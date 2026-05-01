@@ -291,93 +291,93 @@ msgstr "只有 root 用户才能运行 GDM"
 msgid "GNOME Display Manager Session Worker"
 msgstr "GNOME 显示管理器会话工作进程"
 
-#: data/org.gnome.login-screen.gschema.xml:6
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:6
 msgid "Whether or not to allow fingerprint readers for login"
 msgstr "是否允许通过指纹阅读器登录"
 
-#: data/org.gnome.login-screen.gschema.xml:9
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:9
 msgid ""
 "The login screen can optionally allow users who have enrolled their "
 "fingerprints to log in using those prints."
 msgstr "登录屏幕允许已登记指纹的用户使用指纹登录(可选)。"
 
-#: data/org.gnome.login-screen.gschema.xml:16
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:16
 msgid "Whether or not to allow smartcard readers for login"
 msgstr "是否允许通过智能卡读卡器登录"
 
-#: data/org.gnome.login-screen.gschema.xml:19
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:19
 msgid ""
 "The login screen can optionally allow users who have smartcards to log in "
 "using those smartcards."
 msgstr "登录屏幕允许拥有智能卡的用户使用智能卡登录(可选)。"
 
-#: data/org.gnome.login-screen.gschema.xml:26
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:26
 msgid "Whether or not to allow passwords for login"
 msgstr "是否允许通过密码登录"
 
-#: data/org.gnome.login-screen.gschema.xml:29
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:29
 msgid ""
 "The login screen can be configured to disallow password authentication, "
 "forcing the user to use smartcard or fingerprint authentication."
 msgstr "登录屏幕可以设置为不允许密码登录，强制用户使用智能卡或者指纹识别登录。"
 
-#: data/org.gnome.login-screen.gschema.xml:36
-#: data/org.gnome.login-screen.gschema.xml:46
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:36
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:46
 msgid "Path to small image at top of user list"
 msgstr "用户列表上方小图片的路径"
 
-#: data/org.gnome.login-screen.gschema.xml:39
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:39
 msgid ""
 "The login screen can optionally show a small image to provide site "
 "administrators and distributions a way to display branding."
 msgstr "登录屏幕可显示一个小图像以允许管理员和发行版展示标识（可选）。"
 
-#: data/org.gnome.login-screen.gschema.xml:49
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:49
 msgid ""
 "The fallback login screen can optionally show a small image to provide site "
 "administrators and distributions a way to display branding."
 msgstr ""
 "备用模式的登录屏幕可显示一个小图像以允许管理员和发行版展示标识（可选）。"
 
-#: data/org.gnome.login-screen.gschema.xml:56
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:56
 msgid "Avoid showing user list"
 msgstr "不显示用户列表"
 
-#: data/org.gnome.login-screen.gschema.xml:59
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:59
 msgid ""
 "The login screen normally shows a list of available users to log in as. This "
 "setting can be toggled to disable showing the user list."
 msgstr "登录屏幕通常会显示系统中可以登录的用户列表。这个选项可以禁用此功能。"
 
-#: data/org.gnome.login-screen.gschema.xml:66
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:66
 msgid "Enable showing the banner message"
 msgstr "启用横幅信息显示"
 
-#: data/org.gnome.login-screen.gschema.xml:69
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:69
 msgid "Set to true to show the banner message text."
 msgstr "设置为“真(true)”以显示横幅信息文字。"
 
-#: data/org.gnome.login-screen.gschema.xml:75
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:75
 msgid "Banner message text"
 msgstr "横幅信息文字"
 
-#: data/org.gnome.login-screen.gschema.xml:78
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:78
 msgid "Text banner message to show in the login window."
 msgstr "显示在登录窗口的文本横幅信息。"
 
-#: data/org.gnome.login-screen.gschema.xml:84
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:84
 msgid "Disable showing the restart buttons"
 msgstr "禁止显示重启按钮"
 
-#: data/org.gnome.login-screen.gschema.xml:87
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:87
 msgid "Set to true to disable showing the restart buttons in the login window."
 msgstr "设置为 true，则禁止在登录窗口显示重启按钮。"
 
-#: data/org.gnome.login-screen.gschema.xml:93
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:93
 msgid "Number of allowed authentication failures"
 msgstr "允许的认证失败次数"
 
-#: data/org.gnome.login-screen.gschema.xml:96
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:96
 msgid ""
 "The number of times a user is allowed to attempt authentication, before "
 "giving up and going back to user selection."

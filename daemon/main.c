@@ -48,7 +48,7 @@
 #include "gdm-settings-direct.h"
 #include "gdm-settings-keys.h"
 
-#define GDM_DBUS_NAME "org.gnome.DisplayManager"
+#define GDM_DBUS_NAME "io.github.scarecrow-de.DisplayManager"
 
 static GDBusConnection *get_system_bus (void);
 static gboolean         bus_reconnect (void);

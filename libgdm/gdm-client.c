@@ -34,7 +34,7 @@
 #include "gdm-client-glue.h"
 #include "gdm-manager-glue.h"
 
-#define SESSION_DBUS_PATH      "/org/gnome/DisplayManager/Session"
+#define SESSION_DBUS_PATH      "/io/github/scarecrow-de/DisplayManager/Session"
 
 struct _GdmClient
 {
@@ -126,8 +126,8 @@ get_manager (GdmClient           *client,
 
         gdm_manager_proxy_new_for_bus (G_BUS_TYPE_SYSTEM,
                                        G_DBUS_PROXY_FLAGS_NONE,
-                                       "org.gnome.DisplayManager",
-                                       "/org/gnome/DisplayManager/Manager",
+                                       "io.github.scarecrow-de.DisplayManager",
+                                       "/io/github/scarecrow-de/DisplayManager/Manager",
                                        cancellable,
                                        on_got_manager,
                                        task);
@@ -415,8 +415,8 @@ gdm_client_get_connection_sync (GdmClient      *client,
 
         manager = gdm_manager_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
                                                       G_DBUS_PROXY_FLAGS_NONE,
-                                                      "org.gnome.DisplayManager",
-                                                      "/org/gnome/DisplayManager/Manager",
+                                                      "io.github.scarecrow-de.DisplayManager",
+                                                      "/io/github/scarecrow-de/DisplayManager/Manager",
                                                       cancellable,
                                                       error);
 
@@ -596,8 +596,8 @@ gdm_client_open_reauthentication_channel_sync (GdmClient     *client,
 
         manager = gdm_manager_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
                                                       G_DBUS_PROXY_FLAGS_NONE,
-                                                      "org.gnome.DisplayManager",
-                                                      "/org/gnome/DisplayManager/Manager",
+                                                      "io.github.scarecrow-de.DisplayManager",
+                                                      "/io/github/scarecrow-de/DisplayManager/Manager",
                                                       cancellable,
                                                       error);
 
@@ -1497,7 +1497,7 @@ gdm_client_new (void)
  * @extensions: (array zero-terminated=1) (element-type utf8): a list of extensions
  *
  * Enables GDM's pam extensions.  Currently, only
- * org.gnome.DisplayManager.UserVerifier.ChoiceList is supported.
+ * io.github.scarecrow-de.DisplayManager.UserVerifier.ChoiceList is supported.
  */
 void
 gdm_client_set_enabled_extensions (GdmClient          *client,

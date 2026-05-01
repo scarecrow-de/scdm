@@ -278,92 +278,92 @@ msgstr "Chan urrainn ach dhan chleachdaiche a bhios ’na root GDM a ruith"
 msgid "GNOME Display Manager Session Worker"
 msgstr "Obraiche sheiseanan aig manaidsear uidheaman taisbeanaidh GNOME"
 
-#: data/org.gnome.login-screen.gschema.xml:6
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:6
 msgid "Whether or not to allow fingerprint readers for login"
 msgstr "Co dhiubh am bi leughadairean luirg-mheòir ceadaichte airson clàradh a-steach gus nach bi"
 
-#: data/org.gnome.login-screen.gschema.xml:9
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:9
 msgid ""
 "The login screen can optionally allow users who have enrolled their "
 "fingerprints to log in using those prints."
 msgstr "Gabhaidh roghainn a chur ris an sgrìn clàraidh a-steach gum faod cleachdaichean a chlàraich an lorgan-meòir na lorgan ud a chleachdadh gus clàradh a-steach."
 
-#: data/org.gnome.login-screen.gschema.xml:16
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:16
 msgid "Whether or not to allow smartcard readers for login"
 msgstr "Co dhiubh am bi leughadairean smartcard ceadaichte gus clàradh a-steach gus nach bi"
 
-#: data/org.gnome.login-screen.gschema.xml:19
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:19
 msgid ""
 "The login screen can optionally allow users who have smartcards to log in "
 "using those smartcards."
 msgstr "Gabhaidh roghainn a chur ris an sgrìn clàraidh a-steach gum faod cleachdaichean aig a bheil smartcard an smartcard aca a chleachdadh gus clàradh a-steach."
 
-#: data/org.gnome.login-screen.gschema.xml:26
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:26
 msgid "Whether or not to allow passwords for login"
 msgstr "Co dhiubh am bi faclan-faire ceadaichte gus clàradh a-steach gus nach bi"
 
-#: data/org.gnome.login-screen.gschema.xml:29
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:29
 msgid ""
 "The login screen can be configured to disallow password authentication, "
 "forcing the user to use smartcard or fingerprint authentication."
 msgstr "Gabhaidh an sgrìn clàraidh a-steach rèiteachadh ach nach ceadaich i dearbhadh le facal-faire ’s gun doir i air a’ chleachdaiche clàradh a-steach le lorg-meòir no smartcard."
 
-#: data/org.gnome.login-screen.gschema.xml:36
-#: data/org.gnome.login-screen.gschema.xml:46
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:36
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:46
 msgid "Path to small image at top of user list"
 msgstr "Slighe dhan dhealbh bheag air bàrr liosta nan cleachdaichean"
 
-#: data/org.gnome.login-screen.gschema.xml:39
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:39
 msgid ""
 "The login screen can optionally show a small image to provide site "
 "administrators and distributions a way to display branding."
 msgstr "Gabhaidh roghainn a chur ris an sgrìn clàraidh a-steach gun seall e dealbh beag a leigeas le rianairean an t-siostaim ’s le sgaoilidhean an suaicheantas a nochdadh."
 
-#: data/org.gnome.login-screen.gschema.xml:49
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:49
 msgid ""
 "The fallback login screen can optionally show a small image to provide site "
 "administrators and distributions a way to display branding."
 msgstr "Gabhaidh roghainn a chur ris an sgrìn clàraidh a-steach èiginneach gun seall e dealbh beag a leigeas le rianairean an t-siostaim ’s le sgaoilidhean an suaicheantas a nochdadh."
 
-#: data/org.gnome.login-screen.gschema.xml:56
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:56
 msgid "Avoid showing user list"
 msgstr "Na nochd liosta nan cleachdaichean"
 
-#: data/org.gnome.login-screen.gschema.xml:59
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:59
 msgid ""
 "The login screen normally shows a list of available users to log in as. This "
 "setting can be toggled to disable showing the user list."
 msgstr "Nochdaidh an sgrìn clàraidh a-steach liosta dhe na cleachdaichean a dh’fhaodas clàradh a-steach a ghnàth. Gabhaidh an roghainn seo a chur dheth ach nach nochd liosta nan cleachdaichean."
 
-#: data/org.gnome.login-screen.gschema.xml:66
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:66
 msgid "Enable showing the banner message"
 msgstr "Seall teachdaireachd na brataich"
 
-#: data/org.gnome.login-screen.gschema.xml:69
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:69
 msgid "Set to true to show the banner message text."
 msgstr "Suidhich seo air “true” ach an nochd teacsa na brataich."
 
-#: data/org.gnome.login-screen.gschema.xml:75
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:75
 msgid "Banner message text"
 msgstr "Teacsa na brataich"
 
-#: data/org.gnome.login-screen.gschema.xml:78
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:78
 msgid "Text banner message to show in the login window."
 msgstr "Teacsa na brataich a nochdas air uinneag a’ chlàraidh a-steach."
 
-#: data/org.gnome.login-screen.gschema.xml:84
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:84
 msgid "Disable showing the restart buttons"
 msgstr "Cuir na putanan ath-thòiseachaidh à comas"
 
-#: data/org.gnome.login-screen.gschema.xml:87
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:87
 msgid "Set to true to disable showing the restart buttons in the login window."
 msgstr "Ma tha seo air “true”, cha nochd na putanan ath-thòiseachaidh air uinneag a’ chlàraidh a-steach."
 
-#: data/org.gnome.login-screen.gschema.xml:93
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:93
 msgid "Number of allowed authentication failures"
 msgstr "Cò mheud turas a dh’fhaodas dearbhadh fhàilligeadh"
 
-#: data/org.gnome.login-screen.gschema.xml:96
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:96
 msgid ""
 "The number of times a user is allowed to attempt authentication, before "
 "giving up and going back to user selection."

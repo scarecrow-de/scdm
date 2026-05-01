@@ -295,11 +295,11 @@ msgstr "Yalnızca yetkili kullanıcı GDM’yi çalıştırabilir"
 msgid "GNOME Display Manager Session Worker"
 msgstr "GNOME Görüntü Yöneticisi Oturum Çalıştırıcısı"
 
-#: data/org.gnome.login-screen.gschema.xml:6
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:6
 msgid "Whether or not to allow fingerprint readers for login"
 msgstr "Oturum açmak için parmak izi okuyucularına izin verilip verilmeyeceği"
 
-#: data/org.gnome.login-screen.gschema.xml:9
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:9
 msgid ""
 "The login screen can optionally allow users who have enrolled their "
 "fingerprints to log in using those prints."
@@ -307,11 +307,11 @@ msgstr ""
 "Giriş ekranı, parmak izlerini oturum açmak için kaydeden kullanıcıların "
 "isteğe bağlı olarak parmak iziyle giriş yapmasına izin verebilir."
 
-#: data/org.gnome.login-screen.gschema.xml:16
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:16
 msgid "Whether or not to allow smartcard readers for login"
 msgstr "Oturum açmak için akıllı kart okuyucularına izin verilip verilmeyeceği"
 
-#: data/org.gnome.login-screen.gschema.xml:19
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:19
 msgid ""
 "The login screen can optionally allow users who have smartcards to log in "
 "using those smartcards."
@@ -319,11 +319,11 @@ msgstr ""
 "Oturum açma ekranı, isteğe bağlı olarak, akıllı kartı olan kullanıcıların "
 "akıllı kartlarıyla giriş yapmalarına izin verebilir."
 
-#: data/org.gnome.login-screen.gschema.xml:26
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:26
 msgid "Whether or not to allow passwords for login"
 msgstr "Oturum açmak için parolalara izin verilip verilmeyeceği"
 
-#: data/org.gnome.login-screen.gschema.xml:29
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:29
 msgid ""
 "The login screen can be configured to disallow password authentication, "
 "forcing the user to use smartcard or fingerprint authentication."
@@ -332,12 +332,12 @@ msgstr ""
 "yapılandırılabilir, böylece kullanıcı akıllı kartla ya da parmak izi "
 "okuyucuyla kimlik denetimini kullanmaya zorlanır."
 
-#: data/org.gnome.login-screen.gschema.xml:36
-#: data/org.gnome.login-screen.gschema.xml:46
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:36
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:46
 msgid "Path to small image at top of user list"
 msgstr "Kullanıcı listesinin tepesindeki küçük resme giden yol"
 
-#: data/org.gnome.login-screen.gschema.xml:39
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:39
 msgid ""
 "The login screen can optionally show a small image to provide site "
 "administrators and distributions a way to display branding."
@@ -345,7 +345,7 @@ msgstr ""
 "Oturum açma ekranı, isteğe bağlı olarak, site yöneticileri ve dağıtımlara "
 "markalaşma olanağı sağlamak için küçük bir resim gösterebilir."
 
-#: data/org.gnome.login-screen.gschema.xml:49
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:49
 msgid ""
 "The fallback login screen can optionally show a small image to provide site "
 "administrators and distributions a way to display branding."
@@ -353,11 +353,11 @@ msgstr ""
 "Korumalı kip oturum açma ekranı, isteğe bağlı olarak, site yöneticileri ve "
 "dağıtımlara markalaşma olanağı sağlamak için küçük bir resim gösterebilir."
 
-#: data/org.gnome.login-screen.gschema.xml:56
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:56
 msgid "Avoid showing user list"
 msgstr "Kullanıcı listesini göstermekten kaçın"
 
-#: data/org.gnome.login-screen.gschema.xml:59
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:59
 msgid ""
 "The login screen normally shows a list of available users to log in as. This "
 "setting can be toggled to disable showing the user list."
@@ -366,37 +366,37 @@ msgstr ""
 "listesini gösterir. Bu ayar, kullanıcı listesinin gösterimini devre dışı "
 "bırakmak için açılıp kapatılabilir."
 
-#: data/org.gnome.login-screen.gschema.xml:66
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:66
 msgid "Enable showing the banner message"
 msgstr "Afiş iletisi göstermeyi etkinleştir"
 
-#: data/org.gnome.login-screen.gschema.xml:69
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:69
 msgid "Set to true to show the banner message text."
 msgstr "Afiş ileti metnini göstermek için TRUE olarak ayarlayın."
 
-#: data/org.gnome.login-screen.gschema.xml:75
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:75
 msgid "Banner message text"
 msgstr "Afiş ileti metni"
 
-#: data/org.gnome.login-screen.gschema.xml:78
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:78
 msgid "Text banner message to show in the login window."
 msgstr "Giriş penceresinde gösterilecek için metin afişi mesajı."
 
-#: data/org.gnome.login-screen.gschema.xml:84
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:84
 msgid "Disable showing the restart buttons"
 msgstr "Yeniden başlatma düğmelerini devre dışı bırak"
 
-#: data/org.gnome.login-screen.gschema.xml:87
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:87
 msgid "Set to true to disable showing the restart buttons in the login window."
 msgstr ""
 "Giriş pencerede yeniden başlatma düğmelerini göstermeyi devre dışı bırakmak "
 "için TRUE olarak ayarlayın."
 
-#: data/org.gnome.login-screen.gschema.xml:93
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:93
 msgid "Number of allowed authentication failures"
 msgstr "İzin verilen kimlik denetimi hatası sayısı"
 
-#: data/org.gnome.login-screen.gschema.xml:96
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:96
 msgid ""
 "The number of times a user is allowed to attempt authentication, before "
 "giving up and going back to user selection."

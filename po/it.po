@@ -300,12 +300,12 @@ msgstr "Solo l'utente root può avviare GDM"
 msgid "GNOME Display Manager Session Worker"
 msgstr "Worker di sessione del Gestore schermo di GNOME"
 
-#: data/org.gnome.login-screen.gschema.xml:6
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:6
 msgid "Whether or not to allow fingerprint readers for login"
 msgstr ""
 "Indica se consentire o meno i lettori di impronte digitali per l'accesso"
 
-#: data/org.gnome.login-screen.gschema.xml:9
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:9
 msgid ""
 "The login screen can optionally allow users who have enrolled their "
 "fingerprints to log in using those prints."
@@ -313,11 +313,11 @@ msgstr ""
 "La schermata di accesso può opzionalmente consentire agli utenti che hanno "
 "registrato le proprie impronte digitali di usarle per accedere."
 
-#: data/org.gnome.login-screen.gschema.xml:16
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:16
 msgid "Whether or not to allow smartcard readers for login"
 msgstr "Indica se consentire o meno i lettori di smartcard per l'accesso"
 
-#: data/org.gnome.login-screen.gschema.xml:19
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:19
 msgid ""
 "The login screen can optionally allow users who have smartcards to log in "
 "using those smartcards."
@@ -325,11 +325,11 @@ msgstr ""
 "La schermata di accesso può opzionalmente consentire agli utenti che "
 "possiedono smartcard di usarle per accedere."
 
-#: data/org.gnome.login-screen.gschema.xml:26
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:26
 msgid "Whether or not to allow passwords for login"
 msgstr "Indica se consentire o meno le password per l'accesso"
 
-#: data/org.gnome.login-screen.gschema.xml:29
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:29
 msgid ""
 "The login screen can be configured to disallow password authentication, "
 "forcing the user to use smartcard or fingerprint authentication."
@@ -338,12 +338,12 @@ msgstr ""
 "l'autenticazione con password, costringendo l'utente a usare la smartcard o "
 "l'impronta digitale per accedere."
 
-#: data/org.gnome.login-screen.gschema.xml:36
-#: data/org.gnome.login-screen.gschema.xml:46
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:36
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:46
 msgid "Path to small image at top of user list"
 msgstr "Percorso di una piccola immagine in cima all'elenco utenti"
 
-#: data/org.gnome.login-screen.gschema.xml:39
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:39
 msgid ""
 "The login screen can optionally show a small image to provide site "
 "administrators and distributions a way to display branding."
@@ -352,7 +352,7 @@ msgstr ""
 "fornire agli amministratori e alle distribuzioni un metodo per mostrare il "
 "loro brand."
 
-#: data/org.gnome.login-screen.gschema.xml:49
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:49
 msgid ""
 "The fallback login screen can optionally show a small image to provide site "
 "administrators and distributions a way to display branding."
@@ -361,11 +361,11 @@ msgstr ""
 "immagine per fornire agli amministratori e alle distribuzioni un metodo per "
 "mostrare il loro brand."
 
-#: data/org.gnome.login-screen.gschema.xml:56
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:56
 msgid "Avoid showing user list"
 msgstr "Evitare di mostrare l'elenco utenti"
 
-#: data/org.gnome.login-screen.gschema.xml:59
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:59
 msgid ""
 "The login screen normally shows a list of available users to log in as. This "
 "setting can be toggled to disable showing the user list."
@@ -375,39 +375,39 @@ msgstr ""
 "disabilitare l'elenco utenti."
 
 # NdT: non è fedele come traduzione ma rende l'idea?
-#: data/org.gnome.login-screen.gschema.xml:66
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:66
 msgid "Enable showing the banner message"
 msgstr "Abilita la visualizzazione del messaggio di intestazione"
 
-#: data/org.gnome.login-screen.gschema.xml:69
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:69
 msgid "Set to true to show the banner message text."
 msgstr "Impostare a VERO per mostrare il testo del messaggio di intestazione."
 
-#: data/org.gnome.login-screen.gschema.xml:75
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:75
 msgid "Banner message text"
 msgstr "Testo del messaggio di intestazione"
 
-#: data/org.gnome.login-screen.gschema.xml:78
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:78
 msgid "Text banner message to show in the login window."
 msgstr ""
 "Testo del messaggio di intestazione da mostrare nella finestra di accesso."
 
-#: data/org.gnome.login-screen.gschema.xml:84
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:84
 msgid "Disable showing the restart buttons"
 msgstr "Disabilita la visualizzazione dei pulsanti di riavvio"
 
-#: data/org.gnome.login-screen.gschema.xml:87
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:87
 msgid "Set to true to disable showing the restart buttons in the login window."
 msgstr ""
 "Impostare a VERO per disabilitare la visualizzazione dei pulsanti di riavvio "
 "nella finestra di accesso."
 
 # [NdT] la traduco la parte tra ""?
-#: data/org.gnome.login-screen.gschema.xml:93
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:93
 msgid "Number of allowed authentication failures"
 msgstr "Numero consentito di autenticazioni non riuscite"
 
-#: data/org.gnome.login-screen.gschema.xml:96
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:96
 msgid ""
 "The number of times a user is allowed to attempt authentication, before "
 "giving up and going back to user selection."

@@ -289,32 +289,32 @@ msgstr "Chỉ có tài khoản siêu quản trị mới có quyền chạy GDM"
 msgid "GNOME Display Manager Session Worker"
 msgstr "Tiến trình hỗ trợ phiên chạy của trình quản lý màn hình GNOME"
 
-#: data/org.gnome.login-screen.gschema.xml:6
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:6
 msgid "Whether or not to allow fingerprint readers for login"
 msgstr "Có cho đăng nhập bằng đầu đọc vân tay không"
 
-#: data/org.gnome.login-screen.gschema.xml:9
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:9
 msgid ""
 "The login screen can optionally allow users who have enrolled their "
 "fingerprints to log in using those prints."
 msgstr "Màn hình đăng nhập có thể cho phép người dùng đăng nhập bằng vân tay."
 
-#: data/org.gnome.login-screen.gschema.xml:16
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:16
 msgid "Whether or not to allow smartcard readers for login"
 msgstr "Có cho đăng nhập bằng thẻ thông minh không"
 
-#: data/org.gnome.login-screen.gschema.xml:19
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:19
 msgid ""
 "The login screen can optionally allow users who have smartcards to log in "
 "using those smartcards."
 msgstr ""
 "Màn hình đăng nhập có thể cho phép người dùng đăng nhập bằng thẻ thông minh."
 
-#: data/org.gnome.login-screen.gschema.xml:26
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:26
 msgid "Whether or not to allow passwords for login"
 msgstr "Có cho đăng nhập bằng mật khẩu hay không"
 
-#: data/org.gnome.login-screen.gschema.xml:29
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:29
 msgid ""
 "The login screen can be configured to disallow password authentication, "
 "forcing the user to use smartcard or fingerprint authentication."
@@ -323,12 +323,12 @@ msgstr ""
 "để ép buộc người dùng sử dụng xác thực bằng thẻ thông minh hay dùng dấu vân "
 "tay."
 
-#: data/org.gnome.login-screen.gschema.xml:36
-#: data/org.gnome.login-screen.gschema.xml:46
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:36
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:46
 msgid "Path to small image at top of user list"
 msgstr "Đường dẫn đến ảnh nhỏ ở trên danh sách người dùng"
 
-#: data/org.gnome.login-screen.gschema.xml:39
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:39
 msgid ""
 "The login screen can optionally show a small image to provide site "
 "administrators and distributions a way to display branding."
@@ -336,7 +336,7 @@ msgstr ""
 "Màn hình đăng nhập có thể hiện ảnh nhỏ để cung cấp cho nhà phân phối và quản "
 "trị trang cách thức thể hiện thương hiệu."
 
-#: data/org.gnome.login-screen.gschema.xml:49
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:49
 msgid ""
 "The fallback login screen can optionally show a small image to provide site "
 "administrators and distributions a way to display branding."
@@ -344,11 +344,11 @@ msgstr ""
 "Màn hình đăng nhập dự phòng có thể hiện ảnh nhỏ để cung cấp cho nhà phân "
 "phối và quản trị trang cách thức thể hiện thương hiệu."
 
-#: data/org.gnome.login-screen.gschema.xml:56
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:56
 msgid "Avoid showing user list"
 msgstr "Tránh hiện danh sách người dùng"
 
-#: data/org.gnome.login-screen.gschema.xml:59
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:59
 msgid ""
 "The login screen normally shows a list of available users to log in as. This "
 "setting can be toggled to disable showing the user list."
@@ -356,35 +356,35 @@ msgstr ""
 "Màn hình đăng nhập bình thường hiện danh sách người dùng có thể đăng nhập. "
 "Thiết lập này có thể tắt hiện danh sách này."
 
-#: data/org.gnome.login-screen.gschema.xml:66
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:66
 msgid "Enable showing the banner message"
 msgstr "Bật hiển thị lời chào"
 
-#: data/org.gnome.login-screen.gschema.xml:69
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:69
 msgid "Set to true to show the banner message text."
 msgstr "Đặt để hiển thị lời chào."
 
-#: data/org.gnome.login-screen.gschema.xml:75
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:75
 msgid "Banner message text"
 msgstr "Chuỗi thông điệp băng cờ"
 
-#: data/org.gnome.login-screen.gschema.xml:78
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:78
 msgid "Text banner message to show in the login window."
 msgstr "Thông điệp băng cờ cần hiển thị trên cửa sổ đăng nhập."
 
-#: data/org.gnome.login-screen.gschema.xml:84
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:84
 msgid "Disable showing the restart buttons"
 msgstr "Tắt hiển thị cái nút khởi động lại"
 
-#: data/org.gnome.login-screen.gschema.xml:87
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:87
 msgid "Set to true to disable showing the restart buttons in the login window."
 msgstr "Đặt để không hiển thị nút khởi động lại trong cửa sổ đăng nhập."
 
-#: data/org.gnome.login-screen.gschema.xml:93
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:93
 msgid "Number of allowed authentication failures"
 msgstr "Số lần xác thực thất bại cho phép"
 
-#: data/org.gnome.login-screen.gschema.xml:96
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:96
 msgid ""
 "The number of times a user is allowed to attempt authentication, before "
 "giving up and going back to user selection."

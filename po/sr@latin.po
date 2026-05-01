@@ -301,11 +301,11 @@ msgstr "Samo administrator može da pokrene GDM"
 msgid "GNOME Display Manager Session Worker"
 msgstr "Radnik sesije Gnomovog upravnika prikaza"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:1
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:1
 msgid "Whether or not to allow fingerprint readers for login"
 msgstr "Da li da dozvoli ili ne čitače otisaka za prijavljivanje"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:2
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:2
 msgid ""
 "The login screen can optionally allow users who have enrolled their "
 "fingerprints to log in using those prints."
@@ -313,11 +313,11 @@ msgstr ""
 "Ekran za prijavljivanje može opcionalno da omogući korisnicima koji su upisali "
 "svoje otiske prstiju da se prijave koristeći te otiske."
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:3
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:3
 msgid "Whether or not to allow smartcard readers for login"
 msgstr "Da li da dozvoli ili ne pametne kartice za prijavljivanje"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:4
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:4
 msgid ""
 "The login screen can optionally allow users who have smartcards to log in "
 "using those smartcards."
@@ -325,11 +325,11 @@ msgstr ""
 "Ekran za prijavljivanje može opcionalno da omogući korisnicima koji imaju "
 "pametne kartice da se prijave koristeći te kartice."
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:5
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:5
 msgid "Whether or not to allow passwords for login"
 msgstr "Da li da dozvoli ili ne lozinke za prijavljivanje"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:6
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:6
 msgid ""
 "The login screen can be configured to disallow password authentication, "
 "forcing the user to use smartcard or fingerprint authentication."
@@ -338,11 +338,11 @@ msgstr ""
 "lozinkom, primoravajući korisnika da koristi potvrđivanje identiteta pametnom "
 "karticom ili otiskom prsta."
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:7
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:7
 msgid "Path to small image at top of user list"
 msgstr "Putanja do sličica na vrhu spiska korisnika"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:8
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:8
 msgid ""
 "The login screen can optionally show a small image to provide site "
 "administrators and distributions a way to display branding."
@@ -350,7 +350,7 @@ msgstr ""
 "Ekran za prijavu može izborno da prikaže sličicu koja omogućava "
 "administratorima sajtova i distribucijama da prikažu svoju robnu marku."
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:9
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:9
 msgid ""
 "The fallback login screen can optionally show a small image to provide site "
 "administrators and distributions a way to display branding."
@@ -358,11 +358,11 @@ msgstr ""
 "Odstupni ekran za prijavu može izborno da prikaže sličicu koja omogućava "
 "administratorima sajtova i distribucijama da prikažu svoju robnu marku."
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:10
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:10
 msgid "Avoid showing user list"
 msgstr "Izbegavanje prikazivanja spiska korisnika"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:11
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:11
 msgid ""
 "The login screen normally shows a list of available users to log in as. This "
 "setting can be toggled to disable showing the user list."
@@ -371,37 +371,37 @@ msgstr ""
 "mogu prijaviti. Ovo podešavanje može biti prebačeno da isključi prikazivanje "
 "spiska korisnika."
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:12
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:12
 msgid "Enable showing the banner message"
 msgstr "Uključuje prikaz poruke na baneru"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:13
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:13
 msgid "Set to true to show the banner message text."
 msgstr "Postavite na tačno za prikaz teksta u baneru."
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:14
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:14
 msgid "Banner message text"
 msgstr "Tekst poruke na baneru"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:15
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:15
 msgid "Text banner message to show in the login window."
 msgstr "Tekst poruke za prikazivanje u pozdravnom prozoru."
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:16
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:16
 msgid "Disable showing the restart buttons"
 msgstr "Isključuje prikaz dugmadi za ponovno pokretanje"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:17
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:17
 msgid "Set to true to disable showing the restart buttons in the login window."
 msgstr ""
 "Postavite na tačno kako bi onemogućili prikaz dugmića za ponovno pokretanje "
 "računara u pozdravnom prozoru."
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:18
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:18
 msgid "Number of allowed authentication failures"
 msgstr "Broj neuspeha potvrđivanja identiteta"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:19
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:19
 msgid ""
 "The number of times a user is allowed to attempt authentication, before "
 "giving up and going back to user selection."

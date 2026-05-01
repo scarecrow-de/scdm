@@ -283,13 +283,13 @@ msgstr "Hanya pengguna root boleh menjalankan GDM"
 msgid "GNOME Display Manager Session Worker"
 msgstr "Pekerja Sesi Pengurus Paparan GNOME"
 
-#: data/org.gnome.login-screen.gschema.xml:6
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:6
 msgid "Whether or not to allow fingerprint readers for login"
 msgstr ""
 "Sama ada mahu atau tidak untuk membenarkan pembaca cap jari ketika daftar "
 "masuk"
 
-#: data/org.gnome.login-screen.gschema.xml:9
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:9
 msgid ""
 "The login screen can optionally allow users who have enrolled their "
 "fingerprints to log in using those prints."
@@ -297,13 +297,13 @@ msgstr ""
 "Skrin daftar masuk secara pilihan boleh membenarkan para pengguna mengecap "
 "jari untuk mendaftar masuk dengannya"
 
-#: data/org.gnome.login-screen.gschema.xml:16
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:16
 msgid "Whether or not to allow smartcard readers for login"
 msgstr ""
 "Sama ada mahu atau tidak untuk membenarkan pembaca kad pintar ketika "
 "mendaftar masuk"
 
-#: data/org.gnome.login-screen.gschema.xml:19
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:19
 msgid ""
 "The login screen can optionally allow users who have smartcards to log in "
 "using those smartcards."
@@ -311,13 +311,13 @@ msgstr ""
 "Skrin daftar masuk secara pilihan membenarkan pengguna mendaftar masuk "
 "menggunakan kad pintar jika ada."
 
-#: data/org.gnome.login-screen.gschema.xml:26
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:26
 msgid "Whether or not to allow passwords for login"
 msgstr ""
 "Sama ada mahu atau tidak untuk membenarkan penggunaan kata laluan ketika "
 "mendaftar masuk"
 
-#: data/org.gnome.login-screen.gschema.xml:29
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:29
 msgid ""
 "The login screen can be configured to disallow password authentication, "
 "forcing the user to use smartcard or fingerprint authentication."
@@ -326,12 +326,12 @@ msgstr ""
 "kata laluan, sekaligus memaksa penggunaan kad pintar atau pengesahihan cap "
 "jari."
 
-#: data/org.gnome.login-screen.gschema.xml:36
-#: data/org.gnome.login-screen.gschema.xml:46
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:36
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:46
 msgid "Path to small image at top of user list"
 msgstr "Laluan imej kecil di bahagian atas senarai pengguna"
 
-#: data/org.gnome.login-screen.gschema.xml:39
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:39
 msgid ""
 "The login screen can optionally show a small image to provide site "
 "administrators and distributions a way to display branding."
@@ -339,7 +339,7 @@ msgstr ""
 "Skrin daftar masuk secara pilihan boleh menunjukkan satu imej kecil yang "
 "merupakan satu cara pentadbir dan pengedar tapak memaparkan jenama."
 
-#: data/org.gnome.login-screen.gschema.xml:49
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:49
 msgid ""
 "The fallback login screen can optionally show a small image to provide site "
 "administrators and distributions a way to display branding."
@@ -348,11 +348,11 @@ msgstr ""
 "kecil yang merupakan satu cara pentadbir dan pengedar tapak memaparkan "
 "jenama."
 
-#: data/org.gnome.login-screen.gschema.xml:56
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:56
 msgid "Avoid showing user list"
 msgstr "Hindari menunjukkan senarai pengguna"
 
-#: data/org.gnome.login-screen.gschema.xml:59
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:59
 msgid ""
 "The login screen normally shows a list of available users to log in as. This "
 "setting can be toggled to disable showing the user list."
@@ -361,37 +361,37 @@ msgstr ""
 "mendaftar masuk. Tetapan ini boleh ditogol untuk melumpuhkan senarai "
 "pengguna tersebut."
 
-#: data/org.gnome.login-screen.gschema.xml:66
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:66
 msgid "Enable showing the banner message"
 msgstr "Benarkan mesej sepanduk ditunjukkan"
 
-#: data/org.gnome.login-screen.gschema.xml:69
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:69
 msgid "Set to true to show the banner message text."
 msgstr "Tetapkan pada benar untuk menunjukkan teks mesej sepanduk."
 
-#: data/org.gnome.login-screen.gschema.xml:75
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:75
 msgid "Banner message text"
 msgstr "Teks mesej sepanduk"
 
-#: data/org.gnome.login-screen.gschema.xml:78
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:78
 msgid "Text banner message to show in the login window."
 msgstr "Mesej sepanduk teks yang ditunjukkan dalam tetingkap daftar masuk."
 
-#: data/org.gnome.login-screen.gschema.xml:84
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:84
 msgid "Disable showing the restart buttons"
 msgstr "Lumpuhkan butang mula semula"
 
-#: data/org.gnome.login-screen.gschema.xml:87
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:87
 msgid "Set to true to disable showing the restart buttons in the login window."
 msgstr ""
 "Tetapkan pada benar untuk melumpuhkan butang mula semula dalam tetingkap "
 "daftar masuk."
 
-#: data/org.gnome.login-screen.gschema.xml:93
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:93
 msgid "Number of allowed authentication failures"
 msgstr "Bilangan kegagalan pengesahihan yang dibenarkan"
 
-#: data/org.gnome.login-screen.gschema.xml:96
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:96
 msgid ""
 "The number of times a user is allowed to attempt authentication, before "
 "giving up and going back to user selection."

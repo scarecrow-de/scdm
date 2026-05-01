@@ -273,31 +273,31 @@ msgstr "GNOME Shell"
 msgid "Window management and compositing"
 msgstr "การจัดการหน้าต่างและ composite"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:1
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:1
 msgid "Whether or not to allow fingerprint readers for login"
 msgstr "จะอนุญาตให้เข้าระบบโดยใช้เครื่องอ่านลายนิ้วมือหรือไม่"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:2
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:2
 msgid ""
 "The login screen can optionally allow users who have enrolled their "
 "fingerprints to log in using those prints."
 msgstr "หน้าจอเข้าระบบสามารถเปิดให้ผู้ใช้ที่ได้เก็บลายนิ้วมือไว้สามารถใช้ลายนิ้วมือเข้าระบบได้"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:3
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:3
 msgid "Whether or not to allow smartcard readers for login"
 msgstr "จะอนุญาตให้เข้าระบบโดยใช้สมาร์ตการ์ดหรือไม่"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:4
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:4
 msgid ""
 "The login screen can optionally allow users who have smartcards to log in "
 "using those smartcards."
 msgstr "หน้าจอเข้าระบบสามารถเปิดให้ผู้ใช้ที่มีสมาร์ตการ์ดสามารถใช้สมาร์ตการ์ดเข้าระบบได้"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:5
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:5
 msgid "Whether or not to allow passwords for login"
 msgstr "จะอนุญาตให้เข้าระบบโดยใช้รหัสผ่านหรือไม่"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:6
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:6
 msgid ""
 "The login screen can be configured to disallow password authentication, "
 "forcing the user to use smartcard or fingerprint authentication."
@@ -305,11 +305,11 @@ msgstr ""
 "หน้าจอเข้าระบบสามารถตั้งค่าให้ปิดกั้นการยืนยันตัวบุคคลด้วยรหัสผ่านได้ "
 "ซึ่งจะเป็นการบังคับให้ผู้ใช้ใช้สมาร์ตการ์ดหรือลายนิ้วมือในการยืนยันตัวบุคคลแทน"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:7
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:7
 msgid "Path to small image at top of user list"
 msgstr "พาธของภาพขนาดเล็กที่ด้านบนของรายชื่อผู้ใช้"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:8
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:8
 msgid ""
 "The login screen can optionally show a small image at the top of its user "
 "list to provide site administrators and distributions a way to provide "
@@ -318,7 +318,7 @@ msgstr ""
 "หน้าจอเข้าระบบสามารถแสดงภาพเล็กๆ ที่ด้านบนของรายชื่อผู้ใช้ "
 "เพื่อให้ผู้ดูแลระบบและชุดจัดแจกสามารถใช้ติดยี่ห้อได้"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:9
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:9
 msgid ""
 "The fallback login screen can optionally show a small image at the top of "
 "its user list to provide site administrators and distributions a way to "
@@ -327,11 +327,11 @@ msgstr ""
 "หน้าจอเข้าระบบแบบสำรองสามารถแสดงภาพเล็กๆ ที่ด้านบนของรายชื่อผู้ใช้ "
 "เพื่อให้ผู้ดูแลระบบและชุดจัดแจกสามารถใช้ติดยี่ห้อได้"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:10
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:10
 msgid "Avoid showing user list"
 msgstr "ไม่แสดงรายชื่อผู้ใช้"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:11
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:11
 msgid ""
 "The login screen normally shows a list of available users to log in as. This "
 "setting can be toggled to disable showing the user list."
@@ -339,35 +339,35 @@ msgstr ""
 "โดยปกติ หน้าจอเข้าระบบจะแสดงรายชื่อของผู้ใช้ที่มีในระบบเพื่อใช้เข้าระบบ "
 "ค่านี้สามารถตั้งเพื่อปิดการแสดงรายชื่อผู้ใช้ได้"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:12
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:12
 msgid "Enable showing the banner message"
 msgstr "เปิดใช้การแสดงข้อความพาดหัว"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:13
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:13
 msgid "Set to true to show the banner message text."
 msgstr "ตั้งเป็นค่าจริงถ้าต้องการแสดงข้อความพาดหัว"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:14
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:14
 msgid "Banner message text"
 msgstr "ข้อความพาดหัว"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:15
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:15
 msgid "Text banner message to show in the login window."
 msgstr "ข้อความพาดหัวที่จะแสดงในหน้าต่างเข้าระบบ"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:16
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:16
 msgid "Disable showing the restart buttons"
 msgstr "ปิดการแสดงปุ่มเริ่มเปิดเครื่องใหม่"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:17
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:17
 msgid "Set to true to disable showing the restart buttons in the login window."
 msgstr "ตั้งเป็นค่าจริงถ้าต้องการปิดการแสดงปุ่มเริ่มเปิดเครื่องใหม่ในหน้าต่างเข้าระบบ"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:18
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:18
 msgid "Number of allowed authentication failures"
 msgstr "จำนวนครั้งที่ยอมให้ยืนยันตัวบุคคลไม่ผ่าน"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:19
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:19
 msgid ""
 "The number of times a user is allowed to attempt authentication, before "
 "giving up and going back to user selection."

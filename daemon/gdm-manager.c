@@ -57,7 +57,7 @@
 
 #define GDM_MANAGER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), GDM_TYPE_MANAGER, GdmManagerPrivate))
 
-#define GDM_DBUS_PATH             "/org/gnome/DisplayManager"
+#define GDM_DBUS_PATH             "/io/github/scarecrow-de/DisplayManager"
 #define GDM_MANAGER_PATH          GDM_DBUS_PATH "/Manager"
 #define GDM_MANAGER_DISPLAYS_PATH GDM_DBUS_PATH "/Displays"
 
@@ -2452,9 +2452,9 @@ listify_display_ids (const char *id,
 
 /*
   Example:
-  dbus-send --system --dest=org.gnome.DisplayManager \
+  dbus-send --system --dest=io.github.scarecrow-de.DisplayManager \
   --type=method_call --print-reply --reply-timeout=2000 \
-  /org/gnome/DisplayManager/Displays \
+  /io/github/scarecrow-de/DisplayManager/Displays \
   org.freedesktop.ObjectManager.GetAll
 */
 gboolean

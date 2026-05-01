@@ -827,8 +827,8 @@ connect_to_display_manager (State *state)
         state->display_manager_proxy = gdm_dbus_manager_proxy_new_for_bus_sync (
                 G_BUS_TYPE_SYSTEM,
                 G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES | G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS,
-                "org.gnome.DisplayManager",
-                "/org/gnome/DisplayManager/Manager",
+                "io.github.scarecrow-de.DisplayManager",
+                "/io/github/scarecrow-de/DisplayManager/Manager",
                 state->cancellable,
                 &error);
 

@@ -406,19 +406,19 @@ msgstr ""
 #. (itstool) path: sect2/para
 #: C/index.docbook:282
 msgid ""
-"The smartcard extension can be enabled or disabled via the <filename>org.gnome.display-manager.extensions.smartcard.active</filename> "
+"The smartcard extension can be enabled or disabled via the <filename>io.github.scarecrow-de.display-manager.extensions.smartcard.active</filename> "
 "gsettings key."
 msgstr ""
-"Η επέκταση smartcard μπορεί να ενεργοποιηθεί ή να απενεργοποιηθεί από το κλειδί <filename>org.gnome.display-manager.extensions."
+"Η επέκταση smartcard μπορεί να ενεργοποιηθεί ή να απενεργοποιηθεί από το κλειδί <filename>io.github.scarecrow-de.display-manager.extensions."
 "smartcard.active</filename> του gsettings."
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:288
 msgid ""
-"Likewise, the fingerprint extension can be enabled or disabled via the <filename>org.gnome.display-manager.extensions.fingerprint."
+"Likewise, the fingerprint extension can be enabled or disabled via the <filename>io.github.scarecrow-de.display-manager.extensions.fingerprint."
 "active</filename> gsettings key."
 msgstr ""
-"Παρομοίως, η επέκταση του δακτυλικού αποτυπώματος μπορεί να ενεργοποιηθεί ή να απενεργοποιηθεί από το κλειδί <filename>org.gnome."
+"Παρομοίως, η επέκταση του δακτυλικού αποτυπώματος μπορεί να ενεργοποιηθεί ή να απενεργοποιηθεί από το κλειδί <filename>io.github.scarecrow-de."
 "display-manager.extensions.fingerprint.active</filename> του gsettings."
 
 #. (itstool) path: sect2/para
@@ -538,14 +538,14 @@ msgstr "Περιηγητής προσώπων του GDM"
 #: C/index.docbook:383
 msgid ""
 "The Face Browser is the interface which allows users to select their username by clicking on an image. This feature can be enabled or "
-"disabled via the org.gnome.login-screen disable-user-list GSettings key and is on by default. When disabled, users must type their "
+"disabled via the io.github.scarecrow-de.login-screen disable-user-list GSettings key and is on by default. When disabled, users must type their "
 "complete username by hand. When enabled, it displays all local users which are available for login on the system (all user accounts "
 "defined in the /etc/passwd file that have a valid shell and sufficiently high UID) and remote users that have recently logged in. The "
 "face browser in GDM 2.20 and earlier would attempt to display all remote users, which caused performance problems in large, enterprise "
 "deployments."
 msgstr ""
 "Ο περιηγητής προσώπων είναι η διεπαφή που επιτρέπει στους χρήστες να επιλέξουν το όνομα χρήστη τους πατώντας σε μια εικόνα. Αυτή η "
-"λειτουργία μπορεί να ενεργοποιηθεί και να απενεργοποιηθεί μέσα από το κλειδί GSettings org.gnome.login-screen disable-user-list και "
+"λειτουργία μπορεί να ενεργοποιηθεί και να απενεργοποιηθεί μέσα από το κλειδί GSettings io.github.scarecrow-de.login-screen disable-user-list και "
 "είναι ενεργή από προεπιλογή. Όταν είναι ανενεργή, οι χρήστες πρέπει να πληκτρολογήσουν το πλήρες όνομα χρήστη χειροκίνητα. Όταν είναι "
 "ενεργή, εμφανίζει όλους τους τοπικούς χρήστες που είναι διαθέσιμοι για σύνδεση στο σύστημα (όλους τους λογαριασμούς χρηστών που έχουν "
 "οριστεί στο αρχείο /etc/passwd και έχουν έγκυρο κέλυφος και επαρκώς υψηλό UID) και τους απομακρυσμένους χρήστες που συνδέθηκαν "

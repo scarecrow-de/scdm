@@ -305,11 +305,11 @@ msgstr "Mtumiaji root pekee yake ndiye anayeweza kutimusha GDM"
 msgid "GNOME Display Manager Session Worker"
 msgstr "Mfanyaji kazi wa kikao cha Onyesho Kuu la GNOME"
 
-#: data/org.gnome.login-screen.gschema.xml:6
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:6
 msgid "Whether or not to allow fingerprint readers for login"
 msgstr "Kama kukubalia au la kutumia kichapisha-kidole kwa login"
 
-#: data/org.gnome.login-screen.gschema.xml:9
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:9
 msgid ""
 "The login screen can optionally allow users who have enrolled their "
 "fingerprints to log in using those prints."
@@ -317,11 +317,11 @@ msgstr ""
 "Lile pazia la login linaweza kwa hiari kukubalia watumiaji waliojiandikisha "
 "vidole vyao kwenye kichapisha-kidole ku-login wakitumia hizo vichapisho."
 
-#: data/org.gnome.login-screen.gschema.xml:16
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:16
 msgid "Whether or not to allow smartcard readers for login"
 msgstr "Kama kukubalia au la visomaji vya smart-kadi ku-login"
 
-#: data/org.gnome.login-screen.gschema.xml:19
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:19
 msgid ""
 "The login screen can optionally allow users who have smartcards to log in "
 "using those smartcards."
@@ -329,11 +329,11 @@ msgstr ""
 "Lile pazia la login linaweza kwa hiari kukubalia watumiaji walio na smart-"
 "kadi kuingia wakitumia hizo smart-kadi."
 
-#: data/org.gnome.login-screen.gschema.xml:26
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:26
 msgid "Whether or not to allow passwords for login"
 msgstr "Kama kukubalia au la nywila kwa ku-login"
 
-#: data/org.gnome.login-screen.gschema.xml:29
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:29
 msgid ""
 "The login screen can be configured to disallow password authentication, "
 "forcing the user to use smartcard or fingerprint authentication."
@@ -342,12 +342,12 @@ msgstr ""
 "kushurutisha mtumiaji kutumia usahihishaji wa smart-kadi au kwa kichapisha-"
 "kidole."
 
-#: data/org.gnome.login-screen.gschema.xml:36
-#: data/org.gnome.login-screen.gschema.xml:46
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:36
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:46
 msgid "Path to small image at top of user list"
 msgstr "Njia kwa picha ndogo iliyo juu la orodha ya mtumiaji"
 
-#: data/org.gnome.login-screen.gschema.xml:39
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:39
 #, fuzzy
 #| msgid ""
 #| "The login screen can optionally show a small image at the top of its user "
@@ -361,7 +361,7 @@ msgstr ""
 "orodha ya mtumiaji ili kutoa uwezekano wa wasimamizi kwa tovuti na migawanyo "
 "taratibu ya kujichapisha uwazi."
 
-#: data/org.gnome.login-screen.gschema.xml:49
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:49
 #, fuzzy
 #| msgid ""
 #| "The fallback login screen can optionally show a small image at the top of "
@@ -375,11 +375,11 @@ msgstr ""
 "orodha ya mtumiaji ili kutoa uwezekano wa wasimamizi kwa tovuti na migawanyo "
 "taratibu ya kujichapisha uwazi."
 
-#: data/org.gnome.login-screen.gschema.xml:56
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:56
 msgid "Avoid showing user list"
 msgstr "Epuka kueonyesha orodha ya mtumiaji"
 
-#: data/org.gnome.login-screen.gschema.xml:59
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:59
 msgid ""
 "The login screen normally shows a list of available users to log in as. This "
 "setting can be toggled to disable showing the user list."
@@ -388,37 +388,37 @@ msgstr ""
 "wanaopatikana ili kuingia ndani kama. Hii mazingira inaweza kugeuzwa ili "
 "kutooonyesha orodha ya mtumiaji."
 
-#: data/org.gnome.login-screen.gschema.xml:66
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:66
 msgid "Enable showing the banner message"
 msgstr "Wezesha kuonyesha habari ya alamu"
 
-#: data/org.gnome.login-screen.gschema.xml:69
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:69
 msgid "Set to true to show the banner message text."
 msgstr "Tia kua sadifu kuonyesha alamu iliyo na maandiko ya habari."
 
-#: data/org.gnome.login-screen.gschema.xml:75
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:75
 msgid "Banner message text"
 msgstr "Alamu iliyo na maandiko ya habari"
 
-#: data/org.gnome.login-screen.gschema.xml:78
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:78
 msgid "Text banner message to show in the login window."
 msgstr "Maandiko ya habari iliyo kwa alamu ionyeshwe kwenye mizuka ya login."
 
-#: data/org.gnome.login-screen.gschema.xml:84
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:84
 msgid "Disable showing the restart buttons"
 msgstr "Zuia kuonyeshwa vitufe vya kuanzisha tena"
 
-#: data/org.gnome.login-screen.gschema.xml:87
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:87
 msgid "Set to true to disable showing the restart buttons in the login window."
 msgstr ""
 "Tia kua sadifu kuonyesha vile vitufe vya kuanzisha tena kwenye mizuka wa "
 "login."
 
-#: data/org.gnome.login-screen.gschema.xml:93
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:93
 msgid "Number of allowed authentication failures"
 msgstr "Idadi ya feli zinazokubaliwa katika usahihishaji"
 
-#: data/org.gnome.login-screen.gschema.xml:96
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:96
 msgid ""
 "The number of times a user is allowed to attempt authentication, before "
 "giving up and going back to user selection."

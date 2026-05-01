@@ -278,11 +278,11 @@ msgstr "GDM бағдарламасын тек root жібере алады"
 msgid "GNOME Display Manager Session Worker"
 msgstr "GNOME Display Manager Session Worker"
 
-#: data/org.gnome.login-screen.gschema.xml:6
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:6
 msgid "Whether or not to allow fingerprint readers for login"
 msgstr "Жүйеге кіру үшін саусақ оқитын құрылғыларды рұқсат ету ма"
 
-#: data/org.gnome.login-screen.gschema.xml:9
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:9
 msgid ""
 "The login screen can optionally allow users who have enrolled their "
 "fingerprints to log in using those prints."
@@ -290,11 +290,11 @@ msgstr ""
 "Жүйеге кіру экраны пайдаланушылар үшін саусақты өткізіп, ол арқылы жүйеге "
 "кіруге рұқсат ете алады."
 
-#: data/org.gnome.login-screen.gschema.xml:16
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:16
 msgid "Whether or not to allow smartcard readers for login"
 msgstr "Жүйеге кіру үшін смарткарта құрылғыларды рұқсат ету ма"
 
-#: data/org.gnome.login-screen.gschema.xml:19
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:19
 msgid ""
 "The login screen can optionally allow users who have smartcards to log in "
 "using those smartcards."
@@ -302,11 +302,11 @@ msgstr ""
 "Жүйеге кіру экраны пайдаланушылар үшін смарткарталарды қолданып, ол арқылы "
 "жүйеге кіруге рұқсат ете алады."
 
-#: data/org.gnome.login-screen.gschema.xml:26
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:26
 msgid "Whether or not to allow passwords for login"
 msgstr "Жүйеге парольмен кіруді рұқсат ету ма, жоқ па"
 
-#: data/org.gnome.login-screen.gschema.xml:29
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:29
 msgid ""
 "The login screen can be configured to disallow password authentication, "
 "forcing the user to use smartcard or fingerprint authentication."
@@ -315,12 +315,12 @@ msgstr ""
 "пайдаланушы смарткарта немесе саусақ аутентификациясын қолдануға мәжбүр "
 "болады."
 
-#: data/org.gnome.login-screen.gschema.xml:36
-#: data/org.gnome.login-screen.gschema.xml:46
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:36
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:46
 msgid "Path to small image at top of user list"
 msgstr "Пайдаланушылар тізімінің үстіндегі кішкене суретке дейінгі жол"
 
-#: data/org.gnome.login-screen.gschema.xml:39
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:39
 msgid ""
 "The login screen can optionally show a small image to provide site "
 "administrators and distributions a way to display branding."
@@ -328,7 +328,7 @@ msgstr ""
 "Жүйеге кіру экраны әкімшілер және өндірушілер үшін ұйымды анықтауды мүмкін "
 "қылатын кіші бейнені көрсете алады."
 
-#: data/org.gnome.login-screen.gschema.xml:49
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:49
 msgid ""
 "The fallback login screen can optionally show a small image to provide site "
 "administrators and distributions a way to display branding."
@@ -336,11 +336,11 @@ msgstr ""
 "Жүйеге кіру қосымша экраны әкімшілер және өндірушілер үшін ұйымды анықтауды "
 "мүмкін қылатын кіші бейнені көрсете алады."
 
-#: data/org.gnome.login-screen.gschema.xml:56
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:56
 msgid "Avoid showing user list"
 msgstr "Пайдаланушылар тізімін көрсетпеу"
 
-#: data/org.gnome.login-screen.gschema.xml:59
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:59
 msgid ""
 "The login screen normally shows a list of available users to log in as. This "
 "setting can be toggled to disable showing the user list."
@@ -348,37 +348,37 @@ msgstr ""
 "Жүйеге кіру экраны әдетте жүйеге кіре алатын пайдаланушылар тізімін "
 "көрсетеді. Бұл баптау арқылы ол мүмкіндікті сөндіруге болады."
 
-#: data/org.gnome.login-screen.gschema.xml:66
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:66
 msgid "Enable showing the banner message"
 msgstr "Қарсы алу хабарламасын көрсету"
 
-#: data/org.gnome.login-screen.gschema.xml:69
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:69
 msgid "Set to true to show the banner message text."
 msgstr "Ақиқат деп орнатыңыз, егер қарсы алу мәтінді көргіңіз келсе."
 
-#: data/org.gnome.login-screen.gschema.xml:75
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:75
 msgid "Banner message text"
 msgstr "Қарсы алу хабарламасы"
 
-#: data/org.gnome.login-screen.gschema.xml:78
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:78
 msgid "Text banner message to show in the login window."
 msgstr "Кіру терезесінде көрсетілетін мәтін хабарламасы."
 
-#: data/org.gnome.login-screen.gschema.xml:84
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:84
 msgid "Disable showing the restart buttons"
 msgstr "Қайта қосу батырмасын көрсетпеу"
 
-#: data/org.gnome.login-screen.gschema.xml:87
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:87
 msgid "Set to true to disable showing the restart buttons in the login window."
 msgstr ""
 "АҚИҚАТ мәніне орнатыңыз, жүйеге кіру терезесінде қайта қосу батырмасын "
 "көрсетпеу үшін."
 
-#: data/org.gnome.login-screen.gschema.xml:93
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:93
 msgid "Number of allowed authentication failures"
 msgstr "Рұқсат етілген аутентификация қателері"
 
-#: data/org.gnome.login-screen.gschema.xml:96
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:96
 msgid ""
 "The number of times a user is allowed to attempt authentication, before "
 "giving up and going back to user selection."

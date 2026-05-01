@@ -411,19 +411,19 @@ msgstr ""
 #. (itstool) path: sect2/para
 #: C/index.docbook:282
 msgid ""
-"The smartcard extension can be enabled or disabled via the <filename>org.gnome.display-manager.extensions.smartcard.active</filename> "
+"The smartcard extension can be enabled or disabled via the <filename>io.github.scarecrow-de.display-manager.extensions.smartcard.active</filename> "
 "gsettings key."
 msgstr ""
-"Ekstensi smartcard dapat diaktifkan atau dimatikan melalui kunci gsettings <filename>org.gnome.display-manager.extensions.smartcard."
+"Ekstensi smartcard dapat diaktifkan atau dimatikan melalui kunci gsettings <filename>io.github.scarecrow-de.display-manager.extensions.smartcard."
 "active</filename>."
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:288
 msgid ""
-"Likewise, the fingerprint extension can be enabled or disabled via the <filename>org.gnome.display-manager.extensions.fingerprint."
+"Likewise, the fingerprint extension can be enabled or disabled via the <filename>io.github.scarecrow-de.display-manager.extensions.fingerprint."
 "active</filename> gsettings key."
 msgstr ""
-"Serupa dengan itu, ekstensi sidik jari dapat diaktifkan atau dimatikan melalui kunci gsettings <filename>org.gnome.display-manager."
+"Serupa dengan itu, ekstensi sidik jari dapat diaktifkan atau dimatikan melalui kunci gsettings <filename>io.github.scarecrow-de.display-manager."
 "extensions.fingerprint.active</filename>."
 
 #. (itstool) path: sect2/para
@@ -540,14 +540,14 @@ msgstr "Peramban Wajah GDM"
 #: C/index.docbook:383
 msgid ""
 "The Face Browser is the interface which allows users to select their username by clicking on an image. This feature can be enabled or "
-"disabled via the org.gnome.login-screen disable-user-list GSettings key and is on by default. When disabled, users must type their "
+"disabled via the io.github.scarecrow-de.login-screen disable-user-list GSettings key and is on by default. When disabled, users must type their "
 "complete username by hand. When enabled, it displays all local users which are available for login on the system (all user accounts "
 "defined in the /etc/passwd file that have a valid shell and sufficiently high UID) and remote users that have recently logged in. The "
 "face browser in GDM 2.20 and earlier would attempt to display all remote users, which caused performance problems in large, enterprise "
 "deployments."
 msgstr ""
 "Peramban Wajah adalah antar muka yang memungkinkan pengguna memilih nama dengan mengklik gambar. Fitur ini dapat diaktifkan atau "
-"dimatikan melalui kunci GSettings org.gnome.login-screen disable-user-list dan bawaannya aktif. Ketika dimatikan, pengguna mesti "
+"dimatikan melalui kunci GSettings io.github.scarecrow-de.login-screen disable-user-list dan bawaannya aktif. Ketika dimatikan, pengguna mesti "
 "mengetikkan nama penggunanya secara lengkap. Ketika diaktifkan, ini menampilkan semua pengguna lokal yang dapat log masuk pada sistem "
 "(semua akun pengguna yang didefinisikan di dalam berkas /etc/passwd yang memiliki shell yang valid dan UID cukup tinggi) dan pengguna "
 "jauh yang baru-baru ini log masuk. Peramban wajah dalam GDM 2.20 dan sebelumnya akan mencoba menampilkan semua pengguna jauh, yang akan "

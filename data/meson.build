@@ -41,7 +41,7 @@ configure_file(
 )
 
 # GSettings schema
-install_data('org.gnome.login-screen.gschema.xml',
+install_data('io.github.scarecrow-de.login-screen.gschema.xml',
   install_dir: get_option('datadir') / 'glib-2.0' / 'schemas',
 )
 compiled_gschema = gnome.compile_schemas()
@@ -62,27 +62,27 @@ install_data('locale.alias',
   install_dir: get_option('datadir') / 'gdm',
 )
 
-gdm_gnome_shell_component = 'org.gnome.Shell'
+gdm_gnome_shell_component = 'io.github.scarecrow-de.Shell'
 gdm_gnome_session_required_components = [
-  'org.gnome.SettingsDaemon.A11ySettings',
-  'org.gnome.SettingsDaemon.Color',
-  'org.gnome.SettingsDaemon.Datetime',
-  'org.gnome.SettingsDaemon.Housekeeping',
-  'org.gnome.SettingsDaemon.Keyboard',
-  'org.gnome.SettingsDaemon.MediaKeys',
-  'org.gnome.SettingsDaemon.Power',
-  'org.gnome.SettingsDaemon.PrintNotifications',
-  'org.gnome.SettingsDaemon.Rfkill',
-  'org.gnome.SettingsDaemon.ScreensaverProxy',
-  'org.gnome.SettingsDaemon.Sharing',
-  'org.gnome.SettingsDaemon.Smartcard',
-  'org.gnome.SettingsDaemon.Sound',
-  'org.gnome.SettingsDaemon.Wacom',
+  'io.github.scarecrow-de.SettingsDaemon.A11ySettings',
+  'io.github.scarecrow-de.SettingsDaemon.Color',
+  'io.github.scarecrow-de.SettingsDaemon.Datetime',
+  'io.github.scarecrow-de.SettingsDaemon.Housekeeping',
+  'io.github.scarecrow-de.SettingsDaemon.Keyboard',
+  'io.github.scarecrow-de.SettingsDaemon.MediaKeys',
+  'io.github.scarecrow-de.SettingsDaemon.Power',
+  'io.github.scarecrow-de.SettingsDaemon.PrintNotifications',
+  'io.github.scarecrow-de.SettingsDaemon.Rfkill',
+  'io.github.scarecrow-de.SettingsDaemon.ScreensaverProxy',
+  'io.github.scarecrow-de.SettingsDaemon.Sharing',
+  'io.github.scarecrow-de.SettingsDaemon.Smartcard',
+  'io.github.scarecrow-de.SettingsDaemon.Sound',
+  'io.github.scarecrow-de.SettingsDaemon.Wacom',
 ]
 
 gdm_gnome_user_session_wanted_components = gdm_gnome_session_required_components
 gdm_gnome_user_session_wanted_components += [
-  'org.gnome.SettingsDaemon.XSettings',
+  'io.github.scarecrow-de.SettingsDaemon.XSettings',
 ]
 
 configure_file(

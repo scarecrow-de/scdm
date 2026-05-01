@@ -278,11 +278,11 @@ msgstr "गनोम शैल"
 msgid "Window management and compositing"
 msgstr "विंडो प्रबंधन और कंपोसिटिंग"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:1
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:1
 msgid "Whether or not to allow fingerprint readers for login"
 msgstr "लॉगिन के लिए पाठकों को फिंगरप्रिंट देने की अनुमति हैं या नहीं"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:2
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:2
 msgid ""
 "The login screen can optionally allow users who have enrolled their "
 "fingerprints to log in using those prints."
@@ -290,11 +290,11 @@ msgstr ""
 "लॉगिन स्क्रीन वैकल्पिक उपयोगकर्ताओं को, जो उनकी उंगलियों के निशान को नामांकित किया है "
 "उन प्रिंट का उपयोग करके लॉग इन करने के लिए अनुमति दे सकते हैं."
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:3
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:3
 msgid "Whether or not to allow smartcard readers for login"
 msgstr "लॉगिन के लिए पाठकों को स्मार्ट कार्ड देने की अनुमति हैं या नहीं"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:4
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:4
 msgid ""
 "The login screen can optionally allow users who have smartcards to log in "
 "using those smartcards."
@@ -302,11 +302,11 @@ msgstr ""
 "लॉगिन स्क्रीन वैकल्पिक उपयोगकर्ताओं को अनुमति दे सकते हैं., जिनके पास लॉग इन करने के लिए "
 "स्मार्ट कार्ड है उन स्मार्ट कार्ड का उपयोग करके लॉग इन करना चाहते हैं."
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:5
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:5
 msgid "Whether or not to allow passwords for login"
 msgstr "लॉगिन के लिए पाठकों को कूटशब्द देने की अनुमति हैं या नहीं"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:6
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:6
 msgid ""
 "The login screen can be configured to disallow password authentication, "
 "forcing the user to use smartcard or fingerprint authentication."
@@ -314,11 +314,11 @@ msgstr ""
 "लॉगिन स्क्रीन को कूटशब्द सत्यापन की अनुमति हटाने के लिए विन्यस्त किया जा सकता है, "
 "उपयोक्ता को स्मार्टकार्ड या फिंगरप्रिंट सत्यापन के उपयोग के बाध्य करता है."
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:7
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:7
 msgid "Path to small image at top of user list"
 msgstr "उपयोगकर्ता सूची के शीर्ष पर छोटी सी छवि के लिए पथ"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:8
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:8
 msgid ""
 "The login screen can optionally show a small image at the top of its user "
 "list to provide site administrators and distributions a way to provide "
@@ -328,7 +328,7 @@ msgstr ""
 "जो कि साइट व्यवस्थापकों और वितरण के लिए ब्रांडिंग प्रदान करने के लिए एक रास्ता प्रदान कर "
 "सकते हैं."
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:9
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:9
 msgid ""
 "The fallback login screen can optionally show a small image at the top of "
 "its user list to provide site administrators and distributions a way to "
@@ -338,11 +338,11 @@ msgstr ""
 "दिखाता हैं जो कि साइट व्यवस्थापकों और वितरण के लिए ब्रांडिंग प्रदान करने के लिए एक रास्ता "
 "प्रदान कर सकते हैं."
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:10
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:10
 msgid "Avoid showing user list"
 msgstr "उपयोगकर्ता सूची प्रदर्शित करने से बचें"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:11
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:11
 msgid ""
 "The login screen normally shows a list of available users to log in as. This "
 "setting can be toggled to disable showing the user list."
@@ -350,37 +350,37 @@ msgstr ""
 "लॉगिन स्क्रीन आम तौर पर उपलब्ध प्रयोक्ताओं की एक सूची के रूप में लॉग ऑन दिखाता है. इस "
 "सेटिंग से उपयोगकर्ता सूची प्रदर्शन को अक्षम करने के लिए टॉगल किया जा सकता है."
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:12
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:12
 msgid "Enable showing the banner message"
 msgstr "बैनर संदेश दिखाना सक्षम करें"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:13
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:13
 msgid "Set to true to show the banner message text."
 msgstr "बैनर संदेश पाठ दिखाने के लिए सही पर सेट करें."
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:14
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:14
 msgid "Banner message text"
 msgstr "बैनर संदेश पाठ"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:15
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:15
 msgid "Text banner message to show in the login window."
 msgstr "लॉगिन विंडो पर दिखाने के लिए पाठ बैनर संदेश."
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:16
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:16
 msgid "Disable showing the restart buttons"
 msgstr "पुनः आरंभ बटन दिखाना असमर्थ करें"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:17
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:17
 msgid "Set to true to disable showing the restart buttons in the login window."
 msgstr ""
 "निष्क्रिय दिखाने के लिए सही पर सेट करें जो बटन को लॉगिन विंडो में दिखाने के लिए फिर आरंभ "
 "करें."
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:18
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:18
 msgid "Number of allowed authentication failures"
 msgstr "अनुमतिप्राप्त सत्यापन विफलता की संख्या"
 
-#: ../data/org.gnome.login-screen.gschema.xml.in.h:19
+#: ../data/io.github.scarecrow-de.login-screen.gschema.xml.in.h:19
 msgid ""
 "The number of times a user is allowed to attempt authentication, before "
 "giving up and going back to user selection."

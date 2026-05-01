@@ -1,6 +1,6 @@
 <!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
 <node>
-  <interface name="org.gnome.DisplayManager.Display">
+  <interface name="io.github.scarecrow-de.DisplayManager.Display">
     <method name="GetId">
       <arg name="id" direction="out" type="o"/>
     </method>

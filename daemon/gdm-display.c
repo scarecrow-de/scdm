@@ -1188,7 +1188,7 @@ register_display (GdmDisplay *self)
 }
 
 /*
-  dbus-send --system --print-reply --dest=org.gnome.DisplayManager /org/gnome/DisplayManager/Displays/1 org.freedesktop.DBus.Introspectable.Introspect
+  dbus-send --system --print-reply --dest=io.github.scarecrow-de.DisplayManager /io/github/scarecrow-de/DisplayManager/Displays/1 org.freedesktop.DBus.Introspectable.Introspect
 */
 
 static GObject *
@@ -1207,7 +1207,7 @@ gdm_display_constructor (GType                  type,
         priv = gdm_display_get_instance_private (self);
 
         g_free (priv->id);
-        priv->id = g_strdup_printf ("/org/gnome/DisplayManager/Displays/%lu",
+        priv->id = g_strdup_printf ("/io/github/scarecrow-de/DisplayManager/Displays/%lu",
                                           (gulong) self);
 
         res = register_display (self);

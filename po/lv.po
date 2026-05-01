@@ -294,11 +294,11 @@ msgstr "Tikai root var palaist GDM"
 msgid "GNOME Display Manager Session Worker"
 msgstr "GNOME displeja pārvaldnieka sesijas darbinieks"
 
-#: data/org.gnome.login-screen.gschema.xml:6
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:6
 msgid "Whether or not to allow fingerprint readers for login"
 msgstr "Vai ļaut izmantot pirkstu nospiedumu lasītāju, lai ierakstītos"
 
-#: data/org.gnome.login-screen.gschema.xml:9
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:9
 msgid ""
 "The login screen can optionally allow users who have enrolled their "
 "fingerprints to log in using those prints."
@@ -306,11 +306,11 @@ msgstr ""
 "Ierakstīšanās ekrāns var ļaut lietotājiem izmantot savu pirkstu nospiedumus, "
 "ja viņi tos ir ievadījuši, lai ierakstītos."
 
-#: data/org.gnome.login-screen.gschema.xml:16
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:16
 msgid "Whether or not to allow smartcard readers for login"
 msgstr "Vai ļaut izmantot viedkaršu lasītāju, lai ierakstītos"
 
-#: data/org.gnome.login-screen.gschema.xml:19
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:19
 msgid ""
 "The login screen can optionally allow users who have smartcards to log in "
 "using those smartcards."
@@ -318,11 +318,11 @@ msgstr ""
 "Ierakstīšanās ekrāns var ļaut lietotājiem izmantot savas viedkartes, lai "
 "ierakstītos."
 
-#: data/org.gnome.login-screen.gschema.xml:26
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:26
 msgid "Whether or not to allow passwords for login"
 msgstr "Vai ļaut izmantot paroles, lai ierakstītos"
 
-#: data/org.gnome.login-screen.gschema.xml:29
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:29
 msgid ""
 "The login screen can be configured to disallow password authentication, "
 "forcing the user to use smartcard or fingerprint authentication."
@@ -331,12 +331,12 @@ msgstr ""
 "paroli, tādējādi liekot lietotājam izmantot viedkartes vai pirkstu "
 "nospiedumu autentificēšanos."
 
-#: data/org.gnome.login-screen.gschema.xml:36
-#: data/org.gnome.login-screen.gschema.xml:46
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:36
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:46
 msgid "Path to small image at top of user list"
 msgstr "Ceļš uz mazu attēlu lietotāju saraksta augšpusē"
 
-#: data/org.gnome.login-screen.gschema.xml:39
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:39
 msgid ""
 "The login screen can optionally show a small image to provide site "
 "administrators and distributions a way to display branding."
@@ -344,7 +344,7 @@ msgstr ""
 "Ierakstīšanās ekrāns var parādīt mazu attēlu, lai ļautu administratoriem un "
 "distribūcijām parādīt savu zīmolu."
 
-#: data/org.gnome.login-screen.gschema.xml:49
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:49
 msgid ""
 "The fallback login screen can optionally show a small image to provide site "
 "administrators and distributions a way to display branding."
@@ -352,11 +352,11 @@ msgstr ""
 "Atkāpšanās ierakstīšanās ekrāns var parādīt mazu attēlu, lai ļautu "
 "administratoriem un distribūcijām parādīt savu zīmolu."
 
-#: data/org.gnome.login-screen.gschema.xml:56
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:56
 msgid "Avoid showing user list"
 msgstr "Nerādīt lietotāju sarakstu"
 
-#: data/org.gnome.login-screen.gschema.xml:59
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:59
 msgid ""
 "The login screen normally shows a list of available users to log in as. This "
 "setting can be toggled to disable showing the user list."
@@ -364,38 +364,38 @@ msgstr ""
 "Ierakstīšanās ekrānā parasti redzams pieejamo lietotāju kontu saraksts. Šo "
 "iestatījumu var pārslēgt, lai lietotāju saraksts neparādītos."
 
-#: data/org.gnome.login-screen.gschema.xml:66
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:66
 msgid "Enable showing the banner message"
 msgstr "Aktivēt karoga joslas rādīšanu"
 
-#: data/org.gnome.login-screen.gschema.xml:69
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:69
 msgid "Set to true to show the banner message text."
 msgstr ""
 "Iestatīt uz true (patiess), lai rādītu karoga joslas paziņojuma tekstu."
 
-#: data/org.gnome.login-screen.gschema.xml:75
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:75
 msgid "Banner message text"
 msgstr "Karoga joslas teksts"
 
-#: data/org.gnome.login-screen.gschema.xml:78
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:78
 msgid "Text banner message to show in the login window."
 msgstr "Teksta ziņojums, ko rādīt ierakstīšanās logā."
 
-#: data/org.gnome.login-screen.gschema.xml:84
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:84
 msgid "Disable showing the restart buttons"
 msgstr "Nerādīt pārstartēšanas pogas"
 
-#: data/org.gnome.login-screen.gschema.xml:87
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:87
 msgid "Set to true to disable showing the restart buttons in the login window."
 msgstr ""
 "Iestatiet uz true (patiess), lai izslēgtu pārstartēšanas pogu rādīšanu "
 "ierakstīšanās logā."
 
-#: data/org.gnome.login-screen.gschema.xml:93
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:93
 msgid "Number of allowed authentication failures"
 msgstr "Atļauto autentifikācijas kļūdu skaits"
 
-#: data/org.gnome.login-screen.gschema.xml:96
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:96
 msgid ""
 "The number of times a user is allowed to attempt authentication, before "
 "giving up and going back to user selection."

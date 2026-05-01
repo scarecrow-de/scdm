@@ -23,6 +23,8 @@
 #define __GDM_SETTINGS_UTILS_H
 
 #include <glib-object.h>
+#include <glib.h>
+
 
 G_BEGIN_DECLS
 
@@ -45,7 +47,7 @@ gboolean                  gdm_settings_parse_schemas           (const char  *fil
                                                                 GSList     **list);
 
 gboolean                  gdm_settings_parse_value_as_boolean  (const char *value,
-                                                                gboolean   *bool);
+                                                                gboolean   *boole);
 gboolean                  gdm_settings_parse_value_as_integer  (const char *value,
                                                                 int        *intval);
 gboolean                  gdm_settings_parse_value_as_double   (const char *value,

@@ -46,9 +46,9 @@ create_transient_display (GDBusConnection *connection,
         const char     *value;
 
         reply = g_dbus_connection_call_sync (connection,
-                                             "org.gnome.DisplayManager",
-                                             "/org/gnome/DisplayManager/LocalDisplayFactory",
-                                             "org.gnome.DisplayManager.LocalDisplayFactory",
+                                             "io.github.scarecrow-de.DisplayManager",
+                                             "/io/github/scarecrow-de/DisplayManager/LocalDisplayFactory",
+                                             "io.github.scarecrow-de.DisplayManager.LocalDisplayFactory",
                                              "CreateTransientDisplay",
                                              NULL, /* parameters */
                                              G_VARIANT_TYPE ("(o)"),

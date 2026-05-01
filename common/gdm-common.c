@@ -38,9 +38,9 @@
 
 #include <systemd/sd-login.h>
 
-#define GDM_DBUS_NAME                            "org.gnome.DisplayManager"
-#define GDM_DBUS_LOCAL_DISPLAY_FACTORY_PATH      "/org/gnome/DisplayManager/LocalDisplayFactory"
-#define GDM_DBUS_LOCAL_DISPLAY_FACTORY_INTERFACE "org.gnome.DisplayManager.LocalDisplayFactory"
+#define GDM_DBUS_NAME                            "io.github.scarecrow-de.DisplayManager"
+#define GDM_DBUS_LOCAL_DISPLAY_FACTORY_PATH      "/io/github/scarecrow-de/DisplayManager/LocalDisplayFactory"
+#define GDM_DBUS_LOCAL_DISPLAY_FACTORY_INTERFACE "io.github.scarecrow-de.DisplayManager.LocalDisplayFactory"
 
 G_DEFINE_QUARK (gdm-common-error, gdm_common_error);
 

@@ -301,13 +301,13 @@ msgstr "Sol l'utilizaire root pòt aviar GDM"
 msgid "GNOME Display Manager Session Worker"
 msgstr "Assistent de session del gestionari de connexions GNOME"
 
-#: data/org.gnome.login-screen.gschema.xml:6
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:6
 msgid "Whether or not to allow fingerprint readers for login"
 msgstr ""
 "Indica se cal autorizar o pas los lectors d'emprentas digitalas per la "
 "connexion"
 
-#: data/org.gnome.login-screen.gschema.xml:9
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:9
 msgid ""
 "The login screen can optionally allow users who have enrolled their "
 "fingerprints to log in using those prints."
@@ -315,12 +315,12 @@ msgstr ""
 "L'ecran de connexion pòt, en opcion, permetre als utilizaires qu'an "
 "enregistrat lors emprentas digitalas de se connectar en utilizant aquelas."
 
-#: data/org.gnome.login-screen.gschema.xml:16
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:16
 msgid "Whether or not to allow smartcard readers for login"
 msgstr ""
 "Indica se cal autorizar o pas los lectors de cartas de piuse per la connexion"
 
-#: data/org.gnome.login-screen.gschema.xml:19
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:19
 msgid ""
 "The login screen can optionally allow users who have smartcards to log in "
 "using those smartcards."
@@ -328,11 +328,11 @@ msgstr ""
 "L'ecran de connexion pòt, en opcion, permetre als utilizaires que "
 "possedisson de cartas de piuse de se connectar en utilizant aquelas."
 
-#: data/org.gnome.login-screen.gschema.xml:26
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:26
 msgid "Whether or not to allow passwords for login"
 msgstr "Indica se cal autorizar o pas los senhals per la connexion"
 
-#: data/org.gnome.login-screen.gschema.xml:29
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:29
 msgid ""
 "The login screen can be configured to disallow password authentication, "
 "forcing the user to use smartcard or fingerprint authentication."
@@ -341,12 +341,12 @@ msgstr ""
 "senhal, en obligant l'utilizaire d'utilizar l'autentificacion per carta de "
 "piuse o per emprenta digitala."
 
-#: data/org.gnome.login-screen.gschema.xml:36
-#: data/org.gnome.login-screen.gschema.xml:46
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:36
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:46
 msgid "Path to small image at top of user list"
 msgstr "Camin cap al pichon imatge en naut de la lista d'utilizaires"
 
-#: data/org.gnome.login-screen.gschema.xml:39
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:39
 msgid ""
 "The login screen can optionally show a small image to provide site "
 "administrators and distributions a way to display branding."
@@ -354,7 +354,7 @@ msgstr ""
 "L'ecran de connexion pòt eventualament afichar un pichon imatge en naut de "
 "la lista d'utilizaires per fin de provesir als administrators del site."
 
-#: data/org.gnome.login-screen.gschema.xml:49
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:49
 msgid ""
 "The fallback login screen can optionally show a small image to provide site "
 "administrators and distributions a way to display branding."
@@ -363,11 +363,11 @@ msgstr ""
 "naut de la lista d'utilizaires per fin de provesir als administrators del "
 "site."
 
-#: data/org.gnome.login-screen.gschema.xml:56
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:56
 msgid "Avoid showing user list"
 msgstr "Evitar d'afichar la lista dels utilizaires"
 
-#: data/org.gnome.login-screen.gschema.xml:59
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:59
 msgid ""
 "The login screen normally shows a list of available users to log in as. This "
 "setting can be toggled to disable showing the user list."
@@ -376,38 +376,38 @@ msgstr ""
 "pòdon connectar. Aqueste reglatge pòt èsser modificat per desactivar "
 "l'afichatge d'aquesta lista."
 
-#: data/org.gnome.login-screen.gschema.xml:66
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:66
 msgid "Enable showing the banner message"
 msgstr "Activar l'afichatge del messatge de la bandièra"
 
-#: data/org.gnome.login-screen.gschema.xml:69
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:69
 msgid "Set to true to show the banner message text."
 msgstr "Se verai, aficha lo tèxte del messatge de la bandièra."
 
-#: data/org.gnome.login-screen.gschema.xml:75
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:75
 msgid "Banner message text"
 msgstr "Tèxte del messatge de la bandièra"
 
-#: data/org.gnome.login-screen.gschema.xml:78
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:78
 msgid "Text banner message to show in the login window."
 msgstr ""
 "Tèxte del messatge de la bandièra d'afichar dins la fenèstra de connexion."
 
-#: data/org.gnome.login-screen.gschema.xml:84
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:84
 msgid "Disable showing the restart buttons"
 msgstr "Desactivar l'afichatge dels botons de reaviada"
 
-#: data/org.gnome.login-screen.gschema.xml:87
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:87
 msgid "Set to true to disable showing the restart buttons in the login window."
 msgstr ""
 "Se verai, desactiva l'afichatge dels botons de reaviada dins la fenèstra de "
 "connexion."
 
-#: data/org.gnome.login-screen.gschema.xml:93
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:93
 msgid "Number of allowed authentication failures"
 msgstr "Nombre de fracasses d'autentificacion autorizats"
 
-#: data/org.gnome.login-screen.gschema.xml:96
+#: data/io.github.scarecrow-de.login-screen.gschema.xml:96
 msgid ""
 "The number of times a user is allowed to attempt authentication, before "
 "giving up and going back to user selection."
