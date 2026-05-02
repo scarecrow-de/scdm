@@ -3,5 +3,5 @@ Type=Application
 Name=Orca screen reader
 Exec=orca --disable main-window,splash-window --enable speech,braille
 NoDisplay=true
-AutostartCondition=GSettings io.github.scarecrow_de.desktop.a11y.applications screen-reader-enabled
+AutostartCondition=GSettings org.gnome.desktop.a11y.applications screen-reader-enabled
 X-GNOME-AutoRestart=true
