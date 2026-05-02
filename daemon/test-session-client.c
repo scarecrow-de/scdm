@@ -169,8 +169,8 @@ main (int   argc,
 
         manager = GDM_DBUS_MANAGER (gdm_dbus_manager_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
                                                                              G_DBUS_PROXY_FLAGS_NONE,
-                                                                             "io.github.scarecrow-de.DisplayManager",
-                                                                             "/io/github/scarecrow-de/DisplayManager/Manager",
+                                                                             "io.github.scarecrow_de.DisplayManager",
+                                                                             "/io/github/scarecrow_de/DisplayManager/Manager",
                                                                              NULL,
                                                                              &error));
         if (manager == NULL) {
@@ -202,7 +202,7 @@ main (int   argc,
         user_verifier = GDM_DBUS_USER_VERIFIER (gdm_dbus_user_verifier_proxy_new_sync (connection,
                                                                                        G_DBUS_PROXY_FLAGS_NONE,
                                                                                        NULL,
-                                                                                       "/io/github/scarecrow-de/DisplayManager/Session",
+                                                                                       "/io/github/scarecrow_de/DisplayManager/Session",
                                                                                        NULL,
                                                                                        &error));
         if (user_verifier == NULL) {

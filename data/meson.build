@@ -41,7 +41,7 @@ configure_file(
 )
 
 # GSettings schema
-install_data('io.github.scarecrow-de.login-screen.gschema.xml',
+install_data('io.github.scarecrow_de.login-screen.gschema.xml',
   install_dir: get_option('datadir') / 'glib-2.0' / 'schemas',
 )
 compiled_gschema = gnome.compile_schemas()
@@ -62,27 +62,27 @@ install_data('locale.alias',
   install_dir: get_option('datadir') / 'gdm',
 )
 
-gdm_gnome_shell_component = 'io.github.scarecrow-de.Shell'
+gdm_gnome_shell_component = 'io.github.scarecrow_de.Shell'
 gdm_gnome_session_required_components = [
-  'io.github.scarecrow-de.SettingsDaemon.A11ySettings',
-  'io.github.scarecrow-de.SettingsDaemon.Color',
-  'io.github.scarecrow-de.SettingsDaemon.Datetime',
-  'io.github.scarecrow-de.SettingsDaemon.Housekeeping',
-  'io.github.scarecrow-de.SettingsDaemon.Keyboard',
-  'io.github.scarecrow-de.SettingsDaemon.MediaKeys',
-  'io.github.scarecrow-de.SettingsDaemon.Power',
-  'io.github.scarecrow-de.SettingsDaemon.PrintNotifications',
-  'io.github.scarecrow-de.SettingsDaemon.Rfkill',
-  'io.github.scarecrow-de.SettingsDaemon.ScreensaverProxy',
-  'io.github.scarecrow-de.SettingsDaemon.Sharing',
-  'io.github.scarecrow-de.SettingsDaemon.Smartcard',
-  'io.github.scarecrow-de.SettingsDaemon.Sound',
-  'io.github.scarecrow-de.SettingsDaemon.Wacom',
+  'io.github.scarecrow_de.SettingsDaemon.A11ySettings',
+  'io.github.scarecrow_de.SettingsDaemon.Color',
+  'io.github.scarecrow_de.SettingsDaemon.Datetime',
+  'io.github.scarecrow_de.SettingsDaemon.Housekeeping',
+  'io.github.scarecrow_de.SettingsDaemon.Keyboard',
+  'io.github.scarecrow_de.SettingsDaemon.MediaKeys',
+  'io.github.scarecrow_de.SettingsDaemon.Power',
+  'io.github.scarecrow_de.SettingsDaemon.PrintNotifications',
+  'io.github.scarecrow_de.SettingsDaemon.Rfkill',
+  'io.github.scarecrow_de.SettingsDaemon.ScreensaverProxy',
+  'io.github.scarecrow_de.SettingsDaemon.Sharing',
+  'io.github.scarecrow_de.SettingsDaemon.Smartcard',
+  'io.github.scarecrow_de.SettingsDaemon.Sound',
+  'io.github.scarecrow_de.SettingsDaemon.Wacom',
 ]
 
 gdm_gnome_user_session_wanted_components = gdm_gnome_session_required_components
 gdm_gnome_user_session_wanted_components += [
-  'io.github.scarecrow-de.SettingsDaemon.XSettings',
+  'io.github.scarecrow_de.SettingsDaemon.XSettings',
 ]
 
 configure_file(

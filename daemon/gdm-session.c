@@ -57,10 +57,10 @@
 #include "gdm-settings-direct.h"
 #include "gdm-settings-keys.h"
 
-#define GDM_SESSION_DBUS_ERROR_CANCEL "io.github.scarecrow-de.DisplayManager.Session.Error.Cancel"
-#define GDM_SESSION_DBUS_OBJECT_PATH "/io/github/scarecrow-de/DisplayManager/Session"
+#define GDM_SESSION_DBUS_ERROR_CANCEL "io.github.scarecrow_de.DisplayManager.Session.Error.Cancel"
+#define GDM_SESSION_DBUS_OBJECT_PATH "/io/github/scarecrow_de/DisplayManager/Session"
 
-#define GDM_WORKER_DBUS_PATH "/io/github/scarecrow-de/DisplayManager/Worker"
+#define GDM_WORKER_DBUS_PATH "/io/github/scarecrow_de/DisplayManager/Worker"
 
 typedef struct
 {

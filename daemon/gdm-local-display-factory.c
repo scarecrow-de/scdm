@@ -42,9 +42,9 @@
 #include "gdm-local-display.h"
 #include "gdm-legacy-display.h"
 
-#define GDM_DBUS_PATH                       "/io/github/scarecrow-de/DisplayManager"
+#define GDM_DBUS_PATH                       "/io/github/scarecrow_de/DisplayManager"
 #define GDM_LOCAL_DISPLAY_FACTORY_DBUS_PATH GDM_DBUS_PATH "/LocalDisplayFactory"
-#define GDM_MANAGER_DBUS_NAME               "io.github.scarecrow-de.DisplayManager.LocalDisplayFactory"
+#define GDM_MANAGER_DBUS_NAME               "io.github.scarecrow_de.DisplayManager.LocalDisplayFactory"
 
 #define MAX_DISPLAY_FAILURES 5
 #define WAIT_TO_FINISH_TIMEOUT 10 /* seconds */
@@ -212,10 +212,10 @@ gdm_local_display_factory_use_wayland (void)
 
 /*
   Example:
-  dbus-send --system --dest=io.github.scarecrow-de.DisplayManager \
+  dbus-send --system --dest=io.github.scarecrow_de.DisplayManager \
   --type=method_call --print-reply --reply-timeout=2000 \
-  /io/github/scarecrow-de/DisplayManager/Manager \
-  io.github.scarecrow-de.DisplayManager.Manager.GetDisplays
+  /io/github/scarecrow_de/DisplayManager/Manager \
+  io.github.scarecrow_de.DisplayManager.Manager.GetDisplays
 */
 gboolean
 gdm_local_display_factory_create_transient_display (GdmLocalDisplayFactory *factory,

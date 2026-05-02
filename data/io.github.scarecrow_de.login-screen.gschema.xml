@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="gdm">
-  <schema id="io.github.scarecrow-de.login-screen" path="/io/github/scarecrow-de/login-screen/">
+  <schema id="io.github.scarecrow_de.login-screen" path="/io/github/scarecrow_de/login-screen/">
     <key name="enable-fingerprint-authentication" type="b">
       <default>true</default>
       <summary>

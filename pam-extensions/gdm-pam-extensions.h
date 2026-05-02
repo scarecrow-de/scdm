@@ -153,7 +153,7 @@ typedef struct {
         char *key;
 } GdmPamExtensionChoiceListResponse;
 
-#define GDM_PAM_EXTENSION_CHOICE_LIST "io.github.scarecrow-de.DisplayManager.UserVerifier.ChoiceList"
+#define GDM_PAM_EXTENSION_CHOICE_LIST "io.github.scarecrow_de.DisplayManager.UserVerifier.ChoiceList"
 
 #define GDM_CHOICE_LIST_SIZE(num_items) (offsetof(GdmChoiceList, items) + (num_items) * sizeof (GdmChoiceListItems))
 #define GDM_PAM_EXTENSION_CHOICE_LIST_REQUEST_SIZE(num_items) (offsetof(GdmPamExtensionChoiceListRequest, list) + GDM_CHOICE_LIST_SIZE((num_items)))

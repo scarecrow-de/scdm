@@ -26,21 +26,21 @@
 #include "gdm-session-worker-common.h"
 
 static const GDBusErrorEntry gdm_session_worker_error_entries[] = {
-        { GDM_SESSION_WORKER_ERROR_GENERIC              , "io.github.scarecrow-de.DisplayManager.SessionWorker.Error.Generic", },
-        { GDM_SESSION_WORKER_ERROR_WITH_SESSION_COMMAND , "io.github.scarecrow-de.DisplayManager.SessionWorker.Error.WithSessionCommand" },
-        { GDM_SESSION_WORKER_ERROR_FORKING              , "io.github.scarecrow-de.DisplayManager.SessionWorker.Error.Forking" },
-        { GDM_SESSION_WORKER_ERROR_OPENING_MESSAGE_PIPE , "io.github.scarecrow-de.DisplayManager.SessionWorker.Error.OpeningMessagePipe" },
-        { GDM_SESSION_WORKER_ERROR_COMMUNICATING        , "io.github.scarecrow-de.DisplayManager.SessionWorker.Error.Communicating" },
-        { GDM_SESSION_WORKER_ERROR_WORKER_DIED          , "io.github.scarecrow-de.DisplayManager.SessionWorker.Error.WorkerDied" },
-        { GDM_SESSION_WORKER_ERROR_SERVICE_UNAVAILABLE  , "io.github.scarecrow-de.DisplayManager.SessionWorker.Error.ServiceUnavailable" },
-        { GDM_SESSION_WORKER_ERROR_AUTHENTICATING       , "io.github.scarecrow-de.DisplayManager.SessionWorker.Error.Authenticating" },
-        { GDM_SESSION_WORKER_ERROR_AUTHORIZING          , "io.github.scarecrow-de.DisplayManager.SessionWorker.Error.Authorizing" },
-        { GDM_SESSION_WORKER_ERROR_OPENING_LOG_FILE     , "io.github.scarecrow-de.DisplayManager.SessionWorker.Error.OpeningLogFile" },
-        { GDM_SESSION_WORKER_ERROR_OPENING_SESSION      , "io.github.scarecrow-de.DisplayManager.SessionWorker.Error.OpeningSession" },
-        { GDM_SESSION_WORKER_ERROR_GIVING_CREDENTIALS   , "io.github.scarecrow-de.DisplayManager.SessionWorker.Error.GivingCredentials" },
-        { GDM_SESSION_WORKER_ERROR_WRONG_STATE          , "io.github.scarecrow-de.DisplayManager.SessionWorker.Error.WrongState" },
-        { GDM_SESSION_WORKER_ERROR_OUTSTANDING_REQUEST  , "io.github.scarecrow-de.DisplayManager.SessionWorker.Error.OutstandingRequest" },
-        { GDM_SESSION_WORKER_ERROR_IN_REAUTH_SESSION    , "io.github.scarecrow-de.DisplayManager.SessionWorker.Error.InReauthSession" }
+        { GDM_SESSION_WORKER_ERROR_GENERIC              , "io.github.scarecrow_de.DisplayManager.SessionWorker.Error.Generic", },
+        { GDM_SESSION_WORKER_ERROR_WITH_SESSION_COMMAND , "io.github.scarecrow_de.DisplayManager.SessionWorker.Error.WithSessionCommand" },
+        { GDM_SESSION_WORKER_ERROR_FORKING              , "io.github.scarecrow_de.DisplayManager.SessionWorker.Error.Forking" },
+        { GDM_SESSION_WORKER_ERROR_OPENING_MESSAGE_PIPE , "io.github.scarecrow_de.DisplayManager.SessionWorker.Error.OpeningMessagePipe" },
+        { GDM_SESSION_WORKER_ERROR_COMMUNICATING        , "io.github.scarecrow_de.DisplayManager.SessionWorker.Error.Communicating" },
+        { GDM_SESSION_WORKER_ERROR_WORKER_DIED          , "io.github.scarecrow_de.DisplayManager.SessionWorker.Error.WorkerDied" },
+        { GDM_SESSION_WORKER_ERROR_SERVICE_UNAVAILABLE  , "io.github.scarecrow_de.DisplayManager.SessionWorker.Error.ServiceUnavailable" },
+        { GDM_SESSION_WORKER_ERROR_AUTHENTICATING       , "io.github.scarecrow_de.DisplayManager.SessionWorker.Error.Authenticating" },
+        { GDM_SESSION_WORKER_ERROR_AUTHORIZING          , "io.github.scarecrow_de.DisplayManager.SessionWorker.Error.Authorizing" },
+        { GDM_SESSION_WORKER_ERROR_OPENING_LOG_FILE     , "io.github.scarecrow_de.DisplayManager.SessionWorker.Error.OpeningLogFile" },
+        { GDM_SESSION_WORKER_ERROR_OPENING_SESSION      , "io.github.scarecrow_de.DisplayManager.SessionWorker.Error.OpeningSession" },
+        { GDM_SESSION_WORKER_ERROR_GIVING_CREDENTIALS   , "io.github.scarecrow_de.DisplayManager.SessionWorker.Error.GivingCredentials" },
+        { GDM_SESSION_WORKER_ERROR_WRONG_STATE          , "io.github.scarecrow_de.DisplayManager.SessionWorker.Error.WrongState" },
+        { GDM_SESSION_WORKER_ERROR_OUTSTANDING_REQUEST  , "io.github.scarecrow_de.DisplayManager.SessionWorker.Error.OutstandingRequest" },
+        { GDM_SESSION_WORKER_ERROR_IN_REAUTH_SESSION    , "io.github.scarecrow_de.DisplayManager.SessionWorker.Error.InReauthSession" }
 };
 
 GQuark

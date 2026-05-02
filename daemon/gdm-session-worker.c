@@ -82,11 +82,11 @@
 
 #define GDM_SESSION_WORKER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), GDM_TYPE_SESSION_WORKER, GdmSessionWorkerPrivate))
 
-#define GDM_SESSION_DBUS_PATH         "/io/github/scarecrow-de/DisplayManager/Session"
-#define GDM_SESSION_DBUS_NAME         "io.github.scarecrow-de.DisplayManager.Session"
-#define GDM_SESSION_DBUS_ERROR_CANCEL "io.github.scarecrow-de.DisplayManager.Session.Error.Cancel"
+#define GDM_SESSION_DBUS_PATH         "/io/github/scarecrow_de/DisplayManager/Session"
+#define GDM_SESSION_DBUS_NAME         "io.github.scarecrow_de.DisplayManager.Session"
+#define GDM_SESSION_DBUS_ERROR_CANCEL "io.github.scarecrow_de.DisplayManager.Session.Error.Cancel"
 
-#define GDM_WORKER_DBUS_PATH "/io/github/scarecrow-de/DisplayManager/Worker"
+#define GDM_WORKER_DBUS_PATH "/io/github/scarecrow_de/DisplayManager/Worker"
 
 #ifndef GDM_PASSWD_AUXILLARY_BUFFER_SIZE
 #define GDM_PASSWD_AUXILLARY_BUFFER_SIZE 1024

@@ -5,76 +5,76 @@
 
   <!-- Only root can own the service -->
   <policy user="root">
-    <allow own="io.github.scarecrow-de.DisplayManager"/>
+    <allow own="io.github.scarecrow_de.DisplayManager"/>
 
-    <allow send_destination="io.github.scarecrow-de.DisplayManager"
-           send_interface="io.github.scarecrow-de.DisplayManager.Manager"/>
-    <allow send_destination="io.github.scarecrow-de.DisplayManager"
-           send_interface="io.github.scarecrow-de.DisplayManager.Display"/>
-    <allow send_destination="io.github.scarecrow-de.DisplayManager"
-           send_interface="io.github.scarecrow-de.DisplayManager.LocalDisplayFactory"/>
-    <allow send_destination="io.github.scarecrow-de.DisplayManager"
-           send_interface="io.github.scarecrow-de.DisplayManager.Settings"/>
-    <allow send_destination="io.github.scarecrow-de.DisplayManager"
+    <allow send_destination="io.github.scarecrow_de.DisplayManager"
+           send_interface="io.github.scarecrow_de.DisplayManager.Manager"/>
+    <allow send_destination="io.github.scarecrow_de.DisplayManager"
+           send_interface="io.github.scarecrow_de.DisplayManager.Display"/>
+    <allow send_destination="io.github.scarecrow_de.DisplayManager"
+           send_interface="io.github.scarecrow_de.DisplayManager.LocalDisplayFactory"/>
+    <allow send_destination="io.github.scarecrow_de.DisplayManager"
+           send_interface="io.github.scarecrow_de.DisplayManager.Settings"/>
+    <allow send_destination="io.github.scarecrow_de.DisplayManager"
            send_interface="org.freedesktop.DBus.Properties" />
-    <allow send_destination="io.github.scarecrow-de.DisplayManager"
+    <allow send_destination="io.github.scarecrow_de.DisplayManager"
            send_interface="org.freedesktop.DBus.Introspectable"/>
 
   </policy>
 
   <policy context="default">
-    <deny send_destination="io.github.scarecrow-de.DisplayManager"
-          send_interface="io.github.scarecrow-de.DisplayManager.Display"/>
-    <deny send_destination="io.github.scarecrow-de.DisplayManager"
-          send_interface="io.github.scarecrow-de.DisplayManager.LocalDisplayFactory"/>
-    <deny send_destination="io.github.scarecrow-de.DisplayManager"
-          send_interface="io.github.scarecrow-de.DisplayManager.Settings"/>
-    <deny send_destination="io.github.scarecrow-de.DisplayManager"
-          send_interface="io.github.scarecrow-de.DisplayManager.Session"/>
-    <allow send_destination="io.github.scarecrow-de.DisplayManager"
+    <deny send_destination="io.github.scarecrow_de.DisplayManager"
+          send_interface="io.github.scarecrow_de.DisplayManager.Display"/>
+    <deny send_destination="io.github.scarecrow_de.DisplayManager"
+          send_interface="io.github.scarecrow_de.DisplayManager.LocalDisplayFactory"/>
+    <deny send_destination="io.github.scarecrow_de.DisplayManager"
+          send_interface="io.github.scarecrow_de.DisplayManager.Settings"/>
+    <deny send_destination="io.github.scarecrow_de.DisplayManager"
+          send_interface="io.github.scarecrow_de.DisplayManager.Session"/>
+    <allow send_destination="io.github.scarecrow_de.DisplayManager"
            send_interface="org.freedesktop.DBus.Introspectable"/>
-    <allow send_destination="io.github.scarecrow-de.DisplayManager"
+    <allow send_destination="io.github.scarecrow_de.DisplayManager"
            send_interface="org.freedesktop.DBus.ObjectManager"/>
-    <allow send_destination="io.github.scarecrow-de.DisplayManager"
+    <allow send_destination="io.github.scarecrow_de.DisplayManager"
 	   send_interface="org.freedesktop.DBus.Properties"/>
-    <allow send_destination="io.github.scarecrow-de.DisplayManager"
-           send_interface="io.github.scarecrow-de.DisplayManager.Manager"/>
-    <allow send_destination="io.github.scarecrow-de.DisplayManager"
-           send_interface="io.github.scarecrow-de.DisplayManager.Display"
+    <allow send_destination="io.github.scarecrow_de.DisplayManager"
+           send_interface="io.github.scarecrow_de.DisplayManager.Manager"/>
+    <allow send_destination="io.github.scarecrow_de.DisplayManager"
+           send_interface="io.github.scarecrow_de.DisplayManager.Display"
            send_member="GetId"/>
-    <allow send_destination="io.github.scarecrow-de.DisplayManager"
-           send_interface="io.github.scarecrow-de.DisplayManager.Display"
+    <allow send_destination="io.github.scarecrow_de.DisplayManager"
+           send_interface="io.github.scarecrow_de.DisplayManager.Display"
            send_member="GetRemoteHostname"/>
-    <allow send_destination="io.github.scarecrow-de.DisplayManager"
-           send_interface="io.github.scarecrow-de.DisplayManager.Display"
+    <allow send_destination="io.github.scarecrow_de.DisplayManager"
+           send_interface="io.github.scarecrow_de.DisplayManager.Display"
            send_member="GetSeatId"/>
-    <allow send_destination="io.github.scarecrow-de.DisplayManager"
-           send_interface="io.github.scarecrow-de.DisplayManager.Display"
+    <allow send_destination="io.github.scarecrow_de.DisplayManager"
+           send_interface="io.github.scarecrow_de.DisplayManager.Display"
            send_member="GetX11DisplayName"/>
-    <allow send_destination="io.github.scarecrow-de.DisplayManager"
-           send_interface="io.github.scarecrow-de.DisplayManager.Display"
+    <allow send_destination="io.github.scarecrow_de.DisplayManager"
+           send_interface="io.github.scarecrow_de.DisplayManager.Display"
            send_member="GetX11DisplayNumber"/>
-    <allow send_destination="io.github.scarecrow-de.DisplayManager"
-           send_interface="io.github.scarecrow-de.DisplayManager.Display"
+    <allow send_destination="io.github.scarecrow_de.DisplayManager"
+           send_interface="io.github.scarecrow_de.DisplayManager.Display"
            send_member="IsLocal"/>
 
-    <allow send_destination="io.github.scarecrow-de.DisplayManager"
-           send_interface="io.github.scarecrow-de.DisplayManager.LocalDisplayFactory"
+    <allow send_destination="io.github.scarecrow_de.DisplayManager"
+           send_interface="io.github.scarecrow_de.DisplayManager.LocalDisplayFactory"
            send_member="CreateTransientDisplay"/>
   </policy>
 
   <policy user="@GDM_USERNAME@">
-    <allow send_destination="io.github.scarecrow-de.DisplayManager"
-           send_interface="io.github.scarecrow-de.DisplayManager.Manager"/>
-    <allow send_destination="io.github.scarecrow-de.DisplayManager"
-           send_interface="io.github.scarecrow-de.DisplayManager.Display"/>
-    <allow send_destination="io.github.scarecrow-de.DisplayManager"
-           send_interface="io.github.scarecrow-de.DisplayManager.LocalDisplayFactory"/>
-    <allow send_destination="io.github.scarecrow-de.DisplayManager"
-           send_interface="io.github.scarecrow-de.DisplayManager.Settings"/>
-    <allow send_destination="io.github.scarecrow-de.DisplayManager"
+    <allow send_destination="io.github.scarecrow_de.DisplayManager"
+           send_interface="io.github.scarecrow_de.DisplayManager.Manager"/>
+    <allow send_destination="io.github.scarecrow_de.DisplayManager"
+           send_interface="io.github.scarecrow_de.DisplayManager.Display"/>
+    <allow send_destination="io.github.scarecrow_de.DisplayManager"
+           send_interface="io.github.scarecrow_de.DisplayManager.LocalDisplayFactory"/>
+    <allow send_destination="io.github.scarecrow_de.DisplayManager"
+           send_interface="io.github.scarecrow_de.DisplayManager.Settings"/>
+    <allow send_destination="io.github.scarecrow_de.DisplayManager"
            send_interface="org.freedesktop.DBus.Properties" />
-    <allow send_destination="io.github.scarecrow-de.DisplayManager"
+    <allow send_destination="io.github.scarecrow_de.DisplayManager"
            send_interface="org.freedesktop.DBus.Introspectable"/>
   </policy>
 

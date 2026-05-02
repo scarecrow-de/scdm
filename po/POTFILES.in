@@ -38,7 +38,7 @@ daemon/gdm-x-session.c
 daemon/main.c
 daemon/session-worker-main.c
 daemon/test-session-client.c
-data/io.github.scarecrow-de.login-screen.gschema.xml
+data/io.github.scarecrow_de.login-screen.gschema.xml
 libgdm/gdm-user-switching.c
 utils/gdmflexiserver.c
 utils/gdm-screenshot.c
