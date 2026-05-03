@@ -46,25 +46,25 @@ enum {
         PROP_KIND_MASK,
 };
 
-static void     scdm_host_chooser_dialog_class_init  (GdmHostChooserDialogClass *klass);
-static void     scdm_host_chooser_dialog_init        (GdmHostChooserDialog      *host_chooser_dialog);
+static void     gdm_host_chooser_dialog_class_init  (GdmHostChooserDialogClass *klass);
+static void     gdm_host_chooser_dialog_init        (GdmHostChooserDialog      *host_chooser_dialog);
 
-G_DEFINE_TYPE (GdmHostChooserDialog, scdm_host_chooser_dialog, GTK_TYPE_DIALOG)
+G_DEFINE_TYPE (GdmHostChooserDialog, gdm_host_chooser_dialog, GTK_TYPE_DIALOG)
 
 GdmChooserHost *
-scdm_host_chooser_dialog_get_host (GdmHostChooserDialog *dialog)
+gdm_host_chooser_dialog_get_host (GdmHostChooserDialog *dialog)
 {
         GdmChooserHost *host;
 
         g_return_val_if_fail (GDM_IS_HOST_CHOOSER_DIALOG (dialog), NULL);
 
-        host = scdm_host_chooser_widget_get_host (GDM_HOST_CHOOSER_WIDGET (dialog->chooser_widget));
+        host = gdm_host_chooser_widget_get_host (GDM_HOST_CHOOSER_WIDGET (dialog->chooser_widget));
 
         return host;
 }
 
 static void
-_scdm_host_chooser_dialog_set_kind_mask (GdmHostChooserDialog *dialog,
+_gdm_host_chooser_dialog_set_kind_mask (GdmHostChooserDialog *dialog,
                                         int                   kind_mask)
 {
         if (dialog->kind_mask != kind_mask) {
@@ -73,7 +73,7 @@ _scdm_host_chooser_dialog_set_kind_mask (GdmHostChooserDialog *dialog,
 }
 
 static void
-scdm_host_chooser_dialog_set_property (GObject        *object,
+gdm_host_chooser_dialog_set_property (GObject        *object,
                                       guint           prop_id,
                                       const GValue   *value,
                                       GParamSpec     *pspec)
@@ -84,7 +84,7 @@ scdm_host_chooser_dialog_set_property (GObject        *object,
 
         switch (prop_id) {
         case PROP_KIND_MASK:
-                _scdm_host_chooser_dialog_set_kind_mask (self, g_value_get_int (value));
+                _gdm_host_chooser_dialog_set_kind_mask (self, g_value_get_int (value));
                 break;
         default:
                 G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -93,7 +93,7 @@ scdm_host_chooser_dialog_set_property (GObject        *object,
 }
 
 static void
-scdm_host_chooser_dialog_get_property (GObject        *object,
+gdm_host_chooser_dialog_get_property (GObject        *object,
                                       guint           prop_id,
                                       GValue         *value,
                                       GParamSpec     *pspec)
@@ -111,7 +111,7 @@ on_response (GdmHostChooserDialog *dialog,
 {
         switch (response_id) {
         case GTK_RESPONSE_APPLY:
-                scdm_host_chooser_widget_refresh (GDM_HOST_CHOOSER_WIDGET (dialog->chooser_widget));
+                gdm_host_chooser_widget_refresh (GDM_HOST_CHOOSER_WIDGET (dialog->chooser_widget));
                 g_signal_stop_emission_by_name (dialog, "response");
                 break;
         default:
@@ -120,18 +120,18 @@ on_response (GdmHostChooserDialog *dialog,
 }
 
 static GObject *
-scdm_host_chooser_dialog_constructor (GType                  type,
+gdm_host_chooser_dialog_constructor (GType                  type,
                                      guint                  n_construct_properties,
                                      GObjectConstructParam *construct_properties)
 {
         GdmHostChooserDialog      *dialog;
 
-        dialog = GDM_HOST_CHOOSER_DIALOG (G_OBJECT_CLASS (scdm_host_chooser_dialog_parent_class)->constructor (type,
+        dialog = GDM_HOST_CHOOSER_DIALOG (G_OBJECT_CLASS (gdm_host_chooser_dialog_parent_class)->constructor (type,
                                                                                                                            n_construct_properties,
                                                                                                                            construct_properties));
 
 
-        dialog->chooser_widget = scdm_host_chooser_widget_new (dialog->kind_mask);
+        dialog->chooser_widget = gdm_host_chooser_widget_new (dialog->kind_mask);
         gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))), dialog->chooser_widget, TRUE, TRUE, 0);
         gtk_container_set_border_width (GTK_CONTAINER (dialog->chooser_widget), 5);
 
@@ -157,22 +157,22 @@ scdm_host_chooser_dialog_constructor (GType                  type,
 }
 
 static void
-scdm_host_chooser_dialog_dispose (GObject *object)
+gdm_host_chooser_dialog_dispose (GObject *object)
 {
         g_debug ("Disposing host_chooser_dialog");
 
-        G_OBJECT_CLASS (scdm_host_chooser_dialog_parent_class)->dispose (object);
+        G_OBJECT_CLASS (gdm_host_chooser_dialog_parent_class)->dispose (object);
 }
 
 static void
-scdm_host_chooser_dialog_class_init (GdmHostChooserDialogClass *klass)
+gdm_host_chooser_dialog_class_init (GdmHostChooserDialogClass *klass)
 {
         GObjectClass   *object_class = G_OBJECT_CLASS (klass);
 
-        object_class->get_property = scdm_host_chooser_dialog_get_property;
-        object_class->set_property = scdm_host_chooser_dialog_set_property;
-        object_class->constructor = scdm_host_chooser_dialog_constructor;
-        object_class->dispose = scdm_host_chooser_dialog_dispose;
+        object_class->get_property = gdm_host_chooser_dialog_get_property;
+        object_class->set_property = gdm_host_chooser_dialog_set_property;
+        object_class->constructor = gdm_host_chooser_dialog_constructor;
+        object_class->dispose = gdm_host_chooser_dialog_dispose;
 
         g_object_class_install_property (object_class,
                                          PROP_KIND_MASK,
@@ -186,12 +186,12 @@ scdm_host_chooser_dialog_class_init (GdmHostChooserDialogClass *klass)
 }
 
 static void
-scdm_host_chooser_dialog_init (GdmHostChooserDialog *dialog)
+gdm_host_chooser_dialog_init (GdmHostChooserDialog *dialog)
 {
 }
 
 GtkWidget *
-scdm_host_chooser_dialog_new (int kind_mask)
+gdm_host_chooser_dialog_new (int kind_mask)
 {
         GObject *object;
 

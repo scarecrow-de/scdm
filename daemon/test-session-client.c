@@ -78,12 +78,12 @@ on_info_query (GdmDBusUserVerifier *user_verifier,
         answer[strlen (answer) - 1] = '\0';
 
         if (answer[0] == '\0') {
-                scdm_dbus_user_verifier_call_cancel_sync (user_verifier,
+                gdm_dbus_user_verifier_call_cancel_sync (user_verifier,
                                                    NULL,
                                                    NULL);
                 g_main_loop_quit (loop);
         } else {
-                scdm_dbus_user_verifier_call_answer_query_sync (user_verifier,
+                gdm_dbus_user_verifier_call_answer_query_sync (user_verifier,
                                                          service_name,
                                                          answer,
                                                          NULL,
@@ -139,7 +139,7 @@ on_secret_info_query (GdmDBusUserVerifier *user_verifier,
 
         g_print ("\n");
 
-        scdm_dbus_user_verifier_call_answer_query_sync (user_verifier,
+        gdm_dbus_user_verifier_call_answer_query_sync (user_verifier,
                                                  service_name,
                                                  answer,
                                                  NULL,
@@ -167,7 +167,7 @@ main (int   argc,
                 exit (EXIT_FAILURE);
         }
 
-        manager = GDM_DBUS_MANAGER (scdm_dbus_manager_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
+        manager = GDM_DBUS_MANAGER (gdm_dbus_manager_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
                                                                              G_DBUS_PROXY_FLAGS_NONE,
                                                                              "io.github.scarecrow_de.DisplayManager",
                                                                              "/io/github/scarecrow_de/DisplayManager/Manager",
@@ -179,7 +179,7 @@ main (int   argc,
         }
 
         address = NULL;
-        scdm_dbus_manager_call_open_reauthentication_channel_sync (manager,
+        gdm_dbus_manager_call_open_reauthentication_channel_sync (manager,
                                                                   g_get_user_name (),
                                                                   &address,
                                                                   NULL,
@@ -199,7 +199,7 @@ main (int   argc,
                 exit (EXIT_FAILURE);
         }
 
-        user_verifier = GDM_DBUS_USER_VERIFIER (scdm_dbus_user_verifier_proxy_new_sync (connection,
+        user_verifier = GDM_DBUS_USER_VERIFIER (gdm_dbus_user_verifier_proxy_new_sync (connection,
                                                                                        G_DBUS_PROXY_FLAGS_NONE,
                                                                                        NULL,
                                                                                        "/io/github/scarecrow_de/DisplayManager/Session",
@@ -239,7 +239,7 @@ main (int   argc,
                           G_CALLBACK (on_reset),
                           NULL);
 
-        ok = scdm_dbus_user_verifier_call_begin_verification_for_user_sync (user_verifier,
+        ok = gdm_dbus_user_verifier_call_begin_verification_for_user_sync (user_verifier,
                                                                            "scdm-password",
                                                                            g_get_user_name (),
                                                                            NULL,

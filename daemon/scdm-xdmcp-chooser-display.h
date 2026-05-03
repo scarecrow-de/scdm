@@ -31,7 +31,7 @@
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_XDMCP_CHOOSER_DISPLAY         (scdm_xdmcp_chooser_display_get_type ())
+#define GDM_TYPE_XDMCP_CHOOSER_DISPLAY         (gdm_xdmcp_chooser_display_get_type ())
 #define GDM_XDMCP_CHOOSER_DISPLAY(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GDM_TYPE_XDMCP_CHOOSER_DISPLAY, GdmXdmcpChooserDisplay))
 #define GDM_XDMCP_CHOOSER_DISPLAY_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), GDM_TYPE_XDMCP_CHOOSER_DISPLAY, GdmXdmcpChooserDisplayClass))
 #define GDM_IS_XDMCP_CHOOSER_DISPLAY(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDM_TYPE_XDMCP_CHOOSER_DISPLAY))
@@ -53,10 +53,10 @@ typedef struct
                                              const char             *hostname);
 } GdmXdmcpChooserDisplayClass;
 
-GType                     scdm_xdmcp_chooser_display_get_type                 (void);
+GType                     gdm_xdmcp_chooser_display_get_type                 (void);
 
 
-GdmDisplay *              scdm_xdmcp_chooser_display_new                      (const char              *hostname,
+GdmDisplay *              gdm_xdmcp_chooser_display_new                      (const char              *hostname,
                                                                               int                      number,
                                                                               GdmAddress              *addr,
                                                                               gint32                   serial_number);

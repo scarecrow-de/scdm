@@ -46,7 +46,7 @@ struct _GdmSettingsEntry
 };
 
 GdmSettingsEntry *
-scdm_settings_entry_new (void)
+gdm_settings_entry_new (void)
 {
         GdmSettingsEntry *entry = NULL;
 
@@ -60,31 +60,31 @@ scdm_settings_entry_new (void)
 }
 
 const char *
-scdm_settings_entry_get_key (GdmSettingsEntry *entry)
+gdm_settings_entry_get_key (GdmSettingsEntry *entry)
 {
         return entry->key;
 }
 
 const char *
-scdm_settings_entry_get_signature (GdmSettingsEntry *entry)
+gdm_settings_entry_get_signature (GdmSettingsEntry *entry)
 {
         return entry->signature;
 }
 
 const char *
-scdm_settings_entry_get_default_value (GdmSettingsEntry *entry)
+gdm_settings_entry_get_default_value (GdmSettingsEntry *entry)
 {
         return entry->default_value;
 }
 
 const char *
-scdm_settings_entry_get_value (GdmSettingsEntry *entry)
+gdm_settings_entry_get_value (GdmSettingsEntry *entry)
 {
         return entry->value;
 }
 
 void
-scdm_settings_entry_set_value (GdmSettingsEntry *entry,
+gdm_settings_entry_set_value (GdmSettingsEntry *entry,
                               const char       *value)
 {
         g_free (entry->value);
@@ -92,7 +92,7 @@ scdm_settings_entry_set_value (GdmSettingsEntry *entry,
 }
 
 void
-scdm_settings_entry_free (GdmSettingsEntry *entry)
+gdm_settings_entry_free (GdmSettingsEntry *entry)
 {
         g_free (entry->key);
         g_free (entry->signature);
@@ -124,7 +124,7 @@ start_element_cb (GMarkupParseContext *ctx,
         /*g_debug ("parsing start: '%s'", element_name);*/
 
         if (strcmp (element_name, "schema") == 0) {
-                info->entry = scdm_settings_entry_new ();
+                info->entry = gdm_settings_entry_new ();
         } else if (strcmp (element_name, "key") == 0) {
                 info->in_key = TRUE;
         } else if (strcmp (element_name, "signature") == 0) {
@@ -207,7 +207,7 @@ static GMarkupParser parser = {
 };
 
 gboolean
-scdm_settings_parse_schemas (const char  *file,
+gdm_settings_parse_schemas (const char  *file,
                             const char  *root,
                             GSList     **schemas)
 {
@@ -246,7 +246,7 @@ scdm_settings_parse_schemas (const char  *file,
 }
 
 char *
-scdm_settings_parse_double_as_value (gdouble doubleval)
+gdm_settings_parse_double_as_value (gdouble doubleval)
 {
         char result[G_ASCII_DTOSTR_BUF_SIZE];
 
@@ -256,14 +256,14 @@ scdm_settings_parse_double_as_value (gdouble doubleval)
 }
 
 char *
-scdm_settings_parse_integer_as_value (int intval)
+gdm_settings_parse_integer_as_value (int intval)
 
 {
         return g_strdup_printf ("%d", intval);
 }
 
 char *
-scdm_settings_parse_boolean_as_value  (gboolean boolval)
+gdm_settings_parse_boolean_as_value  (gboolean boolval)
 {
         if (boolval) {
                 return g_strdup ("true");
@@ -275,7 +275,7 @@ scdm_settings_parse_boolean_as_value  (gboolean boolval)
 
 /* adapted from GKeyFile */
 gboolean
-scdm_settings_parse_value_as_boolean (const char *value,
+gdm_settings_parse_value_as_boolean (const char *value,
                                      gboolean   *boole)
 {
         if (g_ascii_strcasecmp (value, "true") == 0 || strcmp (value, "1") == 0) {
@@ -290,7 +290,7 @@ scdm_settings_parse_value_as_boolean (const char *value,
 }
 
 gboolean
-scdm_settings_parse_value_as_integer (const char *value,
+gdm_settings_parse_value_as_integer (const char *value,
                                      int        *intval)
 {
         char *end_of_valid_int;
@@ -315,7 +315,7 @@ scdm_settings_parse_value_as_integer (const char *value,
 }
 
 gboolean
-scdm_settings_parse_value_as_double  (const char *value,
+gdm_settings_parse_value_as_double  (const char *value,
                                      gdouble    *doubleval)
 {
         char   *end_of_valid_d;

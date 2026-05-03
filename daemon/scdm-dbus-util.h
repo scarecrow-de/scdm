@@ -25,14 +25,14 @@
 #include <unistd.h>
 #include <sys/types.h>
 
-GDBusServer *scdm_dbus_setup_private_server (GDBusAuthObserver  *observer,
+GDBusServer *gdm_dbus_setup_private_server (GDBusAuthObserver  *observer,
                                             GError            **error);
 
-gboolean scdm_dbus_get_pid_for_name (const char  *system_bus_name,
+gboolean gdm_dbus_get_pid_for_name (const char  *system_bus_name,
                                     pid_t       *out_pid,
                                     GError     **error);
 
-gboolean scdm_dbus_get_uid_for_name (const char  *system_bus_name,
+gboolean gdm_dbus_get_uid_for_name (const char  *system_bus_name,
                                     uid_t       *out_uid,
                                     GError     **error);
 #endif

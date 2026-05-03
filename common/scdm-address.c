@@ -59,21 +59,21 @@ struct _GdmAddress
 
 /* Register GdmAddress in the glib type system */
 GType
-scdm_address_get_type (void)
+gdm_address_get_type (void)
 {
         static GType addr_type = 0;
 
         if (addr_type == 0) {
                 addr_type = g_boxed_type_register_static ("GdmAddress",
-                                                          (GBoxedCopyFunc) scdm_address_copy,
-                                                          (GBoxedFreeFunc) scdm_address_free);
+                                                          (GBoxedCopyFunc) gdm_address_copy,
+                                                          (GBoxedFreeFunc) gdm_address_free);
         }
 
         return addr_type;
 }
 
 /**
- * scdm_address_get_family_type:
+ * gdm_address_get_family_type:
  * @address: A pointer to a #GdmAddress
  *
  * Use this function to retrive the address family of @address.
@@ -81,7 +81,7 @@ scdm_address_get_type (void)
  * Return value: The address family of @address.
  **/
 int
-scdm_address_get_family_type (GdmAddress *address)
+gdm_address_get_family_type (GdmAddress *address)
 {
         g_return_val_if_fail (address != NULL, -1);
 
@@ -90,7 +90,7 @@ scdm_address_get_family_type (GdmAddress *address)
 
 
 /**
- * scdm_address_new_from_sockaddr:
+ * gdm_address_new_from_sockaddr:
  * @sa: A pointer to a sockaddr.
  * @size: size of sockaddr in bytes.
  *
@@ -100,7 +100,7 @@ scdm_address_get_family_type (GdmAddress *address)
  * or %NULL if @sa was invalid or the address family isn't supported.
  **/
 GdmAddress *
-scdm_address_new_from_sockaddr (struct sockaddr *sa,
+gdm_address_new_from_sockaddr (struct sockaddr *sa,
                                size_t           size)
 {
         GdmAddress *addr;
@@ -117,7 +117,7 @@ scdm_address_new_from_sockaddr (struct sockaddr *sa,
 }
 
 /**
- * scdm_address_get_sockaddr_storage:
+ * gdm_address_get_sockaddr_storage:
  * @address: A #GdmAddress
  *
  * This function tanslates @address into a equivalent
@@ -127,7 +127,7 @@ scdm_address_new_from_sockaddr (struct sockaddr *sa,
  * or %NULL if @address did not point to a valid #GdmAddress.
  **/
 struct sockaddr_storage *
-scdm_address_get_sockaddr_storage (GdmAddress *address)
+gdm_address_get_sockaddr_storage (GdmAddress *address)
 {
         struct sockaddr_storage *ss;
 
@@ -140,7 +140,7 @@ scdm_address_get_sockaddr_storage (GdmAddress *address)
 }
 
 struct sockaddr_storage *
-scdm_address_peek_sockaddr_storage (GdmAddress *address)
+gdm_address_peek_sockaddr_storage (GdmAddress *address)
 {
         g_return_val_if_fail (address != NULL, NULL);
 
@@ -168,7 +168,7 @@ v6_v6_equal (struct sockaddr_in6 *a,
 #define SIN6(__s)  ((struct sockaddr_in6 *) __s)
 
 gboolean
-scdm_address_equal (GdmAddress *a,
+gdm_address_equal (GdmAddress *a,
                    GdmAddress *b)
 {
         guint8 fam_a;
@@ -219,7 +219,7 @@ address_family_str (GdmAddress *address)
 }
 
 static void
-_scdm_address_debug (GdmAddress *address,
+_gdm_address_debug (GdmAddress *address,
                     const char *host,
                     const char *port)
 {
@@ -229,20 +229,20 @@ _scdm_address_debug (GdmAddress *address,
                  address_family_str (address) ? address_family_str (address) : "(null)",
                  host ? host : "(null)",
                  port ? port : "(null)",
-                 scdm_address_is_local (address),
-                 scdm_address_is_loopback (address));
+                 gdm_address_is_local (address),
+                 gdm_address_is_loopback (address));
 }
 
 void
-scdm_address_debug (GdmAddress *address)
+gdm_address_debug (GdmAddress *address)
 {
         char *hostname = NULL;
         char *host = NULL;
         char *port = NULL;
 
-        scdm_address_get_numeric_info (address, &host, &port);
+        gdm_address_get_numeric_info (address, &host, &port);
 
-        _scdm_address_debug (address, host, port);
+        _gdm_address_debug (address, host, port);
 
         g_free (hostname);
         g_free (host);
@@ -250,7 +250,7 @@ scdm_address_debug (GdmAddress *address)
 }
 
 gboolean
-scdm_address_get_hostname (GdmAddress *address,
+gdm_address_get_hostname (GdmAddress *address,
                           char      **hostnamep)
 {
         char     host [NI_MAXHOST];
@@ -264,7 +264,7 @@ scdm_address_get_hostname (GdmAddress *address,
 
         host [0] = '\0';
         res = getnameinfo ((const struct sockaddr *)address->ss,
-                           (int) scdm_sockaddr_len (address->ss),
+                           (int) gdm_sockaddr_len (address->ss),
                            host, sizeof (host),
                            NULL, 0,
                            0);
@@ -277,7 +277,7 @@ scdm_address_get_hostname (GdmAddress *address,
                 err_msg = gai_strerror (res);
                 g_warning ("Unable to lookup hostname: %s",
                         err_msg ? err_msg : "(null)");
-                _scdm_address_debug (address, NULL, NULL);
+                _gdm_address_debug (address, NULL, NULL);
 
         }
 
@@ -292,7 +292,7 @@ scdm_address_get_hostname (GdmAddress *address,
 }
 
 gboolean
-scdm_address_get_numeric_info (GdmAddress *address,
+gdm_address_get_numeric_info (GdmAddress *address,
                               char      **hostp,
                               char      **servp)
 {
@@ -309,7 +309,7 @@ scdm_address_get_numeric_info (GdmAddress *address,
         host [0] = '\0';
         serv [0] = '\0';
         res = getnameinfo ((const struct sockaddr *)address->ss,
-                           (int) scdm_sockaddr_len (address->ss),
+                           (int) gdm_sockaddr_len (address->ss),
                            host, sizeof (host),
                            serv, sizeof (serv),
                            NI_NUMERICHOST | NI_NUMERICSERV);
@@ -319,7 +319,7 @@ scdm_address_get_numeric_info (GdmAddress *address,
                 err_msg = gai_strerror (res);
                 g_warning ("Unable to lookup numeric info: %s",
                         err_msg ? err_msg : "(null)");
-                _scdm_address_debug (address, NULL, NULL);
+                _gdm_address_debug (address, NULL, NULL);
         } else {
                 ret = TRUE;
         }
@@ -343,7 +343,7 @@ scdm_address_get_numeric_info (GdmAddress *address,
 }
 
 gboolean
-scdm_address_is_loopback (GdmAddress *address)
+gdm_address_is_loopback (GdmAddress *address)
 {
         g_return_val_if_fail (address != NULL, FALSE);
         g_return_val_if_fail (address->ss != NULL, FALSE);
@@ -402,7 +402,7 @@ add_local_siocgifconf (GList **list)
                                         perror("SIOCGIFADDR");
                                 } else {
                                         GdmAddress *address;
-                                        address = scdm_address_new_from_sockaddr ((struct sockaddr *)&ifreq.ifr_addr,
+                                        address = gdm_address_new_from_sockaddr ((struct sockaddr *)&ifreq.ifr_addr,
                                                                                  sizeof (struct sockaddr));
 
                                         *list = g_list_append (*list, address);
@@ -430,7 +430,7 @@ add_local_addrinfo (GList **list)
 
         hostbuf[BUFSIZ-1] = '\0';
         if (gethostname (hostbuf, BUFSIZ-1) != 0) {
-                g_debug ("%s: Could not get server hostname, using localhost", "scdm_peek_local_address_list");
+                g_debug ("%s: Could not get server hostname, using localhost", "gdm_peek_local_address_list");
                 snprintf (hostbuf, BUFSIZ-1, "localhost");
         }
 
@@ -442,7 +442,7 @@ add_local_addrinfo (GList **list)
         g_debug ("GdmAddress: looking up hostname: %s", hostbuf);
         result = NULL;
         if (getaddrinfo (hostbuf, NULL, &hints, &result) != 0) {
-                g_debug ("%s: Could not get address from hostname!", "scdm_peek_local_address_list");
+                g_debug ("%s: Could not get address from hostname!", "gdm_peek_local_address_list");
 
                 return;
         }
@@ -456,7 +456,7 @@ add_local_addrinfo (GList **list)
                          res->ai_protocol,
                          res->ai_flags,
                          res->ai_canonname ? res->ai_canonname : "(null)");
-                address = scdm_address_new_from_sockaddr (res->ai_addr, res->ai_addrlen);
+                address = gdm_address_new_from_sockaddr (res->ai_addr, res->ai_addrlen);
                 *list = g_list_append (*list, address);
         }
 
@@ -467,7 +467,7 @@ add_local_addrinfo (GList **list)
 }
 
 const GList *
-scdm_address_peek_local_list (void)
+gdm_address_peek_local_list (void)
 {
         static GList  *list = NULL;
         static time_t  last_time = 0;
@@ -477,7 +477,7 @@ scdm_address_peek_local_list (void)
                 return list;
         }
 
-        g_list_foreach (list, (GFunc)scdm_address_free, NULL);
+        g_list_foreach (list, (GFunc)gdm_address_free, NULL);
         g_list_free (list);
         list = NULL;
 
@@ -490,20 +490,20 @@ scdm_address_peek_local_list (void)
 }
 
 gboolean
-scdm_address_is_local (GdmAddress *address)
+gdm_address_is_local (GdmAddress *address)
 {
         const GList *list;
 
-        if (scdm_address_is_loopback (address)) {
+        if (gdm_address_is_loopback (address)) {
                 return TRUE;
         }
 
-        list = scdm_address_peek_local_list ();
+        list = gdm_address_peek_local_list ();
 
         while (list != NULL) {
                 GdmAddress *addr = list->data;
 
-                if (scdm_address_equal (address, addr)) {
+                if (gdm_address_equal (address, addr)) {
                         return TRUE;
                 }
 
@@ -514,7 +514,7 @@ scdm_address_is_local (GdmAddress *address)
 }
 
 /**
- * scdm_address_copy:
+ * gdm_address_copy:
  * @address: A #GdmAddress.
  *
  * Duplicates @address.
@@ -522,7 +522,7 @@ scdm_address_is_local (GdmAddress *address)
  * Return value: Duplicated @address or %NULL if @address was not valid.
  **/
 GdmAddress *
-scdm_address_copy (GdmAddress *address)
+gdm_address_copy (GdmAddress *address)
 {
         GdmAddress *addr;
 
@@ -535,13 +535,13 @@ scdm_address_copy (GdmAddress *address)
 }
 
 /**
- * scdm_address_free:
+ * gdm_address_free:
  * @address: A #GdmAddress.
  *
  * Frees the memory allocated for @address.
  **/
 void
-scdm_address_free (GdmAddress *address)
+gdm_address_free (GdmAddress *address)
 {
         g_return_if_fail (address != NULL);
 

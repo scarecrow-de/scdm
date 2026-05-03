@@ -26,19 +26,19 @@
 G_BEGIN_DECLS
 
 void
-scdm_session_record_login  (GPid                  session_pid,
+gdm_session_record_login  (GPid                  session_pid,
                            const char           *user_name,
                            const char           *host_name,
                            const char           *x11_display_name,
                            const char           *display_device);
 void
-scdm_session_record_logout (GPid                  session_pid,
+gdm_session_record_logout (GPid                  session_pid,
                            const char           *user_name,
                            const char           *host_name,
                            const char           *x11_display_name,
                            const char           *display_device);
 void
-scdm_session_record_failed (GPid                  session_pid,
+gdm_session_record_failed (GPid                  session_pid,
                            const char           *user_name,
                            const char           *host_name,
                            const char           *x11_display_name,

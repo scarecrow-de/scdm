@@ -395,7 +395,7 @@ register_display (State        *state,
         g_variant_builder_init (&details, G_VARIANT_TYPE ("a{ss}"));
         g_variant_builder_add (&details, "{ss}", "session-type", "wayland");
 
-        registered = scdm_dbus_manager_call_register_display_sync (state->display_manager_proxy,
+        registered = gdm_dbus_manager_call_register_display_sync (state->display_manager_proxy,
                                                                   g_variant_builder_end (&details),
                                                                   cancellable,
                                                                   &error);
@@ -449,7 +449,7 @@ register_session_timeout_cb (gpointer user_data)
 
         state = (State *) user_data;
 
-        scdm_dbus_manager_call_register_session_sync (state->display_manager_proxy,
+        gdm_dbus_manager_call_register_session_sync (state->display_manager_proxy,
                                                      g_variant_new ("a{sv}", NULL),
                                                      state->cancellable,
                                                      &error);
@@ -467,7 +467,7 @@ connect_to_display_manager (State *state)
 {
         g_autoptr (GError) error = NULL;
 
-        state->display_manager_proxy = scdm_dbus_manager_proxy_new_for_bus_sync (
+        state->display_manager_proxy = gdm_dbus_manager_proxy_new_for_bus_sync (
                 G_BUS_TYPE_SYSTEM,
                 G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES | G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS,
                 "io.github.scarecrow_de.DisplayManager",
@@ -506,7 +506,7 @@ main (int    argc,
         textdomain (GETTEXT_PACKAGE);
         setlocale (LC_ALL, "");
 
-        scdm_log_init ();
+        gdm_log_init ();
 
         context = g_option_context_new (_("GNOME Display Manager Wayland Session Launcher"));
         g_option_context_add_main_entries (context, entries, NULL);
@@ -524,8 +524,8 @@ main (int    argc,
 
         state->session_command = args[0];
 
-        state->settings = scdm_settings_new ();
-        ret = scdm_settings_direct_init (state->settings, DATADIR "/scdm/scdm.schemas", "/");
+        state->settings = gdm_settings_new ();
+        ret = gdm_settings_direct_init (state->settings, DATADIR "/scdm/scdm.schemas", "/");
 
         if (!ret) {
                 g_printerr ("Unable to initialize settings\n");
@@ -533,10 +533,10 @@ main (int    argc,
                 goto out;
         }
 
-        scdm_settings_direct_get_boolean (GDM_KEY_DEBUG, &debug);
+        gdm_settings_direct_get_boolean (GDM_KEY_DEBUG, &debug);
         state->debug_enabled = debug;
 
-        scdm_log_set_debug (debug);
+        gdm_log_set_debug (debug);
 
         state->main_loop = g_main_loop_new (NULL, FALSE);
         state->cancellable = g_cancellable_new ();

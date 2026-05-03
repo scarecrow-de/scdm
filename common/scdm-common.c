@@ -42,10 +42,10 @@
 #define GDM_DBUS_LOCAL_DISPLAY_FACTORY_PATH      "/io/github/scarecrow_de/DisplayManager/LocalDisplayFactory"
 #define GDM_DBUS_LOCAL_DISPLAY_FACTORY_INTERFACE "io.github.scarecrow_de.DisplayManager.LocalDisplayFactory"
 
-G_DEFINE_QUARK (scdm-common-error, scdm_common_error);
+G_DEFINE_QUARK (scdm-common-error, gdm_common_error);
 
 gboolean
-scdm_clear_close_on_exec_flag (int fd)
+gdm_clear_close_on_exec_flag (int fd)
 {
         int flags;
 
@@ -71,7 +71,7 @@ scdm_clear_close_on_exec_flag (int fd)
 }
 
 gboolean
-scdm_get_pwent_for_name (const char     *name,
+gdm_get_pwent_for_name (const char     *name,
                         struct passwd **pwentp)
 {
         struct passwd *pwent;
@@ -89,7 +89,7 @@ scdm_get_pwent_for_name (const char     *name,
 }
 
 static gboolean
-scdm_get_grent_for_gid (gint           gid,
+gdm_get_grent_for_gid (gint           gid,
                        struct group **grentp)
 {
         struct group *grent;
@@ -107,7 +107,7 @@ scdm_get_grent_for_gid (gint           gid,
 }
 
 int
-scdm_wait_on_and_disown_pid (int pid,
+gdm_wait_on_and_disown_pid (int pid,
                             int timeout)
 {
         int status;
@@ -175,13 +175,13 @@ scdm_wait_on_and_disown_pid (int pid,
 }
 
 int
-scdm_wait_on_pid (int pid)
+gdm_wait_on_pid (int pid)
 {
-    return scdm_wait_on_and_disown_pid (pid, 0);
+    return gdm_wait_on_and_disown_pid (pid, 0);
 }
 
 int
-scdm_signal_pid (int pid,
+gdm_signal_pid (int pid,
                 int signal)
 {
         int status = -1;
@@ -276,7 +276,7 @@ _read_bytes (int      fd,
  */
 
 char *
-scdm_generate_random_bytes (gsize    size,
+gdm_generate_random_bytes (gsize    size,
                            GError **error)
 {
         int fd;
@@ -353,7 +353,7 @@ create_transient_display (GDBusConnection *connection,
 }
 
 gboolean
-scdm_activate_session_by_id (GDBusConnection *connection,
+gdm_activate_session_by_id (GDBusConnection *connection,
                             const char      *seat_id,
                             const char      *session_id)
 {
@@ -382,7 +382,7 @@ scdm_activate_session_by_id (GDBusConnection *connection,
 }
 
 gboolean
-scdm_get_login_window_session_id (const char  *seat_id,
+gdm_get_login_window_session_id (const char  *seat_id,
                                  char       **session_id)
 {
         gboolean   ret;
@@ -497,7 +497,7 @@ goto_login_session (GDBusConnection  *connection,
          * since the data allocated is from libsystemd-logind, which
          * does not use GLib's g_malloc (). */
 
-        if (!scdm_find_display_session (0, getuid (), &our_session, &local_error)) {
+        if (!gdm_find_display_session (0, getuid (), &our_session, &local_error)) {
                 g_propagate_prefixed_error (error, local_error, _("Could not identify the current session: "));
 
                 return FALSE;
@@ -530,9 +530,9 @@ goto_login_session (GDBusConnection  *connection,
                 return FALSE;
         }
 
-        res = scdm_get_login_window_session_id (seat_id, &session_id);
+        res = gdm_get_login_window_session_id (seat_id, &session_id);
         if (res && session_id != NULL) {
-                res = scdm_activate_session_by_id (connection, seat_id, session_id);
+                res = gdm_activate_session_by_id (connection, seat_id, session_id);
 
                 if (res) {
                         ret = TRUE;
@@ -553,7 +553,7 @@ goto_login_session (GDBusConnection  *connection,
 }
 
 gboolean
-scdm_goto_login_session (GError **error)
+gdm_goto_login_session (GError **error)
 {
         GError *local_error;
         GDBusConnection *connection;
@@ -581,7 +581,7 @@ listify_hash (const char *key,
 }
 
 GPtrArray *
-scdm_get_script_environment (const char *username,
+gdm_get_script_environment (const char *username,
                             const char *display_name,
                             const char *display_hostname,
                             const char *display_x11_authority_file)
@@ -608,7 +608,7 @@ scdm_get_script_environment (const char *username,
                 g_hash_table_insert (hash, g_strdup ("USERNAME"),
                                      g_strdup (username));
 
-                scdm_get_pwent_for_name (username, &pwent);
+                gdm_get_pwent_for_name (username, &pwent);
                 if (pwent != NULL) {
                         if (pwent->pw_dir != NULL && pwent->pw_dir[0] != '\0') {
                                 g_hash_table_insert (hash, g_strdup ("HOME"),
@@ -623,7 +623,7 @@ scdm_get_script_environment (const char *username,
                         /* Also get group name and propagate down */
                         struct group *grent;
 
-                        if (scdm_get_grent_for_gid (pwent->pw_gid, &grent)) {
+                        if (gdm_get_grent_for_gid (pwent->pw_gid, &grent)) {
                                 g_hash_table_insert (hash, g_strdup ("GROUP"), g_strdup (grent->gr_name));
                         }
                 }
@@ -655,7 +655,7 @@ scdm_get_script_environment (const char *username,
 }
 
 gboolean
-scdm_run_script (const char *dir,
+gdm_run_script (const char *dir,
                 const char *username,
                 const char *display_name,
                 const char *display_hostname,
@@ -720,7 +720,7 @@ scdm_run_script (const char *dir,
                 goto out;
         }
 
-        env = scdm_get_script_environment (username,
+        env = gdm_get_script_environment (username,
                                           display_name,
                                           display_hostname,
                                           display_x11_authority_file);
@@ -757,7 +757,7 @@ scdm_run_script (const char *dir,
 }
 
 gboolean
-scdm_shell_var_is_valid_char (gchar c, gboolean first)
+gdm_shell_var_is_valid_char (gchar c, gboolean first)
 {
         return (!first && g_ascii_isdigit (c)) ||
                 c == '_' ||
@@ -769,7 +769,7 @@ scdm_shell_var_is_valid_char (gchar c, gboolean first)
    expansion like $FOO and ${FOO}, single-char escapes using \, and
    non-escaped # at the begining of a word is taken as a comment and ignored */
 char *
-scdm_shell_expand (const char *str,
+gdm_shell_expand (const char *str,
                   GdmExpandVarFunc expand_var_func,
                   gpointer user_data)
 {
@@ -814,7 +814,7 @@ scdm_shell_expand (const char *str,
                         }
                         start = p;
                         while (*p != '\0' &&
-                               scdm_shell_var_is_valid_char (*p, p == start))
+                               gdm_shell_var_is_valid_char (*p, p == start))
                                 p++;
                         if (p == start || (brackets && *p != '}')) {
                                 /* Invalid variable, use as-is */
@@ -898,7 +898,7 @@ _systemd_session_is_active (const char *session_id)
 }
 
 gboolean
-scdm_find_display_session (GPid        pid,
+gdm_find_display_session (GPid        pid,
                           const uid_t uid,
                           char      **out_session_id,
                           GError    **error)

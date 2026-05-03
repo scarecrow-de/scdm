@@ -1,8 +1,8 @@
-scdm_dconf = configure_file(
+gdm_dconf = configure_file(
   input: 'scdm.in',
   output: '@BASENAME@',
   configuration: {
-    'DATADIR': scdm_prefix / get_option('datadir'),
+    'DATADIR': gdm_prefix / get_option('datadir'),
     'PACKAGE': meson.project_name(),
   },
   install_dir: get_option('datadir') / 'dconf' / 'profile',

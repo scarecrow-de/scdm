@@ -44,12 +44,12 @@ typedef struct _GdmSessionFile {
         char    *translated_comment;
 } GdmSessionFile;
 
-static GHashTable *scdm_available_sessions_map;
+static GHashTable *gdm_available_sessions_map;
 
-static gboolean scdm_sessions_map_is_initialized = FALSE;
+static gboolean gdm_sessions_map_is_initialized = FALSE;
 
 static void
-scdm_session_file_free (GdmSessionFile *session)
+gdm_session_file_free (GdmSessionFile *session)
 {
   g_free (session->id);
   g_free (session->path);
@@ -154,7 +154,7 @@ load_session_file (const char              *id,
         session->translated_name = g_key_file_get_locale_string (key_file, G_KEY_FILE_DESKTOP_GROUP, "Name", NULL, NULL);
         session->translated_comment = g_key_file_get_locale_string (key_file, G_KEY_FILE_DESKTOP_GROUP, "Comment", NULL, NULL);
 
-        g_hash_table_insert (scdm_available_sessions_map,
+        g_hash_table_insert (gdm_available_sessions_map,
                              g_strdup (id),
                              session);
  out:
@@ -279,9 +279,9 @@ collect_sessions (void)
         }
 #endif
 
-        if (scdm_available_sessions_map == NULL) {
-                scdm_available_sessions_map = g_hash_table_new_full (g_str_hash, g_str_equal,
-                                                                    g_free, (GDestroyNotify)scdm_session_file_free);
+        if (gdm_available_sessions_map == NULL) {
+                gdm_available_sessions_map = g_hash_table_new_full (g_str_hash, g_str_equal,
+                                                                    g_free, (GDestroyNotify)gdm_session_file_free);
         }
 
         for (i = 0; i < xorg_search_array->len; i++) {
@@ -301,13 +301,13 @@ collect_sessions (void)
 #endif
 
 out:
-        g_hash_table_foreach_remove (scdm_available_sessions_map,
+        g_hash_table_foreach_remove (gdm_available_sessions_map,
                                      remove_duplicate_sessions,
                                      names_seen_before);
 }
 
 /**
- * scdm_get_session_ids:
+ * gdm_get_session_ids:
  *
  * Reads /usr/share/xsessions and other relevant places for possible sessions
  * to log into and returns the complete list.
@@ -315,20 +315,20 @@ out:
  * Returns: (transfer full): a %NULL terminated list of session ids
  */
 char **
-scdm_get_session_ids (void)
+gdm_get_session_ids (void)
 {
         GHashTableIter iter;
         gpointer key, value;
         GPtrArray *array;
 
-        if (!scdm_sessions_map_is_initialized) {
+        if (!gdm_sessions_map_is_initialized) {
                 collect_sessions ();
 
-                scdm_sessions_map_is_initialized = TRUE;
+                gdm_sessions_map_is_initialized = TRUE;
         }
 
         array = g_ptr_array_new ();
-        g_hash_table_iter_init (&iter, scdm_available_sessions_map);
+        g_hash_table_iter_init (&iter, gdm_available_sessions_map);
         while (g_hash_table_iter_next (&iter, &key, &value)) {
                 GdmSessionFile *session;
 
@@ -342,8 +342,8 @@ scdm_get_session_ids (void)
 }
 
 /**
- * scdm_get_session_name_and_description:
- * @id: an id from scdm_get_session_ids()
+ * gdm_get_session_name_and_description:
+ * @id: an id from gdm_get_session_ids()
  * @description: (out): optional returned session description
  *
  * Takes an xsession id and returns the name and comment about it.
@@ -351,19 +351,19 @@ scdm_get_session_ids (void)
  * Returns: The session name if found, or %NULL otherwise
  */
 char *
-scdm_get_session_name_and_description (const char  *id,
+gdm_get_session_name_and_description (const char  *id,
                                       char       **description)
 {
         GdmSessionFile *session;
         char *name;
 
-        if (!scdm_sessions_map_is_initialized) {
+        if (!gdm_sessions_map_is_initialized) {
                 collect_sessions ();
 
-                scdm_sessions_map_is_initialized = TRUE;
+                gdm_sessions_map_is_initialized = TRUE;
         }
 
-        session = (GdmSessionFile *) g_hash_table_lookup (scdm_available_sessions_map,
+        session = (GdmSessionFile *) g_hash_table_lookup (gdm_available_sessions_map,
                                                           id);
 
         if (session == NULL) {

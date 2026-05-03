@@ -1,4 +1,4 @@
-libscdm_manager_dbus_gen = gnome.gdbus_codegen('scdm-manager-glue',
+libgdm_manager_dbus_gen = gnome.gdbus_codegen('scdm-manager-glue',
     sources: '..' / 'daemon' / 'scdm-manager.xml',
     namespace: 'Gdm',
     interface_prefix: 'io.github.scarecrow_de.DisplayManager',
@@ -8,7 +8,7 @@ libscdm_manager_dbus_gen = gnome.gdbus_codegen('scdm-manager-glue',
     ],
     build_by_default: true,
 )
-libscdm_client_dbus_gen = gnome.gdbus_codegen('scdm-client-glue',
+libgdm_client_dbus_gen = gnome.gdbus_codegen('scdm-client-glue',
     sources: '..' / 'daemon' / 'scdm-session.xml',
     namespace: 'Gdm',
     interface_prefix: 'io.github.scarecrow_de.DisplayManager',
@@ -24,35 +24,35 @@ libscdm_client_dbus_gen = gnome.gdbus_codegen('scdm-client-glue',
     install_dir: get_option('includedir') / meson.project_name()
 )
 
-libscdm_built_sources = [
-  libscdm_manager_dbus_gen,
-  libscdm_client_dbus_gen,
+libgdm_built_sources = [
+  libgdm_manager_dbus_gen,
+  libgdm_client_dbus_gen,
 ]
 
-libscdm_sources = files(
+libgdm_sources = files(
   'scdm-client.c',
   'scdm-sessions.c',
   'scdm-user-switching.c',
 )
 
-libscdm_public_headers = [
+libgdm_public_headers = [
   'scdm-client.h',
   'scdm-sessions.h',
   'scdm-user-switching.h',
   # scdm-client-glue.h is automatically installed
 ]
 
-install_headers(libscdm_public_headers,
+install_headers(libgdm_public_headers,
   subdir: meson.project_name(),
 )
 
-libscdm_headers = [
-  libscdm_public_headers,
-  libscdm_client_dbus_gen[1],
-  libscdm_manager_dbus_gen[1],
+libgdm_headers = [
+  libgdm_public_headers,
+  libgdm_client_dbus_gen[1],
+  libgdm_manager_dbus_gen[1],
 ]
 
-libscdm_deps = [
+libgdm_deps = [
   glib_dep,
   gio_dep,
   gio_unix_dep,
@@ -60,38 +60,38 @@ libscdm_deps = [
   libscdmcommon_dep,
 ]
 
-libscdm_link_flags = [
+libgdm_link_flags = [
   '-Wl,--version-script,@0@/libscdm.map'.format(meson.current_source_dir()),
 ]
 
 libscdm = library('scdm',
-  libscdm_sources + libscdm_built_sources,
+  libgdm_sources + libgdm_built_sources,
   version: '1.0.0',
-  dependencies: libscdm_deps,
+  dependencies: libgdm_deps,
   include_directories: config_h_dir,
-  link_args: libscdm_link_flags,
+  link_args: libgdm_link_flags,
   install: true,
 )
 
-libscdm_gir_includes = [
+libgdm_gir_includes = [
   'GLib-2.0',
   'GObject-2.0',
   'Gio-2.0',
 ]
 
-libscdm_dep = declare_dependency(
+libgdm_dep = declare_dependency(
   link_with: libscdm,
-  dependencies: libscdm_deps,
+  dependencies: libgdm_deps,
   include_directories: include_directories('.'),
-  sources: libscdm_built_sources,
+  sources: libgdm_built_sources,
 )
 
-libscdm_gir = gnome.generate_gir(libscdm,
-  sources: libscdm_headers + libscdm_sources,
+libgdm_gir = gnome.generate_gir(libscdm,
+  sources: libgdm_headers + libgdm_sources,
   namespace: 'Gdm',
   nsversion: '1.0',
   identifier_prefix: 'Gdm',
-  includes: libscdm_gir_includes,
+  includes: libgdm_gir_includes,
   install: true,
 )
 

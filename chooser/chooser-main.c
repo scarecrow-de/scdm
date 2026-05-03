@@ -213,8 +213,8 @@ main (int argc, char *argv[])
 
         setlocale (LC_ALL, "");
 
-        scdm_log_init ();
-        scdm_log_set_debug (TRUE);
+        gdm_log_init ();
+        gdm_log_set_debug (TRUE);
 
         g_debug ("Chooser for display %s xauthority:%s",
                  g_getenv ("DISPLAY"),
@@ -226,14 +226,14 @@ main (int argc, char *argv[])
 
         gtk_init (&argc, &argv);
 
-        session = scdm_chooser_session_new ();
+        session = gdm_chooser_session_new ();
         if (session == NULL) {
                 g_critical ("Unable to create chooser session");
                 exit (EXIT_FAILURE);
         }
 
         error = NULL;
-        res = scdm_chooser_session_start (session, &error);
+        res = gdm_chooser_session_start (session, &error);
         if (! res) {
                 g_warning ("Unable to start chooser session: %s", error->message);
                 g_error_free (error);

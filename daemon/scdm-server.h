@@ -26,16 +26,16 @@
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_SERVER (scdm_server_get_type ())
-G_DECLARE_FINAL_TYPE (GdmServer, scdm_server, GDM, SERVER, GObject);
+#define GDM_TYPE_SERVER (gdm_server_get_type ())
+G_DECLARE_FINAL_TYPE (GdmServer, gdm_server, GDM, SERVER, GObject);
 
-GdmServer *         scdm_server_new       (const char *display_id,
+GdmServer *         gdm_server_new       (const char *display_id,
                                           const char *seat_id,
                                           const char *auth_file,
                                           gboolean    initial);
-gboolean            scdm_server_start     (GdmServer   *server);
-gboolean            scdm_server_stop      (GdmServer   *server);
-char *              scdm_server_get_display_device (GdmServer *server);
+gboolean            gdm_server_start     (GdmServer   *server);
+gboolean            gdm_server_stop      (GdmServer   *server);
+char *              gdm_server_get_display_device (GdmServer *server);
 
 G_END_DECLS
 

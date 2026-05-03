@@ -58,7 +58,7 @@ struct _GdmDisplayAccessFile
 #define O_BINARY 0
 #endif
 
-static void scdm_display_access_file_finalize (GObject * object);
+static void gdm_display_access_file_finalize (GObject * object);
 
 enum
 {
@@ -67,10 +67,10 @@ enum
         PROP_PATH
 };
 
-G_DEFINE_TYPE (GdmDisplayAccessFile, scdm_display_access_file, G_TYPE_OBJECT)
+G_DEFINE_TYPE (GdmDisplayAccessFile, gdm_display_access_file, G_TYPE_OBJECT)
 
 static void
-scdm_display_access_file_get_property (GObject    *object,
+gdm_display_access_file_get_property (GObject    *object,
                                       guint       prop_id,
                                       GValue     *value,
                                       GParamSpec *pspec)
@@ -94,7 +94,7 @@ scdm_display_access_file_get_property (GObject    *object,
 }
 
 static void
-scdm_display_access_file_set_property (GObject      *object,
+gdm_display_access_file_set_property (GObject      *object,
                                       guint         prop_id,
                                       const GValue *value,
                                       GParamSpec   *pspec)
@@ -115,16 +115,16 @@ scdm_display_access_file_set_property (GObject      *object,
 }
 
 static void
-scdm_display_access_file_class_init (GdmDisplayAccessFileClass *access_file_class)
+gdm_display_access_file_class_init (GdmDisplayAccessFileClass *access_file_class)
 {
         GObjectClass *object_class;
         GParamSpec   *param_spec;
 
         object_class = G_OBJECT_CLASS (access_file_class);
 
-        object_class->finalize = scdm_display_access_file_finalize;
-        object_class->get_property = scdm_display_access_file_get_property;
-        object_class->set_property = scdm_display_access_file_set_property;
+        object_class->finalize = gdm_display_access_file_finalize;
+        object_class->get_property = gdm_display_access_file_get_property;
+        object_class->set_property = gdm_display_access_file_set_property;
 
         param_spec = g_param_spec_string ("username",
                                           "Username",
@@ -141,21 +141,21 @@ scdm_display_access_file_class_init (GdmDisplayAccessFileClass *access_file_clas
 }
 
 static void
-scdm_display_access_file_init (GdmDisplayAccessFile *access_file)
+gdm_display_access_file_init (GdmDisplayAccessFile *access_file)
 {
 }
 
 static void
-scdm_display_access_file_finalize (GObject *object)
+gdm_display_access_file_finalize (GObject *object)
 {
         GdmDisplayAccessFile *file;
         GObjectClass *parent_class;
 
         file = GDM_DISPLAY_ACCESS_FILE (object);
-        parent_class = G_OBJECT_CLASS (scdm_display_access_file_parent_class);
+        parent_class = G_OBJECT_CLASS (gdm_display_access_file_parent_class);
 
         if (file->fp != NULL) {
-            scdm_display_access_file_close (file);
+            gdm_display_access_file_close (file);
         }
         g_assert (file->path == NULL);
 
@@ -171,7 +171,7 @@ scdm_display_access_file_finalize (GObject *object)
 }
 
 GQuark
-scdm_display_access_file_error_quark (void)
+gdm_display_access_file_error_quark (void)
 {
         static GQuark error_quark = 0;
 
@@ -183,7 +183,7 @@ scdm_display_access_file_error_quark (void)
 }
 
 GdmDisplayAccessFile *
-scdm_display_access_file_new (const char *username)
+gdm_display_access_file_new (const char *username)
 {
         GdmDisplayAccessFile *access_file;
         g_return_val_if_fail (username != NULL, NULL);
@@ -207,7 +207,7 @@ _get_uid_and_gid_for_user (const char *username,
         g_assert (gid != NULL);
 
         errno = 0;
-        scdm_get_pwent_for_name (username, &passwd_entry);
+        gdm_get_pwent_for_name (username, &passwd_entry);
 
         if (passwd_entry == NULL) {
                 return FALSE;
@@ -397,7 +397,7 @@ out:
 }
 
 gboolean
-scdm_display_access_file_open (GdmDisplayAccessFile  *file,
+gdm_display_access_file_open (GdmDisplayAccessFile  *file,
                               GError               **error)
 {
         GError *create_error;
@@ -433,7 +433,7 @@ _get_auth_info_for_display (GdmDisplayAccessFile *file,
         int display_number;
         gboolean is_local;
 
-        scdm_display_is_local (display, &is_local, NULL);
+        gdm_display_is_local (display, &is_local, NULL);
 
         if (is_local) {
                 /* We could just use FamilyWild here except xauth
@@ -450,11 +450,11 @@ _get_auth_info_for_display (GdmDisplayAccessFile *file,
                 }
         } else {
                 *family = FamilyWild;
-                scdm_display_get_remote_hostname (display, address, NULL);
+                gdm_display_get_remote_hostname (display, address, NULL);
         }
         *address_length = strlen (*address);
 
-        scdm_display_get_x11_display_number (display, &display_number, NULL);
+        gdm_display_get_x11_display_number (display, &display_number, NULL);
         *number = g_strdup_printf ("%d", display_number);
         *number_length = strlen (*number);
 
@@ -463,7 +463,7 @@ _get_auth_info_for_display (GdmDisplayAccessFile *file,
 }
 
 gboolean
-scdm_display_access_file_add_display (GdmDisplayAccessFile  *file,
+gdm_display_access_file_add_display (GdmDisplayAccessFile  *file,
                                      GdmDisplay            *display,
                                      char                 **cookie,
                                      gsize                 *cookie_size,
@@ -477,7 +477,7 @@ scdm_display_access_file_add_display (GdmDisplayAccessFile  *file,
         g_return_val_if_fail (cookie != NULL, FALSE);
 
         add_error = NULL;
-        *cookie = scdm_generate_random_bytes (GDM_DISPLAY_ACCESS_COOKIE_SIZE,
+        *cookie = gdm_generate_random_bytes (GDM_DISPLAY_ACCESS_COOKIE_SIZE,
                                              &add_error);
 
         if (*cookie == NULL) {
@@ -487,7 +487,7 @@ scdm_display_access_file_add_display (GdmDisplayAccessFile  *file,
 
         *cookie_size = GDM_DISPLAY_ACCESS_COOKIE_SIZE;
 
-        display_added = scdm_display_access_file_add_display_with_cookie (file, display,
+        display_added = gdm_display_access_file_add_display_with_cookie (file, display,
                                                                          *cookie,
                                                                          *cookie_size,
                                                                          &add_error);
@@ -502,7 +502,7 @@ scdm_display_access_file_add_display (GdmDisplayAccessFile  *file,
 }
 
 gboolean
-scdm_display_access_file_add_display_with_cookie (GdmDisplayAccessFile  *file,
+gdm_display_access_file_add_display_with_cookie (GdmDisplayAccessFile  *file,
                                                  GdmDisplay            *display,
                                                  const char            *cookie,
                                                  gsize                  cookie_size,
@@ -562,7 +562,7 @@ scdm_display_access_file_add_display_with_cookie (GdmDisplayAccessFile  *file,
 }
 
 void
-scdm_display_access_file_close (GdmDisplayAccessFile  *file)
+gdm_display_access_file_close (GdmDisplayAccessFile  *file)
 {
         char *auth_dir;
 
@@ -600,7 +600,7 @@ scdm_display_access_file_close (GdmDisplayAccessFile  *file)
 }
 
 char *
-scdm_display_access_file_get_path (GdmDisplayAccessFile *access_file)
+gdm_display_access_file_get_path (GdmDisplayAccessFile *access_file)
 {
         return g_strdup (access_file->path);
 }

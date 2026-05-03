@@ -29,21 +29,21 @@ G_BEGIN_DECLS
 
 #ifdef ENABLE_PROFILING
 #ifdef G_HAVE_ISO_VARARGS
-#define scdm_profile_start(...) _scdm_profile_log (G_STRFUNC, "start", __VA_ARGS__)
-#define scdm_profile_end(...)   _scdm_profile_log (G_STRFUNC, "end", __VA_ARGS__)
-#define scdm_profile_msg(...)   _scdm_profile_log (NULL, NULL, __VA_ARGS__)
+#define gdm_profile_start(...) _gdm_profile_log (G_STRFUNC, "start", __VA_ARGS__)
+#define gdm_profile_end(...)   _gdm_profile_log (G_STRFUNC, "end", __VA_ARGS__)
+#define gdm_profile_msg(...)   _gdm_profile_log (NULL, NULL, __VA_ARGS__)
 #elif defined(G_HAVE_GNUC_VARARGS)
-#define scdm_profile_start(format...) _scdm_profile_log (G_STRFUNC, "start", format)
-#define scdm_profile_end(format...)   _scdm_profile_log (G_STRFUNC, "end", format)
-#define scdm_profile_msg(format...)   _scdm_profile_log (NULL, NULL, format)
+#define gdm_profile_start(format...) _gdm_profile_log (G_STRFUNC, "start", format)
+#define gdm_profile_end(format...)   _gdm_profile_log (G_STRFUNC, "end", format)
+#define gdm_profile_msg(format...)   _gdm_profile_log (NULL, NULL, format)
 #endif
 #else
-#define scdm_profile_start(...)
-#define scdm_profile_end(...)
-#define scdm_profile_msg(...)
+#define gdm_profile_start(...)
+#define gdm_profile_end(...)
+#define gdm_profile_msg(...)
 #endif
 
-void            _scdm_profile_log    (const char *func,
+void            _gdm_profile_log    (const char *func,
                                      const char *note,
                                      const char *format,
                                      ...) G_GNUC_PRINTF (3, 4);

@@ -43,9 +43,9 @@ struct _GdmSessionLinuxAuditor
         int audit_fd;
 };
 
-static void scdm_session_linux_auditor_finalize (GObject *object);
+static void gdm_session_linux_auditor_finalize (GObject *object);
 
-G_DEFINE_TYPE (GdmSessionLinuxAuditor, scdm_session_linux_auditor, GDM_TYPE_SESSION_AUDITOR)
+G_DEFINE_TYPE (GdmSessionLinuxAuditor, gdm_session_linux_auditor, GDM_TYPE_SESSION_AUDITOR)
 
 static void
 log_user_message (GdmSessionAuditor *auditor,
@@ -66,7 +66,7 @@ log_user_message (GdmSessionAuditor *auditor,
         g_object_get (G_OBJECT (auditor), "display-device", &display_device, NULL);
 
         if (username != NULL) {
-                scdm_get_pwent_for_name (username, &pw);
+                gdm_get_pwent_for_name (username, &pw);
         } else {
                 username = g_strdup ("unknown");
                 pw = NULL;
@@ -90,13 +90,13 @@ log_user_message (GdmSessionAuditor *auditor,
 }
 
 static void
-scdm_session_linux_auditor_report_login (GdmSessionAuditor *auditor)
+gdm_session_linux_auditor_report_login (GdmSessionAuditor *auditor)
 {
         log_user_message (auditor, AUDIT_USER_LOGIN, 1);
 }
 
 static void
-scdm_session_linux_auditor_report_login_failure (GdmSessionAuditor *auditor,
+gdm_session_linux_auditor_report_login_failure (GdmSessionAuditor *auditor,
                                                   int                pam_error_code,
                                                   const char        *pam_error_string)
 {
@@ -104,13 +104,13 @@ scdm_session_linux_auditor_report_login_failure (GdmSessionAuditor *auditor,
 }
 
 static void
-scdm_session_linux_auditor_report_logout (GdmSessionAuditor *auditor)
+gdm_session_linux_auditor_report_logout (GdmSessionAuditor *auditor)
 {
         log_user_message (auditor, AUDIT_USER_LOGOUT, 1);
 }
 
 static void
-scdm_session_linux_auditor_class_init (GdmSessionLinuxAuditorClass *klass)
+gdm_session_linux_auditor_class_init (GdmSessionLinuxAuditorClass *klass)
 {
         GObjectClass           *object_class;
         GdmSessionAuditorClass *auditor_class;
@@ -118,21 +118,21 @@ scdm_session_linux_auditor_class_init (GdmSessionLinuxAuditorClass *klass)
         object_class = G_OBJECT_CLASS (klass);
         auditor_class = GDM_SESSION_AUDITOR_CLASS (klass);
 
-        object_class->finalize = scdm_session_linux_auditor_finalize;
+        object_class->finalize = gdm_session_linux_auditor_finalize;
 
-        auditor_class->report_login = scdm_session_linux_auditor_report_login;
-        auditor_class->report_login_failure = scdm_session_linux_auditor_report_login_failure;
-        auditor_class->report_logout = scdm_session_linux_auditor_report_logout;
+        auditor_class->report_login = gdm_session_linux_auditor_report_login;
+        auditor_class->report_login_failure = gdm_session_linux_auditor_report_login_failure;
+        auditor_class->report_logout = gdm_session_linux_auditor_report_logout;
 }
 
 static void
-scdm_session_linux_auditor_init (GdmSessionLinuxAuditor *auditor)
+gdm_session_linux_auditor_init (GdmSessionLinuxAuditor *auditor)
 {
         auditor->audit_fd = audit_open ();
 }
 
 static void
-scdm_session_linux_auditor_finalize (GObject *object)
+gdm_session_linux_auditor_finalize (GObject *object)
 {
         GdmSessionLinuxAuditor *linux_auditor;
         GObjectClass *parent_class;
@@ -141,7 +141,7 @@ scdm_session_linux_auditor_finalize (GObject *object)
 
         close (linux_auditor->audit_fd);
 
-        parent_class = G_OBJECT_CLASS (scdm_session_linux_auditor_parent_class);
+        parent_class = G_OBJECT_CLASS (gdm_session_linux_auditor_parent_class);
         if (parent_class->finalize != NULL) {
                 parent_class->finalize (object);
         }
@@ -149,7 +149,7 @@ scdm_session_linux_auditor_finalize (GObject *object)
 
 
 GdmSessionAuditor *
-scdm_session_linux_auditor_new (const char *hostname,
+gdm_session_linux_auditor_new (const char *hostname,
                                const char *display_device)
 {
         GObject *auditor;

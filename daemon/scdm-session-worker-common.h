@@ -24,9 +24,9 @@
 
 #include <glib-object.h>
 
-#define GDM_SESSION_WORKER_ERROR           (scdm_session_worker_error_quark ())
+#define GDM_SESSION_WORKER_ERROR           (gdm_session_worker_error_quark ())
 
-GQuark scdm_session_worker_error_quark (void);
+GQuark gdm_session_worker_error_quark (void);
 
 typedef enum _GdmSessionWorkerError {
         GDM_SESSION_WORKER_ERROR_GENERIC = 0,

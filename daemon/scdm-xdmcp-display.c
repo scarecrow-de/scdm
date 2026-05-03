@@ -61,52 +61,52 @@ enum {
 
 #define MAX_CONNECT_ATTEMPTS  10
 
-static void     scdm_xdmcp_display_class_init    (GdmXdmcpDisplayClass *klass);
-static void     scdm_xdmcp_display_init          (GdmXdmcpDisplay      *xdmcp_display);
+static void     gdm_xdmcp_display_class_init    (GdmXdmcpDisplayClass *klass);
+static void     gdm_xdmcp_display_init          (GdmXdmcpDisplay      *xdmcp_display);
 
-G_DEFINE_TYPE_WITH_PRIVATE (GdmXdmcpDisplay, scdm_xdmcp_display, GDM_TYPE_DISPLAY)
+G_DEFINE_TYPE_WITH_PRIVATE (GdmXdmcpDisplay, gdm_xdmcp_display, GDM_TYPE_DISPLAY)
 
 gint32
-scdm_xdmcp_display_get_session_number (GdmXdmcpDisplay *display)
+gdm_xdmcp_display_get_session_number (GdmXdmcpDisplay *display)
 {
         GdmXdmcpDisplayPrivate *priv;
 
         g_return_val_if_fail (GDM_IS_XDMCP_DISPLAY (display), 0);
 
-        priv = scdm_xdmcp_display_get_instance_private (display);
+        priv = gdm_xdmcp_display_get_instance_private (display);
         return priv->session_number;
 }
 
 GdmAddress *
-scdm_xdmcp_display_get_remote_address (GdmXdmcpDisplay *display)
+gdm_xdmcp_display_get_remote_address (GdmXdmcpDisplay *display)
 {
         GdmXdmcpDisplayPrivate *priv;
 
         g_return_val_if_fail (GDM_IS_XDMCP_DISPLAY (display), NULL);
 
-        priv = scdm_xdmcp_display_get_instance_private (display);
+        priv = gdm_xdmcp_display_get_instance_private (display);
         return priv->remote_address;
 }
 
 static void
-_scdm_xdmcp_display_set_remote_address (GdmXdmcpDisplay *display,
+_gdm_xdmcp_display_set_remote_address (GdmXdmcpDisplay *display,
                                        GdmAddress      *address)
 {
         GdmXdmcpDisplayPrivate *priv;
 
-        priv = scdm_xdmcp_display_get_instance_private (display);
+        priv = gdm_xdmcp_display_get_instance_private (display);
         if (priv->remote_address != NULL) {
-                scdm_address_free (priv->remote_address);
+                gdm_address_free (priv->remote_address);
         }
 
         g_assert (address != NULL);
 
-        scdm_address_debug (address);
-        priv->remote_address = scdm_address_copy (address);
+        gdm_address_debug (address);
+        priv->remote_address = gdm_address_copy (address);
 }
 
 static void
-scdm_xdmcp_display_set_property (GObject      *object,
+gdm_xdmcp_display_set_property (GObject      *object,
                                 guint         prop_id,
                                 const GValue *value,
                                 GParamSpec   *pspec)
@@ -115,11 +115,11 @@ scdm_xdmcp_display_set_property (GObject      *object,
         GdmXdmcpDisplayPrivate *priv;
 
         self = GDM_XDMCP_DISPLAY (object);
-        priv = scdm_xdmcp_display_get_instance_private (self);
+        priv = gdm_xdmcp_display_get_instance_private (self);
 
         switch (prop_id) {
         case PROP_REMOTE_ADDRESS:
-                _scdm_xdmcp_display_set_remote_address (self, g_value_get_boxed (value));
+                _gdm_xdmcp_display_set_remote_address (self, g_value_get_boxed (value));
                 break;
         case PROP_SESSION_NUMBER:
                 priv->session_number = g_value_get_int (value);
@@ -131,7 +131,7 @@ scdm_xdmcp_display_set_property (GObject      *object,
 }
 
 static void
-scdm_xdmcp_display_get_property (GObject    *object,
+gdm_xdmcp_display_get_property (GObject    *object,
                                 guint       prop_id,
                                 GValue     *value,
                                 GParamSpec *pspec)
@@ -140,7 +140,7 @@ scdm_xdmcp_display_get_property (GObject    *object,
         GdmXdmcpDisplayPrivate *priv;
 
         self = GDM_XDMCP_DISPLAY (object);
-        priv = scdm_xdmcp_display_get_instance_private (self);
+        priv = gdm_xdmcp_display_get_instance_private (self);
 
         switch (prop_id) {
         case PROP_REMOTE_ADDRESS:
@@ -156,7 +156,7 @@ scdm_xdmcp_display_get_property (GObject    *object,
 }
 
 static gboolean
-scdm_xdmcp_display_prepare (GdmDisplay *display)
+gdm_xdmcp_display_prepare (GdmDisplay *display)
 {
         GdmXdmcpDisplay *self = GDM_XDMCP_DISPLAY (display);
         GdmLaunchEnvironment *launch_environment;
@@ -177,7 +177,7 @@ scdm_xdmcp_display_prepare (GdmDisplay *display)
                       NULL);
 
         if (launch_environment == NULL) {
-                launch_environment = scdm_create_greeter_launch_environment (display_name,
+                launch_environment = gdm_create_greeter_launch_environment (display_name,
                                                                             seat_id,
                                                                             NULL,
                                                                             hostname,
@@ -186,13 +186,13 @@ scdm_xdmcp_display_prepare (GdmDisplay *display)
                 g_object_unref (launch_environment);
         }
 
-        if (!scdm_display_create_authority (display)) {
+        if (!gdm_display_create_authority (display)) {
                 g_warning ("Unable to set up access control for display %s",
                            display_name);
                 return FALSE;
         }
 
-        return GDM_DISPLAY_CLASS (scdm_xdmcp_display_parent_class)->prepare (display);
+        return GDM_DISPLAY_CLASS (gdm_xdmcp_display_parent_class)->prepare (display);
 }
 
 static gboolean
@@ -201,16 +201,16 @@ idle_connect_to_display (GdmXdmcpDisplay *self)
         GdmXdmcpDisplayPrivate *priv;
         gboolean res;
 
-        priv = scdm_xdmcp_display_get_instance_private (self);
+        priv = gdm_xdmcp_display_get_instance_private (self);
         priv->connection_attempts++;
 
-        res = scdm_display_connect (GDM_DISPLAY (self));
+        res = gdm_display_connect (GDM_DISPLAY (self));
         if (res) {
                 g_object_set (G_OBJECT (self), "status", GDM_DISPLAY_MANAGED, NULL);
         } else {
                 if (priv->connection_attempts >= MAX_CONNECT_ATTEMPTS) {
                         g_warning ("Unable to connect to display after %d tries - bailing out", priv->connection_attempts);
-                        scdm_display_unmanage (GDM_DISPLAY (self));
+                        gdm_display_unmanage (GDM_DISPLAY (self));
                         return FALSE;
                 }
                 return TRUE;
@@ -220,7 +220,7 @@ idle_connect_to_display (GdmXdmcpDisplay *self)
 }
 
 static void
-scdm_xdmcp_display_manage (GdmDisplay *display)
+gdm_xdmcp_display_manage (GdmDisplay *display)
 {
         GdmXdmcpDisplay *self = GDM_XDMCP_DISPLAY (display);
 
@@ -228,16 +228,16 @@ scdm_xdmcp_display_manage (GdmDisplay *display)
 }
 
 static void
-scdm_xdmcp_display_class_init (GdmXdmcpDisplayClass *klass)
+gdm_xdmcp_display_class_init (GdmXdmcpDisplayClass *klass)
 {
         GObjectClass    *object_class = G_OBJECT_CLASS (klass);
         GdmDisplayClass *display_class = GDM_DISPLAY_CLASS (klass);
 
-        object_class->get_property = scdm_xdmcp_display_get_property;
-        object_class->set_property = scdm_xdmcp_display_set_property;
+        object_class->get_property = gdm_xdmcp_display_get_property;
+        object_class->set_property = gdm_xdmcp_display_set_property;
 
-        display_class->prepare = scdm_xdmcp_display_prepare;
-        display_class->manage = scdm_xdmcp_display_manage;
+        display_class->prepare = gdm_xdmcp_display_prepare;
+        display_class->manage = gdm_xdmcp_display_manage;
 
         g_object_class_install_property (object_class,
                                          PROP_REMOTE_ADDRESS,
@@ -260,19 +260,19 @@ scdm_xdmcp_display_class_init (GdmXdmcpDisplayClass *klass)
 }
 
 static void
-scdm_xdmcp_display_init (GdmXdmcpDisplay *xdmcp_display)
+gdm_xdmcp_display_init (GdmXdmcpDisplay *xdmcp_display)
 {
 
         gboolean allow_remote_autologin;
 
         allow_remote_autologin = FALSE;
-        scdm_settings_direct_get_boolean (GDM_KEY_ALLOW_REMOTE_AUTOLOGIN, &allow_remote_autologin);
+        gdm_settings_direct_get_boolean (GDM_KEY_ALLOW_REMOTE_AUTOLOGIN, &allow_remote_autologin);
 
         g_object_set (G_OBJECT (xdmcp_display), "allow-timed-login", allow_remote_autologin, NULL);
 }
 
 GdmDisplay *
-scdm_xdmcp_display_new (const char *hostname,
+gdm_xdmcp_display_new (const char *hostname,
                        int         number,
                        GdmAddress *address,
                        gint32      session_number)

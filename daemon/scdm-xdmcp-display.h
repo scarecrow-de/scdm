@@ -31,18 +31,18 @@
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_XDMCP_DISPLAY (scdm_xdmcp_display_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GdmXdmcpDisplay, scdm_xdmcp_display, GDM, XDMCP_DISPLAY, GdmDisplay)
+#define GDM_TYPE_XDMCP_DISPLAY (gdm_xdmcp_display_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GdmXdmcpDisplay, gdm_xdmcp_display, GDM, XDMCP_DISPLAY, GdmDisplay)
 
 struct _GdmXdmcpDisplayClass
 {
         GdmDisplayClass   parent_class;
 };
 
-gint32                    scdm_xdmcp_display_get_session_number       (GdmXdmcpDisplay         *display);
-GdmAddress              * scdm_xdmcp_display_get_remote_address       (GdmXdmcpDisplay         *display);
+gint32                    gdm_xdmcp_display_get_session_number       (GdmXdmcpDisplay         *display);
+GdmAddress              * gdm_xdmcp_display_get_remote_address       (GdmXdmcpDisplay         *display);
 
-GdmDisplay              * scdm_xdmcp_display_new                      (const char              *hostname,
+GdmDisplay              * gdm_xdmcp_display_new                      (const char              *hostname,
                                                                       int                      number,
                                                                       GdmAddress              *address,
                                                                       gint32                   session_number);

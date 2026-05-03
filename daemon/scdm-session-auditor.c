@@ -41,15 +41,15 @@ typedef struct _GdmSessionAuditorPrivate
         char *display_device;
 } GdmSessionAuditorPrivate;
 
-static void scdm_session_auditor_finalize (GObject *object);
-static void scdm_session_auditor_class_install_properties (GdmSessionAuditorClass *
+static void gdm_session_auditor_finalize (GObject *object);
+static void gdm_session_auditor_class_install_properties (GdmSessionAuditorClass *
                                               auditor_class);
 
-static void scdm_session_auditor_set_property (GObject      *object,
+static void gdm_session_auditor_set_property (GObject      *object,
                                               guint         prop_id,
                                               const GValue *value,
                                               GParamSpec   *pspec);
-static void scdm_session_auditor_get_property (GObject      *object,
+static void gdm_session_auditor_get_property (GObject      *object,
                                               guint         prop_id,
                                               GValue       *value,
                                               GParamSpec   *pspec);
@@ -61,29 +61,29 @@ enum {
         PROP_DISPLAY_DEVICE
 };
 
-G_DEFINE_TYPE_WITH_PRIVATE (GdmSessionAuditor, scdm_session_auditor, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (GdmSessionAuditor, gdm_session_auditor, G_TYPE_OBJECT)
 
 static void
-scdm_session_auditor_class_init (GdmSessionAuditorClass *auditor_class)
+gdm_session_auditor_class_init (GdmSessionAuditorClass *auditor_class)
 {
         GObjectClass *object_class;
 
         object_class = G_OBJECT_CLASS (auditor_class);
 
-        object_class->finalize = scdm_session_auditor_finalize;
+        object_class->finalize = gdm_session_auditor_finalize;
 
-        scdm_session_auditor_class_install_properties (auditor_class);
+        gdm_session_auditor_class_install_properties (auditor_class);
 }
 
 static void
-scdm_session_auditor_class_install_properties (GdmSessionAuditorClass *auditor_class)
+gdm_session_auditor_class_install_properties (GdmSessionAuditorClass *auditor_class)
 {
         GObjectClass *object_class;
         GParamSpec   *param_spec;
 
         object_class = G_OBJECT_CLASS (auditor_class);
-        object_class->set_property = scdm_session_auditor_set_property;
-        object_class->get_property = scdm_session_auditor_get_property;
+        object_class->set_property = gdm_session_auditor_set_property;
+        object_class->get_property = gdm_session_auditor_get_property;
 
         param_spec = g_param_spec_string ("username", _("Username"),
                                         _("The username"),
@@ -104,25 +104,25 @@ scdm_session_auditor_class_install_properties (GdmSessionAuditorClass *auditor_c
 }
 
 static void
-scdm_session_auditor_init (GdmSessionAuditor *auditor)
+gdm_session_auditor_init (GdmSessionAuditor *auditor)
 {
 }
 
 static void
-scdm_session_auditor_finalize (GObject *object)
+gdm_session_auditor_finalize (GObject *object)
 {
         GdmSessionAuditor *auditor;
         GdmSessionAuditorPrivate *priv;
         GObjectClass *parent_class;
 
         auditor = GDM_SESSION_AUDITOR (object);
-        priv = scdm_session_auditor_get_instance_private (auditor);
+        priv = gdm_session_auditor_get_instance_private (auditor);
 
         g_free (priv->username);
         g_free (priv->hostname);
         g_free (priv->display_device);
 
-        parent_class = G_OBJECT_CLASS (scdm_session_auditor_parent_class);
+        parent_class = G_OBJECT_CLASS (gdm_session_auditor_parent_class);
 
         if (parent_class->finalize != NULL) {
                 parent_class->finalize (object);
@@ -130,14 +130,14 @@ scdm_session_auditor_finalize (GObject *object)
 }
 
 void
-scdm_session_auditor_set_username (GdmSessionAuditor *auditor,
+gdm_session_auditor_set_username (GdmSessionAuditor *auditor,
                                   const char        *username)
 {
         GdmSessionAuditorPrivate *priv;
 
         g_return_if_fail (GDM_IS_SESSION_AUDITOR (auditor));
 
-        priv = scdm_session_auditor_get_instance_private (auditor);
+        priv = gdm_session_auditor_get_instance_private (auditor);
 
         if (username == priv->username) {
                 return;
@@ -151,58 +151,58 @@ scdm_session_auditor_set_username (GdmSessionAuditor *auditor,
 }
 
 static void
-scdm_session_auditor_set_hostname (GdmSessionAuditor *auditor,
+gdm_session_auditor_set_hostname (GdmSessionAuditor *auditor,
                                   const char        *hostname)
 {
         GdmSessionAuditorPrivate *priv;
 
         g_return_if_fail (GDM_IS_SESSION_AUDITOR (auditor));
 
-        priv = scdm_session_auditor_get_instance_private (auditor);
+        priv = gdm_session_auditor_get_instance_private (auditor);
         priv->hostname = g_strdup (hostname);
 }
 
 static void
-scdm_session_auditor_set_display_device (GdmSessionAuditor *auditor,
+gdm_session_auditor_set_display_device (GdmSessionAuditor *auditor,
                                         const char        *display_device)
 {
         GdmSessionAuditorPrivate *priv;
 
         g_return_if_fail (GDM_IS_SESSION_AUDITOR (auditor));
 
-        priv = scdm_session_auditor_get_instance_private (auditor);
+        priv = gdm_session_auditor_get_instance_private (auditor);
         priv->display_device = g_strdup (display_device);
 }
 
 static char *
-scdm_session_auditor_get_username (GdmSessionAuditor *auditor)
+gdm_session_auditor_get_username (GdmSessionAuditor *auditor)
 {
         GdmSessionAuditorPrivate *priv;
 
-        priv = scdm_session_auditor_get_instance_private (auditor);
+        priv = gdm_session_auditor_get_instance_private (auditor);
         return g_strdup (priv->username);
 }
 
 static char *
-scdm_session_auditor_get_hostname (GdmSessionAuditor *auditor)
+gdm_session_auditor_get_hostname (GdmSessionAuditor *auditor)
 {
         GdmSessionAuditorPrivate *priv;
 
-        priv = scdm_session_auditor_get_instance_private (auditor);
+        priv = gdm_session_auditor_get_instance_private (auditor);
         return g_strdup (priv->hostname);
 }
 
 static char *
-scdm_session_auditor_get_display_device (GdmSessionAuditor *auditor)
+gdm_session_auditor_get_display_device (GdmSessionAuditor *auditor)
 {
         GdmSessionAuditorPrivate *priv;
 
-        priv = scdm_session_auditor_get_instance_private (auditor);
+        priv = gdm_session_auditor_get_instance_private (auditor);
         return g_strdup (priv->display_device);
 }
 
 static void
-scdm_session_auditor_set_property (GObject      *object,
+gdm_session_auditor_set_property (GObject      *object,
                                   guint         prop_id,
                                   const GValue *value,
                                   GParamSpec   *pspec)
@@ -213,15 +213,15 @@ scdm_session_auditor_set_property (GObject      *object,
 
         switch (prop_id) {
                 case PROP_USERNAME:
-                        scdm_session_auditor_set_username (auditor, g_value_get_string (value));
+                        gdm_session_auditor_set_username (auditor, g_value_get_string (value));
                 break;
 
                 case PROP_HOSTNAME:
-                        scdm_session_auditor_set_hostname (auditor, g_value_get_string (value));
+                        gdm_session_auditor_set_hostname (auditor, g_value_get_string (value));
                 break;
 
                 case PROP_DISPLAY_DEVICE:
-                        scdm_session_auditor_set_display_device (auditor, g_value_get_string (value));
+                        gdm_session_auditor_set_display_device (auditor, g_value_get_string (value));
                 break;
 
                 default:
@@ -230,7 +230,7 @@ scdm_session_auditor_set_property (GObject      *object,
 }
 
 static void
-scdm_session_auditor_get_property (GObject    *object,
+gdm_session_auditor_get_property (GObject    *object,
                                   guint       prop_id,
                                   GValue     *value,
                                   GParamSpec *pspec)
@@ -241,15 +241,15 @@ scdm_session_auditor_get_property (GObject    *object,
 
         switch (prop_id) {
                 case PROP_USERNAME:
-                        g_value_take_string (value, scdm_session_auditor_get_username (auditor));
+                        g_value_take_string (value, gdm_session_auditor_get_username (auditor));
                 break;
 
                 case PROP_HOSTNAME:
-                        g_value_take_string (value, scdm_session_auditor_get_hostname (auditor));
+                        g_value_take_string (value, gdm_session_auditor_get_hostname (auditor));
                 break;
 
                 case PROP_DISPLAY_DEVICE:
-                        g_value_take_string (value, scdm_session_auditor_get_display_device (auditor));
+                        g_value_take_string (value, gdm_session_auditor_get_display_device (auditor));
                 break;
 
                 default:
@@ -258,7 +258,7 @@ scdm_session_auditor_get_property (GObject    *object,
 }
 
 GdmSessionAuditor *
-scdm_session_auditor_new (const char *hostname,
+gdm_session_auditor_new (const char *hostname,
                          const char *display_device)
 {
         GdmSessionAuditor *auditor;
@@ -272,7 +272,7 @@ scdm_session_auditor_new (const char *hostname,
 }
 
 void
-scdm_session_auditor_report_password_changed (GdmSessionAuditor *auditor)
+gdm_session_auditor_report_password_changed (GdmSessionAuditor *auditor)
 {
         if (GDM_SESSION_AUDITOR_GET_CLASS (auditor)->report_password_changed != NULL) {
                 GDM_SESSION_AUDITOR_GET_CLASS (auditor)->report_password_changed (auditor);
@@ -280,7 +280,7 @@ scdm_session_auditor_report_password_changed (GdmSessionAuditor *auditor)
 }
 
 void
-scdm_session_auditor_report_password_change_failure (GdmSessionAuditor *auditor)
+gdm_session_auditor_report_password_change_failure (GdmSessionAuditor *auditor)
 {
         if (GDM_SESSION_AUDITOR_GET_CLASS (auditor)->report_password_change_failure != NULL) {
                 GDM_SESSION_AUDITOR_GET_CLASS (auditor)->report_password_change_failure (auditor);
@@ -288,7 +288,7 @@ scdm_session_auditor_report_password_change_failure (GdmSessionAuditor *auditor)
 }
 
 void
-scdm_session_auditor_report_user_accredited (GdmSessionAuditor *auditor)
+gdm_session_auditor_report_user_accredited (GdmSessionAuditor *auditor)
 {
         if (GDM_SESSION_AUDITOR_GET_CLASS (auditor)->report_user_accredited != NULL) {
                 GDM_SESSION_AUDITOR_GET_CLASS (auditor)->report_user_accredited (auditor);
@@ -296,7 +296,7 @@ scdm_session_auditor_report_user_accredited (GdmSessionAuditor *auditor)
 }
 
 void
-scdm_session_auditor_report_login (GdmSessionAuditor *auditor)
+gdm_session_auditor_report_login (GdmSessionAuditor *auditor)
 {
         if (GDM_SESSION_AUDITOR_GET_CLASS (auditor)->report_login != NULL) {
                 GDM_SESSION_AUDITOR_GET_CLASS (auditor)->report_login (auditor);
@@ -304,7 +304,7 @@ scdm_session_auditor_report_login (GdmSessionAuditor *auditor)
 }
 
 void
-scdm_session_auditor_report_login_failure (GdmSessionAuditor *auditor,
+gdm_session_auditor_report_login_failure (GdmSessionAuditor *auditor,
                                           int                error_code,
                                           const char        *error_message)
 {
@@ -314,7 +314,7 @@ scdm_session_auditor_report_login_failure (GdmSessionAuditor *auditor,
 }
 
 void
-scdm_session_auditor_report_logout (GdmSessionAuditor *auditor)
+gdm_session_auditor_report_logout (GdmSessionAuditor *auditor)
 {
         if (GDM_SESSION_AUDITOR_GET_CLASS (auditor)->report_logout != NULL) {
                 GDM_SESSION_AUDITOR_GET_CLASS (auditor)->report_logout (auditor);

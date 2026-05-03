@@ -33,10 +33,10 @@
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_SESSION_SOLARIS_AUDITOR (scdm_session_solaris_auditor_get_type ())
-G_DECLARE_FINAL_TYPE (GdmSessionSolarisAuditor, scdm_session_solaris_auditor, GDM, SESSION_SOLARIS_AUDITOR, GdmSessionAuditor)
+#define GDM_TYPE_SESSION_SOLARIS_AUDITOR (gdm_session_solaris_auditor_get_type ())
+G_DECLARE_FINAL_TYPE (GdmSessionSolarisAuditor, gdm_session_solaris_auditor, GDM, SESSION_SOLARIS_AUDITOR, GdmSessionAuditor)
 
-GdmSessionAuditor *scdm_session_solaris_auditor_new                            (const char *hostname,
+GdmSessionAuditor *gdm_session_solaris_auditor_new                            (const char *hostname,
                                                                                const char *display_device);
 G_END_DECLS
 #endif /* GDM_SESSION_SOLARIS_AUDITOR_H */

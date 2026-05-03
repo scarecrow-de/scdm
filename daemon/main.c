@@ -58,8 +58,8 @@ extern char **environ;
 static GdmManager      *manager       = NULL;
 static int              name_id       = -1;
 static GdmSettings     *settings      = NULL;
-static uid_t            scdm_uid       = -1;
-static gid_t            scdm_gid       = -1;
+static uid_t            gdm_uid       = -1;
+static gid_t            gdm_gid       = -1;
 
 static gboolean
 timed_exit_cb (GMainLoop *loop)
@@ -172,26 +172,26 @@ ensure_dir_with_perms (const char *path,
 }
 
 static void
-scdm_daemon_ensure_dirs (uid_t uid,
+gdm_daemon_ensure_dirs (uid_t uid,
                         gid_t gid)
 {
         GError *error = NULL;
 
         /* Set up /var/run/scdm */
         if (!ensure_dir_with_perms (GDM_RAN_ONCE_MARKER_DIR, 0, gid, 0711, &error)) {
-                scdm_fail (_("Failed to create ran once marker dir %s: %s"),
+                gdm_fail (_("Failed to create ran once marker dir %s: %s"),
                           GDM_RAN_ONCE_MARKER_DIR, error->message);
         }
 
         /* Set up /var/log/scdm */
         if (!ensure_dir_with_perms (LOGDIR, 0, gid, 0711, &error)) {
-                scdm_fail (_("Failed to create LogDir %s: %s"),
+                gdm_fail (_("Failed to create LogDir %s: %s"),
                           LOGDIR, error->message);
         }
 }
 
 static void
-scdm_daemon_lookup_user (uid_t *uidp,
+gdm_daemon_lookup_user (uid_t *uidp,
                         gid_t *gidp)
 {
         char          *username;
@@ -206,8 +206,8 @@ scdm_daemon_lookup_user (uid_t *uidp,
         uid = 0;
         gid = 0;
 
-        scdm_settings_direct_get_string (GDM_KEY_USER, &username);
-        scdm_settings_direct_get_string (GDM_KEY_GROUP, &groupname);
+        gdm_settings_direct_get_string (GDM_KEY_USER, &username);
+        gdm_settings_direct_get_string (GDM_KEY_GROUP, &groupname);
 
         if (username == NULL || groupname == NULL) {
                 return;
@@ -216,29 +216,29 @@ scdm_daemon_lookup_user (uid_t *uidp,
         g_debug ("Changing user:group to %s:%s", username, groupname);
 
         /* Lookup user and groupid for the GDM user */
-        scdm_get_pwent_for_name (username, &pwent);
+        gdm_get_pwent_for_name (username, &pwent);
 
         /* Set uid and gid */
         if G_UNLIKELY (pwent == NULL) {
-                scdm_fail (_("Can’t find the GDM user “%s”. Aborting!"), username);
+                gdm_fail (_("Can’t find the GDM user “%s”. Aborting!"), username);
         } else {
                 uid = pwent->pw_uid;
         }
 
         if G_UNLIKELY (uid == 0) {
-                scdm_fail (_("The GDM user should not be root. Aborting!"));
+                gdm_fail (_("The GDM user should not be root. Aborting!"));
         }
 
         grent = getgrnam (groupname);
 
         if G_UNLIKELY (grent == NULL) {
-                scdm_fail (_("Can’t find the GDM group “%s”. Aborting!"), groupname);
+                gdm_fail (_("Can’t find the GDM group “%s”. Aborting!"), groupname);
         } else  {
                 gid = grent->gr_gid;
         }
 
         if G_UNLIKELY (gid == 0) {
-                scdm_fail (_("The GDM group should not be root. Aborting!"));
+                gdm_fail (_("The GDM group should not be root. Aborting!"));
         }
 
         if (uidp != NULL) {
@@ -271,9 +271,9 @@ on_sighup_cb (gpointer user_data)
          * files, etc
          */
         g_object_unref (settings);
-        settings = scdm_settings_new ();
+        settings = gdm_settings_new ();
         if (settings != NULL) {
-                if (! scdm_settings_direct_init (settings, DATADIR "/scdm/scdm.schemas", "/")) {
+                if (! gdm_settings_direct_init (settings, DATADIR "/scdm/scdm.schemas", "/")) {
                         g_warning ("Unable to initialize settings");
                 }
         }
@@ -285,7 +285,7 @@ static gboolean
 is_debug_set (void)
 {
         gboolean debug;
-        scdm_settings_direct_get_boolean (GDM_KEY_DEBUG, &debug);
+        gdm_settings_direct_get_boolean (GDM_KEY_DEBUG, &debug);
         return debug;
 }
 
@@ -359,19 +359,19 @@ main (int    argc,
                 g_log_set_always_fatal (fatal_mask);
         }
 
-        scdm_log_init ();
+        gdm_log_init ();
 
-        settings = scdm_settings_new ();
-        if (! scdm_settings_direct_init (settings, DATADIR "/scdm/scdm.schemas", "/")) {
+        settings = gdm_settings_new ();
+        if (! gdm_settings_direct_init (settings, DATADIR "/scdm/scdm.schemas", "/")) {
                 g_warning ("Unable to initialize settings");
                 return EXIT_FAILURE;
         }
 
-        scdm_log_set_debug (is_debug_set ());
+        gdm_log_set_debug (is_debug_set ());
 
-        scdm_daemon_lookup_user (&scdm_uid, &scdm_gid);
+        gdm_daemon_lookup_user (&gdm_uid, &gdm_gid);
 
-        scdm_daemon_ensure_dirs (scdm_uid, scdm_gid);
+        gdm_daemon_ensure_dirs (gdm_uid, gdm_gid);
 
         /* Connect to the bus, own the name and start the manager */
         bus_reconnect ();
@@ -399,8 +399,8 @@ main (int    argc,
         g_clear_object (&manager);
         g_clear_object (&settings);
 
-        scdm_settings_direct_shutdown ();
-        scdm_log_shutdown ();
+        gdm_settings_direct_shutdown ();
+        gdm_log_shutdown ();
 
         g_main_loop_unref (main_loop);
 
@@ -415,7 +415,7 @@ on_name_acquired (GDBusConnection *bus,
         gboolean xdmcp_enabled;
         gboolean show_local_greeter;
 
-        manager = scdm_manager_new ();
+        manager = gdm_manager_new ();
         if (manager == NULL) {
                 g_warning ("Could not construct manager object");
                 exit (EXIT_FAILURE);
@@ -424,14 +424,14 @@ on_name_acquired (GDBusConnection *bus,
         g_debug ("Successfully connected to D-Bus");
 
         show_local_greeter = TRUE;
-        scdm_settings_direct_get_boolean (GDM_KEY_SHOW_LOCAL_GREETER, &show_local_greeter);
-        scdm_manager_set_show_local_greeter (manager, show_local_greeter);
+        gdm_settings_direct_get_boolean (GDM_KEY_SHOW_LOCAL_GREETER, &show_local_greeter);
+        gdm_manager_set_show_local_greeter (manager, show_local_greeter);
 
         xdmcp_enabled = FALSE;
-        scdm_settings_direct_get_boolean (GDM_KEY_XDMCP_ENABLE, &xdmcp_enabled);
-        scdm_manager_set_xdmcp_enabled (manager, xdmcp_enabled);
+        gdm_settings_direct_get_boolean (GDM_KEY_XDMCP_ENABLE, &xdmcp_enabled);
+        gdm_manager_set_xdmcp_enabled (manager, xdmcp_enabled);
 
-        scdm_manager_start (manager);
+        gdm_manager_start (manager);
 }
 
 static void

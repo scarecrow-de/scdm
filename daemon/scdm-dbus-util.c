@@ -72,7 +72,7 @@ handle_connection (GDBusServer      *server,
 }
 
 GDBusServer *
-scdm_dbus_setup_private_server (GDBusAuthObserver  *observer,
+gdm_dbus_setup_private_server (GDBusAuthObserver  *observer,
                                GError            **error)
 {
         char *guid;
@@ -105,7 +105,7 @@ scdm_dbus_setup_private_server (GDBusAuthObserver  *observer,
 }
 
 gboolean
-scdm_dbus_get_pid_for_name (const char  *system_bus_name,
+gdm_dbus_get_pid_for_name (const char  *system_bus_name,
                            pid_t       *out_pid,
                            GError     **error)
 {
@@ -145,7 +145,7 @@ scdm_dbus_get_pid_for_name (const char  *system_bus_name,
 }
 
 gboolean
-scdm_dbus_get_uid_for_name (const char  *system_bus_name,
+gdm_dbus_get_uid_for_name (const char  *system_bus_name,
                            uid_t       *out_uid,
                            GError     **error)
 {

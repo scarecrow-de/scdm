@@ -55,10 +55,10 @@ expand_fn (const char *var, gpointer data)
 
 static gboolean expands_to (const char *to_expand, const char *expanded)
 {
-        return strcmp (scdm_shell_expand (to_expand, expand_fn, NULL), expanded) == 0;
+        return strcmp (gdm_shell_expand (to_expand, expand_fn, NULL), expanded) == 0;
 }
 
-START_TEST (test_scdm_shell_expand)
+START_TEST (test_gdm_shell_expand)
 {
         ck_assert (expands_to ("foo", "foo"));
         ck_assert (expands_to ("foo ", "foo "));
@@ -103,7 +103,7 @@ suite_common (void)
         tc_core = tcase_create ("core");
 
         tcase_add_checked_fixture (tc_core, setup, teardown);
-        tcase_add_test (tc_core, test_scdm_shell_expand);
+        tcase_add_test (tc_core, test_gdm_shell_expand);
         suite_add_tcase (s, tc_core);
 
         return s;

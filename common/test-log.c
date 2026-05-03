@@ -38,10 +38,10 @@
 static void
 test_log (void)
 {
-        scdm_log_init ();
+        gdm_log_init ();
 
         g_debug ("Test debug 1");
-        scdm_log_set_debug (TRUE);
+        gdm_log_set_debug (TRUE);
         g_debug ("Test debug 2");
 
         g_message ("Test message");

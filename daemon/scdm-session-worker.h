@@ -29,7 +29,7 @@
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_SESSION_WORKER            (scdm_session_worker_get_type ())
+#define GDM_TYPE_SESSION_WORKER            (gdm_session_worker_get_type ())
 #define GDM_SESSION_WORKER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDM_TYPE_SESSION_WORKER, GdmSessionWorker))
 #define GDM_SESSION_WORKER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GDM_TYPE_SESSION_WORKER, GdmSessionWorkerClass))
 #define GDM_IS_SESSION_WORKER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GDM_TYPE_SESSION_WORKER))
@@ -60,9 +60,9 @@ typedef struct
         GdmDBusWorkerSkeletonClass parent_class;
 } GdmSessionWorkerClass;
 
-GType              scdm_session_worker_get_type                 (void);
+GType              gdm_session_worker_get_type                 (void);
 
-GdmSessionWorker * scdm_session_worker_new                      (const char *server_address,
+GdmSessionWorker * gdm_session_worker_new                      (const char *server_address,
                                                                 gboolean    is_for_reauth) G_GNUC_MALLOC;
 G_END_DECLS
 #endif /* GDM_SESSION_WORKER_H */
