@@ -1,55 +1,55 @@
 # D-Bus interfaces
-display_dbus_gen = gnome.gdbus_codegen('gdm-display-glue',
-  'gdm-display.xml',
+display_dbus_gen = gnome.gdbus_codegen('scdm-display-glue',
+  'scdm-display.xml',
   namespace: 'GdmDBus',
   interface_prefix: 'io.github.scarecrow_de.DisplayManager',
   autocleanup: 'all',
 )
-local_display_dbus_gen = gnome.gdbus_codegen('gdm-local-display-glue',
-  'gdm-local-display.xml',
+local_display_dbus_gen = gnome.gdbus_codegen('scdm-local-display-glue',
+  'scdm-local-display.xml',
   namespace: 'GdmDBus',
   interface_prefix: 'io.github.scarecrow_de.DisplayManager',
   autocleanup: 'all',
 )
-local_display_factory_dbus_gen = gnome.gdbus_codegen('gdm-local-display-factory-glue',
-  'gdm-local-display-factory.xml',
+local_display_factory_dbus_gen = gnome.gdbus_codegen('scdm-local-display-factory-glue',
+  'scdm-local-display-factory.xml',
   namespace: 'GdmDBus',
   interface_prefix: 'io.github.scarecrow_de.DisplayManager',
   autocleanup: 'all',
 )
-manager_dbus_gen = gnome.gdbus_codegen('gdm-manager-glue',
-  'gdm-manager.xml',
+manager_dbus_gen = gnome.gdbus_codegen('scdm-manager-glue',
+  'scdm-manager.xml',
   namespace: 'GdmDBus',
   interface_prefix: 'io.github.scarecrow_de.DisplayManager',
   autocleanup: 'all',
 )
-session_dbus_gen = gnome.gdbus_codegen('gdm-session-glue',
-  'gdm-session.xml',
+session_dbus_gen = gnome.gdbus_codegen('scdm-session-glue',
+  'scdm-session.xml',
   namespace: 'GdmDBus',
   interface_prefix: 'io.github.scarecrow_de.DisplayManager',
   autocleanup: 'all',
 )
-session_worker_dbus_gen = gnome.gdbus_codegen('gdm-session-worker-glue',
-  'gdm-session-worker.xml',
+session_worker_dbus_gen = gnome.gdbus_codegen('scdm-session-worker-glue',
+  'scdm-session-worker.xml',
   namespace: 'GdmDBus',
   interface_prefix: 'io.github.scarecrow_de.DisplayManager',
   autocleanup: 'all',
 )
 
-gdm_session_enums = gnome.mkenums('gdm-session-enum-types',
-  h_template: 'gdm-session-enum-types.h.in',
-  c_template: 'gdm-session-enum-types.c.in',
-  sources: 'gdm-session.h',
+scdm_session_enums = gnome.mkenums('scdm-session-enum-types',
+  h_template: 'scdm-session-enum-types.h.in',
+  c_template: 'scdm-session-enum-types.c.in',
+  sources: 'scdm-session.h',
 )
-gdm_session_worker_enums = gnome.mkenums('gdm-session-worker-enum-types',
-  h_template: 'gdm-session-worker-enum-types.h.in',
-  c_template: 'gdm-session-worker-enum-types.c.in',
-  sources: 'gdm-session-worker.h',
+scdm_session_worker_enums = gnome.mkenums('scdm-session-worker-enum-types',
+  h_template: 'scdm-session-worker-enum-types.h.in',
+  c_template: 'scdm-session-worker-enum-types.c.in',
+  sources: 'scdm-session-worker.h',
 )
 
 # Daemons deps
-gdm_daemon_deps = [
-  libgdmcommon_dep,
+scdm_daemon_deps = [
+  libscdmcommon_dep,
   accountsservice_dep,
   gobject_dep,
   gio_dep,
@@ -60,7 +60,7 @@ gdm_daemon_deps = [
 ]
 
 if xdmcp_dep.found() and get_option('tcp-wrappers')
-  gdm_daemon_deps += libwrap_dep
+  scdm_daemon_deps += libwrap_dep
 endif
 
 # test-session-client
@@ -72,134 +72,134 @@ test_session_client_src = [
 
 test_session_client = executable('test-session-client',
   test_session_client_src,
-  dependencies: gdm_daemon_deps,
+  dependencies: scdm_daemon_deps,
   include_directories: config_h_dir,
 )
 
 # Session worker
-gdm_session_worker_src = [
+scdm_session_worker_src = [
   'session-worker-main.c',
-  'gdm-session.c',
-  'gdm-session-settings.c',
-  'gdm-session-auditor.c',
-  'gdm-session-record.c',
-  'gdm-session-worker.c',
-  'gdm-session-worker-job.c',
-  'gdm-session-worker-common.c',
-  'gdm-dbus-util.c',
+  'scdm-session.c',
+  'scdm-session-settings.c',
+  'scdm-session-auditor.c',
+  'scdm-session-record.c',
+  'scdm-session-worker.c',
+  'scdm-session-worker-job.c',
+  'scdm-session-worker-common.c',
+  'scdm-dbus-util.c',
   session_dbus_gen,
   session_worker_dbus_gen,
-  gdm_session_enums,
-  gdm_session_worker_enums,
+  scdm_session_enums,
+  scdm_session_worker_enums,
 ]
 
-gdm_session_worker_deps = [
-  gdm_daemon_deps,
+scdm_session_worker_deps = [
+  scdm_daemon_deps,
 ]
 
-gdm_session_worker_includes = [
+scdm_session_worker_includes = [
   config_h_dir,
 ]
 
 if pam_extensions_supported
-  gdm_session_worker_src += '../pam-extensions/gdm-pam-extensions.h'
-  gdm_session_worker_includes += pam_extensions_inc
+  scdm_session_worker_src += '../pam-extensions/scdm-pam-extensions.h'
+  scdm_session_worker_includes += pam_extensions_inc
 endif
 
 if libaudit_dep.found()
-  gdm_session_worker_deps += libaudit_dep
+  scdm_session_worker_deps += libaudit_dep
 
-  gdm_session_worker_src += [
-    'gdm-session-linux-auditor.c',
+  scdm_session_worker_src += [
+    'scdm-session-linux-auditor.c',
   ]
 endif
 
 if have_adt
-  gdm_session_worker_src += 'gdm-session-solaris-auditor.c'
+  scdm_session_worker_src += 'scdm-session-solaris-auditor.c'
 endif
 
-gdm_session_worker = executable('gdm-session-worker',
-  gdm_session_worker_src,
-  dependencies: gdm_session_worker_deps,
-  include_directories: gdm_session_worker_includes,
+scdm_session_worker = executable('scdm-session-worker',
+  scdm_session_worker_src,
+  dependencies: scdm_session_worker_deps,
+  include_directories: scdm_session_worker_includes,
   install: true,
   install_dir: get_option('libexecdir'),
 )
 
 # Wayland session
-gdm_wayland_session_src = [
-  'gdm-wayland-session.c',
+scdm_wayland_session_src = [
+  'scdm-wayland-session.c',
   manager_dbus_gen,
 ]
 
-gdm_wayland_session = executable('gdm-wayland-session',
-  gdm_wayland_session_src,
-  dependencies: gdm_daemon_deps,
-  include_directories: gdm_session_worker_includes,
+scdm_wayland_session = executable('scdm-wayland-session',
+  scdm_wayland_session_src,
+  dependencies: scdm_daemon_deps,
+  include_directories: scdm_session_worker_includes,
   install: true,
   install_dir: get_option('libexecdir'),
 )
 
 # X session
-gdm_x_session_src = [
-  'gdm-x-session.c',
+scdm_x_session_src = [
+  'scdm-x-session.c',
   manager_dbus_gen,
 ]
 
-gdm_x_session = executable('gdm-x-session',
-  gdm_x_session_src,
-  dependencies: gdm_daemon_deps,
-  include_directories: gdm_session_worker_includes,
+scdm_x_session = executable('scdm-x-session',
+  scdm_x_session_src,
+  dependencies: scdm_daemon_deps,
+  include_directories: scdm_session_worker_includes,
   install: true,
   install_dir: get_option('libexecdir'),
 )
 
 # GDM daemon
-gdm_daemon_sources = files(
-  'gdm-dbus-util.c',
-  'gdm-display-access-file.c',
-  'gdm-display-factory.c',
-  'gdm-display-store.c',
-  'gdm-display.c',
-  'gdm-launch-environment.c',
-  'gdm-legacy-display.c',
-  'gdm-local-display-factory.c',
-  'gdm-local-display.c',
-  'gdm-manager.c',
-  'gdm-server.c',
-  'gdm-session-record.c',
-  'gdm-session-worker-common.c',
-  'gdm-session-worker-job.c',
-  'gdm-session.c',
+scdm_daemon_sources = files(
+  'scdm-dbus-util.c',
+  'scdm-display-access-file.c',
+  'scdm-display-factory.c',
+  'scdm-display-store.c',
+  'scdm-display.c',
+  'scdm-launch-environment.c',
+  'scdm-legacy-display.c',
+  'scdm-local-display-factory.c',
+  'scdm-local-display.c',
+  'scdm-manager.c',
+  'scdm-server.c',
+  'scdm-session-record.c',
+  'scdm-session-worker-common.c',
+  'scdm-session-worker-job.c',
+  'scdm-session.c',
   'main.c',
 )
 
-gdm_daemon_gen_sources = [
+scdm_daemon_gen_sources = [
   display_dbus_gen,
   local_display_factory_dbus_gen,
   manager_dbus_gen,
   local_display_dbus_gen,
   session_dbus_gen,
   session_worker_dbus_gen,
-  gdm_session_enums,
+  scdm_session_enums,
 ]
 
 if xdmcp_dep.found()
-  gdm_daemon_deps += xdmcp_dep
+  scdm_daemon_deps += xdmcp_dep
 
-  gdm_daemon_sources = [
-    gdm_daemon_sources,
+  scdm_daemon_sources = [
+    scdm_daemon_sources,
     files(
-      'gdm-xdmcp-display-factory.c',
-      'gdm-xdmcp-display.c',
-      'gdm-xdmcp-chooser-display.c',
+      'scdm-xdmcp-display-factory.c',
+      'scdm-xdmcp-display.c',
+      'scdm-xdmcp-chooser-display.c',
     ),
   ]
 endif
 
-gdm_daemon = executable('gdm',
-  [ gdm_daemon_sources, gdm_daemon_gen_sources ],
-  dependencies: gdm_daemon_deps,
+scdm_daemon = executable('scdm',
+  [ scdm_daemon_sources, scdm_daemon_gen_sources ],
+  dependencies: scdm_daemon_deps,
   include_directories: config_h_dir,
   install: true,
   install_dir: get_option('sbindir')

@@ -38,7 +38,7 @@
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
 
-#include "gdm-session-record.h"
+#include "scdm-session-record.h"
 
 #ifndef GDM_BAD_SESSION_RECORDS_FILE
 #define GDM_BAD_SESSION_RECORDS_FILE "/var/log/btmp"
@@ -170,7 +170,7 @@ record_set_line (UTMP       *u,
 }
 
 void
-gdm_session_record_login (GPid                  session_pid,
+scdm_session_record_login (GPid                  session_pid,
                           const char           *user_name,
                           const char           *host_name,
                           const char           *x11_display_name,
@@ -221,7 +221,7 @@ gdm_session_record_login (GPid                  session_pid,
 }
 
 void
-gdm_session_record_logout (GPid                  session_pid,
+scdm_session_record_logout (GPid                  session_pid,
                            const char           *user_name,
                            const char           *host_name,
                            const char           *x11_display_name,
@@ -266,7 +266,7 @@ gdm_session_record_logout (GPid                  session_pid,
 }
 
 void
-gdm_session_record_failed (GPid                  session_pid,
+scdm_session_record_failed (GPid                  session_pid,
                            const char           *user_name,
                            const char           *host_name,
                            const char           *x11_display_name,

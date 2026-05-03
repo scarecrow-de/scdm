@@ -1,4 +1,4 @@
-/* gdm-session-settings.h - Object for auditing session login/logout
+/* scdm-session-settings.h - Object for auditing session login/logout
  *
  * Copyright (C) 2008 Red Hat, Inc.
  *
@@ -26,13 +26,13 @@
 #include <glib-object.h>
 
 G_BEGIN_DECLS
-#define GDM_TYPE_SESSION_SETTINGS (gdm_session_settings_get_type ())
+#define GDM_TYPE_SESSION_SETTINGS (scdm_session_settings_get_type ())
 #define GDM_SESSION_SETTINGS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), GDM_TYPE_SESSION_SETTINGS, GdmSessionSettings))
 #define GDM_SESSION_SETTINGS_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), GDM_TYPE_SESSION_SETTINGS, GdmSessionSettingsClass))
 #define GDM_IS_SESSION_SETTINGS(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GDM_TYPE_SESSION_SETTINGS))
 #define GDM_IS_SESSION_SETTINGS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GDM_TYPE_SESSION_SETTINGS))
 #define GDM_SESSION_SETTINGS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), GDM_TYPE_SESSION_SETTINGS, GdmSessionSettingsClass))
-#define GDM_SESSION_SETTINGS_ERROR (gdm_session_settings_error_quark ())
+#define GDM_SESSION_SETTINGS_ERROR (scdm_session_settings_error_quark ())
 typedef struct _GdmSessionSettings GdmSessionSettings;
 typedef struct _GdmSessionSettingsClass GdmSessionSettingsClass;
 typedef struct _GdmSessionSettingsPrivate GdmSessionSettingsPrivate;
@@ -50,19 +50,19 @@ struct _GdmSessionSettingsClass
         GObjectClass        parent_class;
 };
 
-GType               gdm_session_settings_get_type           (void);
-GdmSessionSettings *gdm_session_settings_new                (void);
+GType               scdm_session_settings_get_type           (void);
+GdmSessionSettings *scdm_session_settings_new                (void);
 
-gboolean            gdm_session_settings_load               (GdmSessionSettings  *settings,
+gboolean            scdm_session_settings_load               (GdmSessionSettings  *settings,
                                                              const char          *username);
-gboolean            gdm_session_settings_save               (GdmSessionSettings  *settings,
+gboolean            scdm_session_settings_save               (GdmSessionSettings  *settings,
                                                              const char          *username);
-gboolean            gdm_session_settings_is_loaded          (GdmSessionSettings  *settings);
-char               *gdm_session_settings_get_language_name  (GdmSessionSettings *settings);
-char               *gdm_session_settings_get_session_name   (GdmSessionSettings *settings);
-void                gdm_session_settings_set_language_name  (GdmSessionSettings *settings,
+gboolean            scdm_session_settings_is_loaded          (GdmSessionSettings  *settings);
+char               *scdm_session_settings_get_language_name  (GdmSessionSettings *settings);
+char               *scdm_session_settings_get_session_name   (GdmSessionSettings *settings);
+void                scdm_session_settings_set_language_name  (GdmSessionSettings *settings,
                                                              const char         *language_name);
-void                gdm_session_settings_set_session_name   (GdmSessionSettings *settings,
+void                scdm_session_settings_set_session_name   (GdmSessionSettings *settings,
                                                              const char         *session_name);
 
 G_END_DECLS

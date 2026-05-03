@@ -4,12 +4,12 @@
          xmlns:gnome="http://api.gnome.org/doap-extensions#"
          xmlns="http://usefulinc.com/ns/doap#">
 
-  <name xml:lang="en">gdm</name>
+  <name xml:lang="en">scdm</name>
   <shortdesc xml:lang="en">Display manager and login screen</shortdesc>
   <homepage rdf:resource="http://wiki.gnome.org/Projects/GDM/" />
-  <mailing-list rdf:resource="http://mail.gnome.org/mailman/listinfo/gdm-list" />
-  <download-page rdf:resource="http://download.gnome.org/sources/gdm/" />
-  <bug-database rdf:resource="https://gitlab.gnome.org/GNOME/gdm/issues/" />
+  <mailing-list rdf:resource="http://mail.gnome.org/mailman/listinfo/scdm-list" />
+  <download-page rdf:resource="http://download.gnome.org/sources/scdm/" />
+  <bug-database rdf:resource="https://gitlab.gnome.org/GNOME/scdm/issues/" />
   <category rdf:resource="http://api.gnome.org/doap-extensions#core" />
   <programming-language>C</programming-language>
   <description>The GNOME Display Manager is a system service responsible for

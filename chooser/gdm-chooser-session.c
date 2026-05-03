@@ -29,10 +29,10 @@
 #include <glib/gi18n.h>
 #include <glib-object.h>
 
-#include "gdm-chooser-session.h"
-#include "gdm-client.h"
+#include "scdm-chooser-session.h"
+#include "scdm-client.h"
 
-#include "gdm-host-chooser-dialog.h"
+#include "scdm-host-chooser-dialog.h"
 
 struct _GdmChooserSession
 {
@@ -48,11 +48,11 @@ enum {
         PROP_0,
 };
 
-static void     gdm_chooser_session_class_init  (GdmChooserSessionClass *klass);
-static void     gdm_chooser_session_init        (GdmChooserSession      *chooser_session);
-static void     gdm_chooser_session_finalize    (GObject                *object);
+static void     scdm_chooser_session_class_init  (GdmChooserSessionClass *klass);
+static void     scdm_chooser_session_init        (GdmChooserSession      *chooser_session);
+static void     scdm_chooser_session_finalize    (GObject                *object);
 
-G_DEFINE_TYPE (GdmChooserSession, gdm_chooser_session, G_TYPE_OBJECT)
+G_DEFINE_TYPE (GdmChooserSession, scdm_chooser_session, G_TYPE_OBJECT)
 
 static gpointer session_object = NULL;
 
@@ -157,7 +157,7 @@ on_dialog_response (GtkDialog         *dialog,
         host = NULL;
         switch (response_id) {
         case GTK_RESPONSE_OK:
-                host = gdm_host_chooser_dialog_get_host (GDM_HOST_CHOOSER_DIALOG (dialog));
+                host = scdm_host_chooser_dialog_get_host (GDM_HOST_CHOOSER_DIALOG (dialog));
         case GTK_RESPONSE_NONE:
                 /* delete event */
         default:
@@ -168,14 +168,14 @@ on_dialog_response (GtkDialog         *dialog,
                 char *hostname;
 
                 /* only support XDMCP hosts in remote chooser */
-                g_assert (gdm_chooser_host_get_kind (host) == GDM_CHOOSER_HOST_KIND_XDMCP);
+                g_assert (scdm_chooser_host_get_kind (host) == GDM_CHOOSER_HOST_KIND_XDMCP);
 
                 hostname = NULL;
-                gdm_address_get_hostname (gdm_chooser_host_get_address (host), &hostname);
+                scdm_address_get_hostname (scdm_chooser_host_get_address (host), &hostname);
                 /* FIXME: fall back to numerical address? */
                 if (hostname != NULL) {
                         g_debug ("GdmChooserSession: Selected hostname '%s'", hostname);
-                        gdm_chooser_call_select_hostname_sync (session->chooser,
+                        scdm_chooser_call_select_hostname_sync (session->chooser,
                                                                hostname,
                                                                NULL,
                                                                &error);
@@ -188,7 +188,7 @@ on_dialog_response (GtkDialog         *dialog,
                 }
         }
 
-        gdm_remote_greeter_call_disconnect_sync (session->remote_greeter,
+        scdm_remote_greeter_call_disconnect_sync (session->remote_greeter,
                                                  NULL,
                                                  &error);
         if (error != NULL) {
@@ -197,19 +197,19 @@ on_dialog_response (GtkDialog         *dialog,
 }
 
 gboolean
-gdm_chooser_session_start (GdmChooserSession *session,
+scdm_chooser_session_start (GdmChooserSession *session,
                            GError           **error)
 {
         g_return_val_if_fail (GDM_IS_CHOOSER_SESSION (session), FALSE);
 
-        session->remote_greeter = gdm_client_get_remote_greeter_sync (session->client,
+        session->remote_greeter = scdm_client_get_remote_greeter_sync (session->client,
                                                                             NULL,
                                                                             error);
         if (session->remote_greeter == NULL) {
                 return FALSE;
         }
 
-        session->chooser = gdm_client_get_chooser_sync (session->client,
+        session->chooser = scdm_client_get_chooser_sync (session->client,
                                                               NULL,
                                                               error);
         if (session->chooser == NULL) {
@@ -220,7 +220,7 @@ gdm_chooser_session_start (GdmChooserSession *session,
         start_window_manager (session);
 
         /* Only support XDMCP on remote choosers */
-        session->chooser_dialog = gdm_host_chooser_dialog_new (GDM_CHOOSER_HOST_KIND_XDMCP);
+        session->chooser_dialog = scdm_host_chooser_dialog_new (GDM_CHOOSER_HOST_KIND_XDMCP);
         g_signal_connect (session->chooser_dialog,
                           "response",
                           G_CALLBACK (on_dialog_response),
@@ -231,14 +231,14 @@ gdm_chooser_session_start (GdmChooserSession *session,
 }
 
 void
-gdm_chooser_session_stop (GdmChooserSession *session)
+scdm_chooser_session_stop (GdmChooserSession *session)
 {
         g_return_if_fail (GDM_IS_CHOOSER_SESSION (session));
 
 }
 
 static void
-gdm_chooser_session_set_property (GObject        *object,
+scdm_chooser_session_set_property (GObject        *object,
                                   guint           prop_id,
                                   const GValue   *value,
                                   GParamSpec     *pspec)
@@ -251,7 +251,7 @@ gdm_chooser_session_set_property (GObject        *object,
 }
 
 static void
-gdm_chooser_session_get_property (GObject        *object,
+scdm_chooser_session_get_property (GObject        *object,
                                   guint           prop_id,
                                   GValue         *value,
                                   GParamSpec     *pspec)
@@ -264,13 +264,13 @@ gdm_chooser_session_get_property (GObject        *object,
 }
 
 static GObject *
-gdm_chooser_session_constructor (GType                  type,
+scdm_chooser_session_constructor (GType                  type,
                                  guint                  n_construct_properties,
                                  GObjectConstructParam *construct_properties)
 {
         GdmChooserSession      *chooser_session;
 
-        chooser_session = GDM_CHOOSER_SESSION (G_OBJECT_CLASS (gdm_chooser_session_parent_class)->constructor (type,
+        chooser_session = GDM_CHOOSER_SESSION (G_OBJECT_CLASS (scdm_chooser_session_parent_class)->constructor (type,
                                                                                                                n_construct_properties,
                                                                                                                construct_properties));
 
@@ -278,33 +278,33 @@ gdm_chooser_session_constructor (GType                  type,
 }
 
 static void
-gdm_chooser_session_dispose (GObject *object)
+scdm_chooser_session_dispose (GObject *object)
 {
         g_debug ("GdmChooserSession: Disposing chooser_session");
 
-        G_OBJECT_CLASS (gdm_chooser_session_parent_class)->dispose (object);
+        G_OBJECT_CLASS (scdm_chooser_session_parent_class)->dispose (object);
 }
 
 static void
-gdm_chooser_session_class_init (GdmChooserSessionClass *klass)
+scdm_chooser_session_class_init (GdmChooserSessionClass *klass)
 {
         GObjectClass   *object_class = G_OBJECT_CLASS (klass);
 
-        object_class->get_property = gdm_chooser_session_get_property;
-        object_class->set_property = gdm_chooser_session_set_property;
-        object_class->constructor = gdm_chooser_session_constructor;
-        object_class->dispose = gdm_chooser_session_dispose;
-        object_class->finalize = gdm_chooser_session_finalize;
+        object_class->get_property = scdm_chooser_session_get_property;
+        object_class->set_property = scdm_chooser_session_set_property;
+        object_class->constructor = scdm_chooser_session_constructor;
+        object_class->dispose = scdm_chooser_session_dispose;
+        object_class->finalize = scdm_chooser_session_finalize;
 }
 
 static void
-gdm_chooser_session_init (GdmChooserSession *session)
+scdm_chooser_session_init (GdmChooserSession *session)
 {
-        session->client = gdm_client_new ();
+        session->client = scdm_client_new ();
 }
 
 static void
-gdm_chooser_session_finalize (GObject *object)
+scdm_chooser_session_finalize (GObject *object)
 {
         GdmChooserSession *chooser_session;
 
@@ -319,11 +319,11 @@ gdm_chooser_session_finalize (GObject *object)
         g_clear_object (&chooser_session->remote_greeter);
         g_clear_object (&chooser_session->client);
 
-        G_OBJECT_CLASS (gdm_chooser_session_parent_class)->finalize (object);
+        G_OBJECT_CLASS (scdm_chooser_session_parent_class)->finalize (object);
 }
 
 GdmChooserSession *
-gdm_chooser_session_new (void)
+scdm_chooser_session_new (void)
 {
         if (session_object != NULL) {
                 g_object_ref (session_object);

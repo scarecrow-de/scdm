@@ -44,7 +44,7 @@ main (int argc, char *argv[])
         saved_okay = g_key_file_save_to_file (key_file, GDM_RUNTIME_CONF, &error);
 
         if (!saved_okay) {
-                g_printerr ("gdm-disable-wayland: unable to disable wayland: %s",
+                g_printerr ("scdm-disable-wayland: unable to disable wayland: %s",
                             error->message);
                 return EX_CANTCREAT;
         }

@@ -1,7 +1,7 @@
 # translation of bn_IN.po to Bengali INDIA
 # Bengali India Translation of the GDM2 po file
 # Copyright (C) 1998, 99, 2000, 01, 02, 03, 2005, 2006, 2008, 2009, 2010 Free Software Foundation, Inc.
-# This file is distributed under the same license as the gdm2 package.
+# This file is distributed under the same license as the scdm2 package.
 #
 # Progga <abulfazl@juniv.edu>, 2003.
 # Indranil Das Gupta <indradg@bengalinux.org>, 2004.
@@ -15,7 +15,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: unnamed project\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gdm/issues\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/scdm/issues\n"
 "POT-Creation-Date: 2020-05-30 21:14+0000\n"
 "PO-Revision-Date: 2020-08-15 10:38+0530\n"
 "Last-Translator: Akarshan Biswas <akarshan.biswas@hotmail.com>\n"
@@ -27,52 +27,52 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "X-Generator: Gtranslator 3.36.0\n"
 
-#: chooser/gdm-host-chooser-dialog.c:139
+#: chooser/scdm-host-chooser-dialog.c:139
 msgid "_Refresh"
 msgstr "সতেজ করুন (_R)"
 
-#: chooser/gdm-host-chooser-dialog.c:140
+#: chooser/scdm-host-chooser-dialog.c:140
 msgid "_Cancel"
 msgstr "বাতিল (_C)"
 
-#: chooser/gdm-host-chooser-dialog.c:141
+#: chooser/scdm-host-chooser-dialog.c:141
 msgid "C_onnect"
 msgstr "সংযোগ করুন (_o)"
 
-#: chooser/gdm-host-chooser-dialog.c:146
+#: chooser/scdm-host-chooser-dialog.c:146
 msgid "Select System"
 msgstr "সিস্টেম নির্বাচন করুন"
 
-#: chooser/gdm-host-chooser-widget.c:253
+#: chooser/scdm-host-chooser-widget.c:253
 msgid "XDMCP: Could not create XDMCP buffer!"
 msgstr "XDMCP: XDMCP বাফার নির্মাণ করতে ব্যর্থ!"
 
-#: chooser/gdm-host-chooser-widget.c:259
+#: chooser/scdm-host-chooser-widget.c:259
 msgid "XDMCP: Could not read XDMCP header!"
 msgstr "XDMCP: XDMCP হেডার পড়তে ব্যর্থ!"
 
-#: chooser/gdm-host-chooser-widget.c:265
+#: chooser/scdm-host-chooser-widget.c:265
 msgid "XDMCP: Incorrect XDMCP version!"
 msgstr "XDMCP: ভুল XDMCP সংস্করণ!"
 
-#: chooser/gdm-host-chooser-widget.c:271
+#: chooser/scdm-host-chooser-widget.c:271
 msgid "XDMCP: Unable to parse address"
 msgstr "XDMCP: ঠিকানা পার্জ করা যায়নি"
 
-#: common/gdm-common.c:307
+#: common/scdm-common.c:307
 msgid "/dev/urandom is not a character device"
 msgstr "/dev/urandom ক্যারেক্টার ডিভাইস নয়"
 
-#: common/gdm-common.c:501 libgdm/gdm-user-switching.c:207
+#: common/scdm-common.c:501 libscdm/scdm-user-switching.c:207
 #| msgid "Could not identify the current session."
 msgid "Could not identify the current session: "
 msgstr "বর্তমান সেশান সনাক্ত করা যায়নি: "
 
-#: common/gdm-common.c:510 libgdm/gdm-user-switching.c:216
+#: common/scdm-common.c:510 libscdm/scdm-user-switching.c:216
 msgid "Could not identify the current seat."
 msgstr "বর্তমান সিট সনাক্ত করা যায়নি।"
 
-#: common/gdm-common.c:520 libgdm/gdm-user-switching.c:226
+#: common/scdm-common.c:520 libscdm/scdm-user-switching.c:226
 msgid ""
 "The system is unable to determine whether to switch to an existing login "
 "screen or start up a new login screen."
@@ -80,17 +80,17 @@ msgstr ""
 "কোনো উপস্থিত লগ-ইনে পরিবর্তন করা হবে নাকি নতুন লগ-ইন পর্দা আরম্ভ করা হবে তা "
 "সিস্টেম দ্বারা নির্ধারণ করা যায়নি।"
 
-#: common/gdm-common.c:528 libgdm/gdm-user-switching.c:234
+#: common/scdm-common.c:528 libscdm/scdm-user-switching.c:234
 msgid "The system is unable to start up a new login screen."
 msgstr "সিস্টেম দ্বারা নতুন লগ-ইন পর্দা প্রস্তুত করা যায়নি।"
 
-#: daemon/gdm-display-access-file.c:298
+#: daemon/scdm-display-access-file.c:298
 #, c-format
 #| msgid "could not find user \"%s\" on system"
 msgid "could not find user “%s” on system"
 msgstr "সিস্টেমের মধ্যে \"%s\" নামক ব্যবহারকারী পাওয়া যায়নি"
 
-#: daemon/gdm-legacy-display.c:236
+#: daemon/scdm-legacy-display.c:236
 msgid ""
 "Could not start the X server (your graphical environment) due to an internal "
 "error. Please contact your system administrator or check your syslog to "
@@ -102,32 +102,32 @@ msgstr ""
 "পরীক্ষা করুন। ইতিমধ্যে এই প্রদর্শনটি অক্ষম করা হবে। সমস্যাটি সংশোধন হলে জিডিএম "
 "পুনরায় চালু করুন।"
 
-#: daemon/gdm-manager.c:763
+#: daemon/scdm-manager.c:763
 msgid "No display available"
 msgstr "কোন প্রদর্শন উপলব্ধ নেই"
 
-#: daemon/gdm-manager.c:861 daemon/gdm-manager.c:1145
+#: daemon/scdm-manager.c:861 daemon/scdm-manager.c:1145
 msgid "No session available"
 msgstr "কোনো সেশান উপলব্ধ নেই"
 
-#: daemon/gdm-manager.c:880
+#: daemon/scdm-manager.c:880
 #| msgid "No session available"
 msgid "Chooser session unavailable"
 msgstr "Chooser session unavailable"
 
-#: daemon/gdm-manager.c:896
+#: daemon/scdm-manager.c:896
 msgid "Can only be called before user is logged in"
 msgstr "ব্যবহারকারী লগ-ইন করার পূর্বেই শুধুমাত্র কল করা যাবে"
 
-#: daemon/gdm-manager.c:907
+#: daemon/scdm-manager.c:907
 msgid "Caller not GDM"
 msgstr "GDM দ্বারা কল করা হয়নি"
 
-#: daemon/gdm-manager.c:917
+#: daemon/scdm-manager.c:917
 msgid "Unable to open private communication channel"
 msgstr "ব্যক্তিগত যোগাযোগ চ্যানেল খুলতে অক্ষম"
 
-#: daemon/gdm-server.c:383
+#: daemon/scdm-server.c:383
 #, c-format
 #| msgid "Server was to be spawned by user %s but that user doesn't exist"
 msgid "Server was to be spawned by user %s but that user doesn’t exist"
@@ -135,111 +135,111 @@ msgstr ""
 "ব্যবহারকারী %s দ্বারা সার্ভার স্পন হওয়া উচিত, কিন্তু সংশ্লিষ্ট ব্যবহারকারী বর্তমানে "
 "উপস্থিত নেই"
 
-#: daemon/gdm-server.c:394 daemon/gdm-server.c:414
+#: daemon/scdm-server.c:394 daemon/scdm-server.c:414
 #, c-format
 #| msgid "Couldn't set groupid to %d"
 msgid "Couldn’t set groupid to %d"
 msgstr "groupid-র মান %d রূপে নির্ধারণ করতে ব্যর্থ"
 
-#: daemon/gdm-server.c:400
+#: daemon/scdm-server.c:400
 #, c-format
 msgid "initgroups () failed for %s"
 msgstr "%s-র জন্য initgroups () বিফল"
 
-#: daemon/gdm-server.c:406
+#: daemon/scdm-server.c:406
 #, c-format
 #| msgid "Couldn't set userid to %d"
 msgid "Couldn’t set userid to %d"
 msgstr "userid-র মান %d রূপে ধার্য করা যায়নি"
 
-#: daemon/gdm-server.c:484
+#: daemon/scdm-server.c:484
 #, c-format
 msgid "%s: Could not open log file for display %s!"
 msgstr "%s: ডিসপ্লে %s-র জন্য লগ-ফাইল খুলতে ব্যর্থ!"
 
-#: daemon/gdm-server.c:505 daemon/gdm-server.c:511 daemon/gdm-server.c:517
+#: daemon/scdm-server.c:505 daemon/scdm-server.c:511 daemon/scdm-server.c:517
 #, c-format
 msgid "%s: Error setting %s to %s"
 msgstr "%s: %s-র মান %s রূপে ধার্য করতে ব্যর্থ"
 
-#: daemon/gdm-server.c:537
+#: daemon/scdm-server.c:537
 #, c-format
 #| msgid "%s: Server priority couldn't be set to %d: %s"
 msgid "%s: Server priority couldn’t be set to %d: %s"
 msgstr "%s: সার্ভারের অগ্রাধিকারের মাত্রা %d রূপে নির্ধারণ করতে ব্যর্থ: %s"
 
-#: daemon/gdm-server.c:689
+#: daemon/scdm-server.c:689
 #, c-format
 msgid "%s: Empty server command for display %s"
 msgstr "%s: ডিসপ্লে %s-র জন্য ফাঁকা সার্ভার কমান্ড উল্লিখিত"
 
-#: daemon/gdm-session-auditor.c:88
+#: daemon/scdm-session-auditor.c:88
 msgid "Username"
 msgstr "ব্যবহারকারীর নাম"
 
-#: daemon/gdm-session-auditor.c:89
+#: daemon/scdm-session-auditor.c:89
 msgid "The username"
 msgstr "ব্যবহারকারীর নাম"
 
-#: daemon/gdm-session-auditor.c:93
+#: daemon/scdm-session-auditor.c:93
 msgid "Hostname"
 msgstr "হোস্ট-নেম"
 
-#: daemon/gdm-session-auditor.c:94
+#: daemon/scdm-session-auditor.c:94
 msgid "The hostname"
 msgstr "হোস্ট-নেম"
 
-#: daemon/gdm-session-auditor.c:99
+#: daemon/scdm-session-auditor.c:99
 msgid "Display Device"
 msgstr "ডিসপ্লে ডিভাইস"
 
-#: daemon/gdm-session-auditor.c:100
+#: daemon/scdm-session-auditor.c:100
 msgid "The display device"
 msgstr "ডিসপ্লে ডিভাইস"
 
-#: daemon/gdm-session.c:1285
+#: daemon/scdm-session.c:1285
 msgid "Could not create authentication helper process"
 msgstr "অনুমোদন সহায়ক প্রসেস প্রস্তুত করা যায়নি"
 
-#: daemon/gdm-session-worker.c:756
+#: daemon/scdm-session-worker.c:756
 #| msgid "Your account was given a time limit that's now passed."
 msgid "Your account was given a time limit that’s now passed."
 msgstr "আপনার অ্যাকাউন্টের জন্য দেওয়া সময়সীমা এখন উত্তীর্ণ হয়ে গেছে।"
 
-#: daemon/gdm-session-worker.c:763
+#: daemon/scdm-session-worker.c:763
 #| msgid "Sorry, that didn't work. Please try again."
 msgid "Sorry, that didn’t work. Please try again."
 msgstr "দুঃখিত, এটি কার্যকর হয়নি। অনুগ্রহপূর্বক আবার চেষ্টা করুন."
 
-#: daemon/gdm-session-worker.c:1167
+#: daemon/scdm-session-worker.c:1167
 msgid "Username:"
 msgstr "ব্যবহারকারী অ্যাকাউন্টের নাম:"
 
-#: daemon/gdm-session-worker.c:1669 daemon/gdm-session-worker.c:1686
+#: daemon/scdm-session-worker.c:1669 daemon/scdm-session-worker.c:1686
 msgid "no user account available"
 msgstr "কোনো ব্যবহারকারীর অ্যাকাউন্ট উপলব্ধ নেই"
 
-#: daemon/gdm-session-worker.c:1713
+#: daemon/scdm-session-worker.c:1713
 msgid "Unable to change to user"
 msgstr "চিহ্নিত ব্যবহারকারীর অ্যাকাউন্টে পরিবর্তন করা যায়নি"
 
-#: daemon/gdm-wayland-session.c:511
+#: daemon/scdm-wayland-session.c:511
 msgid "GNOME Display Manager Wayland Session Launcher"
 msgstr "জিনোম ডিসপ্লে ম্যানেজার ওয়েল্যান্ড সেশন লঞ্চার"
 
-#: daemon/gdm-xdmcp-display-factory.c:612
+#: daemon/scdm-xdmcp-display-factory.c:612
 msgid "Could not create socket!"
 msgstr "সকেট নির্মাণ করতে ব্যর্থ!"
 
-#: daemon/gdm-x-session.c:858
-msgid "Run program through /etc/gdm/Xsession wrapper script"
-msgstr "/etc/gdm/Xsession wrapper স্ক্রিপ্টের মাধ্যমে প্রোগ্রামটি চালান"
+#: daemon/scdm-x-session.c:858
+msgid "Run program through /etc/scdm/Xsession wrapper script"
+msgstr "/etc/scdm/Xsession wrapper স্ক্রিপ্টের মাধ্যমে প্রোগ্রামটি চালান"
 
-#: daemon/gdm-x-session.c:859
+#: daemon/scdm-x-session.c:859
 msgid "Listen on TCP socket"
 msgstr "টিসিপি সকেটে শুনুন"
 
-#: daemon/gdm-x-session.c:871
+#: daemon/scdm-x-session.c:871
 msgid "GNOME Display Manager X Session Launcher"
 msgstr "জিনোম ডিসপ্লে ম্যানেজার এক্স সেশন লঞ্চার"
 
@@ -421,47 +421,47 @@ msgstr ""
 "অনুমোদনের ব্যর্থ প্রচেষ্টার সর্বোচ্চ সংখ্যা, যার পরে ব্যবহারকারী নির্বাচন পর্দায় "
 "প্রত্যাবর্তন করা হবে।"
 
-#: libgdm/gdm-user-switching.c:59
+#: libscdm/scdm-user-switching.c:59
 msgid "Unable to create transient display: "
 msgstr "পরিবর্তনশীল প্রদর্শন প্রস্তুত করতে ব্যর্থ: "
 
-#: libgdm/gdm-user-switching.c:90
+#: libscdm/scdm-user-switching.c:90
 msgid "Unable to activate session: "
 msgstr "সেশান আরম্ভ করতে ব্যর্থ: "
 
-#: utils/gdmflexiserver.c:45
+#: utils/scdmflexiserver.c:45
 msgid "Only the VERSION command is supported"
 msgstr "শুধুমাত্র VERSION কম্যান্ড সমর্থিত"
 
-#: utils/gdmflexiserver.c:45
+#: utils/scdmflexiserver.c:45
 msgid "COMMAND"
 msgstr "COMMAND"
 
-#: utils/gdmflexiserver.c:46 utils/gdmflexiserver.c:47
-#: utils/gdmflexiserver.c:49 utils/gdmflexiserver.c:50
+#: utils/scdmflexiserver.c:46 utils/scdmflexiserver.c:47
+#: utils/scdmflexiserver.c:49 utils/scdmflexiserver.c:50
 msgid "Ignored — retained for compatibility"
 msgstr "উপেক্ষিত — সুসংগততার জন্য ধরে রাখা"
 
-#: utils/gdmflexiserver.c:48 utils/gdm-screenshot.c:43
+#: utils/scdmflexiserver.c:48 utils/scdm-screenshot.c:43
 msgid "Debugging output"
 msgstr "ডিবাগ সংক্রান্ত আউটপুট"
 
-#: utils/gdmflexiserver.c:52
+#: utils/scdmflexiserver.c:52
 msgid "Version of this application"
 msgstr "এই অ্যাপ্লিকেশনের সংস্করণ"
 
 #. Option parsing
-#: utils/gdmflexiserver.c:137
+#: utils/scdmflexiserver.c:137
 #| msgid "- New GDM login"
 msgid "— New GDM login"
 msgstr "- নতুন GDM লগিন"
 
-#: utils/gdm-screenshot.c:212
+#: utils/scdm-screenshot.c:212
 msgid "Screenshot taken"
 msgstr "পর্দার ছবি গ্রহণ করা হয়েছে"
 
 #. Option parsing
-#: utils/gdm-screenshot.c:279
+#: utils/scdm-screenshot.c:279
 msgid "Take a picture of the screen"
 msgstr "পর্দার একটি ছবি নিন"
 

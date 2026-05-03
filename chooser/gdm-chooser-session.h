@@ -25,14 +25,14 @@
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_CHOOSER_SESSION (gdm_chooser_session_get_type ())
-G_DECLARE_FINAL_TYPE (GdmChooserSession, gdm_chooser_session, GDM, CHOOSER_SESSION, GObject)
+#define GDM_TYPE_CHOOSER_SESSION (scdm_chooser_session_get_type ())
+G_DECLARE_FINAL_TYPE (GdmChooserSession, scdm_chooser_session, GDM, CHOOSER_SESSION, GObject)
 
-GdmChooserSession    * gdm_chooser_session_new                            (void);
+GdmChooserSession    * scdm_chooser_session_new                            (void);
 
-gboolean               gdm_chooser_session_start                          (GdmChooserSession *session,
+gboolean               scdm_chooser_session_start                          (GdmChooserSession *session,
                                                                            GError           **error);
-void                   gdm_chooser_session_stop                           (GdmChooserSession *session);
+void                   scdm_chooser_session_stop                           (GdmChooserSession *session);
 
 G_END_DECLS
 

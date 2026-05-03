@@ -1,4 +1,4 @@
-/* gdm-solaris-session-auditor.h - Object for solaris auditing of session login/logout
+/* scdm-solaris-session-auditor.h - Object for solaris auditing of session login/logout
  *
  * Copyright (C) 2004, 2008 Sun Microsystems, Inc.
  * Copyright (C) 2005, 2008 Red Hat, Inc.
@@ -29,14 +29,14 @@
 #include <glib.h>
 #include <glib-object.h>
 
-#include "gdm-session-auditor.h"
+#include "scdm-session-auditor.h"
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_SESSION_SOLARIS_AUDITOR (gdm_session_solaris_auditor_get_type ())
-G_DECLARE_FINAL_TYPE (GdmSessionSolarisAuditor, gdm_session_solaris_auditor, GDM, SESSION_SOLARIS_AUDITOR, GdmSessionAuditor)
+#define GDM_TYPE_SESSION_SOLARIS_AUDITOR (scdm_session_solaris_auditor_get_type ())
+G_DECLARE_FINAL_TYPE (GdmSessionSolarisAuditor, scdm_session_solaris_auditor, GDM, SESSION_SOLARIS_AUDITOR, GdmSessionAuditor)
 
-GdmSessionAuditor *gdm_session_solaris_auditor_new                            (const char *hostname,
+GdmSessionAuditor *scdm_session_solaris_auditor_new                            (const char *hostname,
                                                                                const char *display_device);
 G_END_DECLS
 #endif /* GDM_SESSION_SOLARIS_AUDITOR_H */

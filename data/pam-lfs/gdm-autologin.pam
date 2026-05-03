@@ -1,10 +1,10 @@
-# Begin /etc/pam.d/gdm-autologin
+# Begin /etc/pam.d/scdm-autologin
 
 auth     requisite      pam_nologin.so
 auth     required       pam_env.so
 
 auth     required       pam_succeed_if.so uid >= 1000 quiet
-auth     optional       pam_gdm.so
+auth     optional       pam_scdm.so
 auth     optional       pam_gnome_keyring.so
 auth     required       pam_permit.so
 
@@ -16,4 +16,4 @@ session  required       pam_limits.so
 session  include        system-session
 session  optional       pam_gnome_keyring.so auto_start
 
-# End /etc/pam.d/gdm-autologin
+# End /etc/pam.d/scdm-autologin

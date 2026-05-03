@@ -6,4 +6,4 @@ includedir=@includedir@
 Name: GDM PAM Extensions
 Description: Macros for custom protocols over PAM
 Version: @VERSION@
-Cflags: -I${includedir}/gdm
+Cflags: -I${includedir}/scdm

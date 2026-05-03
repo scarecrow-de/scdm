@@ -1,9 +1,9 @@
 desktop_conf = {
-  'LIBDIR': gdm_prefix / get_option('libdir'),
-  'LIBEXECDIR': gdm_prefix / get_option('libexecdir'),
-  'LOCALSTATEDIR': gdm_prefix / get_option('localstatedir'),
-  'SBINDIR': gdm_prefix / get_option('sbindir'),
-  'SYSCONFDIR': gdm_prefix / get_option('sysconfdir'),
+  'LIBDIR': scdm_prefix / get_option('libdir'),
+  'LIBEXECDIR': scdm_prefix / get_option('libexecdir'),
+  'LOCALSTATEDIR': scdm_prefix / get_option('localstatedir'),
+  'SBINDIR': scdm_prefix / get_option('sbindir'),
+  'SYSCONFDIR': scdm_prefix / get_option('sysconfdir'),
 }
 
 foreach desktop_file : [ 'mime-dummy-handler.desktop', 'mimeapps.list' ]
@@ -11,6 +11,6 @@ foreach desktop_file : [ 'mime-dummy-handler.desktop', 'mimeapps.list' ]
     input: desktop_file,
     output: desktop_file,
     configuration: desktop_conf,
-    install_dir: get_option('datadir') / 'gdm' / 'greeter' / 'applications',
+    install_dir: get_option('datadir') / 'scdm' / 'greeter' / 'applications',
   )
 endforeach

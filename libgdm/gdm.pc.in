@@ -6,6 +6,6 @@ includedir=@includedir@
 Name: GDM Client Library
 Description: Client Library for communicating with GDM daemon
 Version: @VERSION@
-Libs: -L${libdir} -lgdm
-Cflags: -I${includedir}/gdm
+Libs: -L${libdir} -lscdm
+Cflags: -I${includedir}/scdm
 Requires: gobject-2.0

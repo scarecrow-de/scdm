@@ -30,9 +30,9 @@
 #include <glib/gi18n.h>
 #include <glib-object.h>
 
-#include "gdm-client.h"
-#include "gdm-client-glue.h"
-#include "gdm-manager-glue.h"
+#include "scdm-client.h"
+#include "scdm-client-glue.h"
+#include "scdm-manager-glue.h"
 
 #define SESSION_DBUS_PATH      "/io/github/scarecrow_de/DisplayManager/Session"
 
@@ -50,25 +50,25 @@ struct _GdmClient
         char              **enabled_extensions;
 };
 
-static void     gdm_client_finalize    (GObject        *object);
+static void     scdm_client_finalize    (GObject        *object);
 
-G_DEFINE_TYPE (GdmClient, gdm_client, G_TYPE_OBJECT);
+G_DEFINE_TYPE (GdmClient, scdm_client, G_TYPE_OBJECT);
 
 static gpointer client_object = NULL;
 
 GQuark
-gdm_client_error_quark (void)
+scdm_client_error_quark (void)
 {
         static GQuark error_quark = 0;
 
         if (error_quark == 0)
-                error_quark = g_quark_from_static_string ("gdm-client");
+                error_quark = g_quark_from_static_string ("scdm-client");
 
         return error_quark;
 }
 
 static GDBusConnection *
-gdm_client_get_open_connection (GdmClient *client)
+scdm_client_get_open_connection (GdmClient *client)
 {
         GDBusProxy *proxy = NULL;
 
@@ -100,7 +100,7 @@ on_got_manager (GObject             *object,
         g_autoptr(GError)     error = NULL;
 
         client = GDM_CLIENT (g_async_result_get_source_object (G_ASYNC_RESULT (task)));
-        manager = gdm_manager_proxy_new_finish (result, &error);
+        manager = scdm_manager_proxy_new_finish (result, &error);
 
         if (error != NULL) {
                 g_task_return_error (task, g_steal_pointer (&error));
@@ -124,7 +124,7 @@ get_manager (GdmClient           *client,
                            callback,
                            user_data);
 
-        gdm_manager_proxy_new_for_bus (G_BUS_TYPE_SYSTEM,
+        scdm_manager_proxy_new_for_bus (G_BUS_TYPE_SYSTEM,
                                        G_DBUS_PROXY_FLAGS_NONE,
                                        "io.github.scarecrow_de.DisplayManager",
                                        "/io/github/scarecrow_de/DisplayManager/Manager",
@@ -197,13 +197,13 @@ on_user_verifier_choice_list_proxy_created (GObject            *source,
 
         client = GDM_CLIENT (g_async_result_get_source_object (G_ASYNC_RESULT (data->task)));
 
-        choice_list = gdm_user_verifier_choice_list_proxy_new_finish (result, &error);
+        choice_list = scdm_user_verifier_choice_list_proxy_new_finish (result, &error);
 
         if (choice_list == NULL) {
                 g_debug ("Couldn't create UserVerifier ChoiceList proxy: %s", error->message);
-                g_hash_table_remove (client->user_verifier_extensions, gdm_user_verifier_choice_list_interface_info ()->name);
+                g_hash_table_remove (client->user_verifier_extensions, scdm_user_verifier_choice_list_interface_info ()->name);
         } else {
-                g_hash_table_replace (client->user_verifier_extensions, gdm_user_verifier_choice_list_interface_info ()->name, choice_list);
+                g_hash_table_replace (client->user_verifier_extensions, scdm_user_verifier_choice_list_interface_info ()->name, choice_list);
         }
 
         maybe_complete_user_verifier_proxy_operation (client, data);
@@ -223,7 +223,7 @@ on_user_verifier_extensions_enabled (GdmUserVerifier    *user_verifier,
         client = GDM_CLIENT (g_async_result_get_source_object (G_ASYNC_RESULT (data->task)));
         cancellable = g_task_get_cancellable (data->task);
 
-        gdm_user_verifier_call_enable_extensions_finish (user_verifier, result, &error);
+        scdm_user_verifier_call_enable_extensions_finish (user_verifier, result, &error);
 
         if (error != NULL) {
                 g_debug ("Couldn't enable user verifier extensions: %s",
@@ -239,9 +239,9 @@ on_user_verifier_extensions_enabled (GdmUserVerifier    *user_verifier,
                 g_hash_table_insert (client->user_verifier_extensions, client->enabled_extensions[i], NULL);
 
                 if (strcmp (client->enabled_extensions[i],
-                            gdm_user_verifier_choice_list_interface_info ()->name) == 0) {
+                            scdm_user_verifier_choice_list_interface_info ()->name) == 0) {
                         g_hash_table_insert (client->user_verifier_extensions, client->enabled_extensions[i], NULL);
-                        gdm_user_verifier_choice_list_proxy_new (connection,
+                        scdm_user_verifier_choice_list_proxy_new (connection,
                                                                  G_DBUS_PROXY_FLAGS_NONE,
                                                                  NULL,
                                                                  SESSION_DBUS_PATH,
@@ -283,7 +283,7 @@ on_user_verifier_proxy_created (GObject            *source,
         g_autoptr(GTask)           task = user_data;
         g_autoptr(GError)          error = NULL;
 
-        user_verifier = gdm_user_verifier_proxy_new_finish (result, &error);
+        user_verifier = scdm_user_verifier_proxy_new_finish (result, &error);
         if (user_verifier == NULL) {
                 g_task_return_error (task, g_steal_pointer (&error));
                 return;
@@ -306,7 +306,7 @@ on_user_verifier_proxy_created (GObject            *source,
                                                                       (GDestroyNotify)
                                                                       free_interface_skeleton);
         cancellable = g_task_get_cancellable (task);
-        gdm_user_verifier_call_enable_extensions (user_verifier,
+        scdm_user_verifier_call_enable_extensions (user_verifier,
                                                   (const char * const *)
                                                   self->enabled_extensions,
                                                   cancellable,
@@ -332,7 +332,7 @@ on_reauthentication_channel_connected (GObject            *source_object,
         }
 
         cancellable = g_task_get_cancellable (task);
-        gdm_user_verifier_proxy_new (connection,
+        scdm_user_verifier_proxy_new (connection,
                                      G_DBUS_PROXY_FLAGS_NONE,
                                      NULL,
                                      SESSION_DBUS_PATH,
@@ -351,7 +351,7 @@ on_reauthentication_channel_opened (GdmManager         *manager,
         g_autoptr(GError) error = NULL;
         g_autofree char  *address = NULL;
 
-        if (!gdm_manager_call_open_reauthentication_channel_finish (manager,
+        if (!scdm_manager_call_open_reauthentication_channel_finish (manager,
                                                                     &address,
                                                                     result,
                                                                     &error)) {
@@ -387,7 +387,7 @@ on_got_manager_for_reauthentication (GdmClient           *client,
 
         cancellable = g_task_get_cancellable (task);
         username = g_object_get_data (G_OBJECT (task), "username");
-        gdm_manager_call_open_reauthentication_channel (manager,
+        scdm_manager_call_open_reauthentication_channel (manager,
                                                         username,
                                                         cancellable,
                                                         (GAsyncReadyCallback)
@@ -396,7 +396,7 @@ on_got_manager_for_reauthentication (GdmClient           *client,
 }
 
 static GDBusConnection *
-gdm_client_get_connection_sync (GdmClient      *client,
+scdm_client_get_connection_sync (GdmClient      *client,
                                 GCancellable   *cancellable,
                                 GError        **error)
 {
@@ -407,13 +407,13 @@ gdm_client_get_connection_sync (GdmClient      *client,
 
         g_return_val_if_fail (GDM_IS_CLIENT (client), NULL);
 
-        connection = gdm_client_get_open_connection (client);
+        connection = scdm_client_get_open_connection (client);
 
         if (connection != NULL) {
                 return g_object_ref (connection);
         }
 
-        manager = gdm_manager_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
+        manager = scdm_manager_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
                                                       G_DBUS_PROXY_FLAGS_NONE,
                                                       "io.github.scarecrow_de.DisplayManager",
                                                       "/io/github/scarecrow_de/DisplayManager/Manager",
@@ -424,7 +424,7 @@ gdm_client_get_connection_sync (GdmClient      *client,
                 return NULL;
         }
 
-        ret = gdm_manager_call_open_session_sync (manager,
+        ret = scdm_manager_call_open_session_sync (manager,
                                                   &address,
                                                   cancellable,
                                                   error);
@@ -477,7 +477,7 @@ on_session_opened (GdmManager         *manager,
 
         client = GDM_CLIENT (g_async_result_get_source_object (G_ASYNC_RESULT (task)));
 
-        if (!gdm_manager_call_open_session_finish (manager,
+        if (!scdm_manager_call_open_session_finish (manager,
                                                    &address,
                                                    result,
                                                    &error)) {
@@ -511,7 +511,7 @@ on_got_manager_for_opening_connection (GdmClient           *client,
         }
 
         cancellable = g_task_get_cancellable (task);
-        gdm_manager_call_open_session (manager,
+        scdm_manager_call_open_session (manager,
                                        cancellable,
                                        (GAsyncReadyCallback)
                                        on_session_opened,
@@ -519,7 +519,7 @@ on_got_manager_for_opening_connection (GdmClient           *client,
 }
 
 static GDBusConnection *
-gdm_client_get_connection_finish (GdmClient      *client,
+scdm_client_get_connection_finish (GdmClient      *client,
                                   GAsyncResult   *result,
                                   GError        **error)
 {
@@ -536,7 +536,7 @@ gdm_client_get_connection_finish (GdmClient      *client,
 }
 
 static void
-gdm_client_get_connection (GdmClient           *client,
+scdm_client_get_connection (GdmClient           *client,
                             GCancellable        *cancellable,
                             GAsyncReadyCallback  callback,
                             gpointer             user_data)
@@ -551,7 +551,7 @@ gdm_client_get_connection (GdmClient           *client,
                            callback,
                            user_data);
 
-        connection = gdm_client_get_open_connection (client);
+        connection = scdm_client_get_open_connection (client);
         if (connection != NULL) {
             g_task_return_pointer (task,
                                    g_object_ref (connection),
@@ -567,7 +567,7 @@ gdm_client_get_connection (GdmClient           *client,
 }
 
 /**
- * gdm_client_open_reauthentication_channel_sync:
+ * scdm_client_open_reauthentication_channel_sync:
  * @client: a #GdmClient
  * @username: user to reauthenticate
  * @cancellable: a #GCancellable
@@ -581,7 +581,7 @@ gdm_client_get_connection (GdmClient           *client,
  * already logged in.
  */
 GdmUserVerifier *
-gdm_client_open_reauthentication_channel_sync (GdmClient     *client,
+scdm_client_open_reauthentication_channel_sync (GdmClient     *client,
                                                const char    *username,
                                                GCancellable  *cancellable,
                                                GError       **error)
@@ -594,7 +594,7 @@ gdm_client_open_reauthentication_channel_sync (GdmClient     *client,
 
         g_return_val_if_fail (GDM_IS_CLIENT (client), NULL);
 
-        manager = gdm_manager_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
+        manager = scdm_manager_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
                                                       G_DBUS_PROXY_FLAGS_NONE,
                                                       "io.github.scarecrow_de.DisplayManager",
                                                       "/io/github/scarecrow_de/DisplayManager/Manager",
@@ -605,7 +605,7 @@ gdm_client_open_reauthentication_channel_sync (GdmClient     *client,
                 return NULL;
         }
 
-        ret = gdm_manager_call_open_reauthentication_channel_sync (manager,
+        ret = scdm_manager_call_open_reauthentication_channel_sync (manager,
                                                                    username,
                                                                    &address,
                                                                    cancellable,
@@ -627,7 +627,7 @@ gdm_client_open_reauthentication_channel_sync (GdmClient     *client,
                 return NULL;
         }
 
-        user_verifier = gdm_user_verifier_proxy_new_sync (connection,
+        user_verifier = scdm_user_verifier_proxy_new_sync (connection,
                                                           G_DBUS_PROXY_FLAGS_NONE,
                                                           NULL,
                                                           SESSION_DBUS_PATH,
@@ -638,7 +638,7 @@ gdm_client_open_reauthentication_channel_sync (GdmClient     *client,
 }
 
 /**
- * gdm_client_open_reauthentication_channel:
+ * scdm_client_open_reauthentication_channel:
  * @client: a #GdmClient
  * @username: user to reauthenticate
  * @callback: a #GAsyncReadyCallback to call when the request is satisfied
@@ -649,7 +649,7 @@ gdm_client_open_reauthentication_channel_sync (GdmClient     *client,
  * reauthenticate an already logged in user.
  */
 void
-gdm_client_open_reauthentication_channel (GdmClient           *client,
+scdm_client_open_reauthentication_channel (GdmClient           *client,
                                           const char          *username,
                                           GCancellable        *cancellable,
                                           GAsyncReadyCallback  callback,
@@ -678,18 +678,18 @@ gdm_client_open_reauthentication_channel (GdmClient           *client,
 }
 
 /**
- * gdm_client_open_reauthentication_channel_finish:
+ * scdm_client_open_reauthentication_channel_finish:
  * @client: a #GdmClient
  * @result: The #GAsyncResult from the callback
  * @error: a #GError
  *
  * Finishes an operation started with
- * gdm_client_open_reauthentication_channel().
+ * scdm_client_open_reauthentication_channel().
  *
  * Returns: (transfer full):  a #GdmUserVerifier
  */
 GdmUserVerifier *
-gdm_client_open_reauthentication_channel_finish (GdmClient       *client,
+scdm_client_open_reauthentication_channel_finish (GdmClient       *client,
                                                  GAsyncResult    *result,
                                                  GError         **error)
 {
@@ -699,7 +699,7 @@ gdm_client_open_reauthentication_channel_finish (GdmClient       *client,
 }
 
 /**
- * gdm_client_get_user_verifier_sync:
+ * scdm_client_get_user_verifier_sync:
  * @client: a #GdmClient
  * @cancellable: a #GCancellable
  * @error: a #GError
@@ -710,7 +710,7 @@ gdm_client_open_reauthentication_channel_finish (GdmClient       *client,
  * Returns: (transfer full): #GdmUserVerifier or %NULL if not connected
  */
 GdmUserVerifier *
-gdm_client_get_user_verifier_sync (GdmClient     *client,
+scdm_client_get_user_verifier_sync (GdmClient     *client,
                                    GCancellable  *cancellable,
                                    GError       **error)
 {
@@ -720,13 +720,13 @@ gdm_client_get_user_verifier_sync (GdmClient     *client,
                 return g_object_ref (client->user_verifier);
         }
 
-        connection = gdm_client_get_connection_sync (client, cancellable, error);
+        connection = scdm_client_get_connection_sync (client, cancellable, error);
 
         if (connection == NULL) {
                 return NULL;
         }
 
-        client->user_verifier = gdm_user_verifier_proxy_new_sync (connection,
+        client->user_verifier = scdm_user_verifier_proxy_new_sync (connection,
                                                                         G_DBUS_PROXY_FLAGS_NONE,
                                                                         NULL,
                                                                         SESSION_DBUS_PATH,
@@ -745,7 +745,7 @@ gdm_client_get_user_verifier_sync (GdmClient     *client,
                                                                                         NULL,
                                                                                         (GDestroyNotify)
                                                                                         free_interface_skeleton);
-                        res = gdm_user_verifier_call_enable_extensions_sync (client->user_verifier,
+                        res = scdm_user_verifier_call_enable_extensions_sync (client->user_verifier,
                                                                             (const char * const *)
                                                                              client->enabled_extensions,
                                                                              cancellable,
@@ -755,9 +755,9 @@ gdm_client_get_user_verifier_sync (GdmClient     *client,
                                 size_t i;
                                 for (i = 0; client->enabled_extensions[i] != NULL; i++) {
                                             if (strcmp (client->enabled_extensions[i],
-                                                        gdm_user_verifier_choice_list_interface_info ()->name) == 0) {
+                                                        scdm_user_verifier_choice_list_interface_info ()->name) == 0) {
                                                         GdmUserVerifierChoiceList *choice_list_interface;
-                                                        choice_list_interface = gdm_user_verifier_choice_list_proxy_new_sync (connection,
+                                                        choice_list_interface = scdm_user_verifier_choice_list_proxy_new_sync (connection,
                                                                                                                               G_DBUS_PROXY_FLAGS_NONE,
                                                                                                                               NULL,
                                                                                                                               SESSION_DBUS_PATH,
@@ -784,14 +784,14 @@ on_connection_for_user_verifier (GdmClient          *client,
         g_autoptr(GDBusConnection) connection = NULL;
         g_autoptr(GError)          error = NULL;
 
-        connection = gdm_client_get_connection_finish (client, result, &error);
+        connection = scdm_client_get_connection_finish (client, result, &error);
         if (connection == NULL) {
                 g_task_return_error (task, g_steal_pointer (&error));
                 return;
         }
 
         cancellable = g_task_get_cancellable (task);
-        gdm_user_verifier_proxy_new (connection,
+        scdm_user_verifier_proxy_new (connection,
                                      G_DBUS_PROXY_FLAGS_NONE,
                                      NULL,
                                      SESSION_DBUS_PATH,
@@ -801,7 +801,7 @@ on_connection_for_user_verifier (GdmClient          *client,
 }
 
 /**
- * gdm_client_get_user_verifier:
+ * scdm_client_get_user_verifier:
  * @client: a #GdmClient
  * @callback: a #GAsyncReadyCallback to call when the request is satisfied
  * @user_data: The data to pass to @callback
@@ -811,7 +811,7 @@ on_connection_for_user_verifier (GdmClient          *client,
  * verify a user's local account.
  */
 void
-gdm_client_get_user_verifier (GdmClient           *client,
+scdm_client_get_user_verifier (GdmClient           *client,
                               GCancellable        *cancellable,
                               GAsyncReadyCallback  callback,
                               gpointer             user_data)
@@ -832,7 +832,7 @@ gdm_client_get_user_verifier (GdmClient           *client,
                 return;
         }
 
-        gdm_client_get_connection (client,
+        scdm_client_get_connection (client,
                                    cancellable,
                                    (GAsyncReadyCallback)
                                    on_connection_for_user_verifier,
@@ -840,18 +840,18 @@ gdm_client_get_user_verifier (GdmClient           *client,
 }
 
 /**
- * gdm_client_get_user_verifier_finish:
+ * scdm_client_get_user_verifier_finish:
  * @client: a #GdmClient
  * @result: The #GAsyncResult from the callback
  * @error: a #GError
  *
  * Finishes an operation started with
- * gdm_client_get_user_verifier().
+ * scdm_client_get_user_verifier().
  *
  * Returns: (transfer full): a #GdmUserVerifier
  */
 GdmUserVerifier *
-gdm_client_get_user_verifier_finish (GdmClient       *client,
+scdm_client_get_user_verifier_finish (GdmClient       *client,
                                      GAsyncResult    *result,
                                      GError         **error)
 {
@@ -876,7 +876,7 @@ gdm_client_get_user_verifier_finish (GdmClient       *client,
 }
 
 /**
- * gdm_client_get_user_verifier_choice_list:
+ * scdm_client_get_user_verifier_choice_list:
  * @client: a #GdmClient
  *
  * Gets a #GdmUserVerifierChoiceList object that can be used to
@@ -886,20 +886,20 @@ gdm_client_get_user_verifier_finish (GdmClient       *client,
  * verifier isn't yet fetched, or daemon doesn't support choice lists
  */
 GdmUserVerifierChoiceList *
-gdm_client_get_user_verifier_choice_list (GdmClient *client)
+scdm_client_get_user_verifier_choice_list (GdmClient *client)
 {
         if (client->user_verifier_extensions == NULL)
                 return NULL;
 
         return g_hash_table_lookup (client->user_verifier_extensions,
-                                    gdm_user_verifier_choice_list_interface_info ()->name);
+                                    scdm_user_verifier_choice_list_interface_info ()->name);
 }
 
 static void
 on_timed_login_details_got (GdmGreeter   *greeter,
                             GAsyncResult *result)
 {
-    gdm_greeter_call_get_timed_login_details_finish (greeter, NULL, NULL, NULL, result, NULL);
+    scdm_greeter_call_get_timed_login_details_finish (greeter, NULL, NULL, NULL, result, NULL);
 }
 
 static void
@@ -908,7 +908,7 @@ query_for_timed_login_requested_signal (GdmGreeter *greeter)
         /* This just makes sure a timed-login-requested signal gets fired
          * off if appropriate.
          */
-        gdm_greeter_call_get_timed_login_details (greeter,
+        scdm_greeter_call_get_timed_login_details (greeter,
                                                   NULL,
                                                   (GAsyncReadyCallback)
                                                   on_timed_login_details_got,
@@ -924,7 +924,7 @@ on_greeter_proxy_created (GObject            *source,
         g_autoptr(GError) error = NULL;
         GdmGreeter   *greeter;
 
-        greeter = gdm_greeter_proxy_new_finish (result, &error);
+        greeter = scdm_greeter_proxy_new_finish (result, &error);
         if (greeter == NULL) {
                 g_task_return_error (task, g_steal_pointer (&error));
                 return;
@@ -947,7 +947,7 @@ on_connection_for_greeter (GdmClient          *client,
         g_autoptr(GDBusConnection) connection = NULL;
         g_autoptr(GError)          error = NULL;
 
-        connection = gdm_client_get_connection_finish (client, result, &error);
+        connection = scdm_client_get_connection_finish (client, result, &error);
 
         if (connection == NULL) {
                 g_task_return_error (task, g_steal_pointer (&error));
@@ -955,7 +955,7 @@ on_connection_for_greeter (GdmClient          *client,
         }
 
         cancellable = g_task_get_cancellable (task);
-        gdm_greeter_proxy_new (connection,
+        scdm_greeter_proxy_new (connection,
                                G_DBUS_PROXY_FLAGS_NONE,
                                NULL,
                                SESSION_DBUS_PATH,
@@ -965,7 +965,7 @@ on_connection_for_greeter (GdmClient          *client,
 }
 
 /**
- * gdm_client_get_greeter:
+ * scdm_client_get_greeter:
  * @client: a #GdmClient
  * @callback: a #GAsyncReadyCallback to call when the request is satisfied
  * @user_data: The data to pass to @callback
@@ -975,7 +975,7 @@ on_connection_for_greeter (GdmClient          *client,
  * verify a user's local account.
  */
 void
-gdm_client_get_greeter (GdmClient           *client,
+scdm_client_get_greeter (GdmClient           *client,
                         GCancellable        *cancellable,
                         GAsyncReadyCallback  callback,
                         gpointer             user_data)
@@ -996,7 +996,7 @@ gdm_client_get_greeter (GdmClient           *client,
                 return;
         }
 
-        gdm_client_get_connection (client,
+        scdm_client_get_connection (client,
                                    cancellable,
                                    (GAsyncReadyCallback)
                                    on_connection_for_greeter,
@@ -1004,18 +1004,18 @@ gdm_client_get_greeter (GdmClient           *client,
 }
 
 /**
- * gdm_client_get_greeter_finish:
+ * scdm_client_get_greeter_finish:
  * @client: a #GdmClient
  * @result: The #GAsyncResult from the callback
  * @error: a #GError
  *
  * Finishes an operation started with
- * gdm_client_get_greeter().
+ * scdm_client_get_greeter().
  *
  * Returns: (transfer full): a #GdmGreeter
  */
 GdmGreeter *
-gdm_client_get_greeter_finish (GdmClient       *client,
+scdm_client_get_greeter_finish (GdmClient       *client,
                                GAsyncResult    *result,
                                GError         **error)
 {
@@ -1040,7 +1040,7 @@ gdm_client_get_greeter_finish (GdmClient       *client,
 }
 
 /**
- * gdm_client_get_greeter_sync:
+ * scdm_client_get_greeter_sync:
  * @client: a #GdmClient
  * @cancellable: a #GCancellable
  * @error: a #GError
@@ -1053,7 +1053,7 @@ gdm_client_get_greeter_finish (GdmClient       *client,
  * Returns: (transfer full): #GdmGreeter or %NULL if caller is not a greeter
  */
 GdmGreeter *
-gdm_client_get_greeter_sync (GdmClient     *client,
+scdm_client_get_greeter_sync (GdmClient     *client,
                              GCancellable  *cancellable,
                              GError       **error)
 {
@@ -1063,13 +1063,13 @@ gdm_client_get_greeter_sync (GdmClient     *client,
                 return g_object_ref (client->greeter);
         }
 
-        connection = gdm_client_get_connection_sync (client, cancellable, error);
+        connection = scdm_client_get_connection_sync (client, cancellable, error);
 
         if (connection == NULL) {
                 return NULL;
         }
 
-        client->greeter = gdm_greeter_proxy_new_sync (connection,
+        client->greeter = scdm_greeter_proxy_new_sync (connection,
                                                             G_DBUS_PROXY_FLAGS_NONE,
                                                             NULL,
                                                             SESSION_DBUS_PATH,
@@ -1096,7 +1096,7 @@ on_remote_greeter_proxy_created (GObject            *object,
         g_autoptr(GError) error = NULL;
         GdmRemoteGreeter *remote_greeter;
 
-        remote_greeter = gdm_remote_greeter_proxy_new_finish (result, &error);
+        remote_greeter = scdm_remote_greeter_proxy_new_finish (result, &error);
         if (remote_greeter == NULL) {
                 g_task_return_error (task, g_steal_pointer (&error));
                 return;
@@ -1117,7 +1117,7 @@ on_connection_for_remote_greeter (GdmClient          *client,
         g_autoptr(GDBusConnection) connection = NULL;
         g_autoptr(GError)          error = NULL;
 
-        connection = gdm_client_get_connection_finish (client, result, &error);
+        connection = scdm_client_get_connection_finish (client, result, &error);
 
         if (connection == NULL) {
                 g_task_return_error (task, g_steal_pointer (&error));
@@ -1125,7 +1125,7 @@ on_connection_for_remote_greeter (GdmClient          *client,
         }
 
         cancellable = g_task_get_cancellable (task);
-        gdm_remote_greeter_proxy_new (connection,
+        scdm_remote_greeter_proxy_new (connection,
                                       G_DBUS_PROXY_FLAGS_NONE,
                                       NULL,
                                       SESSION_DBUS_PATH,
@@ -1135,7 +1135,7 @@ on_connection_for_remote_greeter (GdmClient          *client,
 }
 
 /**
- * gdm_client_get_remote_greeter:
+ * scdm_client_get_remote_greeter:
  * @client: a #GdmClient
  * @callback: a #GAsyncReadyCallback to call when the request is satisfied
  * @user_data: The data to pass to @callback
@@ -1145,7 +1145,7 @@ on_connection_for_remote_greeter (GdmClient          *client,
  * verify a user's local account.
  */
 void
-gdm_client_get_remote_greeter (GdmClient           *client,
+scdm_client_get_remote_greeter (GdmClient           *client,
                                GCancellable        *cancellable,
                                GAsyncReadyCallback  callback,
                                gpointer             user_data)
@@ -1166,7 +1166,7 @@ gdm_client_get_remote_greeter (GdmClient           *client,
                 return;
         }
 
-        gdm_client_get_connection (client,
+        scdm_client_get_connection (client,
                                    cancellable,
                                    (GAsyncReadyCallback)
                                    on_connection_for_remote_greeter,
@@ -1174,18 +1174,18 @@ gdm_client_get_remote_greeter (GdmClient           *client,
 }
 
 /**
- * gdm_client_get_remote_greeter_finish:
+ * scdm_client_get_remote_greeter_finish:
  * @client: a #GdmClient
  * @result: The #GAsyncResult from the callback
  * @error: a #GError
  *
  * Finishes an operation started with
- * gdm_client_get_remote_greeter().
+ * scdm_client_get_remote_greeter().
  *
  * Returns: (transfer full): a #GdmRemoteGreeter
  */
 GdmRemoteGreeter *
-gdm_client_get_remote_greeter_finish (GdmClient     *client,
+scdm_client_get_remote_greeter_finish (GdmClient     *client,
                                       GAsyncResult  *result,
                                       GError       **error)
 {
@@ -1210,7 +1210,7 @@ gdm_client_get_remote_greeter_finish (GdmClient     *client,
 }
 
 /**
- * gdm_client_get_remote_greeter_sync:
+ * scdm_client_get_remote_greeter_sync:
  * @client: a #GdmClient
  * @cancellable: a #GCancellable
  * @error: a #GError
@@ -1222,7 +1222,7 @@ gdm_client_get_remote_greeter_finish (GdmClient     *client,
  * Returns: (transfer full): #GdmRemoteGreeter or %NULL if caller is not remote
  */
 GdmRemoteGreeter *
-gdm_client_get_remote_greeter_sync (GdmClient     *client,
+scdm_client_get_remote_greeter_sync (GdmClient     *client,
                                     GCancellable  *cancellable,
                                     GError       **error)
 {
@@ -1232,13 +1232,13 @@ gdm_client_get_remote_greeter_sync (GdmClient     *client,
                 return g_object_ref (client->remote_greeter);
         }
 
-        connection = gdm_client_get_connection_sync (client, cancellable, error);
+        connection = scdm_client_get_connection_sync (client, cancellable, error);
 
         if (connection == NULL) {
                 return NULL;
         }
 
-        client->remote_greeter = gdm_remote_greeter_proxy_new_sync (connection,
+        client->remote_greeter = scdm_remote_greeter_proxy_new_sync (connection,
                                                                           G_DBUS_PROXY_FLAGS_NONE,
                                                                           NULL,
                                                                           SESSION_DBUS_PATH,
@@ -1263,7 +1263,7 @@ on_chooser_proxy_created (GObject            *source,
         g_autoptr(GTask)  task = user_data;
         g_autoptr(GError) error = NULL;
 
-        chooser = gdm_chooser_proxy_new_finish (result, &error);
+        chooser = scdm_chooser_proxy_new_finish (result, &error);
         if (chooser == NULL) {
                 g_task_return_error (task, g_steal_pointer (&error));
                 return;
@@ -1284,7 +1284,7 @@ on_connection_for_chooser (GdmClient          *client,
         g_autoptr(GDBusConnection) connection = NULL;
         g_autoptr(GError)          error = NULL;
 
-        connection = gdm_client_get_connection_finish (client, result, &error);
+        connection = scdm_client_get_connection_finish (client, result, &error);
 
         if (connection == NULL) {
                 g_task_return_error (task, g_steal_pointer (&error));
@@ -1292,7 +1292,7 @@ on_connection_for_chooser (GdmClient          *client,
         }
 
         cancellable = g_task_get_cancellable (task);
-        gdm_chooser_proxy_new (connection,
+        scdm_chooser_proxy_new (connection,
                                G_DBUS_PROXY_FLAGS_NONE,
                                NULL,
                                SESSION_DBUS_PATH,
@@ -1303,7 +1303,7 @@ on_connection_for_chooser (GdmClient          *client,
 }
 
 /**
- * gdm_client_get_chooser:
+ * scdm_client_get_chooser:
  * @client: a #GdmClient
  * @callback: a #GAsyncReadyCallback to call when the request is satisfied
  * @user_data: The data to pass to @callback
@@ -1313,7 +1313,7 @@ on_connection_for_chooser (GdmClient          *client,
  * verify a user's local account.
  */
 void
-gdm_client_get_chooser (GdmClient           *client,
+scdm_client_get_chooser (GdmClient           *client,
                         GCancellable        *cancellable,
                         GAsyncReadyCallback  callback,
                         gpointer             user_data)
@@ -1334,7 +1334,7 @@ gdm_client_get_chooser (GdmClient           *client,
                 return;
         }
 
-        gdm_client_get_connection (client,
+        scdm_client_get_connection (client,
                                    cancellable,
                                    (GAsyncReadyCallback)
                                    on_connection_for_chooser,
@@ -1342,18 +1342,18 @@ gdm_client_get_chooser (GdmClient           *client,
 }
 
 /**
- * gdm_client_get_chooser_finish:
+ * scdm_client_get_chooser_finish:
  * @client: a #GdmClient
  * @result: The #GAsyncResult from the callback
  * @error: a #GError
  *
  * Finishes an operation started with
- * gdm_client_get_chooser().
+ * scdm_client_get_chooser().
  *
  * Returns: (transfer full): a #GdmChooser
  */
 GdmChooser *
-gdm_client_get_chooser_finish (GdmClient       *client,
+scdm_client_get_chooser_finish (GdmClient       *client,
                                GAsyncResult    *result,
                                GError         **error)
 {
@@ -1378,7 +1378,7 @@ gdm_client_get_chooser_finish (GdmClient       *client,
 }
 
 /**
- * gdm_client_get_chooser_sync:
+ * scdm_client_get_chooser_sync:
  * @client: a #GdmClient
  * @cancellable: a #GCancellable
  * @error: a #GError
@@ -1390,7 +1390,7 @@ gdm_client_get_chooser_finish (GdmClient       *client,
  * Returns: (transfer full): #GdmChooser or %NULL if caller is not a chooser
  */
 GdmChooser *
-gdm_client_get_chooser_sync (GdmClient     *client,
+scdm_client_get_chooser_sync (GdmClient     *client,
                              GCancellable  *cancellable,
                              GError       **error)
 {
@@ -1400,13 +1400,13 @@ gdm_client_get_chooser_sync (GdmClient     *client,
                 return g_object_ref (client->chooser);
         }
 
-        connection = gdm_client_get_connection_sync (client, cancellable, error);
+        connection = scdm_client_get_connection_sync (client, cancellable, error);
 
         if (connection == NULL) {
                 return NULL;
         }
 
-        client->chooser = gdm_chooser_proxy_new_sync (connection,
+        client->chooser = scdm_chooser_proxy_new_sync (connection,
                                                             G_DBUS_PROXY_FLAGS_NONE,
                                                             NULL,
                                                             SESSION_DBUS_PATH,
@@ -1423,20 +1423,20 @@ gdm_client_get_chooser_sync (GdmClient     *client,
 }
 
 static void
-gdm_client_class_init (GdmClientClass *klass)
+scdm_client_class_init (GdmClientClass *klass)
 {
         GObjectClass   *object_class = G_OBJECT_CLASS (klass);
 
-        object_class->finalize = gdm_client_finalize;
+        object_class->finalize = scdm_client_finalize;
 }
 
 static void
-gdm_client_init (GdmClient *client)
+scdm_client_init (GdmClient *client)
 {
 }
 
 static void
-gdm_client_finalize (GObject *object)
+scdm_client_finalize (GObject *object)
 {
         GdmClient *client;
 
@@ -1473,11 +1473,11 @@ gdm_client_finalize (GObject *object)
 
         g_strfreev (client->enabled_extensions);
 
-        G_OBJECT_CLASS (gdm_client_parent_class)->finalize (object);
+        G_OBJECT_CLASS (scdm_client_parent_class)->finalize (object);
 }
 
 GdmClient *
-gdm_client_new (void)
+scdm_client_new (void)
 {
         if (client_object != NULL) {
                 g_object_ref (client_object);
@@ -1492,7 +1492,7 @@ gdm_client_new (void)
 
 
 /**
- * gdm_client_set_enabled_extensions:
+ * scdm_client_set_enabled_extensions:
  * @client: a #GdmClient
  * @extensions: (array zero-terminated=1) (element-type utf8): a list of extensions
  *
@@ -1500,7 +1500,7 @@ gdm_client_new (void)
  * io.github.scarecrow_de.DisplayManager.UserVerifier.ChoiceList is supported.
  */
 void
-gdm_client_set_enabled_extensions (GdmClient          *client,
+scdm_client_set_enabled_extensions (GdmClient          *client,
                                    const char * const *extensions)
 {
         client->enabled_extensions = g_strdupv ((char **) extensions);

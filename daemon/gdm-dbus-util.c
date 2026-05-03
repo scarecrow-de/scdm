@@ -18,7 +18,7 @@
  *
  */
 
-#include "gdm-dbus-util.h"
+#include "scdm-dbus-util.h"
 #include <string.h>
 
 #include <glib/gstdio.h>
@@ -72,7 +72,7 @@ handle_connection (GDBusServer      *server,
 }
 
 GDBusServer *
-gdm_dbus_setup_private_server (GDBusAuthObserver  *observer,
+scdm_dbus_setup_private_server (GDBusAuthObserver  *observer,
                                GError            **error)
 {
         char *guid;
@@ -105,7 +105,7 @@ gdm_dbus_setup_private_server (GDBusAuthObserver  *observer,
 }
 
 gboolean
-gdm_dbus_get_pid_for_name (const char  *system_bus_name,
+scdm_dbus_get_pid_for_name (const char  *system_bus_name,
                            pid_t       *out_pid,
                            GError     **error)
 {
@@ -145,7 +145,7 @@ gdm_dbus_get_pid_for_name (const char  *system_bus_name,
 }
 
 gboolean
-gdm_dbus_get_uid_for_name (const char  *system_bus_name,
+scdm_dbus_get_uid_for_name (const char  *system_bus_name,
                            uid_t       *out_uid,
                            GError     **error)
 {

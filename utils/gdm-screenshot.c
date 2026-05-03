@@ -169,7 +169,7 @@ screenshot_save (GdkPixbuf *pixbuf)
                                filename,
                                "png",
                                &error,
-                               "tEXt::CREATOR", "gdm-screenshot",
+                               "tEXt::CREATOR", "scdm-screenshot",
                                NULL);
         if (! res) {
                 g_warning ("Unable to save screenshot: %s", error->message);

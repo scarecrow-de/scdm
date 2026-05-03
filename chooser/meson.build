@@ -1,49 +1,49 @@
 # Simple chooser
-gdm_simple_chooser_src = [
+scdm_simple_chooser_src = [
  'chooser-main.c',
- 'gdm-chooser-host.c',
- 'gdm-chooser-session.c',
- 'gdm-host-chooser-dialog.c',
- 'gdm-host-chooser-widget.c',
+ 'scdm-chooser-host.c',
+ 'scdm-chooser-session.c',
+ 'scdm-host-chooser-dialog.c',
+ 'scdm-host-chooser-widget.c',
 ]
 
-gdm_simple_chooser_deps = [
+scdm_simple_chooser_deps = [
   glib_dep,
   gtk_dep,
-  libgdmcommon_dep,
-  libgdm_dep,
+  libscdmcommon_dep,
+  libscdm_dep,
   x_deps,
   xdmcp_dep,
 ]
 
-gdm_simple_chooser = executable('gdm-simple-chooser',
-  gdm_simple_chooser_src,
-  dependencies: gdm_simple_chooser_deps,
+scdm_simple_chooser = executable('scdm-simple-chooser',
+  scdm_simple_chooser_src,
+  dependencies: scdm_simple_chooser_deps,
   include_directories: config_h_dir,
   install: true,
   install_dir: get_option('libexecdir'),
 )
 
 # Host chooser
-gdm_host_chooser_src = [
- 'gdm-host-chooser.c',
- 'gdm-chooser-host.c',
- 'gdm-host-chooser-dialog.c',
- 'gdm-host-chooser-widget.c',
+scdm_host_chooser_src = [
+ 'scdm-host-chooser.c',
+ 'scdm-chooser-host.c',
+ 'scdm-host-chooser-dialog.c',
+ 'scdm-host-chooser-widget.c',
 ]
 
-gdm_host_chooser_deps = [
+scdm_host_chooser_deps = [
   glib_dep,
   gtk_dep,
-  libgdmcommon_dep,
-  libgdm_dep,
+  libscdmcommon_dep,
+  libscdm_dep,
   x_deps,
   xdmcp_dep,
 ]
 
-gdm_host_chooser = executable('gdm-host-chooser',
-  gdm_host_chooser_src,
-  dependencies: gdm_host_chooser_deps,
+scdm_host_chooser = executable('scdm-host-chooser',
+  scdm_host_chooser_src,
+  dependencies: scdm_host_chooser_deps,
   include_directories: config_h_dir,
   install: true,
   install_dir: get_option('libexecdir'),

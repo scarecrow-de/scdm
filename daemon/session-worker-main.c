@@ -36,13 +36,13 @@
 #include <glib/gi18n.h>
 #include <glib-object.h>
 
-#include "gdm-common.h"
-#include "gdm-log.h"
-#include "gdm-session-worker.h"
+#include "scdm-common.h"
+#include "scdm-log.h"
+#include "scdm-session-worker.h"
 
-#include "gdm-settings.h"
-#include "gdm-settings-direct.h"
-#include "gdm-settings-keys.h"
+#include "scdm-settings.h"
+#include "scdm-settings-direct.h"
+#include "scdm-settings-keys.h"
 
 static GdmSettings *settings = NULL;
 
@@ -51,7 +51,7 @@ on_sigusr1_cb (gpointer user_data)
 {
         g_debug ("Got USR1 signal");
 
-        gdm_log_toggle_debug ();
+        scdm_log_toggle_debug ();
 
         return TRUE;
 }
@@ -60,7 +60,7 @@ static gboolean
 is_debug_set (void)
 {
         gboolean debug;
-        gdm_settings_direct_get_boolean (GDM_KEY_DEBUG, &debug);
+        scdm_settings_direct_get_boolean (GDM_KEY_DEBUG, &debug);
         return debug;
 }
 
@@ -122,20 +122,20 @@ main (int    argc,
         g_option_context_parse (context, &argc, &argv, NULL);
         g_option_context_free (context);
 
-        gdm_log_init ();
+        scdm_log_init ();
 
-        settings = gdm_settings_new ();
+        settings = scdm_settings_new ();
         if (settings == NULL) {
                 g_warning ("Unable to initialize settings");
                 exit (EXIT_FAILURE);
         }
 
-        if (! gdm_settings_direct_init (settings, DATADIR "/gdm/gdm.schemas", "/")) {
+        if (! scdm_settings_direct_init (settings, DATADIR "/scdm/scdm.schemas", "/")) {
                 g_warning ("Unable to initialize settings");
                 exit (EXIT_FAILURE);
         }
 
-        gdm_log_set_debug (is_debug_set ());
+        scdm_log_set_debug (is_debug_set ());
 
         address = g_getenv ("GDM_SESSION_DBUS_ADDRESS");
         if (address == NULL) {
@@ -145,7 +145,7 @@ main (int    argc,
 
         is_for_reauth = g_getenv ("GDM_SESSION_FOR_REAUTH") != NULL;
 
-        worker = gdm_session_worker_new (address, is_for_reauth);
+        worker = scdm_session_worker_new (address, is_for_reauth);
 
         main_loop = g_main_loop_new (NULL, FALSE);
 

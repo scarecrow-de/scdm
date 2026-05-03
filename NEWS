@@ -7,7 +7,7 @@ Version 3.38.2
 ==============
 Version 3.38.1
 ==============
-- Fix bug leading to users /etc/gdm/custom.conf getting overwritten on nvidia systems.
+- Fix bug leading to users /etc/scdm/custom.conf getting overwritten on nvidia systems.
 - Fix typo in comment
 - Translation updates
 
@@ -77,7 +77,7 @@ Version 3.33.90
 - allow users to set PATH from ~/.config/environmet
 - support systemd user sessions
 - misc warning fixes
-- leak fix in libgdm
+- leak fix in libscdm
 - vt changing fix
 - drop some deprecations
 - drop unused icons
@@ -87,7 +87,7 @@ Version 3.33.90
 Version 3.33.4
 ==============
 - Fix session search directories
-- Kill user sessions when stopping gdm
+- Kill user sessions when stopping scdm
 - Add way for sessions to register when they successfully started
 - Translation updates
 
@@ -156,7 +156,7 @@ Version 3.29.91
 Version 3.29.90
 ===============
 - display wayland on certain server machines
-- lifecycle fixes to libgdm/GdmClient
+- lifecycle fixes to libscdm/GdmClient
 - drop intltool
 - build goo clean ups
 - kill login screen when not in use
@@ -210,7 +210,7 @@ Version 3.27.4
 ==============
 Version 3.27.3
 ==============
-- don't call gdm_session_defaults_changed from setup
+- don't call scdm_session_defaults_changed from setup
 - Add dependency to .pc file
 - code clean ups
 
@@ -236,7 +236,7 @@ Version 3.25.92
 - Fix for going to normal mode after classic
 - crasher fix when user switching
 - make sure reauthentication is run in right context
-- send hangup signal to gdm when systemctl request reload
+- send hangup signal to scdm when systemctl request reload
 - Translation updates
 
 =================
@@ -315,7 +315,7 @@ Version 3.23.4
 - Fix bug that forced wayland on second logins even if user didn't pick it
 - kill clients from display on logout (multiseat and xdmcp only)
 - send hangup to process group when session exits
-- allow specifying pam_gdm install location to configure
+- allow specifying pam_scdm install location to configure
 
 ==============
 Version 3.22.1
@@ -443,7 +443,7 @@ Version 3.17.90
 ==============
 Version 3.17.4
 ==============
-- Fixes to handle gdm restarts better
+- Fixes to handle scdm restarts better
 - Crasher fix on logout of wayland sessoin
 - systemd build updates
 - Translation updates

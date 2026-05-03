@@ -37,6 +37,6 @@ the `COPYING` file.
 
 
 [help pages on MR's]: https://docs.gitlab.com/ee/gitlab-basics/add-merge-request.html
-[GitLab repository]: https://gitlab.gnome.org/GNOME/gdm
-[issue tracker]: https://gitlab.gnome.org/GNOME/gdm/issues
+[GitLab repository]: https://gitlab.gnome.org/GNOME/scdm
+[issue tracker]: https://gitlab.gnome.org/GNOME/scdm/issues
 [translation project wiki page]: https://wiki.gnome.org/TranslationProject/

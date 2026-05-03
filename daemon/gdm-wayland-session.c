@@ -22,12 +22,12 @@
 #include <locale.h>
 #include <sysexits.h>
 
-#include "gdm-common.h"
-#include "gdm-settings-direct.h"
-#include "gdm-settings-keys.h"
-#include "gdm-log.h"
+#include "scdm-common.h"
+#include "scdm-settings-direct.h"
+#include "scdm-settings-keys.h"
+#include "scdm-log.h"
 
-#include "gdm-manager-glue.h"
+#include "scdm-manager-glue.h"
 
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
@@ -395,7 +395,7 @@ register_display (State        *state,
         g_variant_builder_init (&details, G_VARIANT_TYPE ("a{ss}"));
         g_variant_builder_add (&details, "{ss}", "session-type", "wayland");
 
-        registered = gdm_dbus_manager_call_register_display_sync (state->display_manager_proxy,
+        registered = scdm_dbus_manager_call_register_display_sync (state->display_manager_proxy,
                                                                   g_variant_builder_end (&details),
                                                                   cancellable,
                                                                   &error);
@@ -449,7 +449,7 @@ register_session_timeout_cb (gpointer user_data)
 
         state = (State *) user_data;
 
-        gdm_dbus_manager_call_register_session_sync (state->display_manager_proxy,
+        scdm_dbus_manager_call_register_session_sync (state->display_manager_proxy,
                                                      g_variant_new ("a{sv}", NULL),
                                                      state->cancellable,
                                                      &error);
@@ -467,7 +467,7 @@ connect_to_display_manager (State *state)
 {
         g_autoptr (GError) error = NULL;
 
-        state->display_manager_proxy = gdm_dbus_manager_proxy_new_for_bus_sync (
+        state->display_manager_proxy = scdm_dbus_manager_proxy_new_for_bus_sync (
                 G_BUS_TYPE_SYSTEM,
                 G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES | G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS,
                 "io.github.scarecrow_de.DisplayManager",
@@ -476,7 +476,7 @@ connect_to_display_manager (State *state)
                 &error);
 
         if (state->display_manager_proxy == NULL) {
-                g_printerr ("gdm-wayland-session: could not contact display manager: %s\n",
+                g_printerr ("scdm-wayland-session: could not contact display manager: %s\n",
                             error->message);
                 return FALSE;
         }
@@ -506,7 +506,7 @@ main (int    argc,
         textdomain (GETTEXT_PACKAGE);
         setlocale (LC_ALL, "");
 
-        gdm_log_init ();
+        scdm_log_init ();
 
         context = g_option_context_new (_("GNOME Display Manager Wayland Session Launcher"));
         g_option_context_add_main_entries (context, entries, NULL);
@@ -515,7 +515,7 @@ main (int    argc,
         g_option_context_free (context);
 
         if (args == NULL || args[0] == NULL || args[1] != NULL) {
-                g_warning ("gdm-wayland-session takes one argument (the session)");
+                g_warning ("scdm-wayland-session takes one argument (the session)");
                 exit_status = EX_USAGE;
                 goto out;
         }
@@ -524,8 +524,8 @@ main (int    argc,
 
         state->session_command = args[0];
 
-        state->settings = gdm_settings_new ();
-        ret = gdm_settings_direct_init (state->settings, DATADIR "/gdm/gdm.schemas", "/");
+        state->settings = scdm_settings_new ();
+        ret = scdm_settings_direct_init (state->settings, DATADIR "/scdm/scdm.schemas", "/");
 
         if (!ret) {
                 g_printerr ("Unable to initialize settings\n");
@@ -533,10 +533,10 @@ main (int    argc,
                 goto out;
         }
 
-        gdm_settings_direct_get_boolean (GDM_KEY_DEBUG, &debug);
+        scdm_settings_direct_get_boolean (GDM_KEY_DEBUG, &debug);
         state->debug_enabled = debug;
 
-        gdm_log_set_debug (debug);
+        scdm_log_set_debug (debug);
 
         state->main_loop = g_main_loop_new (NULL, FALSE);
         state->cancellable = g_cancellable_new ();
@@ -573,12 +573,12 @@ main (int    argc,
         }
 
         if (register_session) {
-                g_debug ("gdm-wayland-session: Will register session in %d seconds", REGISTER_SESSION_TIMEOUT);
+                g_debug ("scdm-wayland-session: Will register session in %d seconds", REGISTER_SESSION_TIMEOUT);
                 state->register_session_id = g_timeout_add_seconds (REGISTER_SESSION_TIMEOUT,
                                                                     register_session_timeout_cb,
                                                                     state);
         } else {
-                g_debug ("gdm-wayland-session: Session will register itself");
+                g_debug ("scdm-wayland-session: Session will register itself");
         }
 
         g_main_loop_run (state->main_loop);

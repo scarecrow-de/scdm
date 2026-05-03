@@ -20,7 +20,7 @@ After=rc-local.service plymouth-start.service systemd-user-sessions.service
 OnFailure=plymouth-quit.service
 
 [Service]
-ExecStart=${sbindir}/gdm
+ExecStart=${sbindir}/scdm
 KillMode=mixed
 Restart=always
 IgnoreSIGPIPE=no

@@ -24,26 +24,26 @@
 
 #include <glib-object.h>
 
-#include "gdm-display-factory.h"
-#include "gdm-display-store.h"
+#include "scdm-display-factory.h"
+#include "scdm-display-store.h"
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_XDMCP_DISPLAY_FACTORY (gdm_xdmcp_display_factory_get_type ())
-G_DECLARE_FINAL_TYPE (GdmXdmcpDisplayFactory, gdm_xdmcp_display_factory, GDM, XDMCP_DISPLAY_FACTORY, GdmDisplayFactory)
+#define GDM_TYPE_XDMCP_DISPLAY_FACTORY (scdm_xdmcp_display_factory_get_type ())
+G_DECLARE_FINAL_TYPE (GdmXdmcpDisplayFactory, scdm_xdmcp_display_factory, GDM, XDMCP_DISPLAY_FACTORY, GdmDisplayFactory)
 
 typedef enum
 {
          GDM_XDMCP_DISPLAY_FACTORY_ERROR_GENERAL
 } GdmXdmcpDisplayFactoryError;
 
-#define GDM_XDMCP_DISPLAY_FACTORY_ERROR gdm_xdmcp_display_factory_error_quark ()
+#define GDM_XDMCP_DISPLAY_FACTORY_ERROR scdm_xdmcp_display_factory_error_quark ()
 
-GQuark                     gdm_xdmcp_display_factory_error_quark      (void);
+GQuark                     scdm_xdmcp_display_factory_error_quark      (void);
 
-GdmXdmcpDisplayFactory *   gdm_xdmcp_display_factory_new              (GdmDisplayStore        *display_store);
+GdmXdmcpDisplayFactory *   scdm_xdmcp_display_factory_new              (GdmDisplayStore        *display_store);
 
-void                       gdm_xdmcp_display_factory_set_port         (GdmXdmcpDisplayFactory *manager,
+void                       scdm_xdmcp_display_factory_set_port         (GdmXdmcpDisplayFactory *manager,
                                                                        guint                   port);
 
 G_END_DECLS

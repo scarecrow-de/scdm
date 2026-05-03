@@ -23,14 +23,14 @@
 #define __GDM_LEGACY_DISPLAY_H
 
 #include <glib-object.h>
-#include "gdm-display.h"
+#include "scdm-display.h"
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_LEGACY_DISPLAY (gdm_legacy_display_get_type ())
-G_DECLARE_FINAL_TYPE (GdmLegacyDisplay, gdm_legacy_display, GDM, LEGACY_DISPLAY, GdmDisplay)
+#define GDM_TYPE_LEGACY_DISPLAY (scdm_legacy_display_get_type ())
+G_DECLARE_FINAL_TYPE (GdmLegacyDisplay, scdm_legacy_display, GDM, LEGACY_DISPLAY, GdmDisplay)
 
-GdmDisplay *        gdm_legacy_display_new                     (int display_number);
+GdmDisplay *        scdm_legacy_display_new                     (int display_number);
 
 
 G_END_DECLS

@@ -1,11 +1,11 @@
-# Indonesian translation of gdm manual
-# Copyright (C) 2010 THE gdm manual'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the gdm package.
+# Indonesian translation of scdm manual
+# Copyright (C) 2010 THE scdm manual'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the scdm package.
 # Andika Triwidada <andika@gmail.com>, 2010, 2011, 2012, 2013.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gdm-help gnome-3-20\n"
+"Project-Id-Version: scdm-help gnome-3-20\n"
 "POT-Creation-Date: 2016-05-26 21:08+0000\n"
 "PO-Revision-Date: 2016-06-21 00:46+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-Basepath: .\n"
 "X-Generator: Poedit 1.8.8\n"
-"X-Poedit-SearchPath-0: /S/gnome/gdm/docs\n"
+"X-Poedit-SearchPath-0: /S/gnome/scdm/docs\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -187,11 +187,11 @@ msgstr "Istilah dan Konvensi yang Dipakai di Manual Ini"
 #. (itstool) path: sect1/para
 #: C/index.docbook:102
 msgid ""
-"Chooser - A program used to select a remote host for managing a display remotely on the attached display (<command>gdm-host-chooser</"
+"Chooser - A program used to select a remote host for managing a display remotely on the attached display (<command>scdm-host-chooser</"
 "command>)."
 msgstr ""
 "Chooser/Pemilih - Suatu program yang dipakai untuk memilih suatu host jauh untuk mengelola tampilan dari jauh pada tampilan yang "
-"tersambung (<command>gdm-host-chooser</command>)."
+"tersambung (<command>scdm-host-chooser</command>)."
 
 #. (itstool) path: sect1/para
 #: C/index.docbook:107
@@ -210,7 +210,7 @@ msgstr "GDM - Manajer Tampilan GNOME. Dipakai untuk menjelaskan paket perangkat 
 #. (itstool) path: sect1/para
 #: C/index.docbook:118
 msgid "Greeter - The graphical login window (provided by <command>gnome-shell</command>)."
-msgstr "Greeter/Penyapa - Jendela log masuk grafis (disediakan oleh <command>gdm-simple-greeter</command>)."
+msgstr "Greeter/Penyapa - Jendela log masuk grafis (disediakan oleh <command>scdm-simple-greeter</command>)."
 
 #. (itstool) path: sect1/para
 #: C/index.docbook:122
@@ -292,23 +292,23 @@ msgstr ""
 #. (itstool) path: sect2/para
 #: C/index.docbook:178
 msgid ""
-"For discussion or queries about GDM, refer to the <address><email>gdm-list@gnome.org</email></address> mail list. This list is "
+"For discussion or queries about GDM, refer to the <address><email>scdm-list@gnome.org</email></address> mail list. This list is "
 "archived, and is a good resource to check to seek answers to common questions. This list is archived at <ulink type=\"http\" url="
-"\"http://mail.gnome.org/archives/gdm-list/\"> http://mail.gnome.org/archives/gdm-list/</ulink> and has a search facility to look for "
+"\"http://mail.gnome.org/archives/scdm-list/\"> http://mail.gnome.org/archives/scdm-list/</ulink> and has a search facility to look for "
 "messages with keywords."
 msgstr ""
-"Untuk diskusi atau pertanyaan tentang GDM, silakan mengacu ke milis <address><email>gdm-list@gnome.org</email></address>. List ini "
+"Untuk diskusi atau pertanyaan tentang GDM, silakan mengacu ke milis <address><email>scdm-list@gnome.org</email></address>. List ini "
 "diarsipkan, dan merupakan sumber daya yang bagus untuk memeriksa dan mencari jawaban atas pertanyaan umum. List ini diarsipkan di "
-"<ulink type=\"http\" url=\"http://mail.gnome.org/archives/gdm-list/\"> http://mail.gnome.org/archives/gdm-list/</ulink> dan memiliki "
+"<ulink type=\"http\" url=\"http://mail.gnome.org/archives/scdm-list/\"> http://mail.gnome.org/archives/scdm-list/</ulink> dan memiliki "
 "fasilitas pencarian untuk mencari pesan dengan kata kunci."
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:188
 msgid ""
-"Please submit any bug reports or enhancement requests to the \"gdm\" category in <ulink type=\"http\" url=\"http://bugzilla.gnome.org/"
+"Please submit any bug reports or enhancement requests to the \"scdm\" category in <ulink type=\"http\" url=\"http://bugzilla.gnome.org/"
 "\"> http://bugzilla.gnome.org</ulink>."
 msgstr ""
-"Mohon kirim laporan kutu atau permintaan perbaikan ke kategori \"gdm\" pada <ulink type=\"http\" url=\"http://bugzilla.gnome.org/\"> "
+"Mohon kirim laporan kutu atau permintaan perbaikan ke kategori \"scdm\" pada <ulink type=\"http\" url=\"http://bugzilla.gnome.org/\"> "
 "http://bugzilla.gnome.org</ulink>."
 
 #. (itstool) path: sect2/title
@@ -332,22 +332,22 @@ msgstr ""
 #: C/index.docbook:208
 msgid ""
 "Interfaces which continue to be supported in a stable fashion include the Init, PreSession, PostSession, PostLogin, and Xsession "
-"scripts. Some daemon configuration options in the <filename>&lt;etc&gt;/gdm/custom.conf</filename> file continue to be supported. Also, "
+"scripts. Some daemon configuration options in the <filename>&lt;etc&gt;/scdm/custom.conf</filename> file continue to be supported. Also, "
 "the <filename>~/.dmrc</filename>, and face browser image locations are still supported."
 msgstr ""
 "Antarmuka yang didukung terus secara stabil termasuk skrip Xsession, Init, PreSession, PostSession, dan PostLogin. Beberapa opsi "
-"konfigurasi daemon dalam berkas <filename>&lt;etc&gt;/gdm/custom.conf</filename> didukung terus. <filename>~/.dmrc</filename> dan "
+"konfigurasi daemon dalam berkas <filename>&lt;etc&gt;/scdm/custom.conf</filename> didukung terus. <filename>~/.dmrc</filename> dan "
 "lokasi gambar peramban muka juga masih didukung."
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:217
 msgid ""
 "GDM 2.20 and earlier supported the ability to manage multiple displays with separate graphics cards, such as used in terminal server "
-"environments, login in a window via a program like Xnest or Xephyr, the gdmsetup program, XML-based greeter themes, and the ability to "
+"environments, login in a window via a program like Xnest or Xephyr, the scdmsetup program, XML-based greeter themes, and the ability to "
 "run the XDMCP chooser from the login screen. These features were not added back during the 2.22 rewrite."
 msgstr ""
 "GDM 2.20 dan sebelumnya mendukung kemampuan pengelolaan tampilan berganda dengan kartu grafis yang terpisah seperti yang dipakai pada "
-"lingkungan server terminal, log masuk ke jendela melalui program seperti Xnest atau Xephyr, program gdmsetup, tema penyapa berbasis "
+"lingkungan server terminal, log masuk ke jendela melalui program seperti Xnest atau Xephyr, program scdmsetup, tema penyapa berbasis "
 "XML, dan kemampuan menjalankan pemilih XDMCP dari layar log masuk. Fitur-fitur tersebut tak ditambahkan kembali selama penulisan ulang "
 "2.22."
 
@@ -390,7 +390,7 @@ msgstr ""
 #. (itstool) path: sect2/para
 #: C/index.docbook:263
 msgid ""
-"The greeter program is run as the unprivileged \"gdm\" user/group. This user and group are described in the \"Security\" section of "
+"The greeter program is run as the unprivileged \"scdm\" user/group. This user and group are described in the \"Security\" section of "
 "this document. The main functions of the greeter program are to provide a mechanism for selecting an account for log in and to drive "
 "the dialogue between the user and system when authenticating that account. The authentication process is driven by Pluggable "
 "Authentication Modules (PAM). The PAM modules determine what prompts (if any) are shown to the user to authenticate. On the average "
@@ -399,7 +399,7 @@ msgid ""
 "with greeter login extensions and the <command>--enable-split-authentication</command> <filename>./configure</filename> option, or one "
 "at a time via system PAM configuration."
 msgstr ""
-"Program penyapa (greeter) dijalankan sebagai pengguna/grup biasa \"gdm\". Pengguna dan grup ini dijelaskan dalam bagian \"Keamanan\" "
+"Program penyapa (greeter) dijalankan sebagai pengguna/grup biasa \"scdm\". Pengguna dan grup ini dijelaskan dalam bagian \"Keamanan\" "
 "dari dokumen ini. Fungsi utama program penyapa adalah untuk menyediakan mekanisme memilih akun untuk log masuk dan untuk mendorong "
 "dialog antara pengguna dan sistem ketika mengotentikasi akun tersebut. Proses otentikasi ini didorong oleh Pluggable Authentication "
 "Modules (PAM). Modul PAM menentukan sapaan apa (bila ada) yang ditampilkan ke pengguna untuk mengotentikasi. Pada sistem umum, program "
@@ -591,11 +591,11 @@ msgstr ""
 msgid ""
 "If there is no global icon for the user, GDM will look in the user's $HOME directory for the image file. GDM will first look for the "
 "user's face image in <filename>~/.face</filename>. If not found, it will try <filename>~/.face.icon</filename>. If still not found, it "
-"will use the value defined for \"face/picture=\" in the <filename>~/.gnome2/gdm</filename> file."
+"will use the value defined for \"face/picture=\" in the <filename>~/.gnome2/scdm</filename> file."
 msgstr ""
 "Bila tak ada ikon global bagi pengguna, GDM akan mencari berkas gambar dalam direktori $HOME pengguna. Pertama kali GDM akan mencari "
 "gambar wajah pengguna dalam <filename>~/.face</filename>. Bila tak ditemukan, akan dicoba <filename>~/.face.icon</filename>. Bila masih "
-"tak ditemukan, akan dipakai nilai yang didefinisikan bagi \"face/picture=\" dalam berkas <filename>~/.gnome2/gdm</filename>."
+"tak ditemukan, akan dipakai nilai yang didefinisikan bagi \"face/picture=\" dalam berkas <filename>~/.gnome2/scdm</filename>."
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:436
@@ -694,41 +694,41 @@ msgstr "Log"
 #: C/index.docbook:516
 msgid ""
 "GDM uses syslog to log errors and status. It can also log debugging information, which can be useful for tracking down problems if GDM "
-"is not working properly. Debug output can be enabled by setting the debug/Enable key to \"true\" in the <filename>&lt;etc&gt;/gdm/"
+"is not working properly. Debug output can be enabled by setting the debug/Enable key to \"true\" in the <filename>&lt;etc&gt;/scdm/"
 "custom.conf</filename> file."
 msgstr ""
 "GDM memakai syslog untuk mencatat galat dan status. Itu juga dapat mencatat informasi pengawakutuan, yang dapat berguna untuk "
 "menelusuri masalah bila GDM tak bekerja dengan baik. Keluaran awakutu dapat diaktifkan dengan menata kunci debug/Enable ke \"true\" "
-"dalam berkas <filename>&lt;etc&gt;/gdm/custom.conf</filename>."
+"dalam berkas <filename>&lt;etc&gt;/scdm/custom.conf</filename>."
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:524
 msgid ""
-"Output from the various Xservers is stored in the GDM log directory, which is normally <filename>&lt;var&gt;/log/gdm/</filename>. Any "
+"Output from the various Xservers is stored in the GDM log directory, which is normally <filename>&lt;var&gt;/log/scdm/</filename>. Any "
 "Xserver messages are saved to a file associated with the display value, <filename>&lt;display&gt;.log</filename>."
 msgstr ""
-"Keluaran dari berbagai Xserver disimpan di dalam direktori log GDM, yang biasanya <filename>&lt;var&gt;/log/gdm/</filename>. Sebarang "
+"Keluaran dari berbagai Xserver disimpan di dalam direktori log GDM, yang biasanya <filename>&lt;var&gt;/log/scdm/</filename>. Sebarang "
 "pesan Xserver disimpan ke berkas yang dikaitkan dengan nilai tampilan, <filename>&lt;display&gt;.log</filename>."
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:531
 msgid ""
-"The session output is piped through the GDM daemon to the <filename>~/<replaceable>$XDG_CACHE_HOME</replaceable>/gdm/session.log</"
-"filename> file which usually expands to <filename>~/.cache/gdm/session.log</filename>. The file is overwritten on each login, so "
+"The session output is piped through the GDM daemon to the <filename>~/<replaceable>$XDG_CACHE_HOME</replaceable>/scdm/session.log</"
+"filename> file which usually expands to <filename>~/.cache/scdm/session.log</filename>. The file is overwritten on each login, so "
 "logging out and logging back into the same user via GDM will cause any messages from the previous session to be lost."
 msgstr ""
-"Keluaran sesi disalurkan melalui daemon GDM ke berkas <filename>~/<replaceable>$XDG_CACHE_HOME</replaceable>/gdm/session.log</filename> "
-"yang biasanya mengembang menjadi <filename>~/.cache/gdm/session.log</filename>. Berkas ditimpa setiap kali log masuk, sehingga log "
+"Keluaran sesi disalurkan melalui daemon GDM ke berkas <filename>~/<replaceable>$XDG_CACHE_HOME</replaceable>/scdm/session.log</filename> "
+"yang biasanya mengembang menjadi <filename>~/.cache/scdm/session.log</filename>. Berkas ditimpa setiap kali log masuk, sehingga log "
 "keluar dan masuk lagi ke pengguna yang sama melalui GDM akan menyebabkan sebarang pesan dari sesi sebelumnya hilang."
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:540
 msgid ""
 "Note that if GDM can not create this file for some reason, then a fallback file will be created named <filename>~/<replaceable>"
-"$XDG_CACHE_HOME</replaceable>/gdm/session.log.XXXXXXXX</filename> where the <filename>XXXXXXXX</filename> are some random characters."
+"$XDG_CACHE_HOME</replaceable>/scdm/session.log.XXXXXXXX</filename> where the <filename>XXXXXXXX</filename> are some random characters."
 msgstr ""
 "Catat bahwa bila GDM tak bisa membuat berkas ini karena beberapa alasan, maka berkas cadangan akan dibuat dengan nama <filename>~/"
-"<replaceable>$XDG_CACHE_HOME</replaceable>/gdm/session.log.XXXXXXXX</filename> dimana <filename>XXXXXXXX</filename> adalah beberapa "
+"<replaceable>$XDG_CACHE_HOME</replaceable>/scdm/session.log.XXXXXXXX</filename> dimana <filename>XXXXXXXX</filename> adalah beberapa "
 "karakter acak."
 
 #. (itstool) path: sect2/title
@@ -771,11 +771,11 @@ msgstr "Grup dan Pengguna GDM"
 #. (itstool) path: sect2/para
 #: C/index.docbook:575
 msgid ""
-"For security reasons a dedicated user and group id are recommended for proper operation. This user and group are normally \"gdm\" on "
+"For security reasons a dedicated user and group id are recommended for proper operation. This user and group are normally \"scdm\" on "
 "most systems, but can be configured to any user or group. All GDM GUI programs are run as this user, so that the programs which "
 "interact with the user are run in a sandbox. This user and group should have limited privilege."
 msgstr ""
-"Untuk alasan keamanan, id pengguna dan grup yang terdedikasi disarankan untuk operasi yang benar. Pengguna dan grup ini biasanya \"gdm"
+"Untuk alasan keamanan, id pengguna dan grup yang terdedikasi disarankan untuk operasi yang benar. Pengguna dan grup ini biasanya \"scdm"
 "\" pada kebanyakan sistem, tapi dapat ditata ke sebarang pengguna atau grup. Semua program GUI GDM dijalankan sebagai pengguna ini, "
 "sehingga program yang berinteraksi dengan pengguna dijalankan dalam suatu kotak pasir. Pengguna dan grup ini mesti memiliki hak "
 "terbatas."
@@ -783,11 +783,11 @@ msgstr ""
 #. (itstool) path: sect2/para
 #: C/index.docbook:584
 msgid ""
-"The only special privilege the \"gdm\" user requires is the ability to read and write Xauth files to the <filename>&lt;var&gt;/run/gdm</"
-"filename> directory. The <filename>&lt;var&gt;/run/gdm</filename> directory should have root:gdm ownership and 1777 permissions."
+"The only special privilege the \"scdm\" user requires is the ability to read and write Xauth files to the <filename>&lt;var&gt;/run/scdm</"
+"filename> directory. The <filename>&lt;var&gt;/run/scdm</filename> directory should have root:scdm ownership and 1777 permissions."
 msgstr ""
-"Satu-satunya hak khusus yang diperlukan oleh pengguna \"gdm\" adalah kemampuan membaca dan menulis berkas Xauth ke direktori "
-"<filename>&lt;var&gt;/run/gdm</filename> directory. Direktori <filename>&lt;var&gt;/run/gdm</filename> mesti dimiliki oleh root:gdm dan "
+"Satu-satunya hak khusus yang diperlukan oleh pengguna \"scdm\" adalah kemampuan membaca dan menulis berkas Xauth ke direktori "
+"<filename>&lt;var&gt;/run/scdm</filename> directory. Direktori <filename>&lt;var&gt;/run/scdm</filename> mesti dimiliki oleh root:scdm dan "
 "hak 1777."
 
 #. (itstool) path: sect2/para
@@ -796,26 +796,26 @@ msgid ""
 "You should not, under any circumstances, configure the GDM user/group to a user which a user could easily gain access to, such as the "
 "user <filename>nobody</filename>. Any user who gains access to an Xauth key can snoop on and control running GUI programs running in "
 "the associated session or perform a denial-of-service attack on it. It is important to ensure that the system is configured properly so "
-"that only the \"gdm\" user has access to these files and that it is not easy to login to this account. For example, the account should "
+"that only the \"scdm\" user has access to these files and that it is not easy to login to this account. For example, the account should "
 "be setup to not have a password or allow non-root users to login to the account."
 msgstr ""
 "Anda jangan, dalam keadaan apapun, menata pengguna/grup GDM ke sesuatu yang dapat diakses dengan mudah oleh pengguna lain, seperti "
 "misalnya pengguna <filename>nobody</filename>. Sebarang pengguna yang mendapat akses ke kunci Xauth dapat menyadap dan mengendalikan "
 "program GUI yang berjalan pada sesi terkait atau melakukan serangan denial-of-service padanya. Penting untuk memastikan bahwa sistem "
-"ditata secara benar sehingga hanya pengguna \"gdm\" punya akses ke berkas tersebut dan tak mudah untuk log masuk ke akun ini. Sebagai "
+"ditata secara benar sehingga hanya pengguna \"scdm\" punya akses ke berkas tersebut dan tak mudah untuk log masuk ke akun ini. Sebagai "
 "contoh, akun mesti disiapkan untuk tak memiliki sandi atau mengijinkan pengguna bukan root untuk log masuk ke akun."
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:605
 msgid ""
-"The GDM greeter configuration is stored in GConf. To allow the GDM user to be able to write configuration, it is necessary for the \"gdm"
+"The GDM greeter configuration is stored in GConf. To allow the GDM user to be able to write configuration, it is necessary for the \"scdm"
 "\" user to have a writable $HOME directory. Users may configure the default GConf configuration as desired to avoid the need to provide "
-"the \"gdm\" user with a writable $HOME directory. However, some features of GDM may be disabled if it is unable to write state "
+"the \"scdm\" user with a writable $HOME directory. However, some features of GDM may be disabled if it is unable to write state "
 "information to GConf configuration."
 msgstr ""
-"Konfigurasi penyapa GDM disimpan di dalam GConf. Untuk mengijinkan pengguna GDM menulis konfigurasi, pengguna \"gdm\" perlu memiliki "
+"Konfigurasi penyapa GDM disimpan di dalam GConf. Untuk mengijinkan pengguna GDM menulis konfigurasi, pengguna \"scdm\" perlu memiliki "
 "direktori $HOME yang dapat ditulisi. Pengguna dapat menata konfigurasi bawaan GConf sesuai keinginan untuk menghindari perlunya "
-"menyediakan pengguna \"gdm\" dengan direktori $HOME yang dapat ditulisi. Namun beberapa fitur GDM mungkin mati bila tak bisa menulis "
+"menyediakan pengguna \"scdm\" dengan direktori $HOME yang dapat ditulisi. Namun beberapa fitur GDM mungkin mati bila tak bisa menulis "
 "informasi keadaan ke konfigurasi GConf."
 
 #. (itstool) path: sect2/title
@@ -862,15 +862,15 @@ msgstr ""
 #. (itstool) path: sect2/para
 #: C/index.docbook:647
 msgid ""
-"Note that, by default, GDM uses the \"gdm\" PAM service name for normal login and the \"gdm-autologin\" PAM service name for automatic "
+"Note that, by default, GDM uses the \"scdm\" PAM service name for normal login and the \"scdm-autologin\" PAM service name for automatic "
 "login. These services may not be defined in your pam.d or pam.conf configured file. If there is no entry, then GDM will use the default "
-"PAM behavior. On most systems this should work fine. However, the automatic login feature may not work if the gdm-autologin service is "
+"PAM behavior. On most systems this should work fine. However, the automatic login feature may not work if the scdm-autologin service is "
 "not defined."
 msgstr ""
-"Perhatikan bahwa, secara baku, GDM memakai nama layanan PAM \"gdm\" untuk log masuk normal dan nama layanan PAM \"gdm-autologin\" untuk "
+"Perhatikan bahwa, secara baku, GDM memakai nama layanan PAM \"scdm\" untuk log masuk normal dan nama layanan PAM \"scdm-autologin\" untuk "
 "log masuk otomatis. Layanan-layanan ini mungkin tak didefinisikan dalam berkas konfigurasi pam.d atau pam.conf Anda. Bila tak ada "
 "entri, maka GDM akan memakai perilaku PAM bawaan. Pada kebanyakan sistem ini mestinya berjalan baik. Namun, fitur log masuk otomatis "
-"mungkin tak bekerja bila layanan gdm-autologin tak terdefinisi."
+"mungkin tak bekerja bila layanan scdm-autologin tak terdefinisi."
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:657
@@ -888,13 +888,13 @@ msgstr ""
 msgid ""
 "If you wish to make GDM work with other types of authentication mechanisms (such as a fingerprint or SmartCard reader), then you should "
 "implement this by using a PAM service module for the desired authentication type rather than by trying to modify the GDM code directly. "
-"Refer to the PAM documentation on your system. How to do this is frequently discussed on the <address><email>gdm-list@gnome.org</"
+"Refer to the PAM documentation on your system. How to do this is frequently discussed on the <address><email>scdm-list@gnome.org</"
 "email></address> mail list, so you can refer to the list archives for more information."
 msgstr ""
 "Bila Anda hendak membuat GDM bekerja dengan mekanisme otentikasi jenis lain (seperti misalnya sidik jari atau pembaca SmartCard), maka "
 "Anda mesti mengimplementasikan ini memakai modul layanan PAM bagi jenis otentikasi yang diinginkan daripada mencoba mengubah kode GDM "
 "secara langsung. Lihatlah dokumentasi PAM pada sistem Anda. Bagaimana melakukan hal ini sering didiskusikan di milis "
-"<address><email>gdm-list@gnome.org</email></address>, sehingga Anda dapat mengacu ke arsip milis untuk informasi lebih lanjut."
+"<address><email>scdm-list@gnome.org</email></address>, sehingga Anda dapat mengacu ke arsip milis untuk informasi lebih lanjut."
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:676
@@ -911,33 +911,33 @@ msgstr ""
 #. (itstool) path: sect2/para
 #: C/index.docbook:685
 msgid ""
-"If automatic login does not work on a system, check to see if the \"gdm-autologin\" PAM stack is defined in the PAM configuration. For "
+"If automatic login does not work on a system, check to see if the \"scdm-autologin\" PAM stack is defined in the PAM configuration. For "
 "this to work, it is necessary to use a PAM module that simply does no authentication, or which simply returns PAM_SUCCESS from all of "
-"its public interfaces. Assuming your system has a pam_allow.so PAM module which does this, a PAM configuration to enable \"gdm-autologin"
+"its public interfaces. Assuming your system has a pam_allow.so PAM module which does this, a PAM configuration to enable \"scdm-autologin"
 "\" would look like this:"
 msgstr ""
-"Bila log masuk otomatis tak bekerja pada suatu sistem, periksa apakah stack PAM \"gdm-autologin\" didefinisikan di dalam konfigurasi "
+"Bila log masuk otomatis tak bekerja pada suatu sistem, periksa apakah stack PAM \"scdm-autologin\" didefinisikan di dalam konfigurasi "
 "PAM. Agar ini bekerja, perlu memakai modul PAM yang tak melakukan otentikasi, atau yang sekedar mengembalikan PAM_SUCCESS dari semua "
 "antar muka publiknya. Dengan asumsi bahwa sistem Anda memiliki modul PAM pam_allow.so yang melakukan hal ini, konfigurasi PAM yang "
-"mengaktifkan \"gdm-autologin\" akan terlihat seperti ini:"
+"mengaktifkan \"scdm-autologin\" akan terlihat seperti ini:"
 
 #. (itstool) path: sect2/screen
 #: C/index.docbook:695
 #, no-wrap
 msgid ""
 "\n"
-"       gdm-autologin auth  required    pam_unix_cred.so.1\n"
-"       gdm-autologin auth  sufficient  pam_allow.so.1\n"
-"       gdm-autologin account  sufficient  pam_allow.so.1\n"
-"       gdm-autologin session  sufficient  pam_allow.so.1\n"
-"       gdm-autologin password  sufficient  pam_allow.so.1\n"
+"       scdm-autologin auth  required    pam_unix_cred.so.1\n"
+"       scdm-autologin auth  sufficient  pam_allow.so.1\n"
+"       scdm-autologin account  sufficient  pam_allow.so.1\n"
+"       scdm-autologin session  sufficient  pam_allow.so.1\n"
+"       scdm-autologin password  sufficient  pam_allow.so.1\n"
 msgstr ""
 "\n"
-"       gdm-autologin auth  required    pam_unix_cred.so.1\n"
-"       gdm-autologin auth  sufficient  pam_allow.so.1\n"
-"       gdm-autologin account  sufficient  pam_allow.so.1\n"
-"       gdm-autologin session  sufficient  pam_allow.so.1\n"
-"       gdm-autologin password  sufficient  pam_allow.so.1\n"
+"       scdm-autologin auth  required    pam_unix_cred.so.1\n"
+"       scdm-autologin auth  sufficient  pam_allow.so.1\n"
+"       scdm-autologin account  sufficient  pam_allow.so.1\n"
+"       scdm-autologin session  sufficient  pam_allow.so.1\n"
+"       scdm-autologin password  sufficient  pam_allow.so.1\n"
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:703
@@ -951,10 +951,10 @@ msgstr ""
 #, no-wrap
 msgid ""
 "\n"
-"       gdm-autologin session required pam_unix_session.so.1\n"
+"       scdm-autologin session required pam_unix_session.so.1\n"
 msgstr ""
 "\n"
-"       gdm-autologin session required pam_unix_session.so.1\n"
+"       scdm-autologin session required pam_unix_session.so.1\n"
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:712
@@ -962,22 +962,22 @@ msgid ""
 "If the computer is used by several people, which makes automatic login unsuitable, you may want to allow some users to log in without "
 "entering their password. This feature can be enabled as a per-user option in the users-admin tool from the gnome-system-tools; it is "
 "achieved by checking that the user is member a Unix group called \"nopasswdlogin\" before asking for a password. For this to work, the "
-"PAM configuration file for the \"gdm\" service must include a line such as:"
+"PAM configuration file for the \"scdm\" service must include a line such as:"
 msgstr ""
 "Bila komputer dipakai oleh beberapa orang, yang membuat log masuk otomatis tidak cocok, Anda mungkin hendak mengijinkan beberapa "
 "pengguna untuk log masuk tanpa mengetikkan sandi. Fitur ini dapat diaktifkan sebagai opsi per pengguna dalam perkakas users-admin dari "
 "gnome-system-tools; ini dicapai dengan memeriksa apakah pengguna tersebut anggota dari grup Unix bernama \"nopasswdlogin\" sebelum "
-"menanyakan sandi. Agar ini bekerja, berkas konfigurasi PAM bagi layanan \"gdm\" mesti memuat suatu baris seperti:"
+"menanyakan sandi. Agar ini bekerja, berkas konfigurasi PAM bagi layanan \"scdm\" mesti memuat suatu baris seperti:"
 
 #. (itstool) path: sect2/screen
 #: C/index.docbook:723
 #, no-wrap
 msgid ""
 "\n"
-"      gdm auth  sufficient  pam_succeed_if.so  user ingroup nopasswdlogin\n"
+"      scdm auth  sufficient  pam_succeed_if.so  user ingroup nopasswdlogin\n"
 msgstr ""
 "\n"
-"      gdm auth  sufficient  pam_succeed_if.so  user ingroup nopasswdlogin\n"
+"      scdm auth  sufficient  pam_succeed_if.so  user ingroup nopasswdlogin\n"
 
 #. (itstool) path: sect2/title
 #: C/index.docbook:730
@@ -1007,11 +1007,11 @@ msgstr "Skema Otentikasi Xserver"
 #. (itstool) path: sect2/para
 #: C/index.docbook:749
 msgid ""
-"Xserver authorization files are stored in a newly created subdirectory of <filename>&lt;var&gt;/run/gdm</filename> at start up. These "
+"Xserver authorization files are stored in a newly created subdirectory of <filename>&lt;var&gt;/run/scdm</filename> at start up. These "
 "files are used to store and share a \"password\" between X clients and the Xserver. This \"password\" is unique for each session logged "
 "in, so users from one session can't snoop on users from another."
 msgstr ""
-"Berkas otorisasi Xserver disimpan dalam subdirektori <filename>&lt;var&gt;/run/gdm</filename> yang baru dibuat saat awal mula. Berkas-"
+"Berkas otorisasi Xserver disimpan dalam subdirektori <filename>&lt;var&gt;/run/scdm</filename> yang baru dibuat saat awal mula. Berkas-"
 "berkas ini dipakai untuk menyimpan dan berbagi \"sandi\" antara klien X dan Xserver. \"Sandi\" ini unik bagi setiap sesi log masuk, "
 "sehingga pengguna dari sesi satu tak bisa menyadap pengguna sesi lain."
 
@@ -1076,10 +1076,10 @@ msgstr ""
 #. (itstool) path: sect2/para
 #: C/index.docbook:803
 msgid ""
-"You should use the daemon name <command>gdm</command> in the <filename>&lt;etc&gt;/hosts.allow</filename> and <filename>&lt;etc&gt;/"
+"You should use the daemon name <command>scdm</command> in the <filename>&lt;etc&gt;/hosts.allow</filename> and <filename>&lt;etc&gt;/"
 "hosts.deny</filename> files. For example to deny computers from <filename>.evil.domain</filename> from logging in, then add"
 msgstr ""
-"Anda mesti memakai nama deamon <command>gdm</command> dalam berkas <filename>&lt;etc&gt;/hosts.allow</filename> dan <filename>&lt;"
+"Anda mesti memakai nama deamon <command>scdm</command> dalam berkas <filename>&lt;etc&gt;/hosts.allow</filename> dan <filename>&lt;"
 "etc&gt;/hosts.deny</filename>. Sebagai contoh untuk menolak komputer dari <filename>.evil.domain</filename> yang berusaha log masuk, "
 "maka tambahkan"
 
@@ -1088,10 +1088,10 @@ msgstr ""
 #, no-wrap
 msgid ""
 "\n"
-"gdm: .evil.domain\n"
+"scdm: .evil.domain\n"
 msgstr ""
 "\n"
-"gdm: .evil.domain\n"
+"scdm: .evil.domain\n"
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:813
@@ -1103,10 +1103,10 @@ msgstr "ke <filename>&lt;etc&gt;/hosts.deny</filename>. Anda mungkin juga perlu 
 #, no-wrap
 msgid ""
 "\n"
-"gdm: .your.domain\n"
+"scdm: .your.domain\n"
 msgstr ""
 "\n"
-"gdm: .your.domain\n"
+"scdm: .your.domain\n"
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:820
@@ -1193,10 +1193,10 @@ msgstr ""
 #: C/index.docbook:890
 msgid ""
 "For example, on Oracle Solaris, the \"solaris.system.shutdown\" authorization is used to control this. Simply modify the <filename>/etc/"
-"user_attr</filename> file so that the \"gdm\" user has this authorization."
+"user_attr</filename> file so that the \"scdm\" user has this authorization."
 msgstr ""
 "Sebagai contoh, pada Oracle Solaris, otorisasi \"solaris.system.shutdown\" dipakai untuk mengendalikan ini. Cukup ubah berkas "
-"<filename>/etc/user_attr</filename> sehingga pengguna \"gdm\" memiliki otorisasi ini."
+"<filename>/etc/user_attr</filename> sehingga pengguna \"scdm\" memiliki otorisasi ini."
 
 #. (itstool) path: sect1/title
 #: C/index.docbook:903
@@ -1272,8 +1272,8 @@ msgstr "Titik Integrasi Skrip"
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:967
-msgid "The GDM script integration points can be found in the <filename>&lt;etc&gt;/gdm/</filename> directory:"
-msgstr "Titik integrasi skrip GDM dapat ditemukan dalam direktori <filename>&lt;etc&gt;/gdm/</filename>:"
+msgid "The GDM script integration points can be found in the <filename>&lt;etc&gt;/scdm/</filename> directory:"
+msgstr "Titik integrasi skrip GDM dapat ditemukan dalam direktori <filename>&lt;etc&gt;/scdm/</filename>:"
 
 #. (itstool) path: sect2/screen
 #: C/index.docbook:972
@@ -1306,13 +1306,13 @@ msgstr ""
 #: C/index.docbook:986
 msgid ""
 "For each type of script, the default one which will be executed is called \"Default\" and is stored in a directory associated with the "
-"script type. So the default <filename>Init</filename> script is <filename>&lt;etc&gt;/gdm/Init/Default</filename>. A per-display script "
+"script type. So the default <filename>Init</filename> script is <filename>&lt;etc&gt;/scdm/Init/Default</filename>. A per-display script "
 "can be provided, and if it exists it will be run instead of the default script. Such scripts are stored in the same directory as the "
 "default script and have the same name as the Xserver DISPLAY value for that display. For example, if the <filename>&lt;Init&gt;/:0</"
 "filename> script exists, it will be run for DISPLAY \":0\"."
 msgstr ""
 "Untuk setiap jenis skirp, secara baku yang akan dieksekusi dinamai \"Default\" dan disimpan dalam suatu direktori yang berkaitan dengan "
-"tipe skrip. Maka skrip <filename>Init</filename> baku adalah <filename>&lt;etc&gt;/gdm/Init/Default</filename>. Suatu skrip per "
+"tipe skrip. Maka skrip <filename>Init</filename> baku adalah <filename>&lt;etc&gt;/scdm/Init/Default</filename>. Suatu skrip per "
 "tampilan dapat disediakan, dan bila ada akan dijalankan sebagai pengganti skrip bawaan. Skrip demikian disimpan di dalam direktori yang "
 "sama dengan skrip bawaan dan memiliki nama yang sama dengan nilai DISPLAY Xserver bagi tampilan tersebut. Sebagai contoh, bila skrip "
 "<filename>&lt;Init&gt;/:0</filename> ada, itu akan dijalankan bagi DISPLAY \":0\"."
@@ -1398,11 +1398,11 @@ msgstr "Konfigurasi Autostart"
 #. (itstool) path: sect2/para
 #: C/index.docbook:1057
 msgid ""
-"The <filename>&lt;share&gt;/gdm/autostart/LoginWindow</filename> directory contains files in the format specified by the \"FreeDesktop."
+"The <filename>&lt;share&gt;/scdm/autostart/LoginWindow</filename> directory contains files in the format specified by the \"FreeDesktop."
 "org Desktop Application Autostart Specification\". Standard features in the specification may be used to specify programs that should "
 "auto-restart or only be launched if a GConf configuration value is set, etc."
 msgstr ""
-"Direktori <filename>&lt;share&gt;/gdm/autostart/LoginWindow</filename> memuat berkas dalam format yang dinyatakan oleh \"FreeDesktop."
+"Direktori <filename>&lt;share&gt;/scdm/autostart/LoginWindow</filename> memuat berkas dalam format yang dinyatakan oleh \"FreeDesktop."
 "org Desktop Application Autostart Specification\". Fitur standar dalam spesifikasi itu boleh dipakai untuk menyatakan program yang "
 "mesti dijalankan ulang secara otomatis atau hanya diluncurkan bila suatu nilai konfigurasi GConf ditata, dsb."
 
@@ -1410,13 +1410,13 @@ msgstr ""
 #: C/index.docbook:1066
 msgid ""
 "Any <filename>.desktop</filename> files in this directory will cause the associated program to automatically start with the login GUI "
-"greeter. By default, GDM is shipped with files which will autostart the gdm-simple-greeter login GUI greeter itself, the gnome-power-"
+"greeter. By default, GDM is shipped with files which will autostart the scdm-simple-greeter login GUI greeter itself, the gnome-power-"
 "manager application, the gnome-settings-daemon, and the metacity window manager. These programs are needed for the greeter program to "
 "work. In addition, desktop files are provided for starting various AT programs if the configuration values specified in the "
 "Accessibility Configuration section below are set."
 msgstr ""
 "Berkas <filename>.desktop</filename> apapun dalam direktori ini akan menyebabkan program yang terkait dijalankan secara otomatis dengan "
-"penyapa GUI log masuk. Secara baku, GDM dilengkapi dengan berkas yang akan otomatis menjalankan penyapa GUI log masuk gdm-simple-"
+"penyapa GUI log masuk. Secara baku, GDM dilengkapi dengan berkas yang akan otomatis menjalankan penyapa GUI log masuk scdm-simple-"
 "greeter, aplikasi gnome-power-manager, gnome-settings-daemon, dan manajer jendela metacity. Program-program ini diperlukan agar program "
 "penyapa dapat bekerja. Sebagai tambahan, berkas desktop disediakan untuk menjalankan berbagai program AT bila nilai konfigurasi yang "
 "dinyatakan dalam bagian Konfigurasi Aksesabilitas di bawah ditata."
@@ -1429,12 +1429,12 @@ msgstr "Skrip Xsession"
 #. (itstool) path: sect2/para
 #: C/index.docbook:1082
 msgid ""
-"There is also an <filename>Xsession</filename> script located at <filename>&lt;etc&gt;/gdm/Xsession</filename> which is called between "
+"There is also an <filename>Xsession</filename> script located at <filename>&lt;etc&gt;/scdm/Xsession</filename> which is called between "
 "the <filename>PreSession</filename> and the <filename>PostSession</filename> scripts. This script does not support per-display like the "
 "other scripts. This script is used for actually starting the user session. This script is run as the user, and it will run whatever "
 "session was specified by the Desktop session file the user selected to start."
 msgstr ""
-"Ada juga skrip <filename>Xsession</filename> yang terletak di <filename>&lt;etc&gt;/gdm/Xsession</filename> yang dipanggil antara skrip "
+"Ada juga skrip <filename>Xsession</filename> yang terletak di <filename>&lt;etc&gt;/scdm/Xsession</filename> yang dipanggil antara skrip "
 "<filename>PreSession</filename> dan <filename>PostSession</filename>. Skrip ini tak mendukung per-tampilan seperti skrip lain. Skrip "
 "ini dipakai untuk benar-benar memulai sesi pengguna. Skrip ini dijalankan sebagai pengguna, dan akan menjalankan sesi apapun yang "
 "dinyatakan oleh berkas sesi Desktop yang dipilih pengguna untuk dimulai."
@@ -1447,12 +1447,12 @@ msgstr "Konfigurasi Daemon"
 #. (itstool) path: sect2/para
 #: C/index.docbook:1097
 msgid ""
-"The GDM daemon is configured using the <filename>&lt;etc&gt;/gdm/custom.conf</filename> file. Default values are stored in GConf in the "
-"<filename>gdm.schemas</filename> file. It is recommended that end-users modify the <filename>&lt;etc&gt;/gdm/custom.conf</filename> "
+"The GDM daemon is configured using the <filename>&lt;etc&gt;/scdm/custom.conf</filename> file. Default values are stored in GConf in the "
+"<filename>scdm.schemas</filename> file. It is recommended that end-users modify the <filename>&lt;etc&gt;/scdm/custom.conf</filename> "
 "file because the schemas file may be overwritten when the user updates their system to have a newer version of GDM."
 msgstr ""
-"Daemon GDM dikonfigurasi memakai berkas <filename>&lt;etc&gt;/gdm/custom.conf</filename>. Nilai baku disimpan di GConf dalam berkas "
-"<filename>gdm.schemas</filename>. Disarankan bahwa pengguna akhir mengubah berkas <filename>&lt;etc&gt;/gdm/custom.conf</filename> "
+"Daemon GDM dikonfigurasi memakai berkas <filename>&lt;etc&gt;/scdm/custom.conf</filename>. Nilai baku disimpan di GConf dalam berkas "
+"<filename>scdm.schemas</filename>. Disarankan bahwa pengguna akhir mengubah berkas <filename>&lt;etc&gt;/scdm/custom.conf</filename> "
 "karena berkas skema mungkin tertimpa ketika pengguna memutakhirkan sistem mereka untuk mendapatkan versi GDM yang lebih baru."
 
 #. (itstool) path: sect2/para
@@ -1464,22 +1464,22 @@ msgstr "Perhatikan bahwa GDM versi lebih lama mendukung opsi konfigurasi tambaha
 #. (itstool) path: sect2/para
 #: C/index.docbook:1112
 msgid ""
-"The <filename>&lt;etc&gt;/gdm/custom.conf</filename> file is in the <filename>keyfile</filename> format. Keywords in brackets define "
+"The <filename>&lt;etc&gt;/scdm/custom.conf</filename> file is in the <filename>keyfile</filename> format. Keywords in brackets define "
 "group sections, strings before an equal sign (=) are keys and the data after equal sign represents their value. Empty lines or lines "
 "starting with the hash mark (#) are ignored."
 msgstr ""
-"Berkas <filename>&lt;etc&gt;/gdm/custom.conf</filename> berformat <filename>keyfile</filename>. Kata kunci dalam kurung siku "
+"Berkas <filename>&lt;etc&gt;/scdm/custom.conf</filename> berformat <filename>keyfile</filename>. Kata kunci dalam kurung siku "
 "mendefinisikan bagian grup, string sebelum tanda sama dengan adalah kunci dan data setelah tanda sama dengan mewakili nilai mereka. "
 "Baris kosong atau baris yang diawali dengan tanda pagar (#) diabaikan."
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:1120
 msgid ""
-"The file <filename>&lt;etc&gt;/gdm/custom.conf</filename> supports the \"[daemon]\", \"[security]\", and \"[xdmcp]\" group sections. "
+"The file <filename>&lt;etc&gt;/scdm/custom.conf</filename> supports the \"[daemon]\", \"[security]\", and \"[xdmcp]\" group sections. "
 "Within each group, there are particular key/value pairs that can be specified to modify how GDM behaves. For example, to enable timed "
 "login and specify the timed login user to be a user named \"you\", you would modify the file so it contains the following lines:"
 msgstr ""
-"Berkas <filename>&lt;etc&gt;/gdm/custom.conf</filename> mendukung bagian grup \"[daemon]\", \"[security]\", dan \"[xdmcp]\". Dalam "
+"Berkas <filename>&lt;etc&gt;/scdm/custom.conf</filename> mendukung bagian grup \"[daemon]\", \"[security]\", dan \"[xdmcp]\". Dalam "
 "setiap grup, ada pasangan kunci/nilai tertentu yang dapat dinyatakan untuk mengubah bagaimana GDM bertingkahlaku. Sebagai contoh, untuk "
 "mengaktifkan log masuk dengan tenggang waktu dan menyatakan bahwa pengguna yang log masuknya diberi tenggang waktu adalah pengguna "
 "bernama \"you\", Anda perlu mengubah berkas sehingga memuat baris-baris berikut:"
@@ -1669,8 +1669,8 @@ msgstr "User"
 #. (itstool) path: listitem/synopsis
 #: C/index.docbook:1264
 #, no-wrap
-msgid "User=gdm"
-msgstr "User=gdm"
+msgid "User=scdm"
+msgstr "User=scdm"
 
 #. (itstool) path: listitem/para
 #: C/index.docbook:1265
@@ -1689,8 +1689,8 @@ msgstr "Group"
 #. (itstool) path: listitem/synopsis
 #: C/index.docbook:1277
 #, no-wrap
-msgid "Group=gdm"
-msgstr "Group=gdm"
+msgid "Group=scdm"
+msgstr "Group=scdm"
 
 #. (itstool) path: listitem/para
 #: C/index.docbook:1278
@@ -1725,11 +1725,11 @@ msgstr "Enable=false"
 #. (itstool) path: listitem/para
 #: C/index.docbook:1299
 msgid ""
-"To enable debugging, set the debug/Enable key to \"true\" in the <filename>&lt;etc&gt;/gdm/custom.conf</filename> file and restart GDM. "
+"To enable debugging, set the debug/Enable key to \"true\" in the <filename>&lt;etc&gt;/scdm/custom.conf</filename> file and restart GDM. "
 "Then debug output will be sent to the system log file (<filename>&lt;var&gt;/log/messages</filename> or <filename>&lt;var&gt;/adm/"
 "messages</filename> depending on your Operating System)."
 msgstr ""
-"Untuk memungkinkan pengawakutuan, atur kunci debug/Enable ke \"true\" dalam berkas <filename>&lt;etc&gt;/gdm/custom.conf</filename> dan "
+"Untuk memungkinkan pengawakutuan, atur kunci debug/Enable ke \"true\" dalam berkas <filename>&lt;etc&gt;/scdm/custom.conf</filename> dan "
 "mulai ulang GDM. Maka keluaran pengawakutuan akan kemudian dikirim ke  berkas log sistem (<filename>&lt;var&gt;/log/messages</filename> "
 "atau <filename>&lt;var&gt;/adm/messages</filename> bergantung kepada Sistem Operasi Anda)."
 
@@ -1906,27 +1906,27 @@ msgstr "Menata ini ke true memungkinkan dukungan XDMCP yang mengijinkan tampilan
 
 #. (itstool) path: listitem/para
 #: C/index.docbook:1435
-msgid "<filename>gdm</filename> listens for requests on UDP port 177. See the Port option for more information."
-msgstr "<filename>gdm</filename> mendengarkan permintaan pada UDP port 177. Lihat opsi Port untuk informasi lebih jauh."
+msgid "<filename>scdm</filename> listens for requests on UDP port 177. See the Port option for more information."
+msgstr "<filename>scdm</filename> mendengarkan permintaan pada UDP port 177. Lihat opsi Port untuk informasi lebih jauh."
 
 #. (itstool) path: listitem/para
 #: C/index.docbook:1440
 msgid ""
 "If GDM is compiled to support it, access from remote displays can be controlled using the TCP Wrappers library. The service name is "
-"<filename>gdm</filename>"
+"<filename>scdm</filename>"
 msgstr ""
 "Bila GDM dikompail untuk mendukungnya, akses dari tampilan jauh dapat dikendalikan memakai pustaka TCP Wrapper. Nama layanan adalah "
-"<filename>gdm</filename>"
+"<filename>scdm</filename>"
 
 #. (itstool) path: para/screen
 #: C/index.docbook:1448
 #, no-wrap
 msgid ""
 "\n"
-"gdm:.my.domain\n"
+"scdm:.my.domain\n"
 msgstr ""
 "\n"
-"gdm:.my.domain\n"
+"scdm:.my.domain\n"
 
 #. (itstool) path: listitem/para
 #: C/index.docbook:1446
@@ -1960,10 +1960,10 @@ msgstr "HonorIndirect=true"
 #. (itstool) path: listitem/para
 #: C/index.docbook:1469
 msgid ""
-"Enables XDMCP INDIRECT choosing (i.e. remote execution of <filename>gdmchooser</filename>) for X-terminals which do not supply their "
+"Enables XDMCP INDIRECT choosing (i.e. remote execution of <filename>scdmchooser</filename>) for X-terminals which do not supply their "
 "own display browser."
 msgstr ""
-"Fungsikan pemilihan XDMCP INDIRECT (yaitu eksekusi jauh dari <filename>gdmchooser</filename>) bagi X-terminal yang tak menyediakan "
+"Fungsikan pemilihan XDMCP INDIRECT (yaitu eksekusi jauh dari <filename>scdmchooser</filename>) bagi X-terminal yang tak menyediakan "
 "peramban tampilannya sendiri."
 
 #. (itstool) path: varlistentry/term
@@ -2122,9 +2122,9 @@ msgstr "Port=177"
 #. (itstool) path: listitem/para
 #: C/index.docbook:1576
 msgid ""
-"The UDP port number <filename>gdm</filename> should listen to for XDMCP requests. Do not change this unless you know what you are doing."
+"The UDP port number <filename>scdm</filename> should listen to for XDMCP requests. Do not change this unless you know what you are doing."
 msgstr ""
-"Nomor port UDP yang mesti didengar oleh <filename>gdm</filename> bagi permintaan XDMCP. Jangan mengubah ini kecuali Anda tahu apa yang "
+"Nomor port UDP yang mesti didengar oleh <filename>scdm</filename> bagi permintaan XDMCP. Jangan mengubah ini kecuali Anda tahu apa yang "
 "Anda lakukan."
 
 #. (itstool) path: varlistentry/term
@@ -2135,8 +2135,8 @@ msgstr "Willing"
 #. (itstool) path: listitem/synopsis
 #: C/index.docbook:1587
 #, no-wrap
-msgid "Willing=&lt;etc&gt;/gdm/Xwilling"
-msgstr "Willing=&lt;etc&gt;/gdm/Xwilling"
+msgid "Willing=&lt;etc&gt;/scdm/Xwilling"
+msgstr "Willing=&lt;etc&gt;/scdm/Xwilling"
 
 #. (itstool) path: listitem/para
 #: C/index.docbook:1588
@@ -2162,12 +2162,12 @@ msgstr "Konfigurasi Penyapa Sederhana"
 #: C/index.docbook:1609
 msgid ""
 "The GDM default greeter is called the simple Greeter and is configured via GConf. Default values are stored in GConf in the "
-"<filename>gdm-simple-greeter.schemas</filename> file. These defaults can be overridden if the \"gdm\" user has a writable $HOME "
+"<filename>scdm-simple-greeter.schemas</filename> file. These defaults can be overridden if the \"scdm\" user has a writable $HOME "
 "directory to store GConf settings. These values can be edited using the <command>gconftool-2</command> or <command>gconf-editor</"
 "command> programs. The following configuration options are supported:"
 msgstr ""
-"Penyapa bawaan GDM dinamai Simple Greeter dan ditata melalui GConf. Nilai bawaan disimpan dalam GConf pada berkas <filename>gdm-simple-"
-"greeter.schemas</filename>. Nilai bawaan ini dapat ditimpa bila pengguna \"gdm\" memiliki direktori $HOME yang dapat ditulisi untuk "
+"Penyapa bawaan GDM dinamai Simple Greeter dan ditata melalui GConf. Nilai bawaan disimpan dalam GConf pada berkas <filename>scdm-simple-"
+"greeter.schemas</filename>. Nilai bawaan ini dapat ditimpa bila pengguna \"scdm\" memiliki direktori $HOME yang dapat ditulisi untuk "
 "menyimpan tatanan GConf. Nilai-nilai ini dapat disunting memakai program <command>gconftool-2</command> atau <command>gconf-editor</"
 "command>. Opsi konfigurasi berikut didukung:"
 
@@ -2178,8 +2178,8 @@ msgstr "Kunci Konfigurasi Penyapa"
 
 #. (itstool) path: varlistentry/term
 #: C/index.docbook:1623
-msgid "/apps/gdm/simple-greeter/banner_message_enable"
-msgstr "/apps/gdm/simple-greeter/banner_message_enable"
+msgid "/apps/scdm/simple-greeter/banner_message_enable"
+msgstr "/apps/scdm/simple-greeter/banner_message_enable"
 
 #. (itstool) path: listitem/synopsis
 #: C/index.docbook:1625 C/index.docbook:1646 C/index.docbook:1657 C/index.docbook:1722 C/index.docbook:1787 C/index.docbook:1798
@@ -2195,8 +2195,8 @@ msgstr "Mengendalikan apakah teks pesan banner ditampilkan."
 
 #. (itstool) path: varlistentry/term
 #: C/index.docbook:1633
-msgid "/apps/gdm/simple-greeter/banner_message_text"
-msgstr "/apps/gdm/simple-greeter/banner_message_text"
+msgid "/apps/scdm/simple-greeter/banner_message_text"
+msgstr "/apps/scdm/simple-greeter/banner_message_text"
 
 #. (itstool) path: listitem/synopsis
 #: C/index.docbook:1635
@@ -2211,8 +2211,8 @@ msgstr "Menyatakan pesan banner teks untuk ditampilkan pada jendela penyapa."
 
 #. (itstool) path: varlistentry/term
 #: C/index.docbook:1644
-msgid "/apps/gdm/simple-greeter/disable_restart_buttons"
-msgstr "/apps/gdm/simple-greeter/disable_restart_buttons"
+msgid "/apps/scdm/simple-greeter/disable_restart_buttons"
+msgstr "/apps/scdm/simple-greeter/disable_restart_buttons"
 
 #. (itstool) path: listitem/para
 #: C/index.docbook:1647
@@ -2221,8 +2221,8 @@ msgstr "Mengendalikan apakah menampilkan tombol hidupkan ulang komputer pada jen
 
 #. (itstool) path: varlistentry/term
 #: C/index.docbook:1655
-msgid "/apps/gdm/simple-greeter/disable_user_list"
-msgstr "/apps/gdm/simple-greeter/disable_user_list"
+msgid "/apps/scdm/simple-greeter/disable_user_list"
+msgstr "/apps/scdm/simple-greeter/disable_user_list"
 
 #. (itstool) path: listitem/para
 #: C/index.docbook:1658
@@ -2231,8 +2231,8 @@ msgstr "Bila true, maka peramban wajah dengan pengguna yang dikenal tak ditampil
 
 #. (itstool) path: varlistentry/term
 #: C/index.docbook:1666
-msgid "/apps/gdm/simple-greeter/logo_icon_name"
-msgstr "/apps/gdm/simple-greeter/logo_icon_name"
+msgid "/apps/scdm/simple-greeter/logo_icon_name"
+msgstr "/apps/scdm/simple-greeter/logo_icon_name"
 
 #. (itstool) path: listitem/synopsis
 #: C/index.docbook:1668
@@ -2247,8 +2247,8 @@ msgstr "Tata ke nama ikon ditemakan untuk dipakai bagi logo penyapa."
 
 #. (itstool) path: varlistentry/term
 #: C/index.docbook:1676
-msgid "/apps/gdm/simple-greeter/recent-languages"
-msgstr "/apps/gdm/simple-greeter/recent-languages"
+msgid "/apps/scdm/simple-greeter/recent-languages"
+msgstr "/apps/scdm/simple-greeter/recent-languages"
 
 #. (itstool) path: listitem/synopsis
 #: C/index.docbook:1678 C/index.docbook:1700
@@ -2279,8 +2279,8 @@ msgstr ""
 
 #. (itstool) path: varlistentry/term
 #: C/index.docbook:1698
-msgid "/apps/gdm/simple-greeter/recent-layouts"
-msgstr "/apps/gdm/simple-greeter/recent-layouts"
+msgid "/apps/scdm/simple-greeter/recent-layouts"
+msgstr "/apps/scdm/simple-greeter/recent-layouts"
 
 #. (itstool) path: listitem/para
 #: C/index.docbook:1701
@@ -2306,8 +2306,8 @@ msgstr ""
 
 #. (itstool) path: varlistentry/term
 #: C/index.docbook:1720
-msgid "/apps/gdm/simple-greeter/wm_use_compiz"
-msgstr "/apps/gdm/simple-greeter/wm_use_compiz"
+msgid "/apps/scdm/simple-greeter/wm_use_compiz"
+msgstr "/apps/scdm/simple-greeter/wm_use_compiz"
 
 #. (itstool) path: listitem/para
 #: C/index.docbook:1723
@@ -2640,10 +2640,10 @@ msgstr "Ini bertanggungjawab bagi hal-hal seperti gambar latar, pengaturan fonta
 #: C/index.docbook:1982
 msgid ""
 "Plugins can also be disabled using GConf. For example, if you want to disable the sound plugin then unset the following key: <filename>/"
-"apps/gdm/simple-greeter/settings-manager-plugins/sound/active</filename>."
+"apps/scdm/simple-greeter/settings-manager-plugins/sound/active</filename>."
 msgstr ""
 "Plugin juga dapat dinonaktifkan memakai GConf. Sebagai contoh, bila Anda ingin mematikan plugin suara maka hapuskan tatanan kunci "
-"berikut: <filename>/apps/gdm/simple-greeter/settings-manager-plugins/sound/active</filename>."
+"berikut: <filename>/apps/scdm/simple-greeter/settings-manager-plugins/sound/active</filename>."
 
 #. (itstool) path: sect2/title
 #: C/index.docbook:1990
@@ -2665,13 +2665,13 @@ msgstr ""
 msgid ""
 "By default, GDM will install desktop files in the <filename>&lt;share&gt;/xsessions</filename> directory. GDM will search the following "
 "directories in this order to find desktop files: <filename>&lt;etc&gt;/X11/sessions/</filename>, <filename>&lt;dmconfdir&gt;/Sessions</"
-"filename>, <filename>&lt;share&gt;/xsessions</filename>, and <filename>&lt;share&gt;/gdm/BuiltInSessions</filename>. By default the "
+"filename>, <filename>&lt;share&gt;/xsessions</filename>, and <filename>&lt;share&gt;/scdm/BuiltInSessions</filename>. By default the "
 "<filename>&lt;dmconfdir&gt;</filename> is set to <filename>&lt;etc&gt;/dm/</filename> unless GDM is configured to use a different "
 "directory via the \"--with-dmconfdir\" option."
 msgstr ""
 "Secara baku, GDM akan memasang berkas desktop dalam direktori <filename>&lt;share&gt;/xsessions</filename>. GDM akan mencari dalam "
 "direktori berikut, sesuai urutan, untuk mencari berkas desktop: <filename>&lt;etc&gt;/X11/sessions/</filename>, <filename>&lt;"
-"dmconfdir&gt;/Sessions</filename>, <filename>&lt;share&gt;/xsessions</filename>, dan <filename>&lt;share&gt;/gdm/BuiltInSessions</"
+"dmconfdir&gt;/Sessions</filename>, <filename>&lt;share&gt;/xsessions</filename>, dan <filename>&lt;share&gt;/scdm/BuiltInSessions</"
 "filename>. Secara baku <filename>&lt;dmconfdir&gt;</filename> ditata ke <filename>&lt;etc&gt;/dm/</filename> kecuali GDM ditata untuk "
 "memakai direktori lain melalui opsi \"--with-dmconfdir\"."
 
@@ -2686,15 +2686,15 @@ msgid ""
 "GDM desktop files support a GDM-specific extension, a key named \"X-GDM-BypassXsession\". If the key is not specified in a desktop "
 "file, the value defaults to \"false\". If this key is specified to be \"true\" in a desktop file, then GDM will launch the program "
 "specified by the desktop file \"Exec\" key directly when starting the user session. It will not run the program via the <filename>&lt;"
-"etc&gt;/gdm/Xsession</filename> script, which is the normal behavior. Since bypassing the <filename>&lt;etc&gt;/gdm/Xsession</filename> "
+"etc&gt;/scdm/Xsession</filename> script, which is the normal behavior. Since bypassing the <filename>&lt;etc&gt;/scdm/Xsession</filename> "
 "script avoids setting up the user session with the normal system and user settings, sessions started this way can be useful for "
 "debugging problems in the system or user scripts that might be preventing a user from being able to start a session."
 msgstr ""
 "Berkas desktop GDM mendukung ekstensi spesifik GDM, suatu kunci bernama \"X-GDM-BypassXsession\". Bila kunci itu tak dinyatakan dalam "
 "suatu berkas desktop, nilai bawaannya adalah \"false\". Bila kunci ini dinyatakan dengan nilai \"true\" dalam suatu berkas desktop, "
 "maka GDM akan meluncurkan program yang dinyatakan oleh kunci \"Exec\" berkas desktop secara langsung ketika mengawali sesi pengguna. "
-"Itu tidak akan menjalankan program melalui skrip <filename>&lt;etc&gt;/gdm/Xsession</filename>, yang merupakan perilaku normal. Karena "
-"mem-bypass skrip <filename>&lt;etc&gt;/gdm/Xsession</filename> menghindari menyiapkan sesi pengguna dengan pengaturan pengguna dan "
+"Itu tidak akan menjalankan program melalui skrip <filename>&lt;etc&gt;/scdm/Xsession</filename>, yang merupakan perilaku normal. Karena "
+"mem-bypass skrip <filename>&lt;etc&gt;/scdm/Xsession</filename> menghindari menyiapkan sesi pengguna dengan pengaturan pengguna dan "
 "sistem normal, sesi yang dimulai dengan cara ini dapat berguna untuk mengawakutu masalah dalam skrip pengguna atau sistem yang mungkin "
 "mencegah seorang pengguna untuk mengawali suatu sesi."
 
@@ -2766,13 +2766,13 @@ msgstr "Paket GDM menyediakan perintah berikut di <filename>sbindir</filename> y
 #. (itstool) path: sect3/title
 #. (itstool) path: variablelist/title
 #: C/index.docbook:2084 C/index.docbook:2092
-msgid "<command>gdm</command> Command Line Options"
-msgstr "Opsi Perintah Baris <command>gdm</command>"
+msgid "<command>scdm</command> Command Line Options"
+msgstr "Opsi Perintah Baris <command>scdm</command>"
 
 #. (itstool) path: sect3/para
 #: C/index.docbook:2086
-msgid "<command>gdm</command> is the main daemon which sets up graphical login environment and starts necessary helpers."
-msgstr "<command>gdm</command> adalah daemon utama yang menyiapkan lingkungan log masuk grafis dan memulai para pembantu yang diperlukan."
+msgid "<command>scdm</command> is the main daemon which sets up graphical login environment and starts necessary helpers."
+msgstr "<command>scdm</command> adalah daemon utama yang menyiapkan lingkungan log masuk grafis dan memulai para pembantu yang diperlukan."
 
 #. (itstool) path: varlistentry/term
 #: C/index.docbook:2095
@@ -2816,41 +2816,41 @@ msgstr "Cetak versi daemon GDM."
 
 #. (itstool) path: sect3/title
 #: C/index.docbook:2133
-msgid "<command>gdm-restart</command> Command Line Options"
-msgstr "Opsi Perintah Baris <command>gdm-restart</command>"
+msgid "<command>scdm-restart</command> Command Line Options"
+msgstr "Opsi Perintah Baris <command>scdm-restart</command>"
 
 #. (itstool) path: sect3/para
 #: C/index.docbook:2135
 msgid ""
-"<command>gdm-restart</command> stops and restarts GDM by sending the GDM daemon a HUP signal. This command will immediately terminate "
+"<command>scdm-restart</command> stops and restarts GDM by sending the GDM daemon a HUP signal. This command will immediately terminate "
 "all sessions and log out users currently logged in with GDM."
 msgstr ""
-"<command>gdm-restart</command> menghentikan dan memulai ulang GDM dengan mengirim sinyal HUP ke daemon GDM. Perintah ini akan seketika "
+"<command>scdm-restart</command> menghentikan dan memulai ulang GDM dengan mengirim sinyal HUP ke daemon GDM. Perintah ini akan seketika "
 "menghentikan semua sesi dan melog keluar pengguna yang sedang log masuk dengan GDM."
 
 #. (itstool) path: sect3/title
 #: C/index.docbook:2143
-msgid "<command>gdm-safe-restart</command> Command Line Options"
-msgstr "Opsi Perintah Baris <command>gdm-safe-restart</command>"
+msgid "<command>scdm-safe-restart</command> Command Line Options"
+msgstr "Opsi Perintah Baris <command>scdm-safe-restart</command>"
 
 #. (itstool) path: sect3/para
 #: C/index.docbook:2145
 msgid ""
-"<command>gdm-safe-restart</command> stops and restarts GDM by sending the GDM daemon a USR1 signal. GDM will be restarted as soon as "
+"<command>scdm-safe-restart</command> stops and restarts GDM by sending the GDM daemon a USR1 signal. GDM will be restarted as soon as "
 "all users log out."
 msgstr ""
-"<command>gdm-safe-restart</command> menghentikan dan memulai ulang GDM dengan mengirim sinyal USR1 ke daemon GDM. GDM akan direstart "
+"<command>scdm-safe-restart</command> menghentikan dan memulai ulang GDM dengan mengirim sinyal USR1 ke daemon GDM. GDM akan direstart "
 "segera setelah semua pengguna log keluar."
 
 #. (itstool) path: sect3/title
 #: C/index.docbook:2153
-msgid "<command>gdm-stop</command> Command Line Options"
-msgstr "Opsi Perintah Baris <command>gdm-stop</command>"
+msgid "<command>scdm-stop</command> Command Line Options"
+msgstr "Opsi Perintah Baris <command>scdm-stop</command>"
 
 #. (itstool) path: sect3/para
 #: C/index.docbook:2155
-msgid "<command>gdm-stop</command> stops GDM by sending the GDM daemon a TERM signal."
-msgstr "<command>gdm-stop</command> menghentikan GDM dengan cara mengirim sinyal TERM ke daemon GDM."
+msgid "<command>scdm-stop</command> stops GDM by sending the GDM daemon a TERM signal."
+msgstr "<command>scdm-stop</command> menghentikan GDM dengan cara mengirim sinyal TERM ke daemon GDM."
 
 #. (itstool) path: sect1/title
 #: C/index.docbook:2166
@@ -2861,23 +2861,23 @@ msgstr "Penanganan Masalah"
 #: C/index.docbook:2174
 msgid ""
 "This section discusses helpful tips for getting GDM working. In general, if you have a problem using GDM, you can submit a bug or send "
-"an email to the gdm-list mailing list. Information about how to do this is in the Introduction section of the document."
+"an email to the scdm-list mailing list. Information about how to do this is in the Introduction section of the document."
 msgstr ""
 "Bagian ini membahas petunjuk-petunjuk yang berguna agar GDM dapat berjalan. Secara umum, bila Anda menemui masalah saat memakai GDM, "
-"Anda dapat mengirim kutu atau surel ke milis gdm-list. Informasi tentang bagaimana melakukan ini ada pada bagian pengantar dokumen ini."
+"Anda dapat mengirim kutu atau surel ke milis scdm-list. Informasi tentang bagaimana melakukan ini ada pada bagian pengantar dokumen ini."
 
 #. (itstool) path: sect1/para
 #: C/index.docbook:2181
 msgid ""
 "If GDM is failing to work properly, it is always a good idea to include debug information. To enable debugging, set the debug/Enable "
-"key to \"true\" in the <filename>&lt;etc&gt;/gdm/custom.conf</filename> file and restart GDM. Then use GDM to the point where it fails, "
+"key to \"true\" in the <filename>&lt;etc&gt;/scdm/custom.conf</filename> file and restart GDM. Then use GDM to the point where it fails, "
 "and debug output will be sent to the system log file (<filename>&lt;var&gt;/log/messages</filename> or <filename>&lt;var&gt;/adm/"
 "messages</filename> depending on your Operating System). If you share this output with the GDM community via a bug report or email, "
 "please only include the GDM related debug information and not the entire file since it can be large. If you do not see any GDM syslog "
 "output, you may need to configure syslog (refer to the <ulink type=\"help\" url=\"man:syslog\">syslog</ulink> man page)."
 msgstr ""
 "Bila GDM gagal bekerja dengan benar, sangat baik untuk menyertakan informasi awakutu. Untuk mengaktifkan pengawakutuan, tata kunci "
-"debug/Enable ke \"true\" di berkas <filename>&lt;etc&gt;/gdm/custom.conf</filename> dan mulai ulang GDM. Lalu gunakan GDM sampai titik "
+"debug/Enable ke \"true\" di berkas <filename>&lt;etc&gt;/scdm/custom.conf</filename> dan mulai ulang GDM. Lalu gunakan GDM sampai titik "
 "kegagalan, dan keluaran awakutu akan dikirim ke berkas log sistem (<filename>&lt;var&gt;/log/messages</filename> atau <filename>&lt;"
 "var&gt;/adm/messages</filename> bergantung kepada Sistem Operasi Anda). Bila Anda berbagi keluaran ini dengan komunitas GDM melalui "
 "laporan kutu atau surel, mohon hanya sertakan informasi awakutu yang terkait GDM dan bukan seluruh berkas karena itu bisa jadi besar. "

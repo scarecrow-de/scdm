@@ -23,14 +23,14 @@
 #define __GDM_SETTINGS_DESKTOP_BACKEND_H
 
 #include <glib-object.h>
-#include "gdm-settings-backend.h"
+#include "scdm-settings-backend.h"
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_SETTINGS_DESKTOP_BACKEND (gdm_settings_desktop_backend_get_type ())
-G_DECLARE_FINAL_TYPE (GdmSettingsDesktopBackend, gdm_settings_desktop_backend, GDM, SETTINGS_DESKTOP_BACKEND, GdmSettingsBackend)
+#define GDM_TYPE_SETTINGS_DESKTOP_BACKEND (scdm_settings_desktop_backend_get_type ())
+G_DECLARE_FINAL_TYPE (GdmSettingsDesktopBackend, scdm_settings_desktop_backend, GDM, SETTINGS_DESKTOP_BACKEND, GdmSettingsBackend)
 
-GdmSettingsBackend        *gdm_settings_desktop_backend_new             (const char* filename);
+GdmSettingsBackend        *scdm_settings_desktop_backend_new             (const char* filename);
 
 G_END_DECLS
 

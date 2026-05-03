@@ -1,4 +1,4 @@
-# Begin /etc/pam.d/gdm-fingerprint
+# Begin /etc/pam.d/scdm-fingerprint
 
 auth     requisite      pam_nologin.so
 auth     required       pam_env.so
@@ -15,4 +15,4 @@ session  required       pam_limits.so
 session  include        system-session
 session  optional       pam_gnome_keyring.so auto_start
 
-# End /etc/pam.d/gdm-fingerprint
+# End /etc/pam.d/scdm-fingerprint

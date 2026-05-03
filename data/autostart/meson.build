@@ -1,5 +1,5 @@
 autostart_files_conf = {
-  'LIBEXECDIR': gdm_prefix / get_option('libexecdir'),
+  'LIBEXECDIR': scdm_prefix / get_option('libexecdir'),
 }
 
 foreach autostart_file : [ 'orca-autostart.desktop' ]
@@ -7,6 +7,6 @@ foreach autostart_file : [ 'orca-autostart.desktop' ]
     input: autostart_file,
     output: autostart_file,
     configuration: autostart_files_conf,
-    install_dir: get_option('datadir') / 'gdm' / 'greeter' / 'autostart',
+    install_dir: get_option('datadir') / 'scdm' / 'greeter' / 'autostart',
   )
 endforeach

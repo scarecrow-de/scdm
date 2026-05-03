@@ -5,7 +5,7 @@ m_common_test_src = [
 ]
 
 m_common_test_deps = [
-  libgdmcommon_dep,
+  libscdmcommon_dep,
   libcheck_dep,
 ]
 

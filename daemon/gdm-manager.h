@@ -24,12 +24,12 @@
 
 #include <glib-object.h>
 
-#include "gdm-display.h"
-#include "gdm-manager-glue.h"
+#include "scdm-display.h"
+#include "scdm-manager-glue.h"
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_MANAGER         (gdm_manager_get_type ())
+#define GDM_TYPE_MANAGER         (scdm_manager_get_type ())
 #define GDM_MANAGER(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GDM_TYPE_MANAGER, GdmManager))
 #define GDM_MANAGER_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), GDM_TYPE_MANAGER, GdmManagerClass))
 #define GDM_IS_MANAGER(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDM_TYPE_MANAGER))
@@ -59,20 +59,20 @@ typedef enum
          GDM_MANAGER_ERROR_GENERAL
 } GdmManagerError;
 
-#define GDM_MANAGER_ERROR gdm_manager_error_quark ()
+#define GDM_MANAGER_ERROR scdm_manager_error_quark ()
 
-GQuark              gdm_manager_error_quark                    (void);
-GType               gdm_manager_get_type                       (void);
+GQuark              scdm_manager_error_quark                    (void);
+GType               scdm_manager_get_type                       (void);
 
-GdmManager *        gdm_manager_new                            (void);
-void                gdm_manager_start                          (GdmManager *manager);
-void                gdm_manager_stop                           (GdmManager *manager);
+GdmManager *        scdm_manager_new                            (void);
+void                scdm_manager_start                          (GdmManager *manager);
+void                scdm_manager_stop                           (GdmManager *manager);
 
-void                gdm_manager_set_xdmcp_enabled              (GdmManager *manager,
+void                scdm_manager_set_xdmcp_enabled              (GdmManager *manager,
                                                                 gboolean    enabled);
-void                gdm_manager_set_show_local_greeter         (GdmManager *manager,
+void                scdm_manager_set_show_local_greeter         (GdmManager *manager,
                                                                 gboolean    show_local_greeter);
-gboolean            gdm_manager_get_displays                   (GdmManager *manager,
+gboolean            scdm_manager_get_displays                   (GdmManager *manager,
                                                                 GPtrArray **displays,
                                                                 GError    **error);
 

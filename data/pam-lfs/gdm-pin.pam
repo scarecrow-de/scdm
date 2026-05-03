@@ -1,4 +1,4 @@
-# Begin /etc/pam.d/gdm-pin
+# Begin /etc/pam.d/scdm-pin
 
 auth     requisite      pam_nologin.so
 auth     required       pam_env.so
@@ -14,4 +14,4 @@ session  required       pam_limits.so
 session  include        system-session
 session  optional       pam_gnome_keyring.so auto_start
 
-# End /etc/pam.d/gdm-pin
+# End /etc/pam.d/scdm-pin

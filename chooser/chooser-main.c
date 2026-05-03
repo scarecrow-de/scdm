@@ -31,10 +31,10 @@
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 
-#include "gdm-common.h"
-#include "gdm-log.h"
+#include "scdm-common.h"
+#include "scdm-log.h"
 
-#include "gdm-chooser-session.h"
+#include "scdm-chooser-session.h"
 
 #define ACCESSIBILITY_KEY         "/desktop/gnome/interface/accessibility"
 
@@ -213,8 +213,8 @@ main (int argc, char *argv[])
 
         setlocale (LC_ALL, "");
 
-        gdm_log_init ();
-        gdm_log_set_debug (TRUE);
+        scdm_log_init ();
+        scdm_log_set_debug (TRUE);
 
         g_debug ("Chooser for display %s xauthority:%s",
                  g_getenv ("DISPLAY"),
@@ -226,14 +226,14 @@ main (int argc, char *argv[])
 
         gtk_init (&argc, &argv);
 
-        session = gdm_chooser_session_new ();
+        session = scdm_chooser_session_new ();
         if (session == NULL) {
                 g_critical ("Unable to create chooser session");
                 exit (EXIT_FAILURE);
         }
 
         error = NULL;
-        res = gdm_chooser_session_start (session, &error);
+        res = scdm_chooser_session_start (session, &error);
         if (! res) {
                 g_warning ("Unable to start chooser session: %s", error->message);
                 g_error_free (error);

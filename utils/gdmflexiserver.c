@@ -28,7 +28,7 @@
 
 #include <glib/gi18n.h>
 
-#include "common/gdm-common.h"
+#include "common/scdm-common.h"
 
 static const char *send_command     = NULL;
 static gboolean    use_xnest        = FALSE;
@@ -168,7 +168,7 @@ main (int argc, char *argv[])
         }
 
         error = NULL;
-        res = gdm_goto_login_session (&error);
+        res = scdm_goto_login_session (&error);
         if (! res) {
                 g_printerr ("%s", error->message);
         } else {

@@ -32,10 +32,10 @@
 #include <glib.h>
 #include <glib/gstdio.h>
 
-#include "gdm-profile.h"
+#include "scdm-profile.h"
 
 void
-_gdm_profile_log (const char *func,
+_scdm_profile_log (const char *func,
                   const char *note,
                   const char *format,
                   ...)

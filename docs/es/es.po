@@ -1,4 +1,4 @@
-# translation of gdm-help.master.po to Español
+# translation of scdm-help.master.po to Español
 # Jorge Gonzalez <jorgegonz@svn.gnome.org>, 2008, 2009, 2010.
 # Jorge González <jorgegonz@svn.gnome.org>, 2010, 2011.
 # 
@@ -7,7 +7,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gdm-help.master\n"
+"Project-Id-Version: scdm-help.master\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-04-23 05:14+0000\n"
 "PO-Revision-Date: 2015-04-23 11:01+0200\n"
@@ -254,10 +254,10 @@ msgstr "Términos y convenciones usados en este manual"
 #: C/index.docbook:102
 msgid ""
 "Chooser - A program used to select a remote host for managing a display "
-"remotely on the attached display (<command>gdm-host-chooser</command>)."
+"remotely on the attached display (<command>scdm-host-chooser</command>)."
 msgstr ""
 "Selector: Un programa que se usa para seleccionar un equipo remoto para "
-"gestionar una pantalla remotamente en la pantalla local (<command>gdm-host-"
+"gestionar una pantalla remotamente en la pantalla local (<command>scdm-host-"
 "chooser</command>)."
 
 #. (itstool) path: sect1/para
@@ -385,30 +385,30 @@ msgstr ""
 #. (itstool) path: sect2/para
 #: C/index.docbook:178
 msgid ""
-"For discussion or queries about GDM, refer to the <address><email>gdm-"
+"For discussion or queries about GDM, refer to the <address><email>scdm-"
 "list@gnome.org</email></address> mail list. This list is archived, and is a "
 "good resource to check to seek answers to common questions. This list is "
-"archived at <ulink type=\"http\" url=\"http://mail.gnome.org/archives/gdm-"
-"list/\"> http://mail.gnome.org/archives/gdm-list/</ulink> and has a search "
+"archived at <ulink type=\"http\" url=\"http://mail.gnome.org/archives/scdm-"
+"list/\"> http://mail.gnome.org/archives/scdm-list/</ulink> and has a search "
 "facility to look for messages with keywords."
 msgstr ""
 "Para discusiones o consultas acerca de GDM consulte la lista de correo "
-"<address><email>gdm-list@gnome.org</email></address>. Esta lista está "
+"<address><email>scdm-list@gnome.org</email></address>. Esta lista está "
 "archivada y es una buena fuente para comprobar o buscar respuestas a "
 "preguntas comunes. Esta lista está archivada en <ulink type=\"http\" url="
-"\"http://mail.gnome.org/archives/gdm-list/\"> http://mail.gnome.org/archives/"
-"gdm-list/</ulink> y tiene una utilidad de búsqueda para buscar mensajes por "
+"\"http://mail.gnome.org/archives/scdm-list/\"> http://mail.gnome.org/archives/"
+"scdm-list/</ulink> y tiene una utilidad de búsqueda para buscar mensajes por "
 "palabras clave."
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:188
 msgid ""
-"Please submit any bug reports or enhancement requests to the \"gdm\" "
+"Please submit any bug reports or enhancement requests to the \"scdm\" "
 "category in <ulink type=\"http\" url=\"http://bugzilla.gnome.org/\"> http://"
 "bugzilla.gnome.org</ulink>."
 msgstr ""
 "Envíe cualquier informe de error o sugerencias de mejoras a la categoría "
-"«gdm» en <ulink type=\"http\" url=\"http://bugzilla.gnome.org/\">http://"
+"«scdm» en <ulink type=\"http\" url=\"http://bugzilla.gnome.org/\">http://"
 "bugzilla.gnome.org</ulink>."
 
 #. (itstool) path: sect2/title
@@ -439,14 +439,14 @@ msgstr ""
 msgid ""
 "Interfaces which continue to be supported in a stable fashion include the "
 "Init, PreSession, PostSession, PostLogin, and Xsession scripts. Some daemon "
-"configuration options in the <filename>&lt;etc&gt;/gdm/custom.conf</"
+"configuration options in the <filename>&lt;etc&gt;/scdm/custom.conf</"
 "filename> file continue to be supported. Also, the <filename>~/.dmrc</"
 "filename>, and face browser image locations are still supported."
 msgstr ""
 "Las interfaces que continúan siendo soportadas de forma estable incluyen "
 "Init, PreSession, PostSession, PostLogin y los scripts Xsession. Algunas "
 "opciones de configuración del demonio en el archivo <filename>&lt;etc&gt;/"
-"gdm/custom.conf</filename> aún están soportadas. También, <filename>~/.dmrc</"
+"scdm/custom.conf</filename> aún están soportadas. También, <filename>~/.dmrc</"
 "filename> y las ubicaciones del visor de rostros están soportadas."
 
 #. (itstool) path: sect2/para
@@ -454,14 +454,14 @@ msgstr ""
 msgid ""
 "GDM 2.20 and earlier supported the ability to manage multiple displays with "
 "separate graphics cards, such as used in terminal server environments, login "
-"in a window via a program like Xnest or Xephyr, the gdmsetup program, XML-"
+"in a window via a program like Xnest or Xephyr, the scdmsetup program, XML-"
 "based greeter themes, and the ability to run the XDMCP chooser from the "
 "login screen. These features were not added back during the 2.22 rewrite."
 msgstr ""
 "Las versiones de GDM 2.20 y anteriores soportaban la capacidad de gestionar "
 "pantallas múltiples con tarjetas gráficas separadas, como se usa en entornos "
 "de terminales de servidor, iniciando sesión a traes de programas como Xnest "
-"o Xephyr, el programa gdmsetup, la interfaz de entrada con temas basados en "
+"o Xephyr, el programa scdmsetup, la interfaz de entrada con temas basados en "
 "XML y la capacidad de ejecutar el selector XDMCP desde la pantalla de inicio "
 "de sesión. Estas características no se han añadido durante la reescritura de "
 "la versión 2.22."
@@ -518,7 +518,7 @@ msgstr ""
 #. (itstool) path: sect2/para
 #: C/index.docbook:263
 msgid ""
-"The greeter program is run as the unprivileged \"gdm\" user/group. This user "
+"The greeter program is run as the unprivileged \"scdm\" user/group. This user "
 "and group are described in the \"Security\" section of this document. The "
 "main functions of the greeter program are to provide a mechanism for "
 "selecting an account for log in and to drive the dialogue between the user "
@@ -810,13 +810,13 @@ msgid ""
 "directory for the image file. GDM will first look for the user's face image "
 "in <filename>~/.face</filename>. If not found, it will try <filename>~/.face."
 "icon</filename>. If still not found, it will use the value defined for "
-"\"face/picture=\" in the <filename>~/.gnome2/gdm</filename> file."
+"\"face/picture=\" in the <filename>~/.gnome2/scdm</filename> file."
 msgstr ""
 "Si no hay icono global para el usuario GDM buscará en la carpeta $HOME del "
 "usuario el archivo de imagen. GDM busca primero la imagen de la cara del "
 "usuario en <filename>~/.face</filename>. Si no lo encuentra probará con "
 "<filename>~/.face.icon</filename>. Si aún así no lo encuentra usará el valor "
-"definido para \"face/picture=\" en el archivo <filename>~/.gnome2/gdm</"
+"definido para \"face/picture=\" en el archivo <filename>~/.gnome2/scdm</"
 "filename>."
 
 #. (itstool) path: sect2/para
@@ -952,24 +952,24 @@ msgid ""
 "GDM uses syslog to log errors and status. It can also log debugging "
 "information, which can be useful for tracking down problems if GDM is not "
 "working properly. Debug output can be enabled by setting the debug/Enable "
-"key to \"true\" in the <filename>&lt;etc&gt;/gdm/custom.conf</filename> file."
+"key to \"true\" in the <filename>&lt;etc&gt;/scdm/custom.conf</filename> file."
 msgstr ""
 "GDM usa syslog para registrar los errores o el estado. También puede "
 "registrar información de depuración, que puede ser útil para encontrar "
 "problemas si GDM no funciona apropiadamente. La salida de depuración se "
 "puede activar estableciendo la clave debug/Enable a cierta en el archivo "
-"<filename>&lt;etc&gt;/gdm/custom.conf</filename>."
+"<filename>&lt;etc&gt;/scdm/custom.conf</filename>."
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:524
 msgid ""
 "Output from the various Xservers is stored in the GDM log directory, which "
-"is normally <filename>&lt;var&gt;/log/gdm/</filename>. Any Xserver messages "
+"is normally <filename>&lt;var&gt;/log/scdm/</filename>. Any Xserver messages "
 "are saved to a file associated with the display value, <filename>&lt;"
 "display&gt;.log</filename>."
 msgstr ""
 "La salida de los varios servidores X se almacena en la carpeta de registro "
-"de GDM, que generalmente es <filename>&lt;var&gt;/log/gdm/</filename>. "
+"de GDM, que generalmente es <filename>&lt;var&gt;/log/scdm/</filename>. "
 "Cualquier mensaje del servidor X se guarda en un archivo asociado con el "
 "valor de la pantalla, <filename>&lt;display&gt;.log</filename>."
 
@@ -977,14 +977,14 @@ msgstr ""
 #: C/index.docbook:531
 msgid ""
 "The session output is piped through the GDM daemon to the <filename>~/"
-"<replaceable>$XDG_CACHE_HOME</replaceable>/gdm/session.log</filename> file "
-"which usually expands to <filename>~/.cache/gdm/session.log</filename>. The "
+"<replaceable>$XDG_CACHE_HOME</replaceable>/scdm/session.log</filename> file "
+"which usually expands to <filename>~/.cache/scdm/session.log</filename>. The "
 "file is overwritten on each login, so logging out and logging back into the "
 "same user via GDM will cause any messages from the previous session to be "
 "lost."
 msgstr ""
 "La salida de la sesión se redirecciona a través del demonio de GDM al "
-"archivo <filename>~/<replaceable>$XDG_CACHE_HOME</replaceable>/gdm/session."
+"archivo <filename>~/<replaceable>$XDG_CACHE_HOME</replaceable>/scdm/session."
 "log</filename>. El archivo se sobreescribe en cada inicio de sesión, de tal "
 "forma que iniciar de nuevo sesión con el mismo usuario a través de GDM hará "
 "que cualquier mensaje de la sesión anterior se pierda."
@@ -994,12 +994,12 @@ msgstr ""
 msgid ""
 "Note that if GDM can not create this file for some reason, then a fallback "
 "file will be created named <filename>~/<replaceable>$XDG_CACHE_HOME</"
-"replaceable>/gdm/session.log.XXXXXXXX</filename> where the "
+"replaceable>/scdm/session.log.XXXXXXXX</filename> where the "
 "<filename>XXXXXXXX</filename> are some random characters."
 msgstr ""
 "Note que si GDM no puede crear este archivo por alguna razón, entonces se "
 "creará un archivo alternativo llamado <filename>~/<replaceable>"
-"$XDG_CACHE_HOME</replaceable>/gdm/session.log.XXXXXXXX</filename> donde "
+"$XDG_CACHE_HOME</replaceable>/scdm/session.log.XXXXXXXX</filename> donde "
 "<filename>XXXXXX</filename> son algunos caracteres aleatorios."
 
 #. (itstool) path: sect2/title
@@ -1050,13 +1050,13 @@ msgstr "El usuario y grupo GDM"
 #: C/index.docbook:575
 msgid ""
 "For security reasons a dedicated user and group id are recommended for "
-"proper operation. This user and group are normally \"gdm\" on most systems, "
+"proper operation. This user and group are normally \"scdm\" on most systems, "
 "but can be configured to any user or group. All GDM GUI programs are run as "
 "this user, so that the programs which interact with the user are run in a "
 "sandbox. This user and group should have limited privilege."
 msgstr ""
 "Por razones de seguridad se recomienda un ID de usuario y grupo dedicados "
-"para una operación adecuada. Este usuario y grupo generalmente son «gdm» en "
+"para una operación adecuada. Este usuario y grupo generalmente son «scdm» en "
 "la mayoría de los sistemas, pero se puede configurar cualquier usuario o "
 "grupo. Todos los programas IGU de GDM se ejecutan como este usuario, de tal "
 "forma que programas que interactúan con el usuario se ejecutan en una "
@@ -1065,15 +1065,15 @@ msgstr ""
 #. (itstool) path: sect2/para
 #: C/index.docbook:584
 msgid ""
-"The only special privilege the \"gdm\" user requires is the ability to read "
-"and write Xauth files to the <filename>&lt;var&gt;/run/gdm</filename> "
-"directory. The <filename>&lt;var&gt;/run/gdm</filename> directory should "
-"have root:gdm ownership and 1777 permissions."
+"The only special privilege the \"scdm\" user requires is the ability to read "
+"and write Xauth files to the <filename>&lt;var&gt;/run/scdm</filename> "
+"directory. The <filename>&lt;var&gt;/run/scdm</filename> directory should "
+"have root:scdm ownership and 1777 permissions."
 msgstr ""
-"El único privilegio especial que requiere el usuario «gdm» es la capacidad "
+"El único privilegio especial que requiere el usuario «scdm» es la capacidad "
 "de leer y escribir archivos Xauth en la carpeta <filename>&lt;var&gt;/run/"
-"gdm</filename>. La carpeta <filename>&lt;var&gt;/run/gdm</filename> debería "
-"tener un propietario root:gdm y permisos 1777."
+"scdm</filename>. La carpeta <filename>&lt;var&gt;/run/scdm</filename> debería "
+"tener un propietario root:scdm y permisos 1777."
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:592
@@ -1083,7 +1083,7 @@ msgid ""
 "<filename>nobody</filename>. Any user who gains access to an Xauth key can "
 "snoop on and control running GUI programs running in the associated session "
 "or perform a denial-of-service attack on it. It is important to ensure that "
-"the system is configured properly so that only the \"gdm\" user has access "
+"the system is configured properly so that only the \"scdm\" user has access "
 "to these files and that it is not easy to login to this account. For "
 "example, the account should be setup to not have a password or allow non-"
 "root users to login to the account."
@@ -1094,7 +1094,7 @@ msgstr ""
 "una clave Xauth puede fisgar y controlar programas gráficos en ejecución "
 "asociados o realizar un ataque de denegación de servicio sobre esa sesión. "
 "Es importante asegurarse de que el sistema está configurado de forma "
-"correcta de tal forma que sólo el usuario «gdm» tiene acceso a esos archivos "
+"correcta de tal forma que sólo el usuario «scdm» tiene acceso a esos archivos "
 "y que no es fácil iniciar sesión con esa cuenta. Por ejemplo, la cuenta "
 "debería configurarse para no tener contraseña ni permitir que usuarios que "
 "no sean root inicien sesión en la cuenta."
@@ -1103,17 +1103,17 @@ msgstr ""
 #: C/index.docbook:605
 msgid ""
 "The GDM greeter configuration is stored in GConf. To allow the GDM user to "
-"be able to write configuration, it is necessary for the \"gdm\" user to have "
+"be able to write configuration, it is necessary for the \"scdm\" user to have "
 "a writable $HOME directory. Users may configure the default GConf "
-"configuration as desired to avoid the need to provide the \"gdm\" user with "
+"configuration as desired to avoid the need to provide the \"scdm\" user with "
 "a writable $HOME directory. However, some features of GDM may be disabled if "
 "it is unable to write state information to GConf configuration."
 msgstr ""
 "La configuración de la interfaz gráfica de GDM se almacena en GConf. Para "
 "permitir que el usuario de GDM sea capaz de escribir la configuración es "
-"necesario que el usuario «gdm» tenga permiso de escritura sobre la carpeta "
+"necesario que el usuario «scdm» tenga permiso de escritura sobre la carpeta "
 "$HOME. Los usuarios pueden configurar los ajustes predeterminados de GConf "
-"como deseen para evitar tener que proporcionar al usuario «gdm» una carpeta "
+"como deseen para evitar tener que proporcionar al usuario «scdm» una carpeta "
 "$HOME con permisos de escritura. No obstante algunas características de GDM "
 "pueden estar desactivadas si no se puede escribir información de estado en "
 "la configuración de GConf."
@@ -1177,21 +1177,21 @@ msgstr ""
 #. (itstool) path: sect2/para
 #: C/index.docbook:647
 msgid ""
-"Note that, by default, GDM uses the \"gdm\" PAM service name for normal "
-"login and the \"gdm-autologin\" PAM service name for automatic login. These "
+"Note that, by default, GDM uses the \"scdm\" PAM service name for normal "
+"login and the \"scdm-autologin\" PAM service name for automatic login. These "
 "services may not be defined in your pam.d or pam.conf configured file. If "
 "there is no entry, then GDM will use the default PAM behavior. On most "
 "systems this should work fine. However, the automatic login feature may not "
-"work if the gdm-autologin service is not defined."
+"work if the scdm-autologin service is not defined."
 msgstr ""
 "Tenga en cuenta que, de forma predeterminada, GDM usa el nombre de servicio "
-"PAM «gdm» para un inicio de sesión normal y el nombre de servicio PAM «gdm-"
+"PAM «scdm» para un inicio de sesión normal y el nombre de servicio PAM «scdm-"
 "autologin» para el inicio de sesión automático. Estos servicios pueden no "
 "estar definidos en sus archivos de configuración pam.d o pam.conf. Si no hay "
 "ninguna entrada, entonces GDM usará el comportamiento predeterminando de "
 "PAM. En la mayoría de los sistemas debería funcionar bien. No obstante, la "
 "característica de inicio de sesión automático puede no funcionar si el "
-"servicio gdm-autologin no está definido."
+"servicio scdm-autologin no está definido."
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:657
@@ -1215,7 +1215,7 @@ msgid ""
 "by using a PAM service module for the desired authentication type rather "
 "than by trying to modify the GDM code directly. Refer to the PAM "
 "documentation on your system. How to do this is frequently discussed on the "
-"<address><email>gdm-list@gnome.org</email></address> mail list, so you can "
+"<address><email>scdm-list@gnome.org</email></address> mail list, so you can "
 "refer to the list archives for more information."
 msgstr ""
 "Si quiere que GDM funciona con otros tipos de mecanismos de autenticación "
@@ -1223,7 +1223,7 @@ msgstr ""
 "implementar esto usando un módulo de servicio PAM para el tipo de "
 "autenticación requerida en vez de intentando modificar el código de GDM "
 "directamente. Consulte la documentación de PAM para su sistema. Esta "
-"cuestión se ha discutido en la lista de correo <address><email>gdm-"
+"cuestión se ha discutido en la lista de correo <address><email>scdm-"
 "list@gnome.org</email></address>, así que puede referirse a los archivos de "
 "la lista para obtener más información."
 
@@ -1247,19 +1247,19 @@ msgstr ""
 #. (itstool) path: sect2/para
 #: C/index.docbook:685
 msgid ""
-"If automatic login does not work on a system, check to see if the \"gdm-"
+"If automatic login does not work on a system, check to see if the \"scdm-"
 "autologin\" PAM stack is defined in the PAM configuration. For this to work, "
 "it is necessary to use a PAM module that simply does no authentication, or "
 "which simply returns PAM_SUCCESS from all of its public interfaces. Assuming "
 "your system has a pam_allow.so PAM module which does this, a PAM "
-"configuration to enable \"gdm-autologin\" would look like this:"
+"configuration to enable \"scdm-autologin\" would look like this:"
 msgstr ""
 "Si el inicio de sesión automático no funciona en un sistema, compruebe que "
-"la pila PAM «gdm-autologin» está definida en la configuración de PAM. Para "
+"la pila PAM «scdm-autologin» está definida en la configuración de PAM. Para "
 "que esto funcione, si es necesario use un módulo PAM que simplemente no haga "
 "autenticación, o que simplemente devuelva PAM_SUCCESS desde todos sus "
 "interfaces públicos. Asumiendo que su sistema tiene pam_allow para que el "
-"módulo PAM lo haga, una configuración PAM para activara «gdm-autologin» "
+"módulo PAM lo haga, una configuración PAM para activara «scdm-autologin» "
 "podría ser la siguiente:"
 
 #. (itstool) path: sect2/screen
@@ -1267,18 +1267,18 @@ msgstr ""
 #, no-wrap
 msgid ""
 "\n"
-"       gdm-autologin auth  required    pam_unix_cred.so.1\n"
-"       gdm-autologin auth  sufficient  pam_allow.so.1\n"
-"       gdm-autologin account  sufficient  pam_allow.so.1\n"
-"       gdm-autologin session  sufficient  pam_allow.so.1\n"
-"       gdm-autologin password  sufficient  pam_allow.so.1\n"
+"       scdm-autologin auth  required    pam_unix_cred.so.1\n"
+"       scdm-autologin auth  sufficient  pam_allow.so.1\n"
+"       scdm-autologin account  sufficient  pam_allow.so.1\n"
+"       scdm-autologin session  sufficient  pam_allow.so.1\n"
+"       scdm-autologin password  sufficient  pam_allow.so.1\n"
 msgstr ""
 "\n"
-"    gdm-autologin auth required  pam_unix_cred.so.1\n"
-"    gdm-autologin auth sufficient pam_allow.so.1\n"
-"    gdm-autologin account sufficient pam_allow.so.1\n"
-"    gdm-autologin session sufficient pam_allow.so.1\n"
-"    gdm-autologin password sufficient pam_allow.so.1\n"
+"    scdm-autologin auth required  pam_unix_cred.so.1\n"
+"    scdm-autologin auth sufficient pam_allow.so.1\n"
+"    scdm-autologin account sufficient pam_allow.so.1\n"
+"    scdm-autologin session sufficient pam_allow.so.1\n"
+"    scdm-autologin password sufficient pam_allow.so.1\n"
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:703
@@ -1294,10 +1294,10 @@ msgstr ""
 #, no-wrap
 msgid ""
 "\n"
-"       gdm-autologin session required pam_unix_session.so.1\n"
+"       scdm-autologin session required pam_unix_session.so.1\n"
 msgstr ""
 "\n"
-"    gdm-autologin session required pam_unix_session.so.1\n"
+"    scdm-autologin session required pam_unix_session.so.1\n"
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:712
@@ -1307,7 +1307,7 @@ msgid ""
 "their password. This feature can be enabled as a per-user option in the "
 "users-admin tool from the gnome-system-tools; it is achieved by checking "
 "that the user is member a Unix group called \"nopasswdlogin\" before asking "
-"for a password. For this to work, the PAM configuration file for the \"gdm\" "
+"for a password. For this to work, the PAM configuration file for the \"scdm\" "
 "service must include a line such as:"
 msgstr ""
 "Si varias personas usan el equipo, lo que hace que el inicio de sesión "
@@ -1316,7 +1316,7 @@ msgstr ""
 "una opción por usuario en la herramienta de usuarios desde las gnome-system-"
 "tools; se consigue comprobando que dichos usuarios están en un grupo Unix "
 "llamado «nopasswdlogin» antes de preguntar la contraseña. Para que esto "
-"funcione el archivo de configuración PAM para el servicio «gdm» debe incluir "
+"funcione el archivo de configuración PAM para el servicio «scdm» debe incluir "
 "una línea así:"
 
 #. (itstool) path: sect2/screen
@@ -1324,10 +1324,10 @@ msgstr ""
 #, no-wrap
 msgid ""
 "\n"
-"      gdm auth  sufficient  pam_succeed_if.so  user ingroup nopasswdlogin\n"
+"      scdm auth  sufficient  pam_succeed_if.so  user ingroup nopasswdlogin\n"
 msgstr ""
 "\n"
-"      gdm auth  sufficient  pam_succeed_if.so  user ingroup nopasswdlogin\n"
+"      scdm auth  sufficient  pam_succeed_if.so  user ingroup nopasswdlogin\n"
 
 #. (itstool) path: sect2/title
 #: C/index.docbook:730
@@ -1365,13 +1365,13 @@ msgstr "Esquema de autenticación del servidor X"
 #: C/index.docbook:749
 msgid ""
 "Xserver authorization files are stored in a newly created subdirectory of "
-"<filename>&lt;var&gt;/run/gdm</filename> at start up. These files are used "
+"<filename>&lt;var&gt;/run/scdm</filename> at start up. These files are used "
 "to store and share a \"password\" between X clients and the Xserver. This "
 "\"password\" is unique for each session logged in, so users from one session "
 "can't snoop on users from another."
 msgstr ""
 "Los archivos de autorización del servidor X se almacenan en una subcarpeta "
-"nueva de <filename>&lt;var&gt;/run/gdm</filename> creada al inicio. Estos "
+"nueva de <filename>&lt;var&gt;/run/scdm</filename> creada al inicio. Estos "
 "archivos se usan para almacenar y compartir una «contraseña» entre los "
 "clientes X y el servidor X. Esta «contraseña» es única para cada inicio de "
 "sesión, de tal forma que los usuarios de una sesión no pueden fisgar sobre "
@@ -1459,12 +1459,12 @@ msgstr ""
 #. (itstool) path: sect2/para
 #: C/index.docbook:803
 msgid ""
-"You should use the daemon name <command>gdm</command> in the <filename>&lt;"
+"You should use the daemon name <command>scdm</command> in the <filename>&lt;"
 "etc&gt;/hosts.allow</filename> and <filename>&lt;etc&gt;/hosts.deny</"
 "filename> files. For example to deny computers from <filename>.evil.domain</"
 "filename> from logging in, then add"
 msgstr ""
-"Debería usar el nombre del demonio <command>gdm</command> en el archivo "
+"Debería usar el nombre del demonio <command>scdm</command> en el archivo "
 "<filename>&lt;etc&gt;/hosts.allow</filename> y en el archivo <filename>&lt;"
 "etc&gt;hosts.deny</filename>. Por ejemplo para denegar la entrada a equipos "
 "de <filename>.evil.domain</filename> , añada"
@@ -1474,10 +1474,10 @@ msgstr ""
 #, no-wrap
 msgid ""
 "\n"
-"gdm: .evil.domain\n"
+"scdm: .evil.domain\n"
 msgstr ""
 "\n"
-"gdm: .dominio.maligno\n"
+"scdm: .dominio.maligno\n"
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:813
@@ -1491,10 +1491,10 @@ msgstr ""
 #, no-wrap
 msgid ""
 "\n"
-"gdm: .your.domain\n"
+"scdm: .your.domain\n"
 msgstr ""
 "\n"
-"gdm: .su.dominio\n"
+"scdm: .su.dominio\n"
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:820
@@ -1607,11 +1607,11 @@ msgstr ""
 msgid ""
 "For example, on Oracle Solaris, the \"solaris.system.shutdown\" "
 "authorization is used to control this. Simply modify the <filename>/etc/"
-"user_attr</filename> file so that the \"gdm\" user has this authorization."
+"user_attr</filename> file so that the \"scdm\" user has this authorization."
 msgstr ""
 "Por ejemplo, en Oracle Solaris, la autorización «solaris system shutdown» se "
 "usa para controlar esto. Simplemente modifique el archivo <filename>/etc/"
-"user_attr</filename> para que el usuario «gdm» tenga esta autorización."
+"user_attr</filename> para que el usuario «scdm» tenga esta autorización."
 
 #. (itstool) path: sect1/title
 #: C/index.docbook:903
@@ -1714,10 +1714,10 @@ msgstr "Puntos de integración de scripts"
 #: C/index.docbook:967
 msgid ""
 "The GDM script integration points can be found in the <filename>&lt;etc&gt;/"
-"gdm/</filename> directory:"
+"scdm/</filename> directory:"
 msgstr ""
 "Los puntos de integración de scripts para GDM se pueden encontrar en la "
-"carpeta <filename>&lt;etc&gt;/gdm/</filename>:"
+"carpeta <filename>&lt;etc&gt;/scdm/</filename>:"
 
 #. (itstool) path: sect2/screen
 #: C/index.docbook:972
@@ -1753,7 +1753,7 @@ msgstr ""
 msgid ""
 "For each type of script, the default one which will be executed is called "
 "\"Default\" and is stored in a directory associated with the script type. So "
-"the default <filename>Init</filename> script is <filename>&lt;etc&gt;/gdm/"
+"the default <filename>Init</filename> script is <filename>&lt;etc&gt;/scdm/"
 "Init/Default</filename>. A per-display script can be provided, and if it "
 "exists it will be run instead of the default script. Such scripts are stored "
 "in the same directory as the default script and have the same name as the "
@@ -1763,7 +1763,7 @@ msgstr ""
 "Para cada tipo de script el que se ejecutará de forma predeterminada es el "
 "«Default» y está almacenado en una carpeta asociada con el tipo de script. "
 "De tal forma que el script <filename>Init</filename> predeterminado es "
-"<filename>&lt;etc&gt;/gdm/Init/Default</filename>. Se puede proporcionar un "
+"<filename>&lt;etc&gt;/scdm/Init/Default</filename>. Se puede proporcionar un "
 "script por pantalla, y si existe se ejecutará en lugar del script "
 "predeterminado. Tales scripts se almacenan en la misma carpeta que el script "
 "predeterminado y tienen el mismo nombre que el valor PANTALLA del servidor X "
@@ -1879,13 +1879,13 @@ msgstr "Configuración automática al inicio"
 #. (itstool) path: sect2/para
 #: C/index.docbook:1057
 msgid ""
-"The <filename>&lt;share&gt;/gdm/autostart/LoginWindow</filename> directory "
+"The <filename>&lt;share&gt;/scdm/autostart/LoginWindow</filename> directory "
 "contains files in the format specified by the \"FreeDesktop.org Desktop "
 "Application Autostart Specification\". Standard features in the "
 "specification may be used to specify programs that should auto-restart or "
 "only be launched if a GConf configuration value is set, etc."
 msgstr ""
-"La carpeta<filename>&lt;share&gt;/gdm/autostart/LoginWindow</filename> "
+"La carpeta<filename>&lt;share&gt;/scdm/autostart/LoginWindow</filename> "
 "contiene archivos en el formato especificado por la Especificación de Inicio "
 "Automático de Aplicación de FreeDesktop.org. Se pueden usar características "
 "estándar en la especificación para especificar que los programas se inicien "
@@ -1897,7 +1897,7 @@ msgstr ""
 msgid ""
 "Any <filename>.desktop</filename> files in this directory will cause the "
 "associated program to automatically start with the login GUI greeter. By "
-"default, GDM is shipped with files which will autostart the gdm-simple-"
+"default, GDM is shipped with files which will autostart the scdm-simple-"
 "greeter login GUI greeter itself, the gnome-power-manager application, the "
 "gnome-settings-daemon, and the metacity window manager. These programs are "
 "needed for the greeter program to work. In addition, desktop files are "
@@ -1907,7 +1907,7 @@ msgstr ""
 "Cualquier archivo <filename>.desktop</filename> en esta carpeta hará que el "
 "programa asociado se inicie automáticamente con la IGU de inicio de sesión. "
 "De forma predeterminada GDM viene con archivos que iniciarán el IGU de "
-"inicio de sesión gdm-simple-greeter, la aplicación Gestor de energía, el "
+"inicio de sesión scdm-simple-greeter, la aplicación Gestor de energía, el "
 "Demonio de ajustes de GNOME y el gestor de ventanas Metacity. Estos "
 "programas son necesarios para que funcione el programa gráfico. Además, se "
 "proporcionan archivos .desktop para iniciar varios programas de TA si los "
@@ -1923,7 +1923,7 @@ msgstr "Script Xsession"
 #: C/index.docbook:1082
 msgid ""
 "There is also an <filename>Xsession</filename> script located at "
-"<filename>&lt;etc&gt;/gdm/Xsession</filename> which is called between the "
+"<filename>&lt;etc&gt;/scdm/Xsession</filename> which is called between the "
 "<filename>PreSession</filename> and the <filename>PostSession</filename> "
 "scripts. This script does not support per-display like the other scripts. "
 "This script is used for actually starting the user session. This script is "
@@ -1931,7 +1931,7 @@ msgid ""
 "Desktop session file the user selected to start."
 msgstr ""
 "Existe también un script <filename>Xsession</filename> ubicado en "
-"<filename>&lt;etc&gt;/gdm/Xsession</filename> al que se llama entre los "
+"<filename>&lt;etc&gt;/scdm/Xsession</filename> al que se llama entre los "
 "scripts <filename>PreSession</filename> y <filename>PostSession</filename>. "
 "Este script no soporta configuración por cada pantalla como los otros "
 "scripts. Este script se usa para iniciar la sesión del usuario. Este script "
@@ -1947,17 +1947,17 @@ msgstr "Configuración del demonio"
 #. (itstool) path: sect2/para
 #: C/index.docbook:1097
 msgid ""
-"The GDM daemon is configured using the <filename>&lt;etc&gt;/gdm/custom."
+"The GDM daemon is configured using the <filename>&lt;etc&gt;/scdm/custom."
 "conf</filename> file. Default values are stored in GConf in the "
-"<filename>gdm.schemas</filename> file. It is recommended that end-users "
-"modify the <filename>&lt;etc&gt;/gdm/custom.conf</filename> file because the "
+"<filename>scdm.schemas</filename> file. It is recommended that end-users "
+"modify the <filename>&lt;etc&gt;/scdm/custom.conf</filename> file because the "
 "schemas file may be overwritten when the user updates their system to have a "
 "newer version of GDM."
 msgstr ""
-"El demonio de GDM se configura usando el archivo <filename>&lt;etc&gt;/gdm/"
+"El demonio de GDM se configura usando el archivo <filename>&lt;etc&gt;/scdm/"
 "custom.conf</filename>. Los valores predeterminados se almacenan en el "
-"archivo de GConf <filename>gdm.schemas</filename>. Se recomienda que los "
-"usuarios finales modifiquen el archivo <filename>&lt;etc&gt;/gdm/custom."
+"archivo de GConf <filename>scdm.schemas</filename>. Se recomienda que los "
+"usuarios finales modifiquen el archivo <filename>&lt;etc&gt;/scdm/custom."
 "conf</filename> ya que puede que el archivo de esquemas se sobreescriba "
 "cuando el usuario actualiza su sistema con una nueva versión de GDM."
 
@@ -1973,13 +1973,13 @@ msgstr ""
 #. (itstool) path: sect2/para
 #: C/index.docbook:1112
 msgid ""
-"The <filename>&lt;etc&gt;/gdm/custom.conf</filename> file is in the "
+"The <filename>&lt;etc&gt;/scdm/custom.conf</filename> file is in the "
 "<filename>keyfile</filename> format. Keywords in brackets define group "
 "sections, strings before an equal sign (=) are keys and the data after equal "
 "sign represents their value. Empty lines or lines starting with the hash "
 "mark (#) are ignored."
 msgstr ""
-"El archivo <filename>&lt;etc&gt;/gdm/custom.conf</filename> está en el "
+"El archivo <filename>&lt;etc&gt;/scdm/custom.conf</filename> está en el "
 "formato <filename>keyfile</filename>. Las palabras entre paréntesis definen "
 "grupos de secciones, las cadenas antes de un signo igual (=) son claves y "
 "los datos después del signo igual representan su valor. Las líneas vacías o "
@@ -1988,14 +1988,14 @@ msgstr ""
 #. (itstool) path: sect2/para
 #: C/index.docbook:1120
 msgid ""
-"The file <filename>&lt;etc&gt;/gdm/custom.conf</filename> supports the "
+"The file <filename>&lt;etc&gt;/scdm/custom.conf</filename> supports the "
 "\"[daemon]\", \"[security]\", and \"[xdmcp]\" group sections. Within each "
 "group, there are particular key/value pairs that can be specified to modify "
 "how GDM behaves. For example, to enable timed login and specify the timed "
 "login user to be a user named \"you\", you would modify the file so it "
 "contains the following lines:"
 msgstr ""
-"El archivo <filename>&lt;etc&gt;/gdm/custom.conf</filename> soporta las "
+"El archivo <filename>&lt;etc&gt;/scdm/custom.conf</filename> soporta las "
 "secciones de grupo «[daemon]», «[security]» y «[xdmcp]». Existen pares de "
 "claves/valores particulares para cada grupo que pueden modificar cómo se "
 "comporta GDM. Por ejemplo, para activar un inicio de sesión temporizado y "
@@ -2222,8 +2222,8 @@ msgstr "User"
 #. (itstool) path: listitem/synopsis
 #: C/index.docbook:1264
 #, no-wrap
-msgid "User=gdm"
-msgstr "User=gdm"
+msgid "User=scdm"
+msgstr "User=scdm"
 
 #. (itstool) path: listitem/para
 #: C/index.docbook:1265
@@ -2245,8 +2245,8 @@ msgstr "Group"
 #. (itstool) path: listitem/synopsis
 #: C/index.docbook:1277
 #, no-wrap
-msgid "Group=gdm"
-msgstr "Group=gdm"
+msgid "Group=scdm"
+msgstr "Group=scdm"
 
 #. (itstool) path: listitem/para
 #: C/index.docbook:1278
@@ -2285,13 +2285,13 @@ msgstr "Enable=false"
 #: C/index.docbook:1299
 msgid ""
 "To enable debugging, set the debug/Enable key to \"true\" in the "
-"<filename>&lt;etc&gt;/gdm/custom.conf</filename> file and restart GDM. Then "
+"<filename>&lt;etc&gt;/scdm/custom.conf</filename> file and restart GDM. Then "
 "debug output will be sent to the system log file (<filename>&lt;var&gt;/log/"
 "messages</filename> or <filename>&lt;var&gt;/adm/messages</filename> "
 "depending on your Operating System)."
 msgstr ""
 "Para activar la depuración establezca la clave debug/Enable a cierta en el "
-"archivo <filename>&lt;etc&gt;/gdm/custom.conf</filename> y reinicie GDM. "
+"archivo <filename>&lt;etc&gt;/scdm/custom.conf</filename> y reinicie GDM. "
 "Entonces la salida de depuración se enviará al archivo de registro del "
 "sistema (<filename>&lt;var&gt;/log/messages</filename> o <filename>&lt;"
 "var&gt;/adm/messages</filename> dependiendo de su sistema operativo)."
@@ -2500,10 +2500,10 @@ msgstr ""
 #. (itstool) path: listitem/para
 #: C/index.docbook:1435
 msgid ""
-"<filename>gdm</filename> listens for requests on UDP port 177. See the Port "
+"<filename>scdm</filename> listens for requests on UDP port 177. See the Port "
 "option for more information."
 msgstr ""
-"<filename>gdm</filename> escucha peticiones en el puerto UDP 177. Vea la "
+"<filename>scdm</filename> escucha peticiones en el puerto UDP 177. Vea la "
 "opción Puerto para más información."
 
 #. (itstool) path: listitem/para
@@ -2511,21 +2511,21 @@ msgstr ""
 msgid ""
 "If GDM is compiled to support it, access from remote displays can be "
 "controlled using the TCP Wrappers library. The service name is "
-"<filename>gdm</filename>"
+"<filename>scdm</filename>"
 msgstr ""
 "Si GDM está compilado para soportarlo, el acceso desde las pantallas remotas "
 "se puede controlar usando la biblioteca TCPWrappers. El nombre del servicio "
-"es <filename>gdm</filename>"
+"es <filename>scdm</filename>"
 
 #. (itstool) path: para/screen
 #: C/index.docbook:1448
 #, no-wrap
 msgid ""
 "\n"
-"gdm:.my.domain\n"
+"scdm:.my.domain\n"
 msgstr ""
 "\n"
-"gdm:.mi.dominio\n"
+"scdm:.mi.dominio\n"
 
 #. (itstool) path: listitem/para
 #: C/index.docbook:1446
@@ -2564,11 +2564,11 @@ msgstr "HonorIndirect=true"
 #: C/index.docbook:1469
 msgid ""
 "Enables XDMCP INDIRECT choosing (i.e. remote execution of "
-"<filename>gdmchooser</filename>) for X-terminals which do not supply their "
+"<filename>scdmchooser</filename>) for X-terminals which do not supply their "
 "own display browser."
 msgstr ""
 "Activa la selección XDMCP INDIRECT (ejecución remota de "
-"<filename>gdmchooser</filename>) para terminales X que no suministran su "
+"<filename>scdmchooser</filename>) para terminales X que no suministran su "
 "propio examinador de pantallas."
 
 #. (itstool) path: varlistentry/term
@@ -2755,10 +2755,10 @@ msgstr "Port=177"
 #. (itstool) path: listitem/para
 #: C/index.docbook:1576
 msgid ""
-"The UDP port number <filename>gdm</filename> should listen to for XDMCP "
+"The UDP port number <filename>scdm</filename> should listen to for XDMCP "
 "requests. Do not change this unless you know what you are doing."
 msgstr ""
-"El número de puerto UDP en el que <filename>gdm</filename> debería escuchar "
+"El número de puerto UDP en el que <filename>scdm</filename> debería escuchar "
 "las peticiones XDMCP. No cambie esto a no ser que sepa lo que está haciendo."
 
 #. (itstool) path: varlistentry/term
@@ -2769,8 +2769,8 @@ msgstr "Willing"
 #. (itstool) path: listitem/synopsis
 #: C/index.docbook:1587
 #, no-wrap
-msgid "Willing=&lt;etc&gt;/gdm/Xwilling"
-msgstr "Willing=&lt;etc&gt;/gdm/Xwilling"
+msgid "Willing=&lt;etc&gt;/scdm/Xwilling"
+msgstr "Willing=&lt;etc&gt;/scdm/Xwilling"
 
 #. (itstool) path: listitem/para
 #: C/index.docbook:1588
@@ -2802,17 +2802,17 @@ msgstr "Configuración de la interfaz simple"
 #: C/index.docbook:1609
 msgid ""
 "The GDM default greeter is called the simple Greeter and is configured via "
-"GConf. Default values are stored in GConf in the <filename>gdm-simple-"
+"GConf. Default values are stored in GConf in the <filename>scdm-simple-"
 "greeter.schemas</filename> file. These defaults can be overridden if the "
-"\"gdm\" user has a writable $HOME directory to store GConf settings. These "
+"\"scdm\" user has a writable $HOME directory to store GConf settings. These "
 "values can be edited using the <command>gconftool-2</command> or "
 "<command>gconf-editor</command> programs. The following configuration "
 "options are supported:"
 msgstr ""
 "El tema predeterminado de la interfaz gráfica se llama simple y se configura "
 "a través de GConf. Los valores predeterminados se almacenan en GConf en el "
-"archivo <filename>gdm-simple-greeter.schemas</filename>. Estos valores "
-"predeterminados se pueden sobrescribir si el usuario «gdm» tiene una carpeta "
+"archivo <filename>scdm-simple-greeter.schemas</filename>. Estos valores "
+"predeterminados se pueden sobrescribir si el usuario «scdm» tiene una carpeta "
 "$HOME escribible para almacenar ajustes de GConf. Estos valores se pueden "
 "editar usando los programas <command>gconftool-2</command> o <command>gconf-"
 "editor</command>. Las siguientes opciones de configuración están soportadas:"
@@ -2824,8 +2824,8 @@ msgstr "Claves de configuración de la interfaz"
 
 #. (itstool) path: varlistentry/term
 #: C/index.docbook:1623
-msgid "/apps/gdm/simple-greeter/banner_message_enable"
-msgstr "/apps/gdm/simple-greeter/banner_message_enable"
+msgid "/apps/scdm/simple-greeter/banner_message_enable"
+msgstr "/apps/scdm/simple-greeter/banner_message_enable"
 
 #. (itstool) path: listitem/synopsis
 #: C/index.docbook:1625 C/index.docbook:1646 C/index.docbook:1657
@@ -2842,8 +2842,8 @@ msgstr "Controla si se muestra o no el mensaje de texto."
 
 #. (itstool) path: varlistentry/term
 #: C/index.docbook:1633
-msgid "/apps/gdm/simple-greeter/banner_message_text"
-msgstr "/apps/gdm/simple-greeter/banner_message_text"
+msgid "/apps/scdm/simple-greeter/banner_message_text"
+msgstr "/apps/scdm/simple-greeter/banner_message_text"
 
 #. (itstool) path: listitem/synopsis
 #: C/index.docbook:1635
@@ -2859,8 +2859,8 @@ msgstr ""
 
 #. (itstool) path: varlistentry/term
 #: C/index.docbook:1644
-msgid "/apps/gdm/simple-greeter/disable_restart_buttons"
-msgstr "/apps/gdm/simple-greeter/disable_restart_buttons"
+msgid "/apps/scdm/simple-greeter/disable_restart_buttons"
+msgstr "/apps/scdm/simple-greeter/disable_restart_buttons"
 
 #. (itstool) path: listitem/para
 #: C/index.docbook:1647
@@ -2871,8 +2871,8 @@ msgstr ""
 
 #. (itstool) path: varlistentry/term
 #: C/index.docbook:1655
-msgid "/apps/gdm/simple-greeter/disable_user_list"
-msgstr "/apps/gdm/simple-greeter/disable_user_list"
+msgid "/apps/scdm/simple-greeter/disable_user_list"
+msgstr "/apps/scdm/simple-greeter/disable_user_list"
 
 #. (itstool) path: listitem/para
 #: C/index.docbook:1658
@@ -2885,8 +2885,8 @@ msgstr ""
 
 #. (itstool) path: varlistentry/term
 #: C/index.docbook:1666
-msgid "/apps/gdm/simple-greeter/logo_icon_name"
-msgstr "/apps/gdm/simple-greeter/logo_icon_name"
+msgid "/apps/scdm/simple-greeter/logo_icon_name"
+msgstr "/apps/scdm/simple-greeter/logo_icon_name"
 
 #. (itstool) path: listitem/synopsis
 #: C/index.docbook:1668
@@ -2903,8 +2903,8 @@ msgstr ""
 
 #. (itstool) path: varlistentry/term
 #: C/index.docbook:1676
-msgid "/apps/gdm/simple-greeter/recent-languages"
-msgstr "/apps/gdm/simple-greeter/recent-languages"
+msgid "/apps/scdm/simple-greeter/recent-languages"
+msgstr "/apps/scdm/simple-greeter/recent-languages"
 
 #. (itstool) path: listitem/synopsis
 #: C/index.docbook:1678 C/index.docbook:1700
@@ -2942,8 +2942,8 @@ msgstr ""
 
 #. (itstool) path: varlistentry/term
 #: C/index.docbook:1698
-msgid "/apps/gdm/simple-greeter/recent-layouts"
-msgstr "/apps/gdm/simple-greeter/recent-layouts"
+msgid "/apps/scdm/simple-greeter/recent-layouts"
+msgstr "/apps/scdm/simple-greeter/recent-layouts"
 
 #. (itstool) path: listitem/para
 #: C/index.docbook:1701
@@ -2978,8 +2978,8 @@ msgstr ""
 
 #. (itstool) path: varlistentry/term
 #: C/index.docbook:1720
-msgid "/apps/gdm/simple-greeter/wm_use_compiz"
-msgstr "/apps/gdm/simple-greeter/wm_use_compiz"
+msgid "/apps/scdm/simple-greeter/wm_use_compiz"
+msgstr "/apps/scdm/simple-greeter/wm_use_compiz"
 
 #. (itstool) path: listitem/para
 #: C/index.docbook:1723
@@ -3398,12 +3398,12 @@ msgstr ""
 #: C/index.docbook:1982
 msgid ""
 "Plugins can also be disabled using GConf. For example, if you want to "
-"disable the sound plugin then unset the following key: <filename>/apps/gdm/"
+"disable the sound plugin then unset the following key: <filename>/apps/scdm/"
 "simple-greeter/settings-manager-plugins/sound/active</filename>."
 msgstr ""
 "Los complementos también se pueden desactivar usando GConf. Por ejemplo, si "
 "quiere desactivar el complemento de sonido desactive la siguiente clave: "
-"<filename>/apps/gdm/simple-greeter/settings-manager-plugins/sound/active</"
+"<filename>/apps/scdm/simple-greeter/settings-manager-plugins/sound/active</"
 "filename>."
 
 #. (itstool) path: sect2/title
@@ -3432,7 +3432,7 @@ msgid ""
 "xsessions</filename> directory. GDM will search the following directories in "
 "this order to find desktop files: <filename>&lt;etc&gt;/X11/sessions/</"
 "filename>, <filename>&lt;dmconfdir&gt;/Sessions</filename>, <filename>&lt;"
-"share&gt;/xsessions</filename>, and <filename>&lt;share&gt;/gdm/"
+"share&gt;/xsessions</filename>, and <filename>&lt;share&gt;/scdm/"
 "BuiltInSessions</filename>. By default the <filename>&lt;dmconfdir&gt;</"
 "filename> is set to <filename>&lt;etc&gt;/dm/</filename> unless GDM is "
 "configured to use a different directory via the \"--with-dmconfdir\" option."
@@ -3442,7 +3442,7 @@ msgstr ""
 "siguientes carpetas en este orden para encontrar archivos de escritorio: "
 "<filename>&lt;etc&gt;/X11/sessions/</filename>, <filename>&lt;dmconfdir&gt;/"
 "Sessions</filename>, <filename>&lt;share&gt;/xsessions</filename>, y "
-"<filename>&lt;share/gdm/BuiltInSessions</filename>. De forma predeterminada "
+"<filename>&lt;share/scdm/BuiltInSessions</filename>. De forma predeterminada "
 "<filename>&lt;dmconfdir&gt;</filename> está establecido a <filename>&lt;"
 "etc&gt;/dm/</filename> a no ser que GDM se configure para usar una carpeta "
 "diferente a través de la opción «--with-dmconfdir»."
@@ -3464,8 +3464,8 @@ msgid ""
 "defaults to \"false\". If this key is specified to be \"true\" in a desktop "
 "file, then GDM will launch the program specified by the desktop file \"Exec"
 "\" key directly when starting the user session. It will not run the program "
-"via the <filename>&lt;etc&gt;/gdm/Xsession</filename> script, which is the "
-"normal behavior. Since bypassing the <filename>&lt;etc&gt;/gdm/Xsession</"
+"via the <filename>&lt;etc&gt;/scdm/Xsession</filename> script, which is the "
+"normal behavior. Since bypassing the <filename>&lt;etc&gt;/scdm/Xsession</"
 "filename> script avoids setting up the user session with the normal system "
 "and user settings, sessions started this way can be useful for debugging "
 "problems in the system or user scripts that might be preventing a user from "
@@ -3477,9 +3477,9 @@ msgstr ""
 "Si esta clave se especifica a cierta («true») en el archivo de escritorio, "
 "entonces GDM lanzará directamente el programa especificado por la clave "
 "«Exec» del archivo de escritorio al iniciar la sesión del usuario. No "
-"ejecutará el programa a través del script <filename>&lt;etc&gt;/gdm/"
+"ejecutará el programa a través del script <filename>&lt;etc&gt;/scdm/"
 "Xsession</filename>, lo que es el comportamiento normal. Ya que al evitar el "
-"script <filename>&lt;etc&gt;/gdm/Xsession</filename> se evita configurar la "
+"script <filename>&lt;etc&gt;/scdm/Xsession</filename> se evita configurar la "
 "sesión del usuario con la configuración normal del sistema y usuario; las "
 "sesiones iniciadas de esta manera pueden ser útiles para depurar problemas "
 "en el sistema o en scripts de usuario que puedan impedir que un usuario "
@@ -3573,19 +3573,19 @@ msgstr ""
 #. (itstool) path: sect3/title
 #. (itstool) path: variablelist/title
 #: C/index.docbook:2084 C/index.docbook:2092
-msgid "<command>gdm</command> Command Line Options"
-msgstr "Opciones de línea de comandos de <command>gdm</command>"
+msgid "<command>scdm</command> Command Line Options"
+msgstr "Opciones de línea de comandos de <command>scdm</command>"
 
 #. (itstool) path: sect3/para
 #: C/index.docbook:2086
 #| msgid ""
-#| "<command>gdm</command> is the main daemon which sets up graphical login "
+#| "<command>scdm</command> is the main daemon which sets up graphical login "
 #| "environment and starts necesary helpers."
 msgid ""
-"<command>gdm</command> is the main daemon which sets up graphical login "
+"<command>scdm</command> is the main daemon which sets up graphical login "
 "environment and starts necessary helpers."
 msgstr ""
-"<command>gdm</command> es el demonio principal que configura el entorno de "
+"<command>scdm</command> es el demonio principal que configura el entorno de "
 "inicio de sesión gráfico e inicia los ayudantes necesarios."
 
 #. (itstool) path: varlistentry/term
@@ -3630,47 +3630,47 @@ msgstr "Imprime la versión del demonio GDM."
 
 #. (itstool) path: sect3/title
 #: C/index.docbook:2133
-msgid "<command>gdm-restart</command> Command Line Options"
-msgstr "Opciones de línea de comandos de <command>gdm-restart</command>"
+msgid "<command>scdm-restart</command> Command Line Options"
+msgstr "Opciones de línea de comandos de <command>scdm-restart</command>"
 
 #. (itstool) path: sect3/para
 #: C/index.docbook:2135
 msgid ""
-"<command>gdm-restart</command> stops and restarts GDM by sending the GDM "
+"<command>scdm-restart</command> stops and restarts GDM by sending the GDM "
 "daemon a HUP signal. This command will immediately terminate all sessions "
 "and log out users currently logged in with GDM."
 msgstr ""
-"<command>gdm-restart</command> para y reinicia GDM enviando al demonio de "
+"<command>scdm-restart</command> para y reinicia GDM enviando al demonio de "
 "GDM una señal HUP. Este comando inmediatamente terminará todas las sesiones "
 "y echará fuera a los usuarios que hayan entrado con GDM."
 
 #. (itstool) path: sect3/title
 #: C/index.docbook:2143
-msgid "<command>gdm-safe-restart</command> Command Line Options"
-msgstr "Opciones de línea de comandos de <command>gdm-safe-restart</command>"
+msgid "<command>scdm-safe-restart</command> Command Line Options"
+msgstr "Opciones de línea de comandos de <command>scdm-safe-restart</command>"
 
 #. (itstool) path: sect3/para
 #: C/index.docbook:2145
 msgid ""
-"<command>gdm-safe-restart</command> stops and restarts GDM by sending the "
+"<command>scdm-safe-restart</command> stops and restarts GDM by sending the "
 "GDM daemon a USR1 signal. GDM will be restarted as soon as all users log out."
 msgstr ""
-"<command>gdm-safe-restart</command> para y reinicia GDM enviando al demonio "
+"<command>scdm-safe-restart</command> para y reinicia GDM enviando al demonio "
 "GDM una señal USR1. GDM re reiniciará tan pronto como todos los usuarios "
 "salgan."
 
 #. (itstool) path: sect3/title
 #: C/index.docbook:2153
-msgid "<command>gdm-stop</command> Command Line Options"
-msgstr "Opciones de línea de comandos de <command>gdm-stop</command>"
+msgid "<command>scdm-stop</command> Command Line Options"
+msgstr "Opciones de línea de comandos de <command>scdm-stop</command>"
 
 #. (itstool) path: sect3/para
 #: C/index.docbook:2155
 msgid ""
-"<command>gdm-stop</command> stops GDM by sending the GDM daemon a TERM "
+"<command>scdm-stop</command> stops GDM by sending the GDM daemon a TERM "
 "signal."
 msgstr ""
-"<command>gdm-stop</command> para GDM enviando al demonio GDM una señal TERM."
+"<command>scdm-stop</command> para GDM enviando al demonio GDM una señal TERM."
 
 #. (itstool) path: sect1/title
 #: C/index.docbook:2166
@@ -3682,7 +3682,7 @@ msgstr "Resolución de problemas"
 msgid ""
 "This section discusses helpful tips for getting GDM working. In general, if "
 "you have a problem using GDM, you can submit a bug or send an email to the "
-"gdm-list mailing list. Information about how to do this is in the "
+"scdm-list mailing list. Information about how to do this is in the "
 "Introduction section of the document."
 msgstr ""
 "Esta sección habla acerca de consejos útiles para hacer funcionar GDM. En "
@@ -3695,7 +3695,7 @@ msgstr ""
 msgid ""
 "If GDM is failing to work properly, it is always a good idea to include "
 "debug information. To enable debugging, set the debug/Enable key to \"true\" "
-"in the <filename>&lt;etc&gt;/gdm/custom.conf</filename> file and restart "
+"in the <filename>&lt;etc&gt;/scdm/custom.conf</filename> file and restart "
 "GDM. Then use GDM to the point where it fails, and debug output will be sent "
 "to the system log file (<filename>&lt;var&gt;/log/messages</filename> or "
 "<filename>&lt;var&gt;/adm/messages</filename> depending on your Operating "
@@ -3707,7 +3707,7 @@ msgid ""
 msgstr ""
 "Si GDM comienza a no funcionar correctamente, siempre es buena idea incluir "
 "la información de depuración. Para activar la depuración establezca la clave "
-"debug/Enable a cierta en el archivo <filename>&lt;etc&gt;/gdm/custom.conf</"
+"debug/Enable a cierta en el archivo <filename>&lt;etc&gt;/scdm/custom.conf</"
 "filename> y después reinicie GDM. Después use GDM hasta el punto donde falla "
 "y la salida de depuración se enviará a su registro del sistema "
 "(<filename>&lt;var&gt;/log/messages</filename> o <filename>&lt;var&gt;/adm/"
@@ -3864,30 +3864,30 @@ msgstr ""
 "DOCS distribuido con este manual."
 
 #~ msgid ""
-#~ "<command>gdm</command> and <command>gdm-binary</command> Command Line "
+#~ "<command>scdm</command> and <command>scdm-binary</command> Command Line "
 #~ "Options"
 #~ msgstr ""
-#~ "Opciones de línea de comandos de <command>gdm</command> y <command>gdm-"
+#~ "Opciones de línea de comandos de <command>scdm</command> y <command>scdm-"
 #~ "binary</command>"
 
 #~ msgid ""
-#~ "The <command>gdm</command> command is really just a script which runs the "
-#~ "<command>gdm-binary</command>, passing along any options. Before "
-#~ "launching <command>gdm-binary</command>, the gdm wrapper script will "
+#~ "The <command>scdm</command> command is really just a script which runs the "
+#~ "<command>scdm-binary</command>, passing along any options. Before "
+#~ "launching <command>scdm-binary</command>, the scdm wrapper script will "
 #~ "source the <filename>&lt;etc&gt;/profile</filename> file to set the "
 #~ "standard system environment variables. In order to better support "
 #~ "internationalization, it will also set the LC_MESSAGES environment "
 #~ "variable to LANG if neither LC_MESSAGES or LC_ALL are set. The "
-#~ "<command>gdm-binary</command> is the actual GDM daemon."
+#~ "<command>scdm-binary</command> is the actual GDM daemon."
 #~ msgstr ""
-#~ "El comando <command>gdm</command> es realmente sólo un script que ejecuta "
-#~ "el <command>gdm-binary</command>, pasando cualquier opción. Antes de "
-#~ "lanzar <command>gdm-binary</command>, el script de envoltura de gdm "
+#~ "El comando <command>scdm</command> es realmente sólo un script que ejecuta "
+#~ "el <command>scdm-binary</command>, pasando cualquier opción. Antes de "
+#~ "lanzar <command>scdm-binary</command>, el script de envoltura de scdm "
 #~ "incluirá el archivo <filename>&lt;etc&gt;/profile</filename> para "
 #~ "establecer las variables de entorno del sistema estándar. Para soportar "
 #~ "mejor la internacionalización establecerá la variable de entorno "
 #~ "LC_MESSAGES a LANG si cualquiera de LC_MESSAGES o LC_ALL está "
-#~ "establecida. <command>gdm-binary</command> es el demonio actual de GDM."
+#~ "establecida. <command>scdm-binary</command> es el demonio actual de GDM."
 
 #~ msgid "0.0"
 #~ msgstr "0.0"
@@ -3999,8 +3999,8 @@ msgstr ""
 #~ "conexión se detiene y la sesión termina. Esta es una combinación de las "
 #~ "opciones de XDM PingInterval y PingTimeout, pero en segundos."
 
-#~ msgid "/apps/gdm/simple-greeter/debug"
-#~ msgstr "/apps/gdm/simple-greeter/debug"
+#~ msgid "/apps/scdm/simple-greeter/debug"
+#~ msgstr "/apps/scdm/simple-greeter/debug"
 
 #~ msgid "If true, then debugging mode is enabled for the greeter."
 #~ msgstr ""

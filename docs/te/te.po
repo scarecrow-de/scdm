@@ -1,11 +1,11 @@
-# Telugu translation for gdm.
+# Telugu translation for scdm.
 # Copyright (C) 2011, 2012 Swecha Telugu Localisation Team <localization@swecha.net>
-# This file is distributed under the same license as the gdm package.
+# This file is distributed under the same license as the scdm package.
 # Bhuvan Krishna <bhuvan@swecha.net>, 2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gdm master\n"
+"Project-Id-Version: scdm master\n"
 "POT-Creation-Date: 2012-03-25 07:01+0000\n"
 "PO-Revision-Date: 2012-03-25 16:12+0530\n"
 "Last-Translator: Bhuvan Krishna <bhuvan@swecha.net>\n"
@@ -15,135 +15,135 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: C/gdm.xml:13(title)
+#: C/scdm.xml:13(title)
 msgid "GNOME Display Manager Reference Manual"
 msgstr ""
 
-#: C/gdm.xml:17(revnumber)
+#: C/scdm.xml:17(revnumber)
 msgid "0.0"
 msgstr "0.0"
 
-#: C/gdm.xml:18(date)
+#: C/scdm.xml:18(date)
 msgid "2008-09"
 msgstr "2008-09"
 
-#: C/gdm.xml:23(para)
+#: C/scdm.xml:23(para)
 msgid "GDM is the GNOME Display Manager, a graphical login program."
 msgstr ""
 
-#: C/gdm.xml:30(firstname)
+#: C/scdm.xml:30(firstname)
 msgid "Martin"
 msgstr ""
 
-#: C/gdm.xml:30(othername)
+#: C/scdm.xml:30(othername)
 msgid "K."
 msgstr ""
 
-#: C/gdm.xml:31(surname)
+#: C/scdm.xml:31(surname)
 msgid "Petersen"
 msgstr ""
 
-#: C/gdm.xml:33(email)
+#: C/scdm.xml:33(email)
 msgid "mkp@mkp.net"
 msgstr "mkp@mkp.net"
 
-#: C/gdm.xml:37(firstname)
+#: C/scdm.xml:37(firstname)
 msgid "George"
 msgstr ""
 
-#: C/gdm.xml:37(surname)
+#: C/scdm.xml:37(surname)
 msgid "Lebl"
 msgstr ""
 
-#: C/gdm.xml:39(email)
+#: C/scdm.xml:39(email)
 msgid "jirka@5z.com"
 msgstr "jirka@5z.com"
 
-#: C/gdm.xml:43(firstname)
+#: C/scdm.xml:43(firstname)
 msgid "Jon"
 msgstr ""
 
-#: C/gdm.xml:43(surname)
+#: C/scdm.xml:43(surname)
 msgid "McCann"
 msgstr ""
 
-#: C/gdm.xml:45(email)
+#: C/scdm.xml:45(email)
 msgid "mccann@jhu.edu"
 msgstr "mccann@jhu.edu"
 
-#: C/gdm.xml:49(firstname)
+#: C/scdm.xml:49(firstname)
 msgid "Ray"
 msgstr ""
 
-#: C/gdm.xml:49(surname)
+#: C/scdm.xml:49(surname)
 msgid "Strode"
 msgstr ""
 
-#: C/gdm.xml:51(email)
+#: C/scdm.xml:51(email)
 msgid "rstrode@redhat.com"
 msgstr "rstrode@redhat.com"
 
-#: C/gdm.xml:55(firstname)
+#: C/scdm.xml:55(firstname)
 msgid "Brian"
 msgstr ""
 
-#: C/gdm.xml:55(surname)
+#: C/scdm.xml:55(surname)
 msgid "Cameron"
 msgstr ""
 
-#: C/gdm.xml:57(email)
+#: C/scdm.xml:57(email)
 msgid "Brian.Cameron@Oracle.COM"
 msgstr ""
 
-#: C/gdm.xml:62(year)
+#: C/scdm.xml:62(year)
 msgid "1998"
 msgstr "1998"
 
-#: C/gdm.xml:63(year)
+#: C/scdm.xml:63(year)
 msgid "1999"
 msgstr "1999"
 
-#: C/gdm.xml:64(holder)
+#: C/scdm.xml:64(holder)
 msgid "Martin K. Petersen"
 msgstr ""
 
-#: C/gdm.xml:67(year)
+#: C/scdm.xml:67(year)
 msgid "2001"
 msgstr "2001"
 
-#: C/gdm.xml:68(year) C/gdm.xml:73(year) C/gdm.xml:79(year)
+#: C/scdm.xml:68(year) C/scdm.xml:73(year) C/scdm.xml:79(year)
 msgid "2003"
 msgstr "2003"
 
-#: C/gdm.xml:69(year)
+#: C/scdm.xml:69(year)
 msgid "2004"
 msgstr "2004"
 
-#: C/gdm.xml:70(holder)
+#: C/scdm.xml:70(holder)
 msgid "George Lebl"
 msgstr ""
 
-#: C/gdm.xml:74(year)
+#: C/scdm.xml:74(year)
 msgid "2007"
 msgstr "2007"
 
-#: C/gdm.xml:75(year)
+#: C/scdm.xml:75(year)
 msgid "2008"
 msgstr "2008"
 
-#: C/gdm.xml:76(holder)
+#: C/scdm.xml:76(holder)
 msgid "Red Hat, Inc."
 msgstr "రెడ్ హ్యాట్, ఇంక్."
 
-#: C/gdm.xml:80(year)
+#: C/scdm.xml:80(year)
 msgid "2011"
 msgstr "2011"
 
-#: C/gdm.xml:81(holder)
+#: C/scdm.xml:81(holder)
 msgid "Oracle and/or its affiliates. All rights reserved."
 msgstr ""
 
-#: C/gdm.xml:2(para)
+#: C/scdm.xml:2(para)
 msgid ""
 "Permission is granted to copy, distribute and/or modify this document under "
 "the terms of the GNU Free Documentation License (GFDL), Version 1.1 or any "
@@ -153,7 +153,7 @@ msgid ""
 "in the file COPYING-DOCS distributed with this manual."
 msgstr ""
 
-#: C/gdm.xml:12(para)
+#: C/scdm.xml:12(para)
 msgid ""
 "This manual is part of a collection of GNOME manuals distributed under the "
 "GFDL. If you want to distribute this manual separately from the collection, "
@@ -161,7 +161,7 @@ msgid ""
 "section 6 of the license."
 msgstr ""
 
-#: C/gdm.xml:19(para)
+#: C/scdm.xml:19(para)
 msgid ""
 "Many of the names used by companies to distinguish their products and "
 "services are claimed as trademarks. Where those names appear in any GNOME "
@@ -170,7 +170,7 @@ msgid ""
 "capital letters."
 msgstr ""
 
-#: C/gdm.xml:35(para)
+#: C/scdm.xml:35(para)
 msgid ""
 "DOCUMENT IS PROVIDED ON AN \"AS IS\" BASIS, WITHOUT WARRANTY OF ANY KIND, "
 "EITHER EXPRESSED OR IMPLIED, INCLUDING, WITHOUT LIMITATION, WARRANTIES THAT "
@@ -185,7 +185,7 @@ msgid ""
 "OF THE DOCUMENT IS AUTHORIZED HEREUNDER EXCEPT UNDER THIS DISCLAIMER; AND"
 msgstr ""
 
-#: C/gdm.xml:55(para)
+#: C/scdm.xml:55(para)
 msgid ""
 "UNDER NO CIRCUMSTANCES AND UNDER NO LEGAL THEORY, WHETHER IN TORT (INCLUDING "
 "NEGLIGENCE), CONTRACT, OR OTHERWISE, SHALL THE AUTHOR, INITIAL WRITER, ANY "
@@ -199,63 +199,63 @@ msgid ""
 "POSSIBILITY OF SUCH DAMAGES."
 msgstr ""
 
-#: C/gdm.xml:28(para)
+#: C/scdm.xml:28(para)
 msgid ""
 "DOCUMENT AND MODIFIED VERSIONS OF THE DOCUMENT ARE PROVIDED UNDER THE TERMS "
 "OF THE GNU FREE DOCUMENTATION LICENSE WITH THE FURTHER UNDERSTANDING THAT: "
 "<placeholder-1/>"
 msgstr ""
 
-#: C/gdm.xml:86(releaseinfo) C/gdm.xml:97(para)
+#: C/scdm.xml:86(releaseinfo) C/scdm.xml:97(para)
 msgid ""
 "This manual describes version 2.26.0 of the GNOME Display Manager. It was "
 "last updated on 02/10/2009."
 msgstr ""
 
-#: C/gdm.xml:95(title)
+#: C/scdm.xml:95(title)
 msgid "Terms and Conventions Used in This Manual"
 msgstr ""
 
-#: C/gdm.xml:102(para)
+#: C/scdm.xml:102(para)
 msgid ""
 "Chooser - A program used to select a remote host for managing a display "
-"remotely on the attached display (<command>gdm-host-chooser</command>)."
+"remotely on the attached display (<command>scdm-host-chooser</command>)."
 msgstr ""
 
-#: C/gdm.xml:107(para)
+#: C/scdm.xml:107(para)
 msgid ""
 "FreeDesktop - The organization providing desktop standards, such as the "
 "Desktop Entry Specification used by GDM. <ulink type=\"http\" url=\"http://"
 "www.freedesktop.org/\"> http://www.freedesktop.org</ulink>."
 msgstr ""
 
-#: C/gdm.xml:113(para)
+#: C/scdm.xml:113(para)
 msgid ""
 "GDM - GNOME Display Manager. Used to describe the software package as a "
 "whole."
 msgstr ""
 
-#: C/gdm.xml:118(para)
+#: C/scdm.xml:118(para)
 msgid ""
-"Greeter - The graphical login window (<command>gdm-simple-greeter</command>)."
+"Greeter - The graphical login window (<command>scdm-simple-greeter</command>)."
 msgstr ""
 
-#: C/gdm.xml:122(para)
+#: C/scdm.xml:122(para)
 msgid "PAM - Pluggable Authentication Mechanism"
 msgstr ""
 
-#: C/gdm.xml:126(para)
+#: C/scdm.xml:126(para)
 msgid "XDMCP - X Display Manage Protocol"
 msgstr ""
 
-#: C/gdm.xml:130(para)
+#: C/scdm.xml:130(para)
 msgid ""
 "Xserver - An implementation of the X Window System. For example the Xorg "
 "Xserver provided by the X.org Foundation <ulink type=\"http\" url=\"http://"
 "www.x.org/\">http://www.x.org</ulink>."
 msgstr ""
 
-#: C/gdm.xml:136(para)
+#: C/scdm.xml:136(para)
 msgid ""
 "Paths that start with a word in angle brackets are relative to the "
 "installation prefix. I.e. <filename>&lt;share&gt;/pixmaps/</filename> refers "
@@ -263,28 +263,28 @@ msgid ""
 "<command>--prefix=/usr</command>."
 msgstr ""
 
-#: C/gdm.xml:147(title)
+#: C/scdm.xml:147(title)
 msgid "Overview"
 msgstr "పర్యావలోకనం"
 
-#: C/gdm.xml:150(title)
+#: C/scdm.xml:150(title)
 msgid "Introduction"
 msgstr "పరిచయం"
 
-#: C/gdm.xml:152(para)
+#: C/scdm.xml:152(para)
 msgid ""
 "The GNOME Display Manager (GDM) is a display manager that implements all "
 "significant features required for managing attached and remote displays. GDM "
 "was written from scratch and does not contain any XDM or X Consortium code."
 msgstr ""
 
-#: C/gdm.xml:159(para)
+#: C/scdm.xml:159(para)
 msgid ""
 "Note that GDM is configurable, and many configuration settings have an "
 "impact on security. Issues to be aware of are highlighted in this document."
 msgstr ""
 
-#: C/gdm.xml:165(para)
+#: C/scdm.xml:165(para)
 msgid ""
 "Please note that some Operating Systems configure GDM to behave differently "
 "than the default values as described in this document. If GDM does not seem "
@@ -292,36 +292,36 @@ msgid ""
 "be different than described here."
 msgstr ""
 
-#: C/gdm.xml:172(para)
+#: C/scdm.xml:172(para)
 msgid ""
 "For further information about GDM, refer to the project website at <ulink "
-"type=\"http\" url=\"http://www.gnome.org/projects/gdm/\"> http://www.gnome."
-"org/projects/gdm</ulink> and the project Wiki <ulink type=\"http\" url="
+"type=\"http\" url=\"http://www.gnome.org/projects/scdm/\"> http://www.gnome."
+"org/projects/scdm</ulink> and the project Wiki <ulink type=\"http\" url="
 "\"http://live.gnome.org/GDM\"> http://live.gnome.org/GDM</ulink>."
 msgstr ""
 
-#: C/gdm.xml:180(para)
+#: C/scdm.xml:180(para)
 msgid ""
-"For discussion or queries about GDM, refer to the <address><email>gdm-"
+"For discussion or queries about GDM, refer to the <address><email>scdm-"
 "list@gnome.org</email></address> mail list. This list is archived, and is a "
 "good resource to check to seek answers to common questions. This list is "
-"archived at <ulink type=\"http\" url=\"http://mail.gnome.org/archives/gdm-"
-"list/\"> http://mail.gnome.org/archives/gdm-list/</ulink> and has a search "
+"archived at <ulink type=\"http\" url=\"http://mail.gnome.org/archives/scdm-"
+"list/\"> http://mail.gnome.org/archives/scdm-list/</ulink> and has a search "
 "facility to look for messages with keywords."
 msgstr ""
 
-#: C/gdm.xml:190(para)
+#: C/scdm.xml:190(para)
 msgid ""
-"Please submit any bug reports or enhancement requests to the \"gdm\" "
+"Please submit any bug reports or enhancement requests to the \"scdm\" "
 "category in <ulink type=\"http\" url=\"http://bugzilla.gnome.org/\"> http://"
 "bugzilla.gnome.org</ulink>."
 msgstr ""
 
-#: C/gdm.xml:199(title)
+#: C/scdm.xml:199(title)
 msgid "Interface Stability"
 msgstr ""
 
-#: C/gdm.xml:201(para)
+#: C/scdm.xml:201(para)
 msgid ""
 "GDM 2.20 and earlier supported stable configuration interfaces. However, the "
 "codebase was completely rewritten for GDM 2.22, and is not completely "
@@ -331,25 +331,25 @@ msgid ""
 "been reimplemented yet."
 msgstr ""
 
-#: C/gdm.xml:210(para)
+#: C/scdm.xml:210(para)
 msgid ""
 "Interfaces which continue to be supported in a stable fashion include the "
 "Init, PreSession, PostSession, PostLogin, and Xsession scripts. Some daemon "
-"configuration options in the <filename>&lt;etc&gt;/gdm/custom.conf</"
+"configuration options in the <filename>&lt;etc&gt;/scdm/custom.conf</"
 "filename> file continue to be supported. Also, the <filename>~/.dmrc</"
 "filename>, and face browser image locations are still supported."
 msgstr ""
 
-#: C/gdm.xml:219(para)
+#: C/scdm.xml:219(para)
 msgid ""
 "GDM 2.20 and earlier supported the ability to manage multiple displays with "
 "separate graphics cards, such as used in terminal server environments, login "
-"in a window via a program like Xnest or Xephyr, the gdmsetup program, XML-"
+"in a window via a program like Xnest or Xephyr, the scdmsetup program, XML-"
 "based greeter themes, and the ability to run the XDMCP chooser from the "
 "login screen. These features were not added back during the 2.22 rewrite."
 msgstr ""
 
-#: C/gdm.xml:231(title)
+#: C/scdm.xml:231(title)
 msgid "Functional Description"
 msgstr ""
 
@@ -359,7 +359,7 @@ msgstr ""
 #.                From a high-level overview perspective, rather than the
 #.                technical aspects.
 #. </para>
-#: C/gdm.xml:242(para)
+#: C/scdm.xml:242(para)
 msgid ""
 "GDM is responsible for managing displays on the system. This includes "
 "authenticating users, starting the user session, and terminating the user "
@@ -368,7 +368,7 @@ msgid ""
 "for users with disabilities."
 msgstr ""
 
-#: C/gdm.xml:250(para)
+#: C/scdm.xml:250(para)
 msgid ""
 "GDM provides the ability to manage the main console display, and displays "
 "launched via VT. It is integrated with other programs, such as the Fast User "
@@ -377,7 +377,7 @@ msgid ""
 "manage XDMCP displays."
 msgstr ""
 
-#: C/gdm.xml:258(para)
+#: C/scdm.xml:258(para)
 msgid ""
 "Regardless of the display type, GDM will do the following when it manages "
 "the display. It will start an Xserver process, then run the <filename>Init</"
@@ -385,9 +385,9 @@ msgid ""
 "display."
 msgstr ""
 
-#: C/gdm.xml:265(para)
+#: C/scdm.xml:265(para)
 msgid ""
-"The greeter program is run as the unprivileged \"gdm\" user/group. This user "
+"The greeter program is run as the unprivileged \"scdm\" user/group. This user "
 "and group are described in the \"Security\" section of this document. The "
 "main functions of the greeter program are to provide a mechanism for "
 "selecting an account for log in and to drive the dialogue between the user "
@@ -402,27 +402,27 @@ msgid ""
 "filename> option, or one at a time via system PAM configuration."
 msgstr ""
 
-#: C/gdm.xml:284(para)
+#: C/scdm.xml:284(para)
 msgid ""
 "The smartcard extension can be enabled or disabled via the <filename>org."
 "gnome.display-manager.extensions.smartcard.active</filename> gsettings key."
 msgstr ""
 
-#: C/gdm.xml:290(para)
+#: C/scdm.xml:290(para)
 msgid ""
 "Likewise, the fingerprint extension can be enabled or disabled via the "
 "<filename>io.github.scarecrow-de.display-manager.extensions.fingerprint.active</filename> "
 "gsettings key."
 msgstr ""
 
-#: C/gdm.xml:296(para)
+#: C/scdm.xml:296(para)
 msgid ""
 "GDM and PAM can be configured to not require any input, which will cause GDM "
 "to automatically log in and simply start a session, which can be useful for "
 "some environments, such as single user systems or kiosks."
 msgstr ""
 
-#: C/gdm.xml:303(para)
+#: C/scdm.xml:303(para)
 msgid ""
 "In addition to authentication, the greeter program allows the user to select "
 "which session to start and which language to use. Sessions are defined by "
@@ -435,7 +435,7 @@ msgid ""
 "defaults if the user did not pick a session or language in the login GUI."
 msgstr ""
 
-#: C/gdm.xml:316(para)
+#: C/scdm.xml:316(para)
 msgid ""
 "After authenticating a user, the daemon runs the <filename>PostLogin</"
 "filename> script as root, then runs the <filename>PreSession</filename> "
@@ -452,11 +452,11 @@ msgid ""
 "called after session initialization."
 msgstr ""
 
-#: C/gdm.xml:336(title)
+#: C/scdm.xml:336(title)
 msgid "Greeter Panel"
 msgstr ""
 
-#: C/gdm.xml:337(para)
+#: C/scdm.xml:337(para)
 msgid ""
 "The GDM greeter program displays a panel docked at the bottom of the screen "
 "which provides additional functionality. When a user is selected, the panel "
@@ -473,17 +473,17 @@ msgid ""
 "shutdown or restart request."
 msgstr ""
 
-#: C/gdm.xml:354(para)
+#: C/scdm.xml:354(para)
 msgid ""
 "Note that keyboard layout features are only available on systems that "
 "support libxklavier."
 msgstr ""
 
-#: C/gdm.xml:361(title)
+#: C/scdm.xml:361(title)
 msgid "Accessibility"
 msgstr ""
 
-#: C/gdm.xml:363(para)
+#: C/scdm.xml:363(para)
 msgid ""
 "GDM supports \"Accessible Login\", allowing users to log into their desktop "
 "session even if they cannot easily use the screen, mouse, or keyboard in the "
@@ -495,22 +495,22 @@ msgid ""
 "accessibility features can be configured."
 msgstr ""
 
-#: C/gdm.xml:375(para)
+#: C/scdm.xml:375(para)
 msgid ""
 "On some Operating Systems, it is necessary to make sure that the GDM user is "
 "a member of the \"audio\" group for AT programs that require audio output "
 "(such as text-to-speech) to be functional."
 msgstr ""
 
-#: C/gdm.xml:383(title)
+#: C/scdm.xml:383(title)
 msgid "The GDM Face Browser"
 msgstr ""
 
-#: C/gdm.xml:385(para)
+#: C/scdm.xml:385(para)
 msgid ""
 "The Face Browser is the interface which allows users to select their "
 "username by clicking on an image. This feature can be enabled or disabled "
-"via the /apps/gdm/simple-greeter/disable_user_list GConf key and is on by "
+"via the /apps/scdm/simple-greeter/disable_user_list GConf key and is on by "
 "default. When disabled, users must type their complete username by hand. "
 "When enabled, it displays all local users which are available for login on "
 "the system (all user accounts defined in the /etc/passwd file that have a "
@@ -520,14 +520,14 @@ msgid ""
 "deployments."
 msgstr ""
 
-#: C/gdm.xml:399(para)
+#: C/scdm.xml:399(para)
 msgid ""
 "The Face Browser is configured to display the users who log in most "
 "frequently at the top of the list. This helps to ensure that users who log "
 "in frequently can quickly find their login image."
 msgstr ""
 
-#: C/gdm.xml:405(para)
+#: C/scdm.xml:405(para)
 msgid ""
 "The Face Browser supports \"type-ahead search\" which dynamically moves the "
 "face selection as the user types to the corresponding username in the list. "
@@ -536,7 +536,7 @@ msgid ""
 "selected."
 msgstr ""
 
-#: C/gdm.xml:413(para)
+#: C/scdm.xml:413(para)
 msgid ""
 "The icons used by GDM can be installed globally by the sysadmin or can be "
 "located in the user's home directories. If installed globally they should be "
@@ -547,26 +547,26 @@ msgid ""
 msgstr ""
 
 #. <para>
-#.         TODO - In the old GDM the ~/gnome2/gdm file is used, but the new code
-#.                seems to use ~/.gnome/gdm.  Error?
+#.         TODO - In the old GDM the ~/gnome2/scdm file is used, but the new code
+#.                seems to use ~/.gnome/scdm.  Error?
 #. </para>
-#: C/gdm.xml:429(para)
+#: C/scdm.xml:429(para)
 msgid ""
 "If there is no global icon for the user, GDM will look in the user's $HOME "
 "directory for the image file. GDM will first look for the user's face image "
 "in <filename>~/.face</filename>. If not found, it will try <filename>~/.face."
 "icon</filename>. If still not found, it will use the value defined for "
-"\"face/picture=\" in the <filename>~/.gnome2/gdm</filename> file."
+"\"face/picture=\" in the <filename>~/.gnome2/scdm</filename> file."
 msgstr ""
 
-#: C/gdm.xml:438(para)
+#: C/scdm.xml:438(para)
 msgid ""
 "If a user has no defined face image, GDM will use the \"stock_person\" icon "
 "defined in the current GTK+ theme. If no such image is defined, it will "
 "fallback to a generic face image."
 msgstr ""
 
-#: C/gdm.xml:444(para)
+#: C/scdm.xml:444(para)
 msgid ""
 "Please note that loading and scaling face icons located in remote user home "
 "directories can be a very time-consuming task. Since it not practical to "
@@ -574,7 +574,7 @@ msgid ""
 "remote home directories."
 msgstr ""
 
-#: C/gdm.xml:451(para)
+#: C/scdm.xml:451(para)
 msgid ""
 "When the browser is turned on, valid usernames on the computer are exposed "
 "for everyone to see. If XDMCP is enabled, then the usernames are exposed to "
@@ -583,7 +583,7 @@ msgid ""
 "environments the face browser may not be appropriate."
 msgstr ""
 
-#: C/gdm.xml:463(title)
+#: C/scdm.xml:463(title)
 msgid "XDMCP"
 msgstr "XDMCP"
 
@@ -591,7 +591,7 @@ msgstr "XDMCP"
 #.         TODO - What XDMCP features actually work?   I know that the
 #.                chooser is missing.
 #. </para>
-#: C/gdm.xml:472(para)
+#: C/scdm.xml:472(para)
 msgid ""
 "The GDM daemon can be configured to listen for and manage X Display Manage "
 "Protocol (XDMCP) requests from remote displays. By default XDMCP support is "
@@ -600,7 +600,7 @@ msgid ""
 "GDM service section in the TCP Wrappers configuration file."
 msgstr ""
 
-#: C/gdm.xml:481(para)
+#: C/scdm.xml:481(para)
 msgid ""
 "GDM includes several measures making it more resistant to denial of service "
 "attacks on the XDMCP service. A lot of the protocol parameters, handshaking "
@@ -608,14 +608,14 @@ msgid ""
 "reasonably on most systems."
 msgstr ""
 
-#: C/gdm.xml:488(para)
+#: C/scdm.xml:488(para)
 msgid ""
 "GDM by default listens for XDMCP requests on the normal UDP port used for "
 "XDMCP, port 177, and will respond to QUERY and BROADCAST_QUERY requests by "
 "sending a WILLING packet to the originator."
 msgstr ""
 
-#: C/gdm.xml:494(para)
+#: C/scdm.xml:494(para)
 msgid ""
 "GDM can also be configured to honor INDIRECT queries and present a host "
 "chooser to the remote display. GDM will remember the user's choice and "
@@ -626,39 +626,39 @@ msgid ""
 "implement XDMCP."
 msgstr ""
 
-#: C/gdm.xml:504(para)
+#: C/scdm.xml:504(para)
 msgid ""
 "If XDMCP seems to not be working, make sure that all machines are specified "
 "in <filename>/etc/hosts</filename>."
 msgstr ""
 
-#: C/gdm.xml:509(para)
+#: C/scdm.xml:509(para)
 msgid ""
 "Refer to the \"Security\" section for information about security concerns "
 "when using XDMCP."
 msgstr ""
 
-#: C/gdm.xml:516(title)
+#: C/scdm.xml:516(title)
 msgid "Logging"
 msgstr "నమోదుపరుచు"
 
-#: C/gdm.xml:518(para)
+#: C/scdm.xml:518(para)
 msgid ""
 "GDM uses syslog to log errors and status. It can also log debugging "
 "information, which can be useful for tracking down problems if GDM is not "
 "working properly. Debug output can be enabled by setting the debug/Enable "
-"key to \"true\" in the <filename>&lt;etc&gt;/gdm/custom.conf</filename> file."
+"key to \"true\" in the <filename>&lt;etc&gt;/scdm/custom.conf</filename> file."
 msgstr ""
 
-#: C/gdm.xml:526(para)
+#: C/scdm.xml:526(para)
 msgid ""
 "Output from the various Xservers is stored in the GDM log directory, which "
-"is normally <filename>&lt;var&gt;/log/gdm/</filename>. Any Xserver messages "
+"is normally <filename>&lt;var&gt;/log/scdm/</filename>. Any Xserver messages "
 "are saved to a file associated with the display value, <filename>&lt;"
 "display&gt;.log</filename>."
 msgstr ""
 
-#: C/gdm.xml:533(para)
+#: C/scdm.xml:533(para)
 msgid ""
 "The session output is piped through the GDM daemon to the <filename>~/."
 "xsession-errors</filename> file. The file is overwritten on each login, so "
@@ -666,18 +666,18 @@ msgid ""
 "messages from the previous session to be lost."
 msgstr ""
 
-#: C/gdm.xml:540(para)
+#: C/scdm.xml:540(para)
 msgid ""
 "Note that if GDM can not create this file for some reason, then a fallback "
 "file will be created named <filename>~/.xsession-errors.XXXXXXXX</filename> "
 "where the <filename>XXXXXXXX</filename> are some random characters."
 msgstr ""
 
-#: C/gdm.xml:548(title)
+#: C/scdm.xml:548(title)
 msgid "Fast User Switching"
 msgstr ""
 
-#: C/gdm.xml:550(para)
+#: C/scdm.xml:550(para)
 msgid ""
 "GDM allows multiple users to be logged in at the same time. After one user "
 "is logged in, additional users can log in via the User Switcher on the GNOME "
@@ -687,65 +687,65 @@ msgid ""
 "default panel configuration. It can be added using the panel context menu."
 msgstr ""
 
-#: C/gdm.xml:559(para)
+#: C/scdm.xml:559(para)
 msgid ""
 "Note this feature is available on systems that support Virtual Terminals. "
 "This feature will not function if Virtual Terminals is not available."
 msgstr ""
 
-#: C/gdm.xml:570(title)
+#: C/scdm.xml:570(title)
 msgid "Security"
 msgstr "రక్షణ"
 
-#: C/gdm.xml:573(title)
+#: C/scdm.xml:573(title)
 msgid "The GDM User And Group"
 msgstr ""
 
-#: C/gdm.xml:575(para)
+#: C/scdm.xml:575(para)
 msgid ""
 "For security reasons a dedicated user and group id are recommended for "
-"proper operation. This user and group are normally \"gdm\" on most systems, "
+"proper operation. This user and group are normally \"scdm\" on most systems, "
 "but can be configured to any user or group. All GDM GUI programs are run as "
 "this user, so that the programs which interact with the user are run in a "
 "sandbox. This user and group should have limited privilege."
 msgstr ""
 
-#: C/gdm.xml:584(para)
+#: C/scdm.xml:584(para)
 msgid ""
-"The only special privilege the \"gdm\" user requires is the ability to read "
-"and write Xauth files to the <filename>&lt;var&gt;/run/gdm</filename> "
-"directory. The <filename>&lt;var&gt;/run/gdm</filename> directory should "
-"have root:gdm ownership and 1777 permissions."
+"The only special privilege the \"scdm\" user requires is the ability to read "
+"and write Xauth files to the <filename>&lt;var&gt;/run/scdm</filename> "
+"directory. The <filename>&lt;var&gt;/run/scdm</filename> directory should "
+"have root:scdm ownership and 1777 permissions."
 msgstr ""
 
-#: C/gdm.xml:592(para)
+#: C/scdm.xml:592(para)
 msgid ""
 "You should not, under any circumstances, configure the GDM user/group to a "
 "user which a user could easily gain access to, such as the user "
 "<filename>nobody</filename>. Any user who gains access to an Xauth key can "
 "snoop on and control running GUI programs running in the associated session "
 "or perform a denial-of-service attack on it. It is important to ensure that "
-"the system is configured properly so that only the \"gdm\" user has access "
+"the system is configured properly so that only the \"scdm\" user has access "
 "to these files and that it is not easy to login to this account. For "
 "example, the account should be setup to not have a password or allow non-"
 "root users to login to the account."
 msgstr ""
 
-#: C/gdm.xml:605(para)
+#: C/scdm.xml:605(para)
 msgid ""
 "The GDM greeter configuration is stored in GConf. To allow the GDM user to "
-"be able to write configuration, it is necessary for the \"gdm\" user to have "
+"be able to write configuration, it is necessary for the \"scdm\" user to have "
 "a writable $HOME directory. Users may configure the default GConf "
-"configuration as desired to avoid the need to provide the \"gdm\" user with "
+"configuration as desired to avoid the need to provide the \"scdm\" user with "
 "a writable $HOME directory. However, some features of GDM may be disabled if "
 "it is unable to write state information to GConf configuration."
 msgstr ""
 
-#: C/gdm.xml:617(title)
+#: C/scdm.xml:617(title)
 msgid "PAM"
 msgstr "PAM"
 
-#: C/gdm.xml:619(para)
+#: C/scdm.xml:619(para)
 msgid ""
 "GDM uses PAM for login authentication. PAM stands for Pluggable "
 "Authentication Module, and is used by most programs that request "
@@ -754,7 +754,7 @@ msgid ""
 "login GUI, screensaver, etc.)"
 msgstr ""
 
-#: C/gdm.xml:627(para)
+#: C/scdm.xml:627(para)
 msgid ""
 "PAM is complicated and highly configurable, and this documentation does not "
 "intend to explain this in detail. Instead, it is intended to give an "
@@ -765,7 +765,7 @@ msgid ""
 "used in this section."
 msgstr ""
 
-#: C/gdm.xml:637(para)
+#: C/scdm.xml:637(para)
 msgid ""
 "PAM configuration has different, but similar, interfaces on different "
 "Operating Systems, so check the <ulink type=\"help\" url=\"man:pam.d\">pam."
@@ -775,17 +775,17 @@ msgid ""
 "configuration."
 msgstr ""
 
-#: C/gdm.xml:647(para)
+#: C/scdm.xml:647(para)
 msgid ""
-"Note that, by default, GDM uses the \"gdm\" PAM service name for normal "
-"login and the \"gdm-autologin\" PAM service name for automatic login. These "
+"Note that, by default, GDM uses the \"scdm\" PAM service name for normal "
+"login and the \"scdm-autologin\" PAM service name for automatic login. These "
 "services may not be defined in your pam.d or pam.conf configured file. If "
 "there is no entry, then GDM will use the default PAM behavior. On most "
 "systems this should work fine. However, the automatic login feature may not "
-"work if the gdm-autologin service is not defined."
+"work if the scdm-autologin service is not defined."
 msgstr ""
 
-#: C/gdm.xml:657(para)
+#: C/scdm.xml:657(para)
 msgid ""
 "The <filename>PostLogin</filename> script is run before pam_open_session is "
 "called, and the <filename>PreSession</filename> script is called after. This "
@@ -793,18 +793,18 @@ msgid ""
 "either before or after PAM initializes the session."
 msgstr ""
 
-#: C/gdm.xml:665(para)
+#: C/scdm.xml:665(para)
 msgid ""
 "If you wish to make GDM work with other types of authentication mechanisms "
 "(such as a fingerprint or SmartCard reader), then you should implement this "
 "by using a PAM service module for the desired authentication type rather "
 "than by trying to modify the GDM code directly. Refer to the PAM "
 "documentation on your system. How to do this is frequently discussed on the "
-"<address><email>gdm-list@gnome.org</email></address> mail list, so you can "
+"<address><email>scdm-list@gnome.org</email></address> mail list, so you can "
 "refer to the list archives for more information."
 msgstr ""
 
-#: C/gdm.xml:676(para)
+#: C/scdm.xml:676(para)
 msgid ""
 "PAM does have some limitations regarding being able to work with multiple "
 "types of authentication at the same time, like supporting the ability to "
@@ -814,69 +814,69 @@ msgid ""
 "setting up such a configuration."
 msgstr ""
 
-#: C/gdm.xml:685(para)
+#: C/scdm.xml:685(para)
 msgid ""
-"If automatic login does not work on a system, check to see if the \"gdm-"
+"If automatic login does not work on a system, check to see if the \"scdm-"
 "autologin\" PAM stack is defined in the PAM configuration. For this to work, "
 "it is necessary to use a PAM module that simply does no authentication, or "
 "which simply returns PAM_SUCCESS from all of its public interfaces. Assuming "
 "your system has a pam_allow.so PAM module which does this, a PAM "
-"configuration to enable \"gdm-autologin\" would look like this:"
+"configuration to enable \"scdm-autologin\" would look like this:"
 msgstr ""
 
-#: C/gdm.xml:695(screen)
+#: C/scdm.xml:695(screen)
 #, no-wrap
 msgid ""
 "\n"
-"       gdm-autologin auth  required    pam_unix_cred.so.1\n"
-"       gdm-autologin auth  sufficient  pam_allow.so.1\n"
-"       gdm-autologin account  sufficient  pam_allow.so.1\n"
-"       gdm-autologin session  sufficient  pam_allow.so.1\n"
-"       gdm-autologin password  sufficient  pam_allow.so.1\n"
+"       scdm-autologin auth  required    pam_unix_cred.so.1\n"
+"       scdm-autologin auth  sufficient  pam_allow.so.1\n"
+"       scdm-autologin account  sufficient  pam_allow.so.1\n"
+"       scdm-autologin session  sufficient  pam_allow.so.1\n"
+"       scdm-autologin password  sufficient  pam_allow.so.1\n"
 msgstr ""
 "\n"
-"       gdm-autologin auth  required    pam_unix_cred.so.1\n"
-"       gdm-autologin auth  sufficient  pam_allow.so.1\n"
-"       gdm-autologin account  sufficient  pam_allow.so.1\n"
-"       gdm-autologin session  sufficient  pam_allow.so.1\n"
-"       gdm-autologin password  sufficient  pam_allow.so.1\n"
+"       scdm-autologin auth  required    pam_unix_cred.so.1\n"
+"       scdm-autologin auth  sufficient  pam_allow.so.1\n"
+"       scdm-autologin account  sufficient  pam_allow.so.1\n"
+"       scdm-autologin session  sufficient  pam_allow.so.1\n"
+"       scdm-autologin password  sufficient  pam_allow.so.1\n"
 
-#: C/gdm.xml:703(para)
+#: C/scdm.xml:703(para)
 msgid ""
 "The above setup will cause no lastlog entry to be generated. If a lastlog "
 "entry is desired, then use the following for the session:"
 msgstr ""
 
-#: C/gdm.xml:708(screen)
+#: C/scdm.xml:708(screen)
 #, no-wrap
 msgid ""
 "\n"
-"       gdm-autologin session required pam_unix_session.so.1\n"
+"       scdm-autologin session required pam_unix_session.so.1\n"
 msgstr ""
 
-#: C/gdm.xml:712(para)
+#: C/scdm.xml:712(para)
 msgid ""
 "If the computer is used by several people, which makes automatic login "
 "unsuitable, you may want to allow some users to log in without entering "
 "their password. This feature can be enabled as a per-user option in the "
 "users-admin tool from the gnome-system-tools; it is achieved by checking "
 "that the user is member a Unix group called \"nopasswdlogin\" before asking "
-"for a password. For this to work, the PAM configuration file for the \"gdm\" "
+"for a password. For this to work, the PAM configuration file for the \"scdm\" "
 "service must include a line such as:"
 msgstr ""
 
-#: C/gdm.xml:723(screen)
+#: C/scdm.xml:723(screen)
 #, no-wrap
 msgid ""
 "\n"
-"      gdm auth  sufficient  pam_succeed_if.so  user ingroup nopasswdlogin\n"
+"      scdm auth  sufficient  pam_succeed_if.so  user ingroup nopasswdlogin\n"
 msgstr ""
 
-#: C/gdm.xml:730(title)
+#: C/scdm.xml:730(title)
 msgid "utmp and wtmp"
 msgstr ""
 
-#: C/gdm.xml:732(para)
+#: C/scdm.xml:732(para)
 msgid ""
 "GDM generates utmp and wtmp User Accounting Database entries upon session "
 "login and logout. The utmp database contains user access and accounting "
@@ -888,20 +888,20 @@ msgid ""
 "\">wtmp</ulink> man pages on your system for more information."
 msgstr ""
 
-#: C/gdm.xml:747(title)
+#: C/scdm.xml:747(title)
 msgid "Xserver Authentication Scheme"
 msgstr ""
 
-#: C/gdm.xml:749(para)
+#: C/scdm.xml:749(para)
 msgid ""
 "Xserver authorization files are stored in a newly created subdirectory of "
-"<filename>&lt;var&gt;/run/gdm</filename> at start up. These files are used "
+"<filename>&lt;var&gt;/run/scdm</filename> at start up. These files are used "
 "to store and share a \"password\" between X clients and the Xserver. This "
 "\"password\" is unique for each session logged in, so users from one session "
 "can't snoop on users from another."
 msgstr ""
 
-#: C/gdm.xml:757(para)
+#: C/scdm.xml:757(para)
 msgid ""
 "GDM only supports the MIT-MAGIC-COOKIE-1 Xserver authentication scheme. "
 "Normally little is gained from the other schemes, and no effort has been "
@@ -915,18 +915,18 @@ msgid ""
 "issues. In most cases, ssh -Y should be preferred over GDM's XDMCP features."
 msgstr ""
 
-#: C/gdm.xml:774(title)
+#: C/scdm.xml:774(title)
 msgid "XDMCP Security"
 msgstr ""
 
-#: C/gdm.xml:776(para)
+#: C/scdm.xml:776(para)
 msgid ""
 "Even though your display is protected by cookies, XEvents and thus "
 "keystrokes typed when entering passwords will still go over the wire in "
 "clear text. It is trivial to capture these."
 msgstr ""
 
-#: C/gdm.xml:782(para)
+#: C/scdm.xml:782(para)
 msgid ""
 "XDMCP is primarily useful for running thin clients such as in terminal labs. "
 "Those thin clients will only ever need the network to access the server, and "
@@ -937,56 +937,56 @@ msgid ""
 "other sniffable network."
 msgstr ""
 
-#: C/gdm.xml:795(title)
+#: C/scdm.xml:795(title)
 msgid "XDMCP Access Control"
 msgstr ""
 
-#: C/gdm.xml:797(para)
+#: C/scdm.xml:797(para)
 msgid ""
 "XDMCP access control is done using TCP wrappers. It is possible to compile "
 "GDM without TCP wrapper support, so this feature may not be supported on "
 "some Operating Systems."
 msgstr ""
 
-#: C/gdm.xml:803(para)
+#: C/scdm.xml:803(para)
 msgid ""
-"You should use the daemon name <command>gdm</command> in the <filename>&lt;"
+"You should use the daemon name <command>scdm</command> in the <filename>&lt;"
 "etc&gt;/hosts.allow</filename> and <filename>&lt;etc&gt;/hosts.deny</"
 "filename> files. For example to deny computers from <filename>.evil.domain</"
 "filename> from logging in, then add"
 msgstr ""
 
-#: C/gdm.xml:810(screen)
+#: C/scdm.xml:810(screen)
 #, no-wrap
 msgid ""
 "\n"
-"gdm: .evil.domain\n"
+"scdm: .evil.domain\n"
 msgstr ""
 
-#: C/gdm.xml:813(para)
+#: C/scdm.xml:813(para)
 msgid ""
 "to <filename>&lt;etc&gt;/hosts.deny</filename>. You may also need to add"
 msgstr ""
 
-#: C/gdm.xml:817(screen)
+#: C/scdm.xml:817(screen)
 #, no-wrap
 msgid ""
 "\n"
-"gdm: .your.domain\n"
+"scdm: .your.domain\n"
 msgstr ""
 
-#: C/gdm.xml:820(para)
+#: C/scdm.xml:820(para)
 msgid ""
 "to your <filename>&lt;etc&gt;/hosts.allow</filename> if you normally "
 "disallow all services from all hosts. See the <ulink type=\"help\" url=\"man:"
 "hosts.allow\">hosts.allow(5)</ulink> man page for details."
 msgstr ""
 
-#: C/gdm.xml:829(title)
+#: C/scdm.xml:829(title)
 msgid "Firewall Security"
 msgstr ""
 
-#: C/gdm.xml:831(para)
+#: C/scdm.xml:831(para)
 msgid ""
 "Even though GDM tries to outsmart potential attackers trying to take "
 "advantage of XDMCP, it is still advised that you block the XDMCP port "
@@ -997,34 +997,34 @@ msgid ""
 "denial of service attack via XDMCP than attacking a webserver."
 msgstr ""
 
-#: C/gdm.xml:842(para)
+#: C/scdm.xml:842(para)
 msgid ""
 "It is also wise to block all of the Xserver ports. These are TCP ports 6000+ "
 "(one for each display number) on your firewall. Note that GDM will use "
 "display numbers 20 and higher for flexible on-demand servers."
 msgstr ""
 
-#: C/gdm.xml:849(para)
+#: C/scdm.xml:849(para)
 msgid ""
 "X is not a very safe protocol when using it over the Internet, and XDMCP is "
 "even less safe."
 msgstr ""
 
-#: C/gdm.xml:856(title)
+#: C/scdm.xml:856(title)
 msgid "PolicyKit"
 msgstr ""
 
 #. <para>
 #.         TODO - Should we say more?
 #. </para>
-#: C/gdm.xml:864(para)
+#: C/scdm.xml:864(para)
 msgid ""
 "GDM may be configured to use PolicyKit to allow the system administrator to "
 "control whether the login screen should provide the shutdown and restart "
 "buttons on the greeter screen."
 msgstr ""
 
-#: C/gdm.xml:870(para)
+#: C/scdm.xml:870(para)
 msgid ""
 "These buttons are controlled by the <filename>org.freedesktop.consolekit."
 "system.stop-multiple-users</filename> and <filename>org.freedesktop."
@@ -1033,25 +1033,25 @@ msgid ""
 "tool, or the polkit-auth command line program."
 msgstr ""
 
-#: C/gdm.xml:882(title)
+#: C/scdm.xml:882(title)
 msgid "RBAC (Role Based Access Control)"
 msgstr ""
 
-#: C/gdm.xml:884(para)
+#: C/scdm.xml:884(para)
 msgid ""
 "GDM may be configured to use RBAC instead of PolicyKit. In this case the "
 "RBAC configuration is used to control whether the login screen should "
 "provide the shutdown and restart buttons on the greeter screen."
 msgstr ""
 
-#: C/gdm.xml:890(para)
+#: C/scdm.xml:890(para)
 msgid ""
 "For example, on Oracle Solaris, the \"solaris.system.shutdown\" "
 "authorization is used to control this. Simply modify the <filename>/etc/"
-"user_attr</filename> file so that the \"gdm\" user has this authorization."
+"user_attr</filename> file so that the \"scdm\" user has this authorization."
 msgstr ""
 
-#: C/gdm.xml:903(title)
+#: C/scdm.xml:903(title)
 msgid "Support for ConsoleKit"
 msgstr ""
 
@@ -1061,7 +1061,7 @@ msgstr ""
 #.            If so, perhaps this section should be moved to a subsection of
 #.            the "Configure" section?
 #. </para>
-#: C/gdm.xml:914(para)
+#: C/scdm.xml:914(para)
 msgid ""
 "GDM includes support for publishing user login information with the user and "
 "login session accounting framework known as ConsoleKit. ConsoleKit is able "
@@ -1070,7 +1070,7 @@ msgid ""
 "most Unix-like Operating Systems."
 msgstr ""
 
-#: C/gdm.xml:922(para)
+#: C/scdm.xml:922(para)
 msgid ""
 "When GDM is about to create a new login process for a user it will call a "
 "privileged method of ConsoleKit in order to open a new session for this "
@@ -1084,7 +1084,7 @@ msgid ""
 "by the use of the D-Bus system message bus security policy."
 msgstr ""
 
-#: C/gdm.xml:936(para)
+#: C/scdm.xml:936(para)
 msgid ""
 "In case a user with an existing session has authenticated at GDM and "
 "requests to resume that existing session, GDM calls a privileged method of "
@@ -1093,17 +1093,17 @@ msgid ""
 "However, most sessions will unlock a screensaver in response."
 msgstr ""
 
-#: C/gdm.xml:945(para)
+#: C/scdm.xml:945(para)
 msgid ""
 "When the user chooses to log out, or if GDM or the session quit unexpectedly "
 "the user session will be unregistered from ConsoleKit."
 msgstr ""
 
-#: C/gdm.xml:954(title)
+#: C/scdm.xml:954(title)
 msgid "Configuration"
 msgstr ""
 
-#: C/gdm.xml:956(para)
+#: C/scdm.xml:956(para)
 msgid ""
 "GDM has a number of configuration interfaces. These include scripting "
 "integration points, daemon configuration, greeter configuration, general "
@@ -1112,17 +1112,17 @@ msgid ""
 "below."
 msgstr ""
 
-#: C/gdm.xml:965(title)
+#: C/scdm.xml:965(title)
 msgid "Scripting Integration Points"
 msgstr ""
 
-#: C/gdm.xml:967(para)
+#: C/scdm.xml:967(para)
 msgid ""
 "The GDM script integration points can be found in the <filename>&lt;etc&gt;/"
-"gdm/</filename> directory:"
+"scdm/</filename> directory:"
 msgstr ""
 
-#: C/gdm.xml:972(screen)
+#: C/scdm.xml:972(screen)
 #, no-wrap
 msgid ""
 "\n"
@@ -1133,18 +1133,18 @@ msgid ""
 "PostSession/\n"
 msgstr ""
 
-#: C/gdm.xml:980(para)
+#: C/scdm.xml:980(para)
 msgid ""
 "The <filename>Init</filename>, <filename>PostLogin</filename>, "
 "<filename>PreSession</filename>, and <filename>PostSession</filename> "
 "scripts all work as described below."
 msgstr ""
 
-#: C/gdm.xml:986(para)
+#: C/scdm.xml:986(para)
 msgid ""
 "For each type of script, the default one which will be executed is called "
 "\"Default\" and is stored in a directory associated with the script type. So "
-"the default <filename>Init</filename> script is <filename>&lt;etc&gt;/gdm/"
+"the default <filename>Init</filename> script is <filename>&lt;etc&gt;/scdm/"
 "Init/Default</filename>. A per-display script can be provided, and if it "
 "exists it will be run instead of the default script. Such scripts are stored "
 "in the same directory as the default script and have the same name as the "
@@ -1152,7 +1152,7 @@ msgid ""
 "Init&gt;/:0</filename> script exists, it will be run for DISPLAY \":0\"."
 msgstr ""
 
-#: C/gdm.xml:998(para)
+#: C/scdm.xml:998(para)
 msgid ""
 "All of these scripts are run with root privilege and return 0 if run "
 "successfully, and a non-zero return code if there was any failure that "
@@ -1161,7 +1161,7 @@ msgid ""
 "the login process to also hang."
 msgstr ""
 
-#: C/gdm.xml:1006(para)
+#: C/scdm.xml:1006(para)
 msgid ""
 "When the Xserver for the login GUI has been successfully started, but before "
 "the login GUI is actually displayed, GDM will run the <filename>Init</"
@@ -1170,7 +1170,7 @@ msgid ""
 "initialization if required."
 msgstr ""
 
-#: C/gdm.xml:1014(para)
+#: C/scdm.xml:1014(para)
 msgid ""
 "After the user has been successfully authenticated GDM will run the "
 "<filename>PostLogin</filename> script. This is done before any session setup "
@@ -1180,7 +1180,7 @@ msgid ""
 "needed."
 msgstr ""
 
-#: C/gdm.xml:1023(para)
+#: C/scdm.xml:1023(para)
 msgid ""
 "After the user session has been initialized, GDM will run the "
 "<filename>PreSession</filename> script. This script is useful for doing any "
@@ -1189,21 +1189,21 @@ msgid ""
 "example."
 msgstr ""
 
-#: C/gdm.xml:1031(para)
+#: C/scdm.xml:1031(para)
 msgid ""
 "When a user terminates their session, GDM will run the "
 "<filename>PostSession</filename> script. Note that the Xserver will have "
 "been stopped by the time this script is run, so it should not be accessed."
 msgstr ""
 
-#: C/gdm.xml:1038(para)
+#: C/scdm.xml:1038(para)
 msgid ""
 "Note that the <filename>PostSession</filename> script will be run even when "
 "the display fails to respond due to an I/O error or similar. Thus, there is "
 "no guarantee that X applications will work during script execution."
 msgstr ""
 
-#: C/gdm.xml:1045(para)
+#: C/scdm.xml:1045(para)
 msgid ""
 "All of the above scripts will set the <filename>$RUNNING_UNDER_GDM</"
 "filename> environment variable to <filename>yes</filename>. If the scripts "
@@ -1212,24 +1212,24 @@ msgid ""
 "used."
 msgstr ""
 
-#: C/gdm.xml:1055(title)
+#: C/scdm.xml:1055(title)
 msgid "Autostart Configuration"
 msgstr ""
 
-#: C/gdm.xml:1057(para)
+#: C/scdm.xml:1057(para)
 msgid ""
-"The <filename>&lt;share&gt;/gdm/autostart/LoginWindow</filename> directory "
+"The <filename>&lt;share&gt;/scdm/autostart/LoginWindow</filename> directory "
 "contains files in the format specified by the \"FreeDesktop.org Desktop "
 "Application Autostart Specification\". Standard features in the "
 "specification may be used to specify programs that should auto-restart or "
 "only be launched if a GConf configuration value is set, etc."
 msgstr ""
 
-#: C/gdm.xml:1066(para)
+#: C/scdm.xml:1066(para)
 msgid ""
 "Any <filename>.desktop</filename> files in this directory will cause the "
 "associated program to automatically start with the login GUI greeter. By "
-"default, GDM is shipped with files which will autostart the gdm-simple-"
+"default, GDM is shipped with files which will autostart the scdm-simple-"
 "greeter login GUI greeter itself, the gnome-power-manager application, the "
 "gnome-settings-daemon, and the metacity window manager. These programs are "
 "needed for the greeter program to work. In addition, desktop files are "
@@ -1237,14 +1237,14 @@ msgid ""
 "specified in the Accessibility Configuration section below are set."
 msgstr ""
 
-#: C/gdm.xml:1080(title)
+#: C/scdm.xml:1080(title)
 msgid "Xsession Script"
 msgstr ""
 
-#: C/gdm.xml:1082(para)
+#: C/scdm.xml:1082(para)
 msgid ""
 "There is also an <filename>Xsession</filename> script located at "
-"<filename>&lt;etc&gt;/gdm/Xsession</filename> which is called between the "
+"<filename>&lt;etc&gt;/scdm/Xsession</filename> which is called between the "
 "<filename>PreSession</filename> and the <filename>PostSession</filename> "
 "scripts. This script does not support per-display like the other scripts. "
 "This script is used for actually starting the user session. This script is "
@@ -1252,38 +1252,38 @@ msgid ""
 "Desktop session file the user selected to start."
 msgstr ""
 
-#: C/gdm.xml:1095(title)
+#: C/scdm.xml:1095(title)
 msgid "Daemon Configuration"
 msgstr ""
 
-#: C/gdm.xml:1097(para)
+#: C/scdm.xml:1097(para)
 msgid ""
-"The GDM daemon is configured using the <filename>&lt;etc&gt;/gdm/custom."
+"The GDM daemon is configured using the <filename>&lt;etc&gt;/scdm/custom."
 "conf</filename> file. Default values are stored in GConf in the "
-"<filename>gdm.schemas</filename> file. It is recommended that end-users "
-"modify the <filename>&lt;etc&gt;/gdm/custom.conf</filename> file because the "
+"<filename>scdm.schemas</filename> file. It is recommended that end-users "
+"modify the <filename>&lt;etc&gt;/scdm/custom.conf</filename> file because the "
 "schemas file may be overwritten when the user updates their system to have a "
 "newer version of GDM."
 msgstr ""
 
-#: C/gdm.xml:1107(para)
+#: C/scdm.xml:1107(para)
 msgid ""
 "Note that older versions of GDM supported additional configuration options "
 "which are no longer supported in the latest versions of GDM."
 msgstr ""
 
-#: C/gdm.xml:1112(para)
+#: C/scdm.xml:1112(para)
 msgid ""
-"The <filename>&lt;etc&gt;/gdm/custom.conf</filename> file is in the "
+"The <filename>&lt;etc&gt;/scdm/custom.conf</filename> file is in the "
 "<filename>keyfile</filename> format. Keywords in brackets define group "
 "sections, strings before an equal sign (=) are keys and the data after equal "
 "sign represents their value. Empty lines or lines starting with the hash "
 "mark (#) are ignored."
 msgstr ""
 
-#: C/gdm.xml:1120(para)
+#: C/scdm.xml:1120(para)
 msgid ""
-"The file <filename>&lt;etc&gt;/gdm/custom.conf</filename> supports the "
+"The file <filename>&lt;etc&gt;/scdm/custom.conf</filename> supports the "
 "\"[daemon]\", \"[security]\", and \"[xdmcp]\" group sections. Within each "
 "group, there are particular key/value pairs that can be specified to modify "
 "how GDM behaves. For example, to enable timed login and specify the timed "
@@ -1291,7 +1291,7 @@ msgid ""
 "contains the following lines:"
 msgstr ""
 
-#: C/gdm.xml:1130(screen)
+#: C/scdm.xml:1130(screen)
 #, no-wrap
 msgid ""
 "\n"
@@ -1300,57 +1300,57 @@ msgid ""
 "TimedLogin=you\n"
 msgstr ""
 
-#: C/gdm.xml:1136(para)
+#: C/scdm.xml:1136(para)
 msgid "A full list of supported configuration keys follow:"
 msgstr ""
 
-#: C/gdm.xml:1141(title)
+#: C/scdm.xml:1141(title)
 msgid "[chooser]"
 msgstr ""
 
-#: C/gdm.xml:1145(term)
+#: C/scdm.xml:1145(term)
 msgid "Multicast"
 msgstr ""
 
-#: C/gdm.xml:1147(synopsis)
+#: C/scdm.xml:1147(synopsis)
 #, no-wrap
 msgid "Multicast=false"
 msgstr ""
 
-#: C/gdm.xml:1148(para)
+#: C/scdm.xml:1148(para)
 msgid ""
 "If true and IPv6 is enabled, the chooser will send a multicast query to the "
 "local network and collect responses from the hosts who have joined multicast "
 "group."
 msgstr ""
 
-#: C/gdm.xml:1157(term)
+#: C/scdm.xml:1157(term)
 msgid "MulticastAddr"
 msgstr ""
 
-#: C/gdm.xml:1159(synopsis)
+#: C/scdm.xml:1159(synopsis)
 #, no-wrap
 msgid "MulticastAddr=ff02::1"
 msgstr ""
 
-#: C/gdm.xml:1160(para)
+#: C/scdm.xml:1160(para)
 msgid "This is the Link-local multicast address."
 msgstr ""
 
-#: C/gdm.xml:1169(title)
+#: C/scdm.xml:1169(title)
 msgid "[daemon]"
 msgstr ""
 
-#: C/gdm.xml:1172(term)
+#: C/scdm.xml:1172(term)
 msgid "TimedLoginEnable"
 msgstr ""
 
-#: C/gdm.xml:1174(synopsis)
+#: C/scdm.xml:1174(synopsis)
 #, no-wrap
 msgid "TimedLoginEnable=false"
 msgstr ""
 
-#: C/gdm.xml:1175(para)
+#: C/scdm.xml:1175(para)
 msgid ""
 "If the user given in <filename>TimedLogin</filename> should be logged in "
 "after a number of seconds (set with <filename>TimedLoginDelay</filename>) of "
@@ -1366,22 +1366,22 @@ msgid ""
 "more information, or for help if this feature does not seem to work."
 msgstr ""
 
-#: C/gdm.xml:1197(term)
+#: C/scdm.xml:1197(term)
 msgid "TimedLogin"
 msgstr ""
 
-#: C/gdm.xml:1199(synopsis)
+#: C/scdm.xml:1199(synopsis)
 #, no-wrap
 msgid "TimedLogin="
 msgstr ""
 
-#: C/gdm.xml:1200(para)
+#: C/scdm.xml:1200(para)
 msgid ""
 "This is the user that should be logged in after a specified number of "
 "seconds of inactivity."
 msgstr ""
 
-#: C/gdm.xml:1204(para) C/gdm.xml:1248(para)
+#: C/scdm.xml:1204(para) C/scdm.xml:1248(para)
 msgid ""
 "If the value ends with a vertical bar | (the pipe symbol), then GDM will "
 "execute the program specified and use whatever value is returned on standard "
@@ -1391,134 +1391,134 @@ msgid ""
 "then the program \"/usr/bin/getloginuser\" will be run to get the user value."
 msgstr ""
 
-#: C/gdm.xml:1218(term)
+#: C/scdm.xml:1218(term)
 msgid "TimedLoginDelay"
 msgstr ""
 
-#: C/gdm.xml:1220(synopsis)
+#: C/scdm.xml:1220(synopsis)
 #, no-wrap
 msgid "TimedLoginDelay=30"
 msgstr ""
 
-#: C/gdm.xml:1221(para)
+#: C/scdm.xml:1221(para)
 msgid ""
 "Delay in seconds before the <filename>TimedLogin</filename> user will be "
 "logged in."
 msgstr ""
 
-#: C/gdm.xml:1229(term)
+#: C/scdm.xml:1229(term)
 msgid "AutomaticLoginEnable"
 msgstr ""
 
-#: C/gdm.xml:1231(synopsis)
+#: C/scdm.xml:1231(synopsis)
 #, no-wrap
 msgid "AutomaticLoginEnable=false"
 msgstr ""
 
-#: C/gdm.xml:1232(para)
+#: C/scdm.xml:1232(para)
 msgid ""
 "If true, the user given in <filename>AutomaticLogin</filename> should be "
 "logged in immediately. This feature is like timed login with a delay of 0 "
 "seconds."
 msgstr ""
 
-#: C/gdm.xml:1241(term)
+#: C/scdm.xml:1241(term)
 msgid "AutomaticLogin"
 msgstr ""
 
-#: C/gdm.xml:1243(synopsis)
+#: C/scdm.xml:1243(synopsis)
 #, no-wrap
 msgid "AutomaticLogin="
 msgstr ""
 
-#: C/gdm.xml:1244(para)
+#: C/scdm.xml:1244(para)
 msgid ""
 "This is the user that should be logged in immediately if "
 "<filename>AutomaticLoginEnable</filename> is true."
 msgstr ""
 
-#: C/gdm.xml:1262(term)
+#: C/scdm.xml:1262(term)
 msgid "User"
 msgstr ""
 
-#: C/gdm.xml:1264(synopsis)
+#: C/scdm.xml:1264(synopsis)
 #, no-wrap
-msgid "User=gdm"
+msgid "User=scdm"
 msgstr ""
 
-#: C/gdm.xml:1265(para)
+#: C/scdm.xml:1265(para)
 msgid ""
 "The username under which the greeter and other GUI programs are run. Refer "
 "to the <filename>Group</filename> configuration key and to the \"Security-"
 "&gt;GDM User And Group\" section of this document for more information."
 msgstr ""
 
-#: C/gdm.xml:1275(term)
+#: C/scdm.xml:1275(term)
 msgid "Group"
 msgstr ""
 
-#: C/gdm.xml:1277(synopsis)
+#: C/scdm.xml:1277(synopsis)
 #, no-wrap
-msgid "Group=gdm"
+msgid "Group=scdm"
 msgstr ""
 
-#: C/gdm.xml:1278(para)
+#: C/scdm.xml:1278(para)
 msgid ""
 "The group name under which the greeter and other GUI programs are run. Refer "
 "to the <filename>User</filename> configuration key and to the \"Security-&gt;"
 "GDM User And Group\" section of this document for more information."
 msgstr ""
 
-#: C/gdm.xml:1290(title)
+#: C/scdm.xml:1290(title)
 msgid "Debug Options"
 msgstr ""
 
-#: C/gdm.xml:1293(title)
+#: C/scdm.xml:1293(title)
 msgid "[debug]"
 msgstr ""
 
-#: C/gdm.xml:1296(term) C/gdm.xml:1427(term)
+#: C/scdm.xml:1296(term) C/scdm.xml:1427(term)
 msgid "Enable"
 msgstr ""
 
-#: C/gdm.xml:1298(synopsis) C/gdm.xml:1429(synopsis)
+#: C/scdm.xml:1298(synopsis) C/scdm.xml:1429(synopsis)
 #, no-wrap
 msgid "Enable=false"
 msgstr ""
 
-#: C/gdm.xml:1299(para)
+#: C/scdm.xml:1299(para)
 msgid ""
 "To enable debugging, set the debug/Enable key to \"true\" in the "
-"<filename>&lt;etc&gt;/gdm/custom.conf</filename> file and restart GDM. Then "
+"<filename>&lt;etc&gt;/scdm/custom.conf</filename> file and restart GDM. Then "
 "debug output will be sent to the system log file (<filename>&lt;var&gt;/log/"
 "messages</filename> or <filename>&lt;var&gt;/adm/messages</filename> "
 "depending on your Operating System)."
 msgstr ""
 
-#: C/gdm.xml:1314(title)
+#: C/scdm.xml:1314(title)
 msgid "Greeter Options"
 msgstr ""
 
-#: C/gdm.xml:1317(title)
+#: C/scdm.xml:1317(title)
 msgid "[greeter]"
 msgstr ""
 
-#: C/gdm.xml:1320(term)
+#: C/scdm.xml:1320(term)
 msgid "IncludeAll"
 msgstr ""
 
-#: C/gdm.xml:1322(synopsis)
+#: C/scdm.xml:1322(synopsis)
 #, no-wrap
 msgid "IncludeAll=true"
 msgstr ""
 
-#: C/gdm.xml:1323(para)
+#: C/scdm.xml:1323(para)
 msgid ""
 "If true, then the face browser will show all users on the local machine. If "
 "false, the face browser will only show users who have recently logged in."
 msgstr ""
 
-#: C/gdm.xml:1329(para)
+#: C/scdm.xml:1329(para)
 msgid ""
 "When this key is true, GDM will call fgetpwent() to get a list of local "
 "users on the system. Any users with a user id less than 500 (or 100 if "
@@ -1531,38 +1531,38 @@ msgid ""
 "getusershell() returns them)."
 msgstr ""
 
-#: C/gdm.xml:1343(para)
+#: C/scdm.xml:1343(para)
 msgid ""
 "If false, then GDM more simply only displays users that have previously "
 "logged in on the system (local or NIS/LDAP users) by calling the <command>ck-"
 "history</command> ConsoleKit interface."
 msgstr ""
 
-#: C/gdm.xml:1352(term)
+#: C/scdm.xml:1352(term)
 msgid "Include"
 msgstr ""
 
-#: C/gdm.xml:1354(synopsis)
+#: C/scdm.xml:1354(synopsis)
 #, no-wrap
 msgid "Include="
 msgstr ""
 
-#: C/gdm.xml:1355(para)
+#: C/scdm.xml:1355(para)
 msgid ""
 "Set to a list of users to always include in the Face Browser. This value is "
 "set to a list of users separated by commas. By default, the value is empty."
 msgstr ""
 
-#: C/gdm.xml:1364(term)
+#: C/scdm.xml:1364(term)
 msgid "Exclude"
 msgstr ""
 
-#: C/gdm.xml:1366(synopsis)
+#: C/scdm.xml:1366(synopsis)
 #, no-wrap
 msgid "Exclude=bin,root,daemon,adm,lp,sync,shutdown,halt,mail,news,uucp,operator,nobody,nobody4,noaccess,postgres,pvm,rpm,nfsnobody,pcap"
 msgstr ""
 
-#: C/gdm.xml:1367(para)
+#: C/scdm.xml:1367(para)
 msgid ""
 "Set to a list of users to always exclude in the Face Browser. This value is "
 "set to a list of users separated by commas. Note that the setting in the "
@@ -1571,24 +1571,24 @@ msgid ""
 "default value with additional users appended to the list."
 msgstr ""
 
-#: C/gdm.xml:1381(title)
+#: C/scdm.xml:1381(title)
 msgid "Security Options"
 msgstr ""
 
-#: C/gdm.xml:1384(title)
+#: C/scdm.xml:1384(title)
 msgid "[security]"
 msgstr ""
 
-#: C/gdm.xml:1387(term)
+#: C/scdm.xml:1387(term)
 msgid "DisallowTCP"
 msgstr ""
 
-#: C/gdm.xml:1389(synopsis)
+#: C/scdm.xml:1389(synopsis)
 #, no-wrap
 msgid "DisallowTCP=true"
 msgstr ""
 
-#: C/gdm.xml:1390(para)
+#: C/scdm.xml:1390(para)
 msgid ""
 "If true, then always append <filename>-nolisten tcp</filename> to the "
 "command line when starting attached Xservers, thus disallowing TCP "
@@ -1596,24 +1596,24 @@ msgid ""
 "connections."
 msgstr ""
 
-#: C/gdm.xml:1402(title)
+#: C/scdm.xml:1402(title)
 msgid "XDCMP Support"
 msgstr ""
 
-#: C/gdm.xml:1405(title)
+#: C/scdm.xml:1405(title)
 msgid "[xdmcp]"
 msgstr ""
 
-#: C/gdm.xml:1408(term)
+#: C/scdm.xml:1408(term)
 msgid "DisplaysPerHost"
 msgstr ""
 
-#: C/gdm.xml:1410(synopsis)
+#: C/scdm.xml:1410(synopsis)
 #, no-wrap
 msgid "DisplaysPerHost=1"
 msgstr ""
 
-#: C/gdm.xml:1411(para)
+#: C/scdm.xml:1411(para)
 msgid ""
 "To prevent attackers from filling up the pending queue, GDM will only allow "
 "one connection for each remote computer. If you want to provide display "
@@ -1621,139 +1621,139 @@ msgid ""
 "value."
 msgstr ""
 
-#: C/gdm.xml:1418(para)
+#: C/scdm.xml:1418(para)
 msgid ""
 "Note that the number of attached DISPLAYS allowed is not limited. Only "
 "remote connections via XDMCP are limited by this configuration option."
 msgstr ""
 
-#: C/gdm.xml:1430(para)
+#: C/scdm.xml:1430(para)
 msgid ""
 "Setting this to true enables XDMCP support allowing remote displays/X "
 "terminals to be managed by GDM."
 msgstr ""
 
-#: C/gdm.xml:1435(para)
+#: C/scdm.xml:1435(para)
 msgid ""
-"<filename>gdm</filename> listens for requests on UDP port 177. See the Port "
+"<filename>scdm</filename> listens for requests on UDP port 177. See the Port "
 "option for more information."
 msgstr ""
 
-#: C/gdm.xml:1440(para)
+#: C/scdm.xml:1440(para)
 msgid ""
 "If GDM is compiled to support it, access from remote displays can be "
 "controlled using the TCP Wrappers library. The service name is "
-"<filename>gdm</filename>"
+"<filename>scdm</filename>"
 msgstr ""
 
-#: C/gdm.xml:1446(para)
+#: C/scdm.xml:1446(para)
 msgid ""
 "You should add <screen>\n"
-"gdm:.my.domain\n"
+"scdm:.my.domain\n"
 "</screen> to your <filename>&lt;etc&gt;/hosts.allow</filename>, depending on "
 "your TCP Wrappers configuration. See the <ulink type=\"help\" url=\"man:"
 "hosts.allow\">hosts.allow</ulink> man page for details."
 msgstr ""
 
-#: C/gdm.xml:1457(para)
+#: C/scdm.xml:1457(para)
 msgid ""
 "Please note that XDMCP is not a particularly secure protocol and that it is "
 "a good idea to block UDP port 177 on your firewall unless you really need it."
 msgstr ""
 
-#: C/gdm.xml:1466(term)
+#: C/scdm.xml:1466(term)
 msgid "HonorIndirect"
 msgstr ""
 
-#: C/gdm.xml:1468(synopsis)
+#: C/scdm.xml:1468(synopsis)
 #, no-wrap
 msgid "HonorIndirect=true"
 msgstr ""
 
-#: C/gdm.xml:1469(para)
+#: C/scdm.xml:1469(para)
 msgid ""
 "Enables XDMCP INDIRECT choosing (i.e. remote execution of "
-"<filename>gdmchooser</filename>) for X-terminals which do not supply their "
+"<filename>scdmchooser</filename>) for X-terminals which do not supply their "
 "own display browser."
 msgstr ""
 
-#: C/gdm.xml:1478(term)
+#: C/scdm.xml:1478(term)
 msgid "MaxPending"
 msgstr ""
 
-#: C/gdm.xml:1480(synopsis)
+#: C/scdm.xml:1480(synopsis)
 #, no-wrap
 msgid "MaxPending=4"
 msgstr ""
 
-#: C/gdm.xml:1481(para)
+#: C/scdm.xml:1481(para)
 msgid ""
 "To avoid denial of service attacks, GDM has fixed size queue of pending "
 "connections. Only MaxPending displays can start at the same time."
 msgstr ""
 
-#: C/gdm.xml:1487(para)
+#: C/scdm.xml:1487(para)
 msgid ""
 "Please note that this parameter does not limit the number of remote displays "
 "which can be managed. It only limits the number of displays initiating a "
 "connection simultaneously."
 msgstr ""
 
-#: C/gdm.xml:1496(term)
+#: C/scdm.xml:1496(term)
 msgid "MaxSessions"
 msgstr ""
 
-#: C/gdm.xml:1498(synopsis)
+#: C/scdm.xml:1498(synopsis)
 #, no-wrap
 msgid "MaxSessions=16"
 msgstr ""
 
-#: C/gdm.xml:1499(para)
+#: C/scdm.xml:1499(para)
 msgid ""
 "Determines the maximum number of remote display connections which will be "
 "managed simultaneously. I.e. the total number of remote displays that can "
 "use your host."
 msgstr ""
 
-#: C/gdm.xml:1508(term)
+#: C/scdm.xml:1508(term)
 msgid "MaxWait"
 msgstr ""
 
-#: C/gdm.xml:1510(synopsis)
+#: C/scdm.xml:1510(synopsis)
 #, no-wrap
 msgid "MaxWait=30"
 msgstr ""
 
-#: C/gdm.xml:1511(para)
+#: C/scdm.xml:1511(para)
 msgid ""
 "When GDM is ready to manage a display an ACCEPT packet is sent to it "
 "containing a unique session id which will be used in future XDMCP "
 "conversations."
 msgstr ""
 
-#: C/gdm.xml:1517(para)
+#: C/scdm.xml:1517(para)
 msgid ""
 "GDM will then place the session id in the pending queue waiting for the "
 "display to respond with a MANAGE request."
 msgstr ""
 
-#: C/gdm.xml:1522(para)
+#: C/scdm.xml:1522(para)
 msgid ""
 "If no response is received within MaxWait seconds, GDM will declare the "
 "display dead and erase it from the pending queue freeing up the slot for "
 "other displays."
 msgstr ""
 
-#: C/gdm.xml:1531(term)
+#: C/scdm.xml:1531(term)
 msgid "MaxWaitIndirect"
 msgstr ""
 
-#: C/gdm.xml:1533(synopsis)
+#: C/scdm.xml:1533(synopsis)
 #, no-wrap
 msgid "MaxWaitIndirect=30"
 msgstr ""
 
-#: C/gdm.xml:1534(para)
+#: C/scdm.xml:1534(para)
 msgid ""
 "The MaxWaitIndirect parameter determines the maximum number of seconds "
 "between the time where a user chooses a host and the subsequent indirect "
@@ -1764,16 +1764,16 @@ msgid ""
 "<filename>MaxPendingIndirect</filename>."
 msgstr ""
 
-#: C/gdm.xml:1548(term)
+#: C/scdm.xml:1548(term)
 msgid "PingIntervalSeconds"
 msgstr ""
 
-#: C/gdm.xml:1550(synopsis)
+#: C/scdm.xml:1550(synopsis)
 #, no-wrap
 msgid "PingIntervalSeconds=60"
 msgstr ""
 
-#: C/gdm.xml:1560(para)
+#: C/scdm.xml:1560(para)
 msgid ""
 "Note that GDM in the past used to have a <filename>PingInterval</filename> "
 "configuration key which was also in minutes. For most purposes you'd want "
@@ -1783,31 +1783,31 @@ msgid ""
 "you would want to end the session."
 msgstr ""
 
-#: C/gdm.xml:1573(term)
+#: C/scdm.xml:1573(term)
 msgid "Port"
 msgstr ""
 
-#: C/gdm.xml:1575(synopsis)
+#: C/scdm.xml:1575(synopsis)
 #, no-wrap
 msgid "Port=177"
 msgstr ""
 
-#: C/gdm.xml:1576(para)
+#: C/scdm.xml:1576(para)
 msgid ""
-"The UDP port number <filename>gdm</filename> should listen to for XDMCP "
+"The UDP port number <filename>scdm</filename> should listen to for XDMCP "
 "requests. Do not change this unless you know what you are doing."
 msgstr ""
 
-#: C/gdm.xml:1585(term)
+#: C/scdm.xml:1585(term)
 msgid "Willing"
 msgstr ""
 
-#: C/gdm.xml:1587(synopsis)
+#: C/scdm.xml:1587(synopsis)
 #, no-wrap
-msgid "Willing=&lt;etc&gt;/gdm/Xwilling"
+msgid "Willing=&lt;etc&gt;/scdm/Xwilling"
 msgstr ""
 
-#: C/gdm.xml:1588(para)
+#: C/scdm.xml:1588(para)
 msgid ""
 "When the machine sends a WILLING packet back after a QUERY it sends a string "
 "that gives the current status of this server. The default message is the "
@@ -1819,94 +1819,94 @@ msgid ""
 "machine with QUERY packets."
 msgstr ""
 
-#: C/gdm.xml:1607(title)
+#: C/scdm.xml:1607(title)
 msgid "Simple Greeter Configuration"
 msgstr ""
 
-#: C/gdm.xml:1609(para)
+#: C/scdm.xml:1609(para)
 msgid ""
 "The GDM default greeter is called the simple Greeter and is configured via "
-"GConf. Default values are stored in GConf in the <filename>gdm-simple-"
+"GConf. Default values are stored in GConf in the <filename>scdm-simple-"
 "greeter.schemas</filename> file. These defaults can be overridden if the "
-"\"gdm\" user has a writable $HOME directory to store GConf settings. These "
+"\"scdm\" user has a writable $HOME directory to store GConf settings. These "
 "values can be edited using the <command>gconftool-2</command> or "
 "<command>gconf-editor</command> programs. The following configuration "
 "options are supported:"
 msgstr ""
 
-#: C/gdm.xml:1620(title)
+#: C/scdm.xml:1620(title)
 msgid "Greeter Configuration Keys"
 msgstr ""
 
-#: C/gdm.xml:1623(term)
-msgid "/apps/gdm/simple-greeter/banner_message_enable"
+#: C/scdm.xml:1623(term)
+msgid "/apps/scdm/simple-greeter/banner_message_enable"
 msgstr ""
 
-#: C/gdm.xml:1625(synopsis) C/gdm.xml:1646(synopsis) C/gdm.xml:1657(synopsis)
-#: C/gdm.xml:1722(synopsis) C/gdm.xml:1787(synopsis) C/gdm.xml:1798(synopsis)
-#: C/gdm.xml:1809(synopsis) C/gdm.xml:1820(synopsis)
+#: C/scdm.xml:1625(synopsis) C/scdm.xml:1646(synopsis) C/scdm.xml:1657(synopsis)
+#: C/scdm.xml:1722(synopsis) C/scdm.xml:1787(synopsis) C/scdm.xml:1798(synopsis)
+#: C/scdm.xml:1809(synopsis) C/scdm.xml:1820(synopsis)
 #, no-wrap
 msgid "false (boolean)"
 msgstr ""
 
-#: C/gdm.xml:1626(para)
+#: C/scdm.xml:1626(para)
 msgid "Controls whether the banner message text is displayed."
 msgstr ""
 
-#: C/gdm.xml:1633(term)
-msgid "/apps/gdm/simple-greeter/banner_message_text"
+#: C/scdm.xml:1633(term)
+msgid "/apps/scdm/simple-greeter/banner_message_text"
 msgstr ""
 
-#: C/gdm.xml:1635(synopsis)
+#: C/scdm.xml:1635(synopsis)
 #, no-wrap
 msgid "NULL (string)"
 msgstr ""
 
-#: C/gdm.xml:1636(para)
+#: C/scdm.xml:1636(para)
 msgid "Specifies the text banner message to show on the greeter window."
 msgstr ""
 
-#: C/gdm.xml:1644(term)
-msgid "/apps/gdm/simple-greeter/disable_restart_buttons"
+#: C/scdm.xml:1644(term)
+msgid "/apps/scdm/simple-greeter/disable_restart_buttons"
 msgstr ""
 
-#: C/gdm.xml:1647(para)
+#: C/scdm.xml:1647(para)
 msgid "Controls whether to show the restart buttons in the login window."
 msgstr ""
 
-#: C/gdm.xml:1655(term)
-msgid "/apps/gdm/simple-greeter/disable_user_list"
+#: C/scdm.xml:1655(term)
+msgid "/apps/scdm/simple-greeter/disable_user_list"
 msgstr ""
 
-#: C/gdm.xml:1658(para)
+#: C/scdm.xml:1658(para)
 msgid ""
 "If true, then the face browser with known users is not shown in the login "
 "window."
 msgstr ""
 
-#: C/gdm.xml:1666(term)
-msgid "/apps/gdm/simple-greeter/logo_icon_name"
+#: C/scdm.xml:1666(term)
+msgid "/apps/scdm/simple-greeter/logo_icon_name"
 msgstr ""
 
-#: C/gdm.xml:1668(synopsis)
+#: C/scdm.xml:1668(synopsis)
 #, no-wrap
 msgid "computer (string)"
 msgstr ""
 
-#: C/gdm.xml:1669(para)
+#: C/scdm.xml:1669(para)
 msgid "Set to the themed icon name to use for the greeter logo."
 msgstr ""
 
-#: C/gdm.xml:1676(term)
-msgid "/apps/gdm/simple-greeter/recent-languages"
+#: C/scdm.xml:1676(term)
+msgid "/apps/scdm/simple-greeter/recent-languages"
 msgstr ""
 
-#: C/gdm.xml:1678(synopsis) C/gdm.xml:1700(synopsis)
+#: C/scdm.xml:1678(synopsis) C/scdm.xml:1700(synopsis)
 #, no-wrap
 msgid "[] (string list)"
 msgstr ""
 
-#: C/gdm.xml:1679(para)
+#: C/scdm.xml:1679(para)
 msgid ""
 "Set to a list of languages to be shown by default in the login window. "
 "Default value is \"[]\". With the default setting only the system default "
@@ -1914,7 +1914,7 @@ msgid ""
 "showing a full list of available languages which the user can select."
 msgstr ""
 
-#: C/gdm.xml:1687(para)
+#: C/scdm.xml:1687(para)
 msgid ""
 "Users are not intended to change this setting by hand. Instead GDM keeps "
 "track of any languages selected in this configuration key, and will show "
@@ -1922,11 +1922,11 @@ msgid ""
 "commonly selected languages are easier to select."
 msgstr ""
 
-#: C/gdm.xml:1698(term)
-msgid "/apps/gdm/simple-greeter/recent-layouts"
+#: C/scdm.xml:1698(term)
+msgid "/apps/scdm/simple-greeter/recent-layouts"
 msgstr ""
 
-#: C/gdm.xml:1701(para)
+#: C/scdm.xml:1701(para)
 msgid ""
 "Set to a list of keyboard layouts to be shown by default in the login panel. "
 "Default value is \"[]\". With the default setting only the system default "
@@ -1935,7 +1935,7 @@ msgid ""
 "select."
 msgstr ""
 
-#: C/gdm.xml:1709(para)
+#: C/scdm.xml:1709(para)
 msgid ""
 "Users are not intended to change this setting by hand. Instead GDM keeps "
 "track of any keyboard layouts selected in this configuration key, and will "
@@ -1943,30 +1943,30 @@ msgid ""
 "choice. This way, commonly selected keyboard layouts are easier to select."
 msgstr ""
 
-#: C/gdm.xml:1720(term)
-msgid "/apps/gdm/simple-greeter/wm_use_compiz"
+#: C/scdm.xml:1720(term)
+msgid "/apps/scdm/simple-greeter/wm_use_compiz"
 msgstr ""
 
-#: C/gdm.xml:1723(para)
+#: C/scdm.xml:1723(para)
 msgid ""
 "Controls whether compiz is used as the window manager instead of metacity."
 msgstr ""
 
-#: C/gdm.xml:1733(title)
+#: C/scdm.xml:1733(title)
 msgid "Accessibility Configuration"
 msgstr ""
 
-#: C/gdm.xml:1735(para)
+#: C/scdm.xml:1735(para)
 msgid ""
 "This section describes the accessibility configuration options available in "
 "GDM."
 msgstr ""
 
-#: C/gdm.xml:1741(title)
+#: C/scdm.xml:1741(title)
 msgid "GDM Accessibility Dialog And GConf Keys"
 msgstr ""
 
-#: C/gdm.xml:1743(para)
+#: C/scdm.xml:1743(para)
 msgid ""
 "The GDM greeter panel at the login screen displays an accessibility icon. "
 "Clicking on that icon opens the GDM Accessibility Dialog. In the GDM "
@@ -1974,7 +1974,7 @@ msgid ""
 "or disable the associated assistive tools."
 msgstr ""
 
-#: C/gdm.xml:1750(para)
+#: C/scdm.xml:1750(para)
 msgid ""
 "The checkboxes that correspond to the on-screen keyboard, screen magnifier "
 "and screen reader assistive tools act on the three GConf keys that are "
@@ -1988,7 +1988,7 @@ msgid ""
 "login session will automatically be launched at the next GDM login session."
 msgstr ""
 
-#: C/gdm.xml:1764(para)
+#: C/scdm.xml:1764(para)
 msgid ""
 "The other checkboxes in the GDM Accessibility Dialog do not have "
 "corresponding GConf keys because no additional program is launched to "
@@ -1997,65 +1997,65 @@ msgid ""
 "is always running during the GDM session."
 msgstr ""
 
-#: C/gdm.xml:1774(title)
+#: C/scdm.xml:1774(title)
 msgid "Accessibility GConf Keys"
 msgstr ""
 
-#: C/gdm.xml:1776(para)
+#: C/scdm.xml:1776(para)
 msgid ""
 "GDM offers the following GConf keys to control its accessibility features:"
 msgstr ""
 
-#: C/gdm.xml:1782(title)
+#: C/scdm.xml:1782(title)
 msgid "GDM Configuration Keys"
 msgstr ""
 
-#: C/gdm.xml:1785(term)
+#: C/scdm.xml:1785(term)
 msgid "/desktop/gnome/interface/accessibility"
 msgstr ""
 
-#: C/gdm.xml:1788(para)
+#: C/scdm.xml:1788(para)
 msgid ""
 "Controls whether the Accessibility infrastructure will be started with the "
 "GDM GUI. This is needed for many accessibility technology programs to work."
 msgstr ""
 
-#: C/gdm.xml:1796(term)
+#: C/scdm.xml:1796(term)
 msgid "/desktop/gnome/applications/at/screen_magnifier_enabled"
 msgstr ""
 
-#: C/gdm.xml:1799(para)
+#: C/scdm.xml:1799(para)
 msgid ""
 "If set, then the assistive tools linked to this GConf key will be started "
 "with the GDM GUI program. By default this is a screen magnifier application."
 msgstr ""
 
-#: C/gdm.xml:1807(term)
+#: C/scdm.xml:1807(term)
 msgid "/desktop/gnome/applications/at/screen_keyboard_enabled"
 msgstr ""
 
-#: C/gdm.xml:1810(para)
+#: C/scdm.xml:1810(para)
 msgid ""
 "If set, then the assistive tools linked to this GConf key will be started "
 "with the GDM GUI program. By default this is an on-screen keyboard "
 "application."
 msgstr ""
 
-#: C/gdm.xml:1818(term)
+#: C/scdm.xml:1818(term)
 msgid "/desktop/gnome/applications/at/screen_reader_enabled"
 msgstr ""
 
-#: C/gdm.xml:1821(para)
+#: C/scdm.xml:1821(para)
 msgid ""
 "If set, then the assistive tools linked to this GConf key will be started "
 "with the GDM GUI program. By default this is a screen reader application."
 msgstr ""
 
-#: C/gdm.xml:1832(title)
+#: C/scdm.xml:1832(title)
 msgid "Linking GConf Keys to Accessbility Tools"
 msgstr ""
 
-#: C/gdm.xml:1834(para)
+#: C/scdm.xml:1834(para)
 msgid ""
 "For the screen_magnifier_enabled, the screen_keyboard_enabled, and the "
 "screen_reader_enabled GConf keys, the assistive tool which gets launched "
@@ -2067,7 +2067,7 @@ msgid ""
 "of the following:"
 msgstr ""
 
-#: C/gdm.xml:1846(screen)
+#: C/scdm.xml:1846(screen)
 #, no-wrap
 msgid ""
 "\n"
@@ -2076,7 +2076,7 @@ msgid ""
 "AutostartCondition=GNOME /desktop/gnome/applications/at/screen_reader_enabled\n"
 msgstr ""
 
-#: C/gdm.xml:1852(para)
+#: C/scdm.xml:1852(para)
 msgid ""
 "When an accessibility key is true, then any program which is linked to that "
 "key in a GDM autostart desktop file will be launched (unless the Hidden key "
@@ -2085,11 +2085,11 @@ msgid ""
 "AutostartCondition in the GDM autostart directory."
 msgstr ""
 
-#: C/gdm.xml:1862(title)
+#: C/scdm.xml:1862(title)
 msgid "Example Of Modifying Accessibility Tool Configuration"
 msgstr ""
 
-#: C/gdm.xml:1864(para)
+#: C/scdm.xml:1864(para)
 msgid ""
 "For example, if GNOME is distributed with GOK as the default on-screen "
 "keyboard, then this could be replaced with a different program if desired. "
@@ -2098,7 +2098,7 @@ msgid ""
 "support, then the following configuration is needed."
 msgstr ""
 
-#: C/gdm.xml:1872(para)
+#: C/scdm.xml:1872(para)
 msgid ""
 "Create a desktop file for onboard and a second one for mousetweaks; for "
 "example, onboard.desktop and mousetweaks.desktop. These files must be placed "
@@ -2106,11 +2106,11 @@ msgid ""
 "\"Autostart Configuration\" section of this document."
 msgstr ""
 
-#: C/gdm.xml:1880(para)
+#: C/scdm.xml:1880(para)
 msgid "The following is an example <filename>onboard.desktop</filename> file:"
 msgstr ""
 
-#: C/gdm.xml:1884(screen)
+#: C/scdm.xml:1884(screen)
 #, no-wrap
 msgid ""
 "\n"
@@ -2127,12 +2127,12 @@ msgid ""
 "AutostartCondition=GNOME /desktop/gnome/applications/at/screen_keyboard_enabled\n"
 msgstr ""
 
-#: C/gdm.xml:1898(para)
+#: C/scdm.xml:1898(para)
 msgid ""
 "The following is an example <filename>mousetweaks.desktop</filename> file:"
 msgstr ""
 
-#: C/gdm.xml:1903(screen)
+#: C/scdm.xml:1903(screen)
 #, no-wrap
 msgid ""
 "\n"
@@ -2149,13 +2149,13 @@ msgid ""
 "AutostartCondition=GNOME /desktop/gnome/applications/at/screen_keyboard_enabled\n"
 msgstr ""
 
-#: C/gdm.xml:1917(para)
+#: C/scdm.xml:1917(para)
 msgid ""
 "Note the line with the AutostartCondition that links both desktop files to "
 "the GConf key for the on-screen keyboard."
 msgstr ""
 
-#: C/gdm.xml:1922(para)
+#: C/scdm.xml:1922(para)
 msgid ""
 "To disable GOK from starting, the desktop file for the GOK on-screen "
 "keyboard must be removed or deactivated. Otherwise onboard and GOK would "
@@ -2164,14 +2164,14 @@ msgid ""
 "setting to the gok.desktop file."
 msgstr ""
 
-#: C/gdm.xml:1930(para)
+#: C/scdm.xml:1930(para)
 msgid ""
 "After making these changes, GOK will no longer be started when the user "
 "activates the on-screen keyboard in the GDM session; but onboard and "
 "mousetweaks will instead be launched."
 msgstr ""
 
-#: C/gdm.xml:1939(title)
+#: C/scdm.xml:1939(title)
 msgid "General Session Settings"
 msgstr ""
 
@@ -2181,7 +2181,7 @@ msgstr ""
 #.                  to configure?  Also, would be good to be more specific about
 #.                  how lock down management is handled.
 #. </para>
-#: C/gdm.xml:1948(para)
+#: C/scdm.xml:1948(para)
 msgid ""
 "The GDM Greeter uses some of the same framework that your desktop session "
 "will use. And so, it is influenced by a number of the same GConf settings. "
@@ -2191,7 +2191,7 @@ msgid ""
 "settings for security."
 msgstr ""
 
-#: C/gdm.xml:1959(title)
+#: C/scdm.xml:1959(title)
 msgid "GNOME Settings Daemon"
 msgstr ""
 
@@ -2204,30 +2204,30 @@ msgstr ""
 #.                  configuration setting?  Oddly I do not find this key used
 #.                  in anything but the chooser in SVN.
 #. </para>
-#: C/gdm.xml:1972(para)
+#: C/scdm.xml:1972(para)
 msgid ""
 "GDM enables the following gnome-settings-daemon plugins: a11y-keyboard, "
 "background, sound, xsettings."
 msgstr ""
 
-#: C/gdm.xml:1977(para)
+#: C/scdm.xml:1977(para)
 msgid ""
 "These are responsible for things like the background image, font and theme "
 "settings, sound events, etc."
 msgstr ""
 
-#: C/gdm.xml:1982(para)
+#: C/scdm.xml:1982(para)
 msgid ""
 "Plugins can also be disabled using GConf. For example, if you want to "
-"disable the sound plugin then unset the following key: <filename>/apps/gdm/"
+"disable the sound plugin then unset the following key: <filename>/apps/scdm/"
 "simple-greeter/settings-manager-plugins/sound/active</filename>."
 msgstr ""
 
-#: C/gdm.xml:1990(title)
+#: C/scdm.xml:1990(title)
 msgid "GDM Session Configuration"
 msgstr ""
 
-#: C/gdm.xml:1992(para)
+#: C/scdm.xml:1992(para)
 msgid ""
 "GDM sessions are specified using the FreeDesktop.org Desktop Entry "
 "Specification, which can be referenced at the following URL: <ulink url="
@@ -2235,44 +2235,44 @@ msgid ""
 "http://www.freedesktop.org/wiki/Specifications/desktop-entry-spec</ulink>."
 msgstr ""
 
-#: C/gdm.xml:1999(para)
+#: C/scdm.xml:1999(para)
 msgid ""
 "By default, GDM will install desktop files in the <filename>&lt;share&gt;/"
 "xsessions</filename> directory. GDM will search the following directories in "
 "this order to find desktop files: <filename>&lt;etc&gt;/X11/sessions/</"
 "filename>, <filename>&lt;dmconfdir&gt;/Sessions</filename>, <filename>&lt;"
-"share&gt;/xsessions</filename>, and <filename>&lt;share&gt;/gdm/"
+"share&gt;/xsessions</filename>, and <filename>&lt;share&gt;/scdm/"
 "BuiltInSessions</filename>. By default the <filename>&lt;dmconfdir&gt;</"
 "filename> is set to <filename>&lt;etc&gt;/dm/</filename> unless GDM is "
 "configured to use a different directory via the \"--with-dmconfdir\" option."
 msgstr ""
 
-#: C/gdm.xml:2012(para)
+#: C/scdm.xml:2012(para)
 msgid ""
 "A session can be disabled by editing the desktop file and adding a line as "
 "follows: <filename>Hidden=true</filename>."
 msgstr ""
 
-#: C/gdm.xml:2017(para)
+#: C/scdm.xml:2017(para)
 msgid ""
 "GDM desktop files support a GDM-specific extension, a key named \"X-GDM-"
 "BypassXsession\". If the key is not specified in a desktop file, the value "
 "defaults to \"false\". If this key is specified to be \"true\" in a desktop "
 "file, then GDM will launch the program specified by the desktop file \"Exec"
 "\" key directly when starting the user session. It will not run the program "
-"via the <filename>&lt;etc&gt;/gdm/Xsession</filename> script, which is the "
-"normal behavior. Since bypassing the <filename>&lt;etc&gt;/gdm/Xsession</"
+"via the <filename>&lt;etc&gt;/scdm/Xsession</filename> script, which is the "
+"normal behavior. Since bypassing the <filename>&lt;etc&gt;/scdm/Xsession</"
 "filename> script avoids setting up the user session with the normal system "
 "and user settings, sessions started this way can be useful for debugging "
 "problems in the system or user scripts that might be preventing a user from "
 "being able to start a session."
 msgstr ""
 
-#: C/gdm.xml:2036(title)
+#: C/scdm.xml:2036(title)
 msgid "GDM User Session and Language Configuration"
 msgstr ""
 
-#: C/gdm.xml:2037(para)
+#: C/scdm.xml:2037(para)
 msgid ""
 "The user's default session and language choices are stored in the "
 "<filename>~/.dmrc</filename> file. When a user logs in for the first time, "
@@ -2281,7 +2281,7 @@ msgid ""
 "in. GDM will remember this change for subsequent logins."
 msgstr ""
 
-#: C/gdm.xml:2045(para)
+#: C/scdm.xml:2045(para)
 msgid ""
 "The <filename>~/.dmrc</filename> file is in the standard <filename>INI</"
 "filename> format. It has one section called <filename>[Desktop]</filename> "
@@ -2289,7 +2289,7 @@ msgid ""
 "filename>."
 msgstr ""
 
-#: C/gdm.xml:2052(para)
+#: C/scdm.xml:2052(para)
 msgid ""
 "The <filename>Session</filename> key specifies the basename of the session "
 "<filename>.desktop</filename> file that the user wishes to normally use "
@@ -2299,7 +2299,7 @@ msgid ""
 "would normally look as follows:"
 msgstr ""
 
-#: C/gdm.xml:2061(screen)
+#: C/scdm.xml:2061(screen)
 #, no-wrap
 msgid ""
 "\n"
@@ -2308,101 +2308,101 @@ msgid ""
 "Language=cs_CZ.UTF-8\n"
 msgstr ""
 
-#: C/gdm.xml:2073(title)
+#: C/scdm.xml:2073(title)
 msgid "GDM Commands"
 msgstr ""
 
-#: C/gdm.xml:2076(title)
+#: C/scdm.xml:2076(title)
 msgid "GDM Root User Commands"
 msgstr ""
 
-#: C/gdm.xml:2078(para)
+#: C/scdm.xml:2078(para)
 msgid ""
 "The GDM package provides the following commands in <filename>sbindir</"
 "filename> intended to be run by the root user:"
 msgstr ""
 
-#: C/gdm.xml:2084(title) C/gdm.xml:2099(title)
+#: C/scdm.xml:2084(title) C/scdm.xml:2099(title)
 msgid ""
-"<command>gdm</command> and <command>gdm-binary</command> Command Line Options"
+"<command>scdm</command> and <command>scdm-binary</command> Command Line Options"
 msgstr ""
 
-#: C/gdm.xml:2087(para)
+#: C/scdm.xml:2087(para)
 msgid ""
-"The <command>gdm</command> command is really just a script which runs the "
-"<command>gdm-binary</command>, passing along any options. Before launching "
-"<command>gdm-binary</command>, the gdm wrapper script will source the "
+"The <command>scdm</command> command is really just a script which runs the "
+"<command>scdm-binary</command>, passing along any options. Before launching "
+"<command>scdm-binary</command>, the scdm wrapper script will source the "
 "<filename>&lt;etc&gt;/profile</filename> file to set the standard system "
 "environment variables. In order to better support internationalization, it "
 "will also set the LC_MESSAGES environment variable to LANG if neither "
-"LC_MESSAGES or LC_ALL are set. The <command>gdm-binary</command> is the "
+"LC_MESSAGES or LC_ALL are set. The <command>scdm-binary</command> is the "
 "actual GDM daemon."
 msgstr ""
 
-#: C/gdm.xml:2103(term)
+#: C/scdm.xml:2103(term)
 msgid "-?, --help"
 msgstr ""
 
-#: C/gdm.xml:2105(para)
+#: C/scdm.xml:2105(para)
 msgid "Gives a brief overview of the command line options."
 msgstr ""
 
-#: C/gdm.xml:2112(term)
+#: C/scdm.xml:2112(term)
 msgid "--fatal-warnings"
 msgstr ""
 
-#: C/gdm.xml:2114(para)
+#: C/scdm.xml:2114(para)
 msgid "Make all warnings cause GDM to exit."
 msgstr ""
 
-#: C/gdm.xml:2121(term)
+#: C/scdm.xml:2121(term)
 msgid "--timed-exit"
 msgstr ""
 
-#: C/gdm.xml:2123(para)
+#: C/scdm.xml:2123(para)
 msgid "Exit after 30 seconds. Useful for debugging."
 msgstr ""
 
-#: C/gdm.xml:2130(term)
+#: C/scdm.xml:2130(term)
 msgid "--version"
 msgstr ""
 
-#: C/gdm.xml:2132(para)
+#: C/scdm.xml:2132(para)
 msgid "Print the version of the GDM daemon."
 msgstr ""
 
-#: C/gdm.xml:2141(title)
-msgid "<command>gdm-restart</command> Command Line Options"
+#: C/scdm.xml:2141(title)
+msgid "<command>scdm-restart</command> Command Line Options"
 msgstr ""
 
-#: C/gdm.xml:2143(para)
+#: C/scdm.xml:2143(para)
 msgid ""
-"<command>gdm-restart</command> stops and restarts GDM by sending the GDM "
+"<command>scdm-restart</command> stops and restarts GDM by sending the GDM "
 "daemon a HUP signal. This command will immediately terminate all sessions "
 "and log out users currently logged in with GDM."
 msgstr ""
 
-#: C/gdm.xml:2151(title)
-msgid "<command>gdm-safe-restart</command> Command Line Options"
+#: C/scdm.xml:2151(title)
+msgid "<command>scdm-safe-restart</command> Command Line Options"
 msgstr ""
 
-#: C/gdm.xml:2153(para)
+#: C/scdm.xml:2153(para)
 msgid ""
-"<command>gdm-safe-restart</command> stops and restarts GDM by sending the "
+"<command>scdm-safe-restart</command> stops and restarts GDM by sending the "
 "GDM daemon a USR1 signal. GDM will be restarted as soon as all users log out."
 msgstr ""
 
-#: C/gdm.xml:2161(title)
-msgid "<command>gdm-stop</command> Command Line Options"
+#: C/scdm.xml:2161(title)
+msgid "<command>scdm-stop</command> Command Line Options"
 msgstr ""
 
-#: C/gdm.xml:2163(para)
+#: C/scdm.xml:2163(para)
 msgid ""
-"<command>gdm-stop</command> stops GDM by sending the GDM daemon a TERM "
+"<command>scdm-stop</command> stops GDM by sending the GDM daemon a TERM "
 "signal."
 msgstr ""
 
-#: C/gdm.xml:2174(title)
+#: C/scdm.xml:2174(title)
 msgid "Troubleshooting"
 msgstr ""
 
@@ -2410,19 +2410,19 @@ msgstr ""
 #.       TODO - any other tips we should add?  Might be useful to highlight any
 #.              common D-Bus configuration issues?
 #. </para>
-#: C/gdm.xml:2182(para)
+#: C/scdm.xml:2182(para)
 msgid ""
 "This section discusses helpful tips for getting GDM working. In general, if "
 "you have a problem using GDM, you can submit a bug or send an email to the "
-"gdm-list mailing list. Information about how to do this is in the "
+"scdm-list mailing list. Information about how to do this is in the "
 "Introduction section of the document."
 msgstr ""
 
-#: C/gdm.xml:2189(para)
+#: C/scdm.xml:2189(para)
 msgid ""
 "If GDM is failing to work properly, it is always a good idea to include "
 "debug information. To enable debugging, set the debug/Enable key to \"true\" "
-"in the <filename>&lt;etc&gt;/gdm/custom.conf</filename> file and restart "
+"in the <filename>&lt;etc&gt;/scdm/custom.conf</filename> file and restart "
 "GDM. Then use GDM to the point where it fails, and debug output will be sent "
 "to the system log file (<filename>&lt;var&gt;/log/messages</filename> or "
 "<filename>&lt;var&gt;/adm/messages</filename> depending on your Operating "
@@ -2433,11 +2433,11 @@ msgid ""
 "\"man:syslog\">syslog</ulink> man page)."
 msgstr ""
 
-#: C/gdm.xml:2205(title)
+#: C/scdm.xml:2205(title)
 msgid "GDM Will Not Start"
 msgstr ""
 
-#: C/gdm.xml:2207(para)
+#: C/scdm.xml:2207(para)
 msgid ""
 "There are a many problems that can cause GDM to fail to start, but this "
 "section will discuss a few common problems and how to approach tracking down "
@@ -2446,7 +2446,7 @@ msgid ""
 "track down problems when GDM fails silently."
 msgstr ""
 
-#: C/gdm.xml:2216(para)
+#: C/scdm.xml:2216(para)
 msgid ""
 "First make sure that the Xserver is configured properly. The GDM "
 "configuration file contains a command in the [server-Standard] section that "
@@ -2459,18 +2459,18 @@ msgid ""
 "file so that it is correct for your system."
 msgstr ""
 
-#: C/gdm.xml:2229(para)
+#: C/scdm.xml:2229(para)
 msgid ""
 "Also make sure that the <filename>/tmp</filename> directory has reasonable "
 "ownership and permissions, and that the machine's file system is not full. "
 "These problems will cause GDM to fail to start."
 msgstr ""
 
-#: C/gdm.xml:2240(title)
+#: C/scdm.xml:2240(title)
 msgid "License"
 msgstr ""
 
-#: C/gdm.xml:2241(para)
+#: C/scdm.xml:2241(para)
 msgid ""
 "This program is free software; you can redistribute it and/or modify it "
 "under the terms of the <ulink type=\"help\" url=\"gnome-help:gpl"
@@ -2479,7 +2479,7 @@ msgid ""
 "option) any later version."
 msgstr ""
 
-#: C/gdm.xml:2249(para)
+#: C/scdm.xml:2249(para)
 msgid ""
 "This program is distributed in the hope that it will be useful, but WITHOUT "
 "ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
@@ -2487,7 +2487,7 @@ msgid ""
 "License</citetitle> for more details."
 msgstr ""
 
-#: C/gdm.xml:2255(para)
+#: C/scdm.xml:2255(para)
 msgid ""
 "A copy of the <citetitle>GNU General Public License</citetitle> is included "
 "as an appendix to the <citetitle>GNOME Users Guide</citetitle>. You may also "
@@ -2500,6 +2500,6 @@ msgid ""
 msgstr ""
 
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
-#: C/gdm.xml:0(None)
+#: C/scdm.xml:0(None)
 msgid "translator-credits"
 msgstr ""

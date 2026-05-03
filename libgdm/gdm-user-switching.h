@@ -25,7 +25,7 @@
 #include <glib-object.h>
 #include <gio/gio.h>
 
-gboolean gdm_goto_login_session_sync (GCancellable  *cancellable,
+gboolean scdm_goto_login_session_sync (GCancellable  *cancellable,
 				      GError       **error);
 
 #endif

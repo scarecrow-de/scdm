@@ -6,7 +6,7 @@
 PATH="@X_PATH@:$PATH"
 OLD_IFS=$IFS
 
-gdmwhich () {
+scdmwhich () {
   COMMAND="$1"
   OUTPUT=
   IFS=:
@@ -31,7 +31,7 @@ fi
 
 sysmodmap=/etc/X11/Xmodmap
 
-XMODMAP=`gdmwhich xmodmap`
+XMODMAP=`scdmwhich xmodmap`
 if [ "x$XMODMAP" != "x" ] ; then
   if [ "x$GDM_PARENT_DISPLAY" = "x" ]; then
     if [ -f $sysmodmap ]; then
@@ -45,7 +45,7 @@ if [ "x$XMODMAP" != "x" ] ; then
   # Switch Sun's Alt and Meta mod mappings
   #
 
-  UNAME=`gdmwhich uname`
+  UNAME=`scdmwhich uname`
   PROCESSOR=`$UNAME -p`
   if [ "x$PROCESSOR" = "xsparc" ]; then
     if $XMODMAP | grep mod4 | grep Alt > /dev/null 2>/dev/null
@@ -60,7 +60,7 @@ if [ "x$XMODMAP" != "x" ] ; then
   fi
 fi
 
-SETXKBMAP=`gdmwhich setxkbmap`
+SETXKBMAP=`scdmwhich setxkbmap`
 if [ "x$SETXKBMAP" != "x" ] ; then
   # FIXME: is this all right?  Is this completely on crack?
   # What this does is move the xkb configuration from the GDM_PARENT_DISPLAY

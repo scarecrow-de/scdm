@@ -1,16 +1,16 @@
-libgdmcommon_src = files(
-  'gdm-address.c',
-  'gdm-common.c',
-  'gdm-log.c',
-  'gdm-profile.c',
-  'gdm-settings-backend.c',
-  'gdm-settings-desktop-backend.c',
-  'gdm-settings-direct.c',
-  'gdm-settings-utils.c',
-  'gdm-settings.c',
+libscdmcommon_src = files(
+  'scdm-address.c',
+  'scdm-common.c',
+  'scdm-log.c',
+  'scdm-profile.c',
+  'scdm-settings-backend.c',
+  'scdm-settings-desktop-backend.c',
+  'scdm-settings-direct.c',
+  'scdm-settings-utils.c',
+  'scdm-settings.c',
 )
 
-libgdmcommon_deps = [
+libscdmcommon_deps = [
   libsystemd_dep,
   gobject_dep,
   gio_dep,
@@ -18,18 +18,18 @@ libgdmcommon_deps = [
 ]
 
 if libselinux_dep.found()
-  libgdmcommon_deps += libselinux_dep
+  libscdmcommon_deps += libselinux_dep
 endif
 
-libgdmcommon_lib = static_library('gdmcommon',
-  libgdmcommon_src,
-  dependencies: libgdmcommon_deps,
+libscdmcommon_lib = static_library('scdmcommon',
+  libscdmcommon_src,
+  dependencies: libscdmcommon_deps,
   include_directories: config_h_dir,
 )
 
-libgdmcommon_dep = declare_dependency(
-  link_with: libgdmcommon_lib,
-  dependencies: libgdmcommon_deps,
+libscdmcommon_dep = declare_dependency(
+  link_with: libscdmcommon_lib,
+  dependencies: libscdmcommon_deps,
   include_directories: include_directories('.'),
 )
 
@@ -38,6 +38,6 @@ install_data('gdb-cmd')
 # test-log exectuable
 test_log = executable('test-log',
   'test-log.c',
-  dependencies: libgdmcommon_dep,
+  dependencies: libscdmcommon_dep,
   include_directories: config_h_dir,
 )

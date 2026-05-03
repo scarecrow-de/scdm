@@ -33,9 +33,9 @@
 
 #include <systemd/sd-login.h>
 
-#include "common/gdm-common.h"
-#include "gdm-user-switching.h"
-#include "gdm-client.h"
+#include "common/scdm-common.h"
+#include "scdm-user-switching.h"
+#include "scdm-client.h"
 
 static gboolean
 create_transient_display (GDBusConnection *connection,
@@ -155,7 +155,7 @@ get_login_window_session_id (const char  *seat_id,
                         goto out;
                 }
 
-                if (strcmp (service_id, "gdm-launch-environment") == 0) {
+                if (strcmp (service_id, "scdm-launch-environment") == 0) {
                         *session_id = g_strdup (sessions[i]);
                         ret = TRUE;
 
@@ -203,7 +203,7 @@ goto_login_session (GDBusConnection  *connection,
         /* Note that we mostly use free () here, instead of g_free ()
          * since the data allocated is from libsystemd-logind, which
          * does not use GLib's g_malloc (). */
-        if (!gdm_find_display_session (0, getuid (), &our_session, &local_error)) {
+        if (!scdm_find_display_session (0, getuid (), &our_session, &local_error)) {
                 g_propagate_prefixed_error (error, local_error, _("Could not identify the current session: "));
 
                 return FALSE;
@@ -259,7 +259,7 @@ goto_login_session (GDBusConnection  *connection,
 }
 
 gboolean
-gdm_goto_login_session_sync (GCancellable  *cancellable,
+scdm_goto_login_session_sync (GCancellable  *cancellable,
                              GError       **error)
 {
         GDBusConnection *connection;

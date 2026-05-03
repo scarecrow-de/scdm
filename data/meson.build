@@ -11,7 +11,7 @@ foreach file : [ 'Init', 'PreSession', 'PostSession' ]
   )
 
   install_data(generated_file,
-    install_dir: gdmconfdir / file,
+    install_dir: scdmconfdir / file,
     install_mode: 'rwxr-xr-x',
     rename: 'Default'
   )
@@ -20,12 +20,12 @@ endforeach
 install_data('PostLogin',
   rename: 'Default.sample',
   install_mode: 'rwxr-xr-x',
-  install_dir: gdmconfdir / 'PostLogin',
+  install_dir: scdmconfdir / 'PostLogin',
 )
 
-# gdm.conf
+# scdm.conf
 configure_file(
-  input: 'gdm.conf.in',
+  input: 'scdm.conf.in',
   output: '@BASENAME@',
   configuration: {
     'GDM_USERNAME': get_option('user')
@@ -33,11 +33,11 @@ configure_file(
   install_dir: dbus_sys_dir,
 )
 configure_file(
-  input: 'gdm.conf-custom.in',
-  output: gdm_custom_conf.split('/')[-1],
+  input: 'scdm.conf-custom.in',
+  output: scdm_custom_conf.split('/')[-1],
   copy: true,
   install_mode: 'rw-r--r--',
-  install_dir: run_command(find_program('dirname'), gdm_custom_conf).stdout().strip(),
+  install_dir: run_command(find_program('dirname'), scdm_custom_conf).stdout().strip(),
 )
 
 # GSettings schema
@@ -46,24 +46,24 @@ install_data('io.github.scarecrow_de.login-screen.gschema.xml',
 )
 compiled_gschema = gnome.compile_schemas()
 
-# gdm.schema
-gdm_schema = configure_file(
-  input: 'gdm.schemas.in',
+# scdm.schema
+scdm_schema = configure_file(
+  input: 'scdm.schemas.in',
   output: '@BASENAME@',
   configuration: {
     'GDM_USERNAME': get_option('user'),
     'GDM_GROUPNAME': get_option('group'),
-    'gdmconfdir': gdmconfdir,
+    'scdmconfdir': scdmconfdir,
   },
-  install_dir: get_option('datadir') / 'gdm',
+  install_dir: get_option('datadir') / 'scdm',
 )
 
 install_data('locale.alias',
-  install_dir: get_option('datadir') / 'gdm',
+  install_dir: get_option('datadir') / 'scdm',
 )
 
-gdm_gnome_shell_component = 'io.github.scarecrow_de.Shell'
-gdm_gnome_session_required_components = [
+scdm_gnome_shell_component = 'io.github.scarecrow_de.Shell'
+scdm_gnome_session_required_components = [
   'io.github.scarecrow_de.SettingsDaemon.A11ySettings',
   'io.github.scarecrow_de.SettingsDaemon.Color',
   'io.github.scarecrow_de.SettingsDaemon.Datetime',
@@ -80,8 +80,8 @@ gdm_gnome_session_required_components = [
   'io.github.scarecrow_de.SettingsDaemon.Wacom',
 ]
 
-gdm_gnome_user_session_wanted_components = gdm_gnome_session_required_components
-gdm_gnome_user_session_wanted_components += [
+scdm_gnome_user_session_wanted_components = scdm_gnome_session_required_components
+scdm_gnome_user_session_wanted_components += [
   'io.github.scarecrow_de.SettingsDaemon.XSettings',
 ]
 
@@ -89,10 +89,10 @@ configure_file(
   input: 'gnome-login.session.in',
   output: '@BASENAME@',
   configuration: {
-    'libexecdir': gdm_prefix / get_option('libexecdir'),
+    'libexecdir': scdm_prefix / get_option('libexecdir'),
     'check_accelerated_dir': check_accelerated_dir,
     'gnome_required_components': ';'.join(
-      [ gdm_gnome_shell_component ] + gdm_gnome_session_required_components),
+      [ scdm_gnome_shell_component ] + scdm_gnome_session_required_components),
   },
   install_dir: get_option('datadir') / 'gnome-session' / 'sessions',
 )
@@ -100,42 +100,42 @@ configure_file(
 # PAM
 pam_data_files_map = {
   'redhat': [
-    'gdm-autologin',
-    'gdm-launch-environment',
-    'gdm-fingerprint',
-    'gdm-smartcard',
-    'gdm-password',
-    'gdm-pin',
+    'scdm-autologin',
+    'scdm-launch-environment',
+    'scdm-fingerprint',
+    'scdm-smartcard',
+    'scdm-password',
+    'scdm-pin',
   ],
   'openembedded': [
-    'gdm-autologin',
-    'gdm-launch-environment',
-    'gdm-password',
-    'gdm-pin',
+    'scdm-autologin',
+    'scdm-launch-environment',
+    'scdm-password',
+    'scdm-pin',
   ],
   'exherbo': [
-    'gdm-autologin',
-    'gdm-launch-environment',
-    'gdm-fingerprint',
-    'gdm-smartcard',
-    'gdm-password',
-    'gdm-pin',
+    'scdm-autologin',
+    'scdm-launch-environment',
+    'scdm-fingerprint',
+    'scdm-smartcard',
+    'scdm-password',
+    'scdm-pin',
   ],
   'lfs': [
-    'gdm-autologin',
-    'gdm-launch-environment',
-    'gdm-fingerprint',
-    'gdm-smartcard',
-    'gdm-password',
-    'gdm-pin',
+    'scdm-autologin',
+    'scdm-launch-environment',
+    'scdm-fingerprint',
+    'scdm-smartcard',
+    'scdm-password',
+    'scdm-pin',
   ],
   'arch': [
-    'gdm-autologin',
-    'gdm-launch-environment',
-    'gdm-fingerprint',
-    'gdm-smartcard',
-    'gdm-password',
-    'gdm-pin',
+    'scdm-autologin',
+    'scdm-launch-environment',
+    'scdm-fingerprint',
+    'scdm-smartcard',
+    'scdm-password',
+    'scdm-pin',
   ],
   'none': [],
   # We should no longer have 'autodetect' at this point
@@ -150,18 +150,18 @@ foreach _pam_filename : pam_data_files
   )
 endforeach
 
-gdm_rules = configure_file(
-  input: '61-gdm.rules.in',
+scdm_rules = configure_file(
+  input: '61-scdm.rules.in',
   output: '@BASENAME@',
   configuration: {
-    'libexecdir': gdm_prefix / get_option('libexecdir'),
+    'libexecdir': scdm_prefix / get_option('libexecdir'),
   },
   install_dir: udev_dir,
 )
 
 # DBus service files
 service_config = configuration_data()
-service_config.set('sbindir', gdm_prefix / get_option('sbindir'))
+service_config.set('sbindir', scdm_prefix / get_option('sbindir'))
 service_config.set('GDM_INITIAL_VT', get_option('initial-vt'))
 service_config.set('LANG_CONFIG_FILE', lang_config_file)
 if plymouth_dep.found()
@@ -184,37 +184,37 @@ else
 endif
 
 configure_file(
-  input: 'gdm.service.in',
+  input: 'scdm.service.in',
   output: '@BASENAME@',
   configuration: service_config,
   install_dir: systemd_systemunitdir,
   format: 'cmake'
 )
 
-gdm_gnome_session_wanted_targets = []
-foreach component: gdm_gnome_user_session_wanted_components
-  gdm_gnome_session_wanted_targets += 'Wants=@0@.target'.format(component)
+scdm_gnome_session_wanted_targets = []
+foreach component: scdm_gnome_user_session_wanted_components
+  scdm_gnome_session_wanted_targets += 'Wants=@0@.target'.format(component)
 endforeach
 
 configure_file(
   input: 'session.conf.in',
   output: 'session.conf',
   configuration: {
-    'requires_component': gdm_gnome_shell_component,
-    'wants_required_components': '\n'.join(gdm_gnome_session_wanted_targets),
+    'requires_component': scdm_gnome_shell_component,
+    'wants_required_components': '\n'.join(scdm_gnome_session_wanted_targets),
   },
   install_dir: systemd_userunitdir / 'gnome-session@gnome-login.target.d',
 )
 
 # XSession
-if get_option('gdm-xsession')
+if get_option('scdm-xsession')
   configure_file(
     input: 'Xsession.in',
     output: '@BASENAME@',
     configuration: {
-      'libexecdir': gdm_prefix / get_option('libexecdir'),
+      'libexecdir': scdm_prefix / get_option('libexecdir'),
       'XSESSION_SHELL': get_option('solaris')? '/bin/ksh' : '/bin/sh',
     },
-    install_dir: gdmconfdir,
+    install_dir: scdmconfdir,
   )
 endif

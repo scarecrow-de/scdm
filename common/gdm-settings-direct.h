@@ -23,26 +23,26 @@
 #define __GDM_SETTINGS_DIRECT_H
 
 #include <glib-object.h>
-#include "gdm-settings.h"
+#include "scdm-settings.h"
 
 G_BEGIN_DECLS
 
-gboolean              gdm_settings_direct_init                       (GdmSettings       *settings,
+gboolean              scdm_settings_direct_init                       (GdmSettings       *settings,
                                                                       const char        *schemas_file,
                                                                       const char        *root);
-void                  gdm_settings_direct_shutdown                   (void);
+void                  scdm_settings_direct_shutdown                   (void);
 
-gboolean              gdm_settings_direct_get                        (const char        *key,
+gboolean              scdm_settings_direct_get                        (const char        *key,
                                                                       GValue            *value);
-gboolean              gdm_settings_direct_set                        (const char        *key,
+gboolean              scdm_settings_direct_set                        (const char        *key,
                                                                       GValue            *value);
-gboolean              gdm_settings_direct_get_int                    (const char        *key,
+gboolean              scdm_settings_direct_get_int                    (const char        *key,
                                                                       int               *value);
-gboolean              gdm_settings_direct_get_uint                   (const char        *key,
+gboolean              scdm_settings_direct_get_uint                   (const char        *key,
                                                                       uint              *value);
-gboolean              gdm_settings_direct_get_boolean                (const char        *key,
+gboolean              scdm_settings_direct_get_boolean                (const char        *key,
                                                                       gboolean          *value);
-gboolean              gdm_settings_direct_get_string                 (const char        *key,
+gboolean              scdm_settings_direct_get_string                 (const char        *key,
                                                                       char             **value);
 
 G_END_DECLS
