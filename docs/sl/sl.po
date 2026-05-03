@@ -665,7 +665,7 @@ msgid "Configuration"
 msgstr ""
 
 #: C/scdm.xml:938(para)
-msgid "GDM has a number of configuration interfaces. These include scripting integration points, daemon configuration, greeter configuration, general session settings, integration with gnome-settings-daemon configuration, and session configuration. These types of integration are described in detail below."
+msgid "GDM has a number of configuration interfaces. These include scripting integration points, daemon configuration, greeter configuration, general session settings, integration with scarecrow-settings-daemon configuration, and session configuration. These types of integration are described in detail below."
 msgstr ""
 
 #: C/scdm.xml:947(title)
@@ -732,7 +732,7 @@ msgid "The <filename>&lt;share&gt;/scdm/autostart/LoginWindow</filename> directo
 msgstr ""
 
 #: C/scdm.xml:1048(para)
-msgid "Any <filename>.desktop</filename> files in this directory will cause the associated program to automatically start with the login GUI greeter. By default, GDM is shipped with files which will autostart the scdm-simple-greeter login GUI greeter itself, the gnome-power-manager application, the gnome-settings-daemon, and the metacity window manager. These programs are needed for the greeter program to work. In addition, desktop files are provided for starting various AT programs if the configuration values specified in the Accessibility Configuration section below are set."
+msgid "Any <filename>.desktop</filename> files in this directory will cause the associated program to automatically start with the login GUI greeter. By default, GDM is shipped with files which will autostart the scdm-simple-greeter login GUI greeter itself, the gnome-power-manager application, the scarecrow-settings-daemon, and the metacity window manager. These programs are needed for the greeter program to work. In addition, desktop files are provided for starting various AT programs if the configuration values specified in the Accessibility Configuration section below are set."
 msgstr ""
 
 #: C/scdm.xml:1062(title)
@@ -1464,7 +1464,7 @@ msgstr ""
 #.                  in anything but the chooser in SVN.
 #. </para>
 #: C/scdm.xml:1953(para)
-msgid "GDM enables the following gnome-settings-daemon plugins: a11y-keyboard, background, sound, xsettings."
+msgid "GDM enables the following scarecrow-settings-daemon plugins: a11y-keyboard, background, sound, xsettings."
 msgstr ""
 
 #: C/scdm.xml:1958(para)

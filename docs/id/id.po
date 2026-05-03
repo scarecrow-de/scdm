@@ -1259,11 +1259,11 @@ msgstr "Konfigurasi"
 #: C/index.docbook:956
 msgid ""
 "GDM has a number of configuration interfaces. These include scripting integration points, daemon configuration, greeter configuration, "
-"general session settings, integration with gnome-settings-daemon configuration, and session configuration. These types of integration "
+"general session settings, integration with scarecrow-settings-daemon configuration, and session configuration. These types of integration "
 "are described in detail below."
 msgstr ""
 "GDM memiliki sejumlah antar muka konfigurasi. Ini termasuk titik integrasi skrip, konfigurasi daemon, konfigurasi penyapa, pengaturan "
-"sesi umum, integrasi dengan konfigurasi gnome-settings-daemon, dan konfigurasi sesi. Integrasi tipe ini diuraikan secara rinci di bawah."
+"sesi umum, integrasi dengan konfigurasi scarecrow-settings-daemon, dan konfigurasi sesi. Integrasi tipe ini diuraikan secara rinci di bawah."
 
 #. (itstool) path: sect2/title
 #: C/index.docbook:965
@@ -1411,13 +1411,13 @@ msgstr ""
 msgid ""
 "Any <filename>.desktop</filename> files in this directory will cause the associated program to automatically start with the login GUI "
 "greeter. By default, GDM is shipped with files which will autostart the scdm-simple-greeter login GUI greeter itself, the gnome-power-"
-"manager application, the gnome-settings-daemon, and the metacity window manager. These programs are needed for the greeter program to "
+"manager application, the scarecrow-settings-daemon, and the metacity window manager. These programs are needed for the greeter program to "
 "work. In addition, desktop files are provided for starting various AT programs if the configuration values specified in the "
 "Accessibility Configuration section below are set."
 msgstr ""
 "Berkas <filename>.desktop</filename> apapun dalam direktori ini akan menyebabkan program yang terkait dijalankan secara otomatis dengan "
 "penyapa GUI log masuk. Secara baku, GDM dilengkapi dengan berkas yang akan otomatis menjalankan penyapa GUI log masuk scdm-simple-"
-"greeter, aplikasi gnome-power-manager, gnome-settings-daemon, dan manajer jendela metacity. Program-program ini diperlukan agar program "
+"greeter, aplikasi gnome-power-manager, scarecrow-settings-daemon, dan manajer jendela metacity. Program-program ini diperlukan agar program "
 "penyapa dapat bekerja. Sebagai tambahan, berkas desktop disediakan untuk menjalankan berbagai program AT bila nilai konfigurasi yang "
 "dinyatakan dalam bagian Konfigurasi Aksesabilitas di bawah ditata."
 
@@ -2628,8 +2628,8 @@ msgstr "Daemon Penataan GNOME"
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:1972
-msgid "GDM enables the following gnome-settings-daemon plugins: a11y-keyboard, background, sound, xsettings."
-msgstr "GDM mengaktifkan plugin gnome-settings-daemon berikut: a11y-keyboard, background, sound, xsettings."
+msgid "GDM enables the following scarecrow-settings-daemon plugins: a11y-keyboard, background, sound, xsettings."
+msgstr "GDM mengaktifkan plugin scarecrow-settings-daemon berikut: a11y-keyboard, background, sound, xsettings."
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:1977

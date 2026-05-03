@@ -24,7 +24,7 @@ pam_mod_dir = (get_option('pam-mod-dir') != '')? get_option('pam-mod-dir') : scd
 dbus_sys_dir = (get_option('dbus-sys') != '')? get_option('dbus-sys') : get_option('sysconfdir') / 'dbus-1' / 'system.d'
 scdm_defaults_conf = (get_option('defaults-conf') != '')? get_option('defaults-conf') : scdm_prefix / get_option('datadir') / 'scdm' / 'defaults.conf'
 scdm_custom_conf = (get_option('custom-conf') != '')? get_option('custom-conf') : scdmconfdir / 'custom.conf'
-gnome_settings_daemon_dir = (get_option('gnome-settings-daemon-dir') != '')? get_option('gnome-settings-daemon-dir') : scdm_prefix / get_option('libexecdir')
+gnome_settings_daemon_dir = (get_option('scarecrow-settings-daemon-dir') != '')? get_option('scarecrow-settings-daemon-dir') : scdm_prefix / get_option('libexecdir')
 check_accelerated_dir = (get_option('check-accelerated-dir') != '')? get_option('check-accelerated-dir') : scdm_prefix / get_option('libexecdir')
 scdm_run_dir = (get_option('run-dir') != '')? get_option('run-dir') : scdm_prefix / get_option('localstatedir') / 'run' / 'scdm'
 scdm_runtime_conf = (get_option('runtime-conf') != '')? get_option('runtime-conf') : scdm_run_dir / 'custom.conf'

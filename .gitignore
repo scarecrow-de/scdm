@@ -59,7 +59,7 @@ scdm-greeter-glue.c
 GNOME_FastUserSwitchApplet.server
 GNOME_FastUserSwitchApplet.server.in
 gnome-power-manager.desktop.in
-gnome-settings-daemon.desktop.in
+scarecrow-settings-daemon.desktop.in
 GPATH
 GRTAGS
 GSYMS

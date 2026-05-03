@@ -1249,11 +1249,11 @@ msgstr "Konfiguration"
 #: C/index.docbook:956
 msgid ""
 "GDM has a number of configuration interfaces. These include scripting integration points, daemon configuration, greeter configuration, "
-"general session settings, integration with gnome-settings-daemon configuration, and session configuration. These types of integration "
+"general session settings, integration with scarecrow-settings-daemon configuration, and session configuration. These types of integration "
 "are described in detail below."
 msgstr ""
 "GDM har ett antal konfigurationsgränssnitt. Dessa inkluderar integrationspunkter för skriptning, demonkonfiguration, "
-"inloggningsskärmskonfiguration, allmänna sessionsinställningar, integration med konfiguration för gnome-settings-daemon, och "
+"inloggningsskärmskonfiguration, allmänna sessionsinställningar, integration med konfiguration för scarecrow-settings-daemon, och "
 "sessionkonfiguration. Dessa typer av integration beskrivs i detalj nedan."
 
 #. (itstool) path: sect2/title
@@ -1401,13 +1401,13 @@ msgstr ""
 msgid ""
 "Any <filename>.desktop</filename> files in this directory will cause the associated program to automatically start with the login GUI "
 "greeter. By default, GDM is shipped with files which will autostart the scdm-simple-greeter login GUI greeter itself, the gnome-power-"
-"manager application, the gnome-settings-daemon, and the metacity window manager. These programs are needed for the greeter program to "
+"manager application, the scarecrow-settings-daemon, and the metacity window manager. These programs are needed for the greeter program to "
 "work. In addition, desktop files are provided for starting various AT programs if the configuration values specified in the "
 "Accessibility Configuration section below are set."
 msgstr ""
 "<filename>.desktop</filename>-filer i denna katalog kommer att orsaka att det associerade programmet automatiskt startar samtidigt som "
 "inloggningsgränssnittets GUI. Som standard så levereras med filer som startar om inloggningsgränssnittet scdm-simple-greeter i sig, "
-"programmet gnome-power-manager, gnome-settings-daemon och fönsterhanteraren metacity. Dessa program behövs för att "
+"programmet gnome-power-manager, scarecrow-settings-daemon och fönsterhanteraren metacity. Dessa program behövs för att "
 "inloggningsprogrammet ska fungera. Därtill tillhandahålls desktop-filer för att starta diverse hjälpmedelsprogram om "
 "konfigurationsvärdena ställts in som anges i avsnittet Hjälpmedelskonfiguration nedan."
 
@@ -2613,8 +2613,8 @@ msgstr "GNOME Inställningsdemon"
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:1972
-msgid "GDM enables the following gnome-settings-daemon plugins: a11y-keyboard, background, sound, xsettings."
-msgstr "GDM erbjuder följande insticksmoduler för gnome-settings-daemon: a11y-keyboard, background, sound, xsettings."
+msgid "GDM enables the following scarecrow-settings-daemon plugins: a11y-keyboard, background, sound, xsettings."
+msgstr "GDM erbjuder följande insticksmoduler för scarecrow-settings-daemon: a11y-keyboard, background, sound, xsettings."
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:1977

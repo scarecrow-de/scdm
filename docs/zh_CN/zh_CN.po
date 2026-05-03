@@ -1146,10 +1146,10 @@ msgstr "配置"
 #: C/index.docbook:956
 msgid ""
 "GDM has a number of configuration interfaces. These include scripting integration points, daemon configuration, greeter configuration, "
-"general session settings, integration with gnome-settings-daemon configuration, and session configuration. These types of integration "
+"general session settings, integration with scarecrow-settings-daemon configuration, and session configuration. These types of integration "
 "are described in detail below."
 msgstr ""
-"GDM 有一些配置界面，包括脚本集成点、守护进程配置、欢迎界面配置、通用会话配置、与 gnome-settings-daemon 配置的集成以及会话配置。这些集成"
+"GDM 有一些配置界面，包括脚本集成点、守护进程配置、欢迎界面配置、通用会话配置、与 scarecrow-settings-daemon 配置的集成以及会话配置。这些集成"
 "的细节在下边描述。"
 
 #. (itstool) path: sect2/title
@@ -1289,12 +1289,12 @@ msgstr ""
 msgid ""
 "Any <filename>.desktop</filename> files in this directory will cause the associated program to automatically start with the login GUI "
 "greeter. By default, GDM is shipped with files which will autostart the scdm-simple-greeter login GUI greeter itself, the gnome-power-"
-"manager application, the gnome-settings-daemon, and the metacity window manager. These programs are needed for the greeter program to "
+"manager application, the scarecrow-settings-daemon, and the metacity window manager. These programs are needed for the greeter program to "
 "work. In addition, desktop files are provided for starting various AT programs if the configuration values specified in the "
 "Accessibility Configuration section below are set."
 msgstr ""
 "任何在这个目录中的 <filename>.desktop</filename> 文件将造成相关的程序在登录欢迎界面自动启动。默认情况下，GDM 跟随了自动启动 scdm-simple-"
-"greeter 登录欢迎界面本身、 gnome-power-manager 程序、gnome-settings-daemon 和 Metacity 窗口管理器的文件。欢迎程序运行需要这些程序。另"
+"greeter 登录欢迎界面本身、 gnome-power-manager 程序、scarecrow-settings-daemon 和 Metacity 窗口管理器的文件。欢迎程序运行需要这些程序。另"
 "外，如果设定了辅助功能配置节中指定的配置值，桌面项文件被用以启用多种辅助功能技术程序。"
 
 #. (itstool) path: sect2/title
@@ -2427,8 +2427,8 @@ msgstr "GNOME 设置守护进程"
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:1972
-msgid "GDM enables the following gnome-settings-daemon plugins: a11y-keyboard, background, sound, xsettings."
-msgstr "GDM 启用了 gnome-settings-daemon 的下列插件：a11y-keyboard, background, sound, xsettings。"
+msgid "GDM enables the following scarecrow-settings-daemon plugins: a11y-keyboard, background, sound, xsettings."
+msgstr "GDM 启用了 scarecrow-settings-daemon 的下列插件：a11y-keyboard, background, sound, xsettings。"
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:1977

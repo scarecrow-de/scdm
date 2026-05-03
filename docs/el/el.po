@@ -1278,11 +1278,11 @@ msgstr "Διαμόρφωση"
 #: C/index.docbook:956
 msgid ""
 "GDM has a number of configuration interfaces. These include scripting integration points, daemon configuration, greeter configuration, "
-"general session settings, integration with gnome-settings-daemon configuration, and session configuration. These types of integration "
+"general session settings, integration with scarecrow-settings-daemon configuration, and session configuration. These types of integration "
 "are described in detail below."
 msgstr ""
 "Το GDM έχει ένα σύνολο διεπαφών διαμόρφωσης. Αυτές περιλαμβάνουν σημεία ενσωμάτωσης σεναρίων εντολών κελύφους, διαμόρφωση δαιμόνων, "
-"διαμόρφωση του greeter, γενικές ρυθμίσεις συνεδρίας, συγχώνευση με την διαμόρφωση του gnome-settings-daemon, και διαμόρφωση συνεδρίας. "
+"διαμόρφωση του greeter, γενικές ρυθμίσεις συνεδρίας, συγχώνευση με την διαμόρφωση του scarecrow-settings-daemon, και διαμόρφωση συνεδρίας. "
 "Αυτοί οι τρόποι ενοποίησης λειτουργιών περιγράφονται με λεπτομέρεια παρακάτω."
 
 #. (itstool) path: sect2/title
@@ -1434,13 +1434,13 @@ msgstr ""
 msgid ""
 "Any <filename>.desktop</filename> files in this directory will cause the associated program to automatically start with the login GUI "
 "greeter. By default, GDM is shipped with files which will autostart the scdm-simple-greeter login GUI greeter itself, the gnome-power-"
-"manager application, the gnome-settings-daemon, and the metacity window manager. These programs are needed for the greeter program to "
+"manager application, the scarecrow-settings-daemon, and the metacity window manager. These programs are needed for the greeter program to "
 "work. In addition, desktop files are provided for starting various AT programs if the configuration values specified in the "
 "Accessibility Configuration section below are set."
 msgstr ""
 "Οποιοδήποτε αρχείο <filename>.desktop</filename> σε αυτόν τον κατάλογο θα προκαλέσει την αυτόματη εκκίνηση του συνδεδεμένου "
 "προγράμματος με την οθόνη εισόδου του greeter. Από προεπιλογή, το GDM αποστέλλεται με αρχεία που εκκινούν αυτόματα το ίδιο το scdm-"
-"simple-greeter, την εφαρμογή gnome-power-manager, τον δαίμονα gnome-settings-daemon, και τον διαχειριστή παραθύρων metacity. Αυτές οι "
+"simple-greeter, την εφαρμογή gnome-power-manager, τον δαίμονα scarecrow-settings-daemon, και τον διαχειριστή παραθύρων metacity. Αυτές οι "
 "εφαρμογές είναι απαραίτητες στο greeter για να λειτουργήσει. Επιπρόσθετα, αρχεία desktop παρέχονται για την εκκίνηση διαφόρων εφαρμογών "
 "AT αν τιμές διαμόρφωσης που προσδιορίζονται στην ενότητα διαμόρφωση προσβασιμότητας παρακάτω ρυθμιστούν κατάλληλα."
 
@@ -2664,8 +2664,8 @@ msgstr "Δαίμονας ρυθμίσεων του GNOME"
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:1972
-msgid "GDM enables the following gnome-settings-daemon plugins: a11y-keyboard, background, sound, xsettings."
-msgstr "Το GDM ενεργοποιεί τα εξής πρόσθετα του gnome-settings-daemon: a11y-keyboard, background, sound, xsettings."
+msgid "GDM enables the following scarecrow-settings-daemon plugins: a11y-keyboard, background, sound, xsettings."
+msgstr "Το GDM ενεργοποιεί τα εξής πρόσθετα του scarecrow-settings-daemon: a11y-keyboard, background, sound, xsettings."
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:1977

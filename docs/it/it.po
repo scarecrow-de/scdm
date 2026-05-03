@@ -631,7 +631,7 @@ msgid "Configuration"
 msgstr ""
 
 #: C/scdm.xml:912(para) 
-msgid "GDM has a number of configuration interfaces. These include scripting integration points, daemon configuration, greeter configuration, general session settings, integration with gnome-settings-daemon configuration, and session configuration. These types of integration are described in detail below."
+msgid "GDM has a number of configuration interfaces. These include scripting integration points, daemon configuration, greeter configuration, general session settings, integration with scarecrow-settings-daemon configuration, and session configuration. These types of integration are described in detail below."
 msgstr ""
 
 #: C/scdm.xml:921(title) 
@@ -1173,7 +1173,7 @@ msgstr ""
 #.                  in anything but the chooser in SVN.
 #. </para>
 #: C/scdm.xml:1577(para) 
-msgid "GDM enables the following gnome-settings-daemon plugins: a11y-keyboard, background, sound, xsettings."
+msgid "GDM enables the following scarecrow-settings-daemon plugins: a11y-keyboard, background, sound, xsettings."
 msgstr ""
 
 #: C/scdm.xml:1582(para) 

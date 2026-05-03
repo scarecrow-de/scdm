@@ -6,22 +6,22 @@
 #       dconf update
 #
 
-[org/gnome/desktop/session]
+[io/github/scarecrow_de/desktop/session]
 session-name='gnome-login'
 
-[org/gnome/desktop/input-sources]
+[io/github/scarecrow_de/desktop/input-sources]
 show-all-sources=true
 
-[org/gnome/desktop/a11y]
+[io/github/scarecrow_de/desktop/a11y]
 always-show-universal-access-status=true
 
-[org/gnome/desktop/background]
+[io/github/scarecrow_de/desktop/background]
 show-desktop-icons=false
 
-[org/gnome/desktop/default-applications/terminal]
+[io/github/scarecrow_de/desktop/default-applications/terminal]
 exec='true'
 
-[org/gnome/desktop/lockdown]
+[io/github/scarecrow_de/desktop/lockdown]
 disable-application-handlers=true
 disable-command-line=true
 disable-lock-screen=true
@@ -31,10 +31,10 @@ disable-print-setup=true
 disable-save-to-disk=true
 disable-user-switching=true
 
-[org/gnome/desktop/sound]
+[io/github/scarecrow_de/desktop/sound]
 event-sounds=true
 
-[org/gnome/settings-daemon/plugins/media-keys]
+[io/github/scarecrow_de/settings-daemon/plugins/media-keys]
 calculator=''
 eject=''
 email=''
