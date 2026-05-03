@@ -7,7 +7,7 @@
 #
 
 [io/github/scarecrow_de/desktop/session]
-session-name='gnome-login'
+session-name='scarecrow-login'
 
 [io/github/scarecrow_de/desktop/input-sources]
 show-all-sources=true

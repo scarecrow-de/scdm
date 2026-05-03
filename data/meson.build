@@ -86,7 +86,7 @@ scdm_gnome_user_session_wanted_components += [
 ]
 
 configure_file(
-  input: 'gnome-login.session.in',
+  input: 'scarecrow-login.session.in',
   output: '@BASENAME@',
   configuration: {
     'libexecdir': scdm_prefix / get_option('libexecdir'),
@@ -203,7 +203,7 @@ configure_file(
     'requires_component': scdm_gnome_shell_component,
     'wants_required_components': '\n'.join(scdm_gnome_session_wanted_targets),
   },
-  install_dir: systemd_userunitdir / 'gnome-session@gnome-login.target.d',
+  install_dir: systemd_userunitdir / 'gnome-session@scarecrow-login.target.d',
 )
 
 # XSession
