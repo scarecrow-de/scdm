@@ -18,8 +18,8 @@
  *
  */
 
-#ifndef __SCDM_CHOOSER_SESSION_H
-#define __SCDM_CHOOSER_SESSION_H
+#ifndef __GDM_CHOOSER_SESSION_H
+#define __GDM_CHOOSER_SESSION_H
 
 #include <glib-object.h>
 
@@ -36,4 +36,4 @@ void                   scdm_chooser_session_stop                           (Scdm
 
 G_END_DECLS
 
-#endif /* __SCDM_CHOOSER_SESSION_H */
+#endif /* __GDM_CHOOSER_SESSION_H */

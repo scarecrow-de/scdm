@@ -137,7 +137,7 @@ scdm_chooser_host_set_property (GObject      *object,
 {
         ScdmChooserHost *host;
 
-        host = SCDM_CHOOSER_HOST (object);
+        host = GDM_CHOOSER_HOST (object);
 
         switch (param_id) {
         case PROP_ADDRESS:
@@ -166,7 +166,7 @@ scdm_chooser_host_get_property (GObject    *object,
 {
         ScdmChooserHost *host;
 
-        host = SCDM_CHOOSER_HOST (object);
+        host = GDM_CHOOSER_HOST (object);
 
         switch (param_id) {
         case PROP_ADDRESS:
@@ -243,7 +243,7 @@ scdm_chooser_host_finalize (GObject *object)
         g_return_if_fail (object != NULL);
         g_return_if_fail (GDM_IS_CHOOSER_HOST (object));
 
-        host = SCDM_CHOOSER_HOST (object);
+        host = GDM_CHOOSER_HOST (object);
 
         g_free (host->description);
         scdm_address_free (host->address);

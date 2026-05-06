@@ -303,7 +303,7 @@ decode_packet (GIOChannel           *source,
                                              "address", address,
                                              "description", status,
                                              "willing", (header.opcode == WILLING),
-                                             "kind", SCDM_CHOOSER_HOST_KIND_XDMCP,
+                                             "kind", GDM_CHOOSER_HOST_KIND_XDMCP,
                                              NULL);
                 chooser_host_add (widget, chooser_host);
                 browser_add_host (widget, chooser_host);

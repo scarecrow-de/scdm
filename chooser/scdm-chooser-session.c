@@ -168,7 +168,7 @@ on_dialog_response (GtkDialog         *dialog,
                 char *hostname;
 
                 /* only support XDMCP hosts in remote chooser */
-                g_assert (scdm_chooser_host_get_kind (host) == SCDM_CHOOSER_HOST_KIND_XDMCP);
+                g_assert (scdm_chooser_host_get_kind (host) == GDM_CHOOSER_HOST_KIND_XDMCP);
 
                 hostname = NULL;
                 scdm_address_get_hostname (scdm_chooser_host_get_address (host), &hostname);
@@ -220,7 +220,7 @@ scdm_chooser_session_start (ScdmChooserSession *session,
         start_window_manager (session);
 
         /* Only support XDMCP on remote choosers */
-        session->chooser_dialog = scdm_host_chooser_dialog_new (SCDM_CHOOSER_HOST_KIND_XDMCP);
+        session->chooser_dialog = scdm_host_chooser_dialog_new (GDM_CHOOSER_HOST_KIND_XDMCP);
         g_signal_connect (session->chooser_dialog,
                           "response",
                           G_CALLBACK (on_dialog_response),
@@ -270,7 +270,7 @@ scdm_chooser_session_constructor (GType                  type,
 {
         ScdmChooserSession      *chooser_session;
 
-        chooser_session = SCDM_CHOOSER_SESSION (G_OBJECT_CLASS (scdm_chooser_session_parent_class)->constructor (type,
+        chooser_session = GDM_CHOOSER_SESSION (G_OBJECT_CLASS (scdm_chooser_session_parent_class)->constructor (type,
                                                                                                                n_construct_properties,
                                                                                                                construct_properties));
 
@@ -311,7 +311,7 @@ scdm_chooser_session_finalize (GObject *object)
         g_return_if_fail (object != NULL);
         g_return_if_fail (GDM_IS_CHOOSER_SESSION (object));
 
-        chooser_session = SCDM_CHOOSER_SESSION (object);
+        chooser_session = GDM_CHOOSER_SESSION (object);
 
         g_return_if_fail (chooser_session != NULL);
 
@@ -333,5 +333,5 @@ scdm_chooser_session_new (void)
                                            (gpointer *) &session_object);
         }
 
-        return SCDM_CHOOSER_SESSION (session_object);
+        return GDM_CHOOSER_SESSION (session_object);
 }
