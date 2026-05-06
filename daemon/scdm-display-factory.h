@@ -19,8 +19,8 @@
  */
 
 
-#ifndef __SCDM_DISPLAY_FACTORY_H
-#define __SCDM_DISPLAY_FACTORY_H
+#ifndef __GDM_DISPLAY_FACTORY_H
+#define __GDM_DISPLAY_FACTORY_H
 
 #include <glib-object.h>
 
@@ -41,10 +41,10 @@ struct _ScdmDisplayFactoryClass
 
 typedef enum
 {
-         SCDM_DISPLAY_FACTORY_ERROR_GENERAL
+         GDM_DISPLAY_FACTORY_ERROR_GENERAL
 } ScdmDisplayFactoryError;
 
-#define SCDM_DISPLAY_FACTORY_ERROR scdm_display_factory_error_quark ()
+#define GDM_DISPLAY_FACTORY_ERROR scdm_display_factory_error_quark ()
 
 GQuark                     scdm_display_factory_error_quark             (void);
 GType                      scdm_display_factory_get_type                (void);
@@ -56,4 +56,4 @@ void                       scdm_display_factory_queue_purge_displays    (ScdmDis
 
 G_END_DECLS
 
-#endif /* __SCDM_DISPLAY_FACTORY_H */
+#endif /* __GDM_DISPLAY_FACTORY_H */

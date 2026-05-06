@@ -50,8 +50,8 @@ struct _ScdmDisplayAccessFile
         char *path;
 };
 
-#ifndef SCDM_DISPLAY_ACCESS_COOKIE_SIZE
-#define SCDM_DISPLAY_ACCESS_COOKIE_SIZE 16
+#ifndef GDM_DISPLAY_ACCESS_COOKIE_SIZE
+#define GDM_DISPLAY_ACCESS_COOKIE_SIZE 16
 #endif
 
 #ifndef O_BINARY
@@ -77,7 +77,7 @@ scdm_display_access_file_get_property (GObject    *object,
 {
         ScdmDisplayAccessFile *access_file;
 
-        access_file = SCDM_DISPLAY_ACCESS_FILE (object);
+        access_file = GDM_DISPLAY_ACCESS_FILE (object);
 
         switch (prop_id) {
             case PROP_USERNAME:
@@ -101,7 +101,7 @@ scdm_display_access_file_set_property (GObject      *object,
 {
         ScdmDisplayAccessFile *access_file;
 
-        access_file = SCDM_DISPLAY_ACCESS_FILE (object);
+        access_file = GDM_DISPLAY_ACCESS_FILE (object);
 
         switch (prop_id) {
             case PROP_USERNAME:
@@ -151,7 +151,7 @@ scdm_display_access_file_finalize (GObject *object)
         ScdmDisplayAccessFile *file;
         GObjectClass *parent_class;
 
-        file = SCDM_DISPLAY_ACCESS_FILE (object);
+        file = GDM_DISPLAY_ACCESS_FILE (object);
         parent_class = G_OBJECT_CLASS (scdm_display_access_file_parent_class);
 
         if (file->fp != NULL) {
@@ -293,8 +293,8 @@ _create_xauth_file_for_user (const char  *username,
 
         if (!_get_uid_and_gid_for_user (username, &uid, &gid)) {
                 g_set_error (error,
-                             SCDM_DISPLAY_ERROR,
-                             SCDM_DISPLAY_ERROR_GETTING_USER_INFO,
+                             GDM_DISPLAY_ERROR,
+                             GDM_DISPLAY_ERROR_GETTING_USER_INFO,
                              _("could not find user “%s” on system"),
                              username);
                 goto out;
@@ -477,7 +477,7 @@ scdm_display_access_file_add_display (ScdmDisplayAccessFile  *file,
         g_return_val_if_fail (cookie != NULL, FALSE);
 
         add_error = NULL;
-        *cookie = scdm_generate_random_bytes (SCDM_DISPLAY_ACCESS_COOKIE_SIZE,
+        *cookie = scdm_generate_random_bytes (GDM_DISPLAY_ACCESS_COOKIE_SIZE,
                                              &add_error);
 
         if (*cookie == NULL) {
@@ -485,7 +485,7 @@ scdm_display_access_file_add_display (ScdmDisplayAccessFile  *file,
                 return FALSE;
         }
 
-        *cookie_size = SCDM_DISPLAY_ACCESS_COOKIE_SIZE;
+        *cookie_size = GDM_DISPLAY_ACCESS_COOKIE_SIZE;
 
         display_added = scdm_display_access_file_add_display_with_cookie (file, display,
                                                                          *cookie,

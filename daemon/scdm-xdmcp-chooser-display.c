@@ -68,7 +68,7 @@ static void
 scdm_xdmcp_chooser_display_class_init (ScdmXdmcpChooserDisplayClass *klass)
 {
         GObjectClass    *object_class = G_OBJECT_CLASS (klass);
-        ScdmDisplayClass *display_class = SCDM_DISPLAY_CLASS (klass);
+        ScdmDisplayClass *display_class = GDM_DISPLAY_CLASS (klass);
 
         display_class->prepare = scdm_xdmcp_chooser_display_prepare;
 
@@ -119,7 +119,7 @@ scdm_xdmcp_chooser_display_prepare (ScdmDisplay *display)
         g_signal_connect (launch_environment, "hostname-selected",
                           G_CALLBACK (on_hostname_selected), display);
 
-        return SCDM_DISPLAY_CLASS (scdm_xdmcp_chooser_display_parent_class)->prepare (display);
+        return GDM_DISPLAY_CLASS (scdm_xdmcp_chooser_display_parent_class)->prepare (display);
 }
 
 ScdmDisplay *
@@ -142,5 +142,5 @@ scdm_xdmcp_chooser_display_new (const char              *hostname,
                                NULL);
         g_free (x11_display);
 
-        return SCDM_DISPLAY (object);
+        return GDM_DISPLAY (object);
 }

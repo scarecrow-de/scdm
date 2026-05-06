@@ -68,7 +68,7 @@ scdm_local_display_constructor (GType                  type,
 
         display->skeleton = SCDM_DBUS_LOCAL_DISPLAY (scdm_dbus_local_display_skeleton_new ());
 
-        g_dbus_object_skeleton_add_interface (scdm_display_get_object_skeleton (SCDM_DISPLAY (display)),
+        g_dbus_object_skeleton_add_interface (scdm_display_get_object_skeleton (GDM_DISPLAY (display)),
                                               G_DBUS_INTERFACE_SKELETON (display->skeleton));
 
         return G_OBJECT (display);
@@ -135,14 +135,14 @@ out:
         if (failed) {
                 return FALSE;
         }
-        return SCDM_DISPLAY_CLASS (scdm_local_display_parent_class)->prepare (display);
+        return GDM_DISPLAY_CLASS (scdm_local_display_parent_class)->prepare (display);
 }
 
 static void
 scdm_local_display_class_init (ScdmLocalDisplayClass *klass)
 {
         GObjectClass *object_class = G_OBJECT_CLASS (klass);
-        ScdmDisplayClass *display_class = SCDM_DISPLAY_CLASS (klass);
+        ScdmDisplayClass *display_class = GDM_DISPLAY_CLASS (klass);
 
         object_class->constructor = scdm_local_display_constructor;
         object_class->finalize = scdm_local_display_finalize;
@@ -162,5 +162,5 @@ scdm_local_display_new (void)
 
         object = g_object_new (SCDM_TYPE_LOCAL_DISPLAY, NULL);
 
-        return SCDM_DISPLAY (object);
+        return GDM_DISPLAY (object);
 }

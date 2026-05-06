@@ -310,7 +310,7 @@ scdm_display_store_finalize (GObject *object)
         g_return_if_fail (object != NULL);
         g_return_if_fail (GDM_IS_DISPLAY_STORE (object));
 
-        store = SCDM_DISPLAY_STORE (object);
+        store = GDM_DISPLAY_STORE (object);
 
         g_return_if_fail (store->priv != NULL);
 
@@ -327,5 +327,5 @@ scdm_display_store_new (void)
         object = g_object_new (SCDM_TYPE_DISPLAY_STORE,
                                NULL);
 
-        return SCDM_DISPLAY_STORE (object);
+        return GDM_DISPLAY_STORE (object);
 }

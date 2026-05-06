@@ -216,8 +216,8 @@ get_session_id_for_pid (pid_t    pid,
         ret = sd_pid_get_session (pid, &session);
         if (ret < 0) {
                 g_set_error (error,
-                             SCDM_DISPLAY_ERROR,
-                             SCDM_DISPLAY_ERROR_GETTING_SESSION_INFO,
+                             GDM_DISPLAY_ERROR,
+                             GDM_DISPLAY_ERROR_GETTING_SESSION_INFO,
                              "Error getting session id from systemd: %s",
                              g_strerror (-ret));
                 return NULL;
@@ -243,8 +243,8 @@ get_uid_for_session_id (const char  *session_id,
         ret = sd_session_get_uid (session_id, uid);
         if (ret < 0) {
                 g_set_error (error,
-                             SCDM_DISPLAY_ERROR,
-                             SCDM_DISPLAY_ERROR_GETTING_SESSION_INFO,
+                             GDM_DISPLAY_ERROR,
+                             GDM_DISPLAY_ERROR_GETTING_SESSION_INFO,
                              "Error getting uid for session id %s from systemd: %s",
                              session_id,
                              g_strerror (-ret));
@@ -278,8 +278,8 @@ is_login_session (ScdmManager  *self,
 
         if (ret < 0) {
                 g_set_error (error,
-                             SCDM_DISPLAY_ERROR,
-                             SCDM_DISPLAY_ERROR_GETTING_SESSION_INFO,
+                             GDM_DISPLAY_ERROR,
+                             GDM_DISPLAY_ERROR_GETTING_SESSION_INFO,
                              "Error getting class for session id %s from systemd: %s",
                              session_id,
                              g_strerror (-ret));
@@ -418,8 +418,8 @@ get_seat_id_for_session_id (const char  *session_id,
                 out_seat = NULL;
         } else if (ret < 0) {
                 g_set_error (error,
-                             SCDM_DISPLAY_ERROR,
-                             SCDM_DISPLAY_ERROR_GETTING_SESSION_INFO,
+                             GDM_DISPLAY_ERROR,
+                             GDM_DISPLAY_ERROR_GETTING_SESSION_INFO,
                              "Error getting uid for session id %s from systemd: %s",
                              session_id,
                              g_strerror (-ret));
@@ -445,8 +445,8 @@ get_tty_for_session_id (const char  *session_id,
                 out_tty = NULL;
         } else if (ret < 0) {
                 g_set_error (error,
-                             SCDM_DISPLAY_ERROR,
-                             SCDM_DISPLAY_ERROR_GETTING_SESSION_INFO,
+                             GDM_DISPLAY_ERROR,
+                             GDM_DISPLAY_ERROR_GETTING_SESSION_INFO,
                              "Error getting tty for session id %s from systemd: %s",
                              session_id,
                              g_strerror (-ret));
@@ -796,7 +796,7 @@ scdm_manager_handle_register_display (ScdmDBusManager        *manager,
                 }
         }
 
-        g_object_set (G_OBJECT (display), "status", SCDM_DISPLAY_MANAGED, NULL);
+        g_object_set (G_OBJECT (display), "status", GDM_DISPLAY_MANAGED, NULL);
 
         scdm_dbus_manager_complete_register_display (SCDM_DBUS_MANAGER (manager),
                                                     invocation);
@@ -1520,10 +1520,10 @@ on_display_status_changed (ScdmDisplay *display,
         status = scdm_display_get_status (display);
 
         switch (status) {
-                case SCDM_DISPLAY_PREPARED:
-                case SCDM_DISPLAY_MANAGED:
-                        if ((display_number == -1 && status == SCDM_DISPLAY_PREPARED) ||
-                            (display_number != -1 && status == SCDM_DISPLAY_MANAGED)) {
+                case GDM_DISPLAY_PREPARED:
+                case GDM_DISPLAY_MANAGED:
+                        if ((display_number == -1 && status == GDM_DISPLAY_PREPARED) ||
+                            (display_number != -1 && status == GDM_DISPLAY_MANAGED)) {
                                 char *session_class;
 
                                 g_object_get (display,
@@ -1534,9 +1534,9 @@ on_display_status_changed (ScdmDisplay *display,
                                 g_free (session_class);
                         }
                         break;
-                case SCDM_DISPLAY_FAILED:
-                case SCDM_DISPLAY_UNMANAGED:
-                case SCDM_DISPLAY_FINISHED:
+                case GDM_DISPLAY_FAILED:
+                case GDM_DISPLAY_UNMANAGED:
+                case GDM_DISPLAY_FINISHED:
 #ifdef WITH_PLYMOUTH
                         if (quit_plymouth) {
                                 plymouth_quit_without_transition ();
@@ -1550,7 +1550,7 @@ on_display_status_changed (ScdmDisplay *display,
                                 manager->priv->did_automatic_login = TRUE;
 
 #ifdef ENABLE_WAYLAND_SUPPORT
-                                if (g_strcmp0 (session_type, "wayland") != 0 && status == SCDM_DISPLAY_FAILED) {
+                                if (g_strcmp0 (session_type, "wayland") != 0 && status == GDM_DISPLAY_FAILED) {
                                         /* we're going to fall back to X11, so try to autologin again
                                          */
                                         manager->priv->did_automatic_login = FALSE;
@@ -1831,7 +1831,7 @@ on_start_user_session (StartUserSessionOperation *operation)
                         g_autoptr(GError) error = NULL;
 
                         g_debug ("ScdmManager: closing down initial setup display in background");
-                        g_object_set (G_OBJECT (display), "status", SCDM_DISPLAY_WAITING_TO_FINISH, NULL);
+                        g_object_set (G_OBJECT (display), "status", GDM_DISPLAY_WAITING_TO_FINISH, NULL);
 
                         if (!g_file_set_contents (ALREADY_RAN_INITIAL_SETUP_ON_THIS_BOOT,
                                                   "1",
@@ -2482,12 +2482,12 @@ scdm_manager_stop (ScdmManager *manager)
         g_debug ("ScdmManager: GDM stopping");
 
         if (manager->priv->local_factory != NULL) {
-                scdm_display_factory_stop (SCDM_DISPLAY_FACTORY (manager->priv->local_factory));
+                scdm_display_factory_stop (GDM_DISPLAY_FACTORY (manager->priv->local_factory));
         }
 
 #ifdef HAVE_LIBXDMCP
         if (manager->priv->xdmcp_factory != NULL) {
-                scdm_display_factory_stop (SCDM_DISPLAY_FACTORY (manager->priv->xdmcp_factory));
+                scdm_display_factory_stop (GDM_DISPLAY_FACTORY (manager->priv->xdmcp_factory));
         }
 #endif
 
@@ -2507,7 +2507,7 @@ scdm_manager_start (ScdmManager *manager)
         }
 #endif
         if (!manager->priv->xdmcp_enabled || manager->priv->show_local_greeter) {
-                scdm_display_factory_start (SCDM_DISPLAY_FACTORY (manager->priv->local_factory));
+                scdm_display_factory_start (GDM_DISPLAY_FACTORY (manager->priv->local_factory));
         }
 
 #ifdef HAVE_LIBXDMCP
@@ -2522,7 +2522,7 @@ scdm_manager_start (ScdmManager *manager)
 #endif
                 if (manager->priv->xdmcp_factory != NULL) {
                         g_debug ("ScdmManager: Accepting XDMCP connections...");
-                        scdm_display_factory_start (SCDM_DISPLAY_FACTORY (manager->priv->xdmcp_factory));
+                        scdm_display_factory_start (GDM_DISPLAY_FACTORY (manager->priv->xdmcp_factory));
                 }
         }
 #endif
@@ -2576,11 +2576,11 @@ scdm_manager_set_xdmcp_enabled (ScdmManager *manager,
                 if (manager->priv->xdmcp_enabled) {
                         manager->priv->xdmcp_factory = scdm_xdmcp_display_factory_new (manager->priv->display_store);
                         if (manager->priv->started) {
-                                scdm_display_factory_start (SCDM_DISPLAY_FACTORY (manager->priv->xdmcp_factory));
+                                scdm_display_factory_start (GDM_DISPLAY_FACTORY (manager->priv->xdmcp_factory));
                         }
                 } else {
                         if (manager->priv->started) {
-                                scdm_display_factory_stop (SCDM_DISPLAY_FACTORY (manager->priv->xdmcp_factory));
+                                scdm_display_factory_stop (GDM_DISPLAY_FACTORY (manager->priv->xdmcp_factory));
                         }
 
                         g_object_unref (manager->priv->xdmcp_factory);
@@ -2756,7 +2756,7 @@ finish_display (const char *id,
                 ScdmManager *manager)
 {
         scdm_display_stop_greeter_session (display);
-        if (scdm_display_get_status (display) == SCDM_DISPLAY_MANAGED)
+        if (scdm_display_get_status (display) == GDM_DISPLAY_MANAGED)
                 scdm_display_unmanage (display);
         scdm_display_finish (display);
 }

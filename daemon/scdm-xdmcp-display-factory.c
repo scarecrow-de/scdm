@@ -692,7 +692,7 @@ scdm_xdmcp_num_displays_from_host (ScdmXdmcpDisplayFactory *factory,
         data.count = 0;
         data.address = address;
 
-        store = scdm_display_factory_get_display_store (SCDM_DISPLAY_FACTORY (factory));
+        store = scdm_display_factory_get_display_store (GDM_DISPLAY_FACTORY (factory));
         scdm_display_store_foreach (store,
                                    (ScdmDisplayStoreFunc)count_displays_from_host,
                                    &data);
@@ -741,7 +741,7 @@ scdm_xdmcp_display_lookup_by_host (ScdmXdmcpDisplayFactory *factory,
         data->address = address;
         data->display_num = display_num;
 
-        store = scdm_display_factory_get_display_store (SCDM_DISPLAY_FACTORY (factory));
+        store = scdm_display_factory_get_display_store (GDM_DISPLAY_FACTORY (factory));
         display = scdm_display_store_find (store,
                                           (ScdmDisplayStoreFunc)lookup_by_host,
                                           data);
@@ -1815,9 +1815,9 @@ count_sessions (const char             *id,
 
                 status = scdm_display_get_status (display);
 
-                if (status == SCDM_DISPLAY_MANAGED) {
+                if (status == GDM_DISPLAY_MANAGED) {
                         factory->num_sessions++;
-                } else if (status == SCDM_DISPLAY_UNMANAGED) {
+                } else if (status == GDM_DISPLAY_UNMANAGED) {
                         factory->num_pending_sessions++;
                 }
         }
@@ -1831,7 +1831,7 @@ scdm_xdmcp_recount_sessions (ScdmXdmcpDisplayFactory *factory)
         factory->num_sessions = 0;
         factory->num_pending_sessions = 0;
 
-        store = scdm_display_factory_get_display_store (SCDM_DISPLAY_FACTORY (factory));
+        store = scdm_display_factory_get_display_store (GDM_DISPLAY_FACTORY (factory));
         scdm_display_store_foreach (store,
                                    (ScdmDisplayStoreFunc)count_sessions,
                                    factory);
@@ -1851,7 +1851,7 @@ purge_displays (const char             *id,
                 status = scdm_display_get_status (display);
                 acctime = scdm_display_get_creation_time (display);
 
-                if (status == SCDM_DISPLAY_UNMANAGED &&
+                if (status == GDM_DISPLAY_UNMANAGED &&
                     currtime > acctime + factory->max_wait) {
                         /* return TRUE to remove display */
                         return TRUE;
@@ -1866,7 +1866,7 @@ scdm_xdmcp_displays_purge (ScdmXdmcpDisplayFactory *factory)
 {
         ScdmDisplayStore *store;
 
-        store = scdm_display_factory_get_display_store (SCDM_DISPLAY_FACTORY (factory));
+        store = scdm_display_factory_get_display_store (GDM_DISPLAY_FACTORY (factory));
 
         scdm_display_store_foreach_remove (store,
                                           (ScdmDisplayStoreFunc)purge_displays,
@@ -1918,7 +1918,7 @@ display_dispose_check (ScdmXdmcpDisplayFactory *factory,
                 return;
         }
 
-        store = scdm_display_factory_get_display_store (SCDM_DISPLAY_FACTORY (factory));
+        store = scdm_display_factory_get_display_store (GDM_DISPLAY_FACTORY (factory));
 
         g_debug ("ScdmXdmcpDisplayFactory: display_dispose_check (%s:%d)",
                 hostname ? hostname : "(null)", display_num);
@@ -2048,7 +2048,7 @@ on_hostname_selected (ScdmXdmcpChooserDisplay *display,
 static void
 on_client_disconnected (ScdmDisplay *display)
 {
-        if (scdm_display_get_status (display) != SCDM_DISPLAY_MANAGED)
+        if (scdm_display_get_status (display) != GDM_DISPLAY_MANAGED)
                 return;
 
         scdm_display_stop_greeter_session (display);
@@ -2080,7 +2080,7 @@ on_display_status_changed (ScdmDisplay             *display,
 
         g_debug ("ScdmXdmcpDisplayFactory: xdmcp display status changed: %d", status);
         switch (status) {
-        case SCDM_DISPLAY_FINISHED:
+        case GDM_DISPLAY_FINISHED:
                 g_object_get (display,
                               "remote-address", &address,
                               "x11-display-number", &display_number,
@@ -2088,21 +2088,21 @@ on_display_status_changed (ScdmDisplay             *display,
                               NULL);
                 scdm_xdmcp_send_alive (factory, address, display_number, session_number);
 
-                scdm_display_factory_queue_purge_displays (SCDM_DISPLAY_FACTORY (factory));
+                scdm_display_factory_queue_purge_displays (GDM_DISPLAY_FACTORY (factory));
                 break;
-        case SCDM_DISPLAY_FAILED:
-                scdm_display_factory_queue_purge_displays (SCDM_DISPLAY_FACTORY (factory));
+        case GDM_DISPLAY_FAILED:
+                scdm_display_factory_queue_purge_displays (GDM_DISPLAY_FACTORY (factory));
                 break;
-        case SCDM_DISPLAY_UNMANAGED:
+        case GDM_DISPLAY_UNMANAGED:
                 if (session != NULL) {
                         g_signal_handlers_disconnect_by_func (G_OBJECT (session),
                                                               G_CALLBACK (on_client_disconnected),
                                                               display);
                 }
                 break;
-        case SCDM_DISPLAY_PREPARED:
+        case GDM_DISPLAY_PREPARED:
                 break;
-        case SCDM_DISPLAY_MANAGED:
+        case GDM_DISPLAY_MANAGED:
                 if (session != NULL) {
                         g_signal_connect_object (G_OBJECT (session),
                                                  "client-disconnected",
@@ -2175,7 +2175,7 @@ scdm_xdmcp_display_create (ScdmXdmcpDisplayFactory *factory,
                                 G_CALLBACK (on_display_status_changed),
                                 factory);
 
-        store = scdm_display_factory_get_display_store (SCDM_DISPLAY_FACTORY (factory));
+        store = scdm_display_factory_get_display_store (GDM_DISPLAY_FACTORY (factory));
         scdm_display_store_add (store, display);
 
         factory->num_pending_sessions++;
@@ -2512,7 +2512,7 @@ scdm_xdmcp_display_lookup (ScdmXdmcpDisplayFactory *factory,
                 return NULL;
         }
 
-        store = scdm_display_factory_get_display_store (SCDM_DISPLAY_FACTORY (factory));
+        store = scdm_display_factory_get_display_store (GDM_DISPLAY_FACTORY (factory));
         display = scdm_display_store_find (store,
                                           (ScdmDisplayStoreFunc)lookup_by_session_id,
                                           GINT_TO_POINTER (sessid));
@@ -2645,7 +2645,7 @@ scdm_xdmcp_handle_manage (ScdmXdmcpDisplayFactory *factory,
 
         display = scdm_xdmcp_display_lookup (factory, clnt_sessid);
         if (display != NULL &&
-            scdm_display_get_status (display) == SCDM_DISPLAY_PREPARED) {
+            scdm_display_get_status (display) == GDM_DISPLAY_PREPARED) {
                 char *name;
 
                 name = NULL;
@@ -2693,7 +2693,7 @@ scdm_xdmcp_handle_manage (ScdmXdmcpDisplayFactory *factory,
                         g_debug ("ScdmXdmcpDisplayFactory: Failed to manage display");
                 }
         } else if (display != NULL &&
-                   scdm_display_get_status (display) == SCDM_DISPLAY_MANAGED) {
+                   scdm_display_get_status (display) == GDM_DISPLAY_MANAGED) {
                 g_debug ("ScdmXdmcpDisplayFactory: Session ID %ld already managed",
                          (long)clnt_sessid);
         } else {
@@ -2824,7 +2824,7 @@ scdm_xdmcp_send_alive (ScdmXdmcpDisplayFactory *factory,
                 send_sessid = scdm_xdmcp_display_get_session_number (SCDM_XDMCP_DISPLAY (display));
                 status = scdm_display_get_status (display);
 
-                if (status == SCDM_DISPLAY_MANAGED) {
+                if (status == GDM_DISPLAY_MANAGED) {
                         send_running = 1;
                 }
         }
@@ -3305,7 +3305,7 @@ static void
 scdm_xdmcp_display_factory_class_init (ScdmXdmcpDisplayFactoryClass *klass)
 {
         GObjectClass           *object_class = G_OBJECT_CLASS (klass);
-        ScdmDisplayFactoryClass *factory_class = SCDM_DISPLAY_FACTORY_CLASS (klass);
+        ScdmDisplayFactoryClass *factory_class = GDM_DISPLAY_FACTORY_CLASS (klass);
 
         object_class->get_property = scdm_xdmcp_display_factory_get_property;
         object_class->set_property = scdm_xdmcp_display_factory_set_property;

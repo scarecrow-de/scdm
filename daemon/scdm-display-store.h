@@ -19,8 +19,8 @@
  */
 
 
-#ifndef __SCDM_DISPLAY_STORE_H
-#define __SCDM_DISPLAY_STORE_H
+#ifndef __GDM_DISPLAY_STORE_H
+#define __GDM_DISPLAY_STORE_H
 
 #include <glib-object.h>
 #include "scdm-display.h"
@@ -28,11 +28,11 @@
 G_BEGIN_DECLS
 
 #define SCDM_TYPE_DISPLAY_STORE         (scdm_display_store_get_type ())
-#define SCDM_DISPLAY_STORE(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), SCDM_TYPE_DISPLAY_STORE, ScdmDisplayStore))
-#define SCDM_DISPLAY_STORE_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), SCDM_TYPE_DISPLAY_STORE, ScdmDisplayStoreClass))
+#define GDM_DISPLAY_STORE(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), SCDM_TYPE_DISPLAY_STORE, ScdmDisplayStore))
+#define GDM_DISPLAY_STORE_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), SCDM_TYPE_DISPLAY_STORE, ScdmDisplayStoreClass))
 #define GDM_IS_DISPLAY_STORE(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), SCDM_TYPE_DISPLAY_STORE))
 #define GDM_IS_DISPLAY_STORE_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), SCDM_TYPE_DISPLAY_STORE))
-#define SCDM_DISPLAY_STORE_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), SCDM_TYPE_DISPLAY_STORE, ScdmDisplayStoreClass))
+#define GDM_DISPLAY_STORE_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), SCDM_TYPE_DISPLAY_STORE, ScdmDisplayStoreClass))
 
 typedef struct ScdmDisplayStorePrivate ScdmDisplayStorePrivate;
 
@@ -54,10 +54,10 @@ typedef struct
 
 typedef enum
 {
-         SCDM_DISPLAY_STORE_ERROR_GENERAL
+         GDM_DISPLAY_STORE_ERROR_GENERAL
 } ScdmDisplayStoreError;
 
-#define SCDM_DISPLAY_STORE_ERROR scdm_display_store_error_quark ()
+#define GDM_DISPLAY_STORE_ERROR scdm_display_store_error_quark ()
 
 typedef gboolean (*ScdmDisplayStoreFunc) (const char *id,
                                          ScdmDisplay *display,
@@ -89,4 +89,4 @@ ScdmDisplay *        scdm_display_store_find                     (ScdmDisplaySto
 
 G_END_DECLS
 
-#endif /* __SCDM_DISPLAY_STORE_H */
+#endif /* __GDM_DISPLAY_STORE_H */

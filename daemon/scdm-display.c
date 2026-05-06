@@ -505,7 +505,7 @@ scdm_display_real_prepare (ScdmDisplay *self)
 
         g_debug ("ScdmDisplay: prepare display");
 
-        _scdm_display_set_status (self, SCDM_DISPLAY_PREPARED);
+        _scdm_display_set_status (self, GDM_DISPLAY_PREPARED);
 
         return TRUE;
 }
@@ -576,7 +576,7 @@ scdm_display_prepare (ScdmDisplay *self)
         priv->doing_initial_setup = wants_initial_setup (self);
 
         g_object_ref (self);
-        ret = SCDM_DISPLAY_GET_CLASS (self)->prepare (self);
+        ret = GDM_DISPLAY_GET_CLASS (self)->prepare (self);
         g_object_unref (self);
 
         return ret;
@@ -595,7 +595,7 @@ scdm_display_manage (ScdmDisplay *self)
         g_debug ("ScdmDisplay: Managing display: %s", priv->id);
 
         /* If not explicitly prepared, do it now */
-        if (priv->status == SCDM_DISPLAY_UNMANAGED) {
+        if (priv->status == GDM_DISPLAY_UNMANAGED) {
                 res = scdm_display_prepare (self);
                 if (! res) {
                         return FALSE;
@@ -603,8 +603,8 @@ scdm_display_manage (ScdmDisplay *self)
         }
 
         if (g_strcmp0 (priv->session_class, "greeter") == 0) {
-                if (SCDM_DISPLAY_GET_CLASS (self)->manage != NULL) {
-                        SCDM_DISPLAY_GET_CLASS (self)->manage (self);
+                if (GDM_DISPLAY_GET_CLASS (self)->manage != NULL) {
+                        GDM_DISPLAY_GET_CLASS (self)->manage (self);
                 }
         }
 
@@ -624,7 +624,7 @@ scdm_display_finish (ScdmDisplay *self)
                 priv->finish_idle_id = 0;
         }
 
-        _scdm_display_set_status (self, SCDM_DISPLAY_FINISHED);
+        _scdm_display_set_status (self, GDM_DISPLAY_FINISHED);
 
         g_debug ("ScdmDisplay: finish display");
 
@@ -696,9 +696,9 @@ scdm_display_unmanage (ScdmDisplay *self)
 
         if (!priv->session_registered) {
                 g_warning ("ScdmDisplay: Session never registered, failing");
-                _scdm_display_set_status (self, SCDM_DISPLAY_FAILED);
+                _scdm_display_set_status (self, GDM_DISPLAY_FAILED);
         } else {
-                _scdm_display_set_status (self, SCDM_DISPLAY_UNMANAGED);
+                _scdm_display_set_status (self, GDM_DISPLAY_UNMANAGED);
         }
 
         return TRUE;
@@ -923,7 +923,7 @@ scdm_display_set_property (GObject        *object,
 {
         ScdmDisplay *self;
 
-        self = SCDM_DISPLAY (object);
+        self = GDM_DISPLAY (object);
 
         switch (prop_id) {
         case PROP_ID:
@@ -986,7 +986,7 @@ scdm_display_get_property (GObject        *object,
         ScdmDisplay *self;
         ScdmDisplayPrivate *priv;
 
-        self = SCDM_DISPLAY (object);
+        self = GDM_DISPLAY (object);
         priv = scdm_display_get_instance_private (self);
 
         switch (prop_id) {
@@ -1200,7 +1200,7 @@ scdm_display_constructor (GType                  type,
         ScdmDisplayPrivate *priv;
         gboolean           res;
 
-        self = SCDM_DISPLAY (G_OBJECT_CLASS (scdm_display_parent_class)->constructor (type,
+        self = GDM_DISPLAY (G_OBJECT_CLASS (scdm_display_parent_class)->constructor (type,
                                                                                     n_construct_properties,
                                                                                     construct_properties));
 
@@ -1224,7 +1224,7 @@ scdm_display_dispose (GObject *object)
         ScdmDisplay *self;
         ScdmDisplayPrivate *priv;
 
-        self = SCDM_DISPLAY (object);
+        self = GDM_DISPLAY (object);
         priv = scdm_display_get_instance_private (self);
 
         g_debug ("ScdmDisplay: Disposing display");
@@ -1235,7 +1235,7 @@ scdm_display_dispose (GObject *object)
         }
         g_clear_object (&priv->launch_environment);
 
-        g_warn_if_fail (priv->status != SCDM_DISPLAY_MANAGED);
+        g_warn_if_fail (priv->status != GDM_DISPLAY_MANAGED);
         g_warn_if_fail (priv->user_access_file == NULL);
         g_warn_if_fail (priv->access_file == NULL);
 
@@ -1392,7 +1392,7 @@ scdm_display_class_init (ScdmDisplayClass *klass)
                                                            "status",
                                                            -1,
                                                            G_MAXINT,
-                                                           SCDM_DISPLAY_UNMANAGED,
+                                                           GDM_DISPLAY_UNMANAGED,
                                                            G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS));
 }
 
@@ -1415,7 +1415,7 @@ scdm_display_finalize (GObject *object)
         g_return_if_fail (object != NULL);
         g_return_if_fail (GDM_IS_DISPLAY (object));
 
-        self = SCDM_DISPLAY (object);
+        self = GDM_DISPLAY (object);
         priv = scdm_display_get_instance_private (self);
 
         g_return_if_fail (priv != NULL);
@@ -1476,11 +1476,11 @@ static void
 self_destruct (ScdmDisplay *self)
 {
         g_object_ref (self);
-        if (scdm_display_get_status (self) == SCDM_DISPLAY_MANAGED) {
+        if (scdm_display_get_status (self) == GDM_DISPLAY_MANAGED) {
                 scdm_display_unmanage (self);
         }
 
-        if (scdm_display_get_status (self) != SCDM_DISPLAY_FINISHED) {
+        if (scdm_display_get_status (self) != GDM_DISPLAY_FINISHED) {
                 queue_finish (self);
         }
         g_object_unref (self);

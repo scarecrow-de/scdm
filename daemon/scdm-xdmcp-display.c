@@ -192,7 +192,7 @@ scdm_xdmcp_display_prepare (ScdmDisplay *display)
                 return FALSE;
         }
 
-        return SCDM_DISPLAY_CLASS (scdm_xdmcp_display_parent_class)->prepare (display);
+        return GDM_DISPLAY_CLASS (scdm_xdmcp_display_parent_class)->prepare (display);
 }
 
 static gboolean
@@ -204,13 +204,13 @@ idle_connect_to_display (ScdmXdmcpDisplay *self)
         priv = scdm_xdmcp_display_get_instance_private (self);
         priv->connection_attempts++;
 
-        res = scdm_display_connect (SCDM_DISPLAY (self));
+        res = scdm_display_connect (GDM_DISPLAY (self));
         if (res) {
-                g_object_set (G_OBJECT (self), "status", SCDM_DISPLAY_MANAGED, NULL);
+                g_object_set (G_OBJECT (self), "status", GDM_DISPLAY_MANAGED, NULL);
         } else {
                 if (priv->connection_attempts >= MAX_CONNECT_ATTEMPTS) {
                         g_warning ("Unable to connect to display after %d tries - bailing out", priv->connection_attempts);
-                        scdm_display_unmanage (SCDM_DISPLAY (self));
+                        scdm_display_unmanage (GDM_DISPLAY (self));
                         return FALSE;
                 }
                 return TRUE;
@@ -231,7 +231,7 @@ static void
 scdm_xdmcp_display_class_init (ScdmXdmcpDisplayClass *klass)
 {
         GObjectClass    *object_class = G_OBJECT_CLASS (klass);
-        ScdmDisplayClass *display_class = SCDM_DISPLAY_CLASS (klass);
+        ScdmDisplayClass *display_class = GDM_DISPLAY_CLASS (klass);
 
         object_class->get_property = scdm_xdmcp_display_get_property;
         object_class->set_property = scdm_xdmcp_display_set_property;
@@ -291,5 +291,5 @@ scdm_xdmcp_display_new (const char *hostname,
                                NULL);
         g_free (x11_display);
 
-        return SCDM_DISPLAY (object);
+        return GDM_DISPLAY (object);
 }
