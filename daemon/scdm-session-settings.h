@@ -19,20 +19,20 @@
  *
  * Written by: Ray Strode <rstrode@redhat.com>
  */
-#ifndef SCDM_SESSION_SETTINGS_H
-#define SCDM_SESSION_SETTINGS_H
+#ifndef GDM_SESSION_SETTINGS_H
+#define GDM_SESSION_SETTINGS_H
 
 #include <glib.h>
 #include <glib-object.h>
 
 G_BEGIN_DECLS
 #define SCDM_TYPE_SESSION_SETTINGS (scdm_session_settings_get_type ())
-#define SCDM_SESSION_SETTINGS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCDM_TYPE_SESSION_SETTINGS, ScdmSessionSettings))
-#define SCDM_SESSION_SETTINGS_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SCDM_TYPE_SESSION_SETTINGS, ScdmSessionSettingsClass))
+#define GDM_SESSION_SETTINGS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCDM_TYPE_SESSION_SETTINGS, ScdmSessionSettings))
+#define GDM_SESSION_SETTINGS_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), SCDM_TYPE_SESSION_SETTINGS, ScdmSessionSettingsClass))
 #define GDM_IS_SESSION_SETTINGS(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCDM_TYPE_SESSION_SETTINGS))
 #define GDM_IS_SESSION_SETTINGS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SCDM_TYPE_SESSION_SETTINGS))
-#define SCDM_SESSION_SETTINGS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), SCDM_TYPE_SESSION_SETTINGS, ScdmSessionSettingsClass))
-#define SCDM_SESSION_SETTINGS_ERROR (scdm_session_settings_error_quark ())
+#define GDM_SESSION_SETTINGS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), SCDM_TYPE_SESSION_SETTINGS, ScdmSessionSettingsClass))
+#define GDM_SESSION_SETTINGS_ERROR (scdm_session_settings_error_quark ())
 typedef struct _ScdmSessionSettings ScdmSessionSettings;
 typedef struct _ScdmSessionSettingsClass ScdmSessionSettingsClass;
 typedef struct _ScdmSessionSettingsPrivate ScdmSessionSettingsPrivate;
@@ -66,4 +66,4 @@ void                scdm_session_settings_set_session_name   (ScdmSessionSetting
                                                              const char         *session_name);
 
 G_END_DECLS
-#endif /* SCDM_SESSION_SETTINGS_H */
+#endif /* GDM_SESSION_SETTINGS_H */

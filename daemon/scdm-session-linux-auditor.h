@@ -23,8 +23,8 @@
  *             Ray Strode <rstrode@redhat.com>
  *             Steve Grubb <sgrubb@redhat.com>
  */
-#ifndef SCDM_SESSION_LINUX_AUDITOR_H
-#define SCDM_SESSION_LINUX_AUDITOR_H
+#ifndef GDM_SESSION_LINUX_AUDITOR_H
+#define GDM_SESSION_LINUX_AUDITOR_H
 
 #include <glib.h>
 #include <glib-object.h>
@@ -40,4 +40,4 @@ ScdmSessionAuditor *scdm_session_linux_auditor_new                            (c
                                                                              const char *display_device);
 
 G_END_DECLS
-#endif /* SCDM_SESSION_LINUX_AUDITOR_H */
+#endif /* GDM_SESSION_LINUX_AUDITOR_H */

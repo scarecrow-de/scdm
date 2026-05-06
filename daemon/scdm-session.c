@@ -57,8 +57,8 @@
 #include "scdm-settings-direct.h"
 #include "scdm-settings-keys.h"
 
-#define SCDM_SESSION_DBUS_ERROR_CANCEL "io.github.scarecrow_de.DisplayManager.Session.Error.Cancel"
-#define SCDM_SESSION_DBUS_OBJECT_PATH "/io/github/scarecrow_de/DisplayManager/Session"
+#define GDM_SESSION_DBUS_ERROR_CANCEL "io.github.scarecrow_de.DisplayManager.Session.Error.Cancel"
+#define GDM_SESSION_DBUS_OBJECT_PATH "/io/github/scarecrow_de/DisplayManager/Session"
 
 #define SCDM_WORKER_DBUS_PATH "/io/github/scarecrow_de/DisplayManager/Worker"
 
@@ -219,8 +219,8 @@ report_and_stop_conversation (ScdmSession *self,
 
         if (self->user_verifier_interface != NULL) {
                 if (g_error_matches (error,
-                                     SCDM_SESSION_WORKER_ERROR,
-                                     SCDM_SESSION_WORKER_ERROR_SERVICE_UNAVAILABLE)) {
+                                     GDM_SESSION_WORKER_ERROR,
+                                     GDM_SESSION_WORKER_ERROR_SERVICE_UNAVAILABLE)) {
                         scdm_dbus_user_verifier_emit_service_unavailable (self->user_verifier_interface,
                                                                          service_name,
                                                                          error->message);
@@ -326,11 +326,11 @@ on_establish_credentials_cb (ScdmDBusWorker *proxy,
                 }
 
                 switch (self->verification_mode) {
-                case SCDM_SESSION_VERIFICATION_MODE_LOGIN:
-                case SCDM_SESSION_VERIFICATION_MODE_CHOOSER:
+                case GDM_SESSION_VERIFICATION_MODE_LOGIN:
+                case GDM_SESSION_VERIFICATION_MODE_CHOOSER:
                         scdm_session_open_session (self, service_name);
                         break;
-                case SCDM_SESSION_VERIFICATION_MODE_REAUTHENTICATE:
+                case GDM_SESSION_VERIFICATION_MODE_REAUTHENTICATE:
                 default:
                         break;
                 }
@@ -681,7 +681,7 @@ cancel_pending_query (ScdmSessionConversation *conversation)
         g_debug ("ScdmSession: Cancelling pending query");
 
         g_dbus_method_invocation_return_dbus_error (conversation->pending_invocation,
-                                                    SCDM_SESSION_DBUS_ERROR_CANCEL,
+                                                    GDM_SESSION_DBUS_ERROR_CANCEL,
                                                     "Operation cancelled");
         conversation->pending_invocation = NULL;
 }
@@ -1206,7 +1206,7 @@ export_worker_manager_interface (ScdmSession      *self,
 
         g_dbus_interface_skeleton_export (G_DBUS_INTERFACE_SKELETON (worker_manager_interface),
                                           connection,
-                                          SCDM_SESSION_DBUS_OBJECT_PATH,
+                                          GDM_SESSION_DBUS_OBJECT_PATH,
                                           NULL);
 }
 
@@ -1316,7 +1316,7 @@ export_user_verifier_choice_list_interface (ScdmSession      *self,
 
         g_dbus_interface_skeleton_export (G_DBUS_INTERFACE_SKELETON (interface),
                                           connection,
-                                          SCDM_SESSION_DBUS_OBJECT_PATH,
+                                          GDM_SESSION_DBUS_OBJECT_PATH,
                                           NULL);
 
         g_hash_table_insert (self->user_verifier_extensions,
@@ -1608,7 +1608,7 @@ export_user_verifier_interface (ScdmSession      *self,
 
         g_dbus_interface_skeleton_export (G_DBUS_INTERFACE_SKELETON (user_verifier_interface),
                                           connection,
-                                          SCDM_SESSION_DBUS_OBJECT_PATH,
+                                          GDM_SESSION_DBUS_OBJECT_PATH,
                                           NULL);
 
         self->user_verifier_interface = user_verifier_interface;
@@ -1645,7 +1645,7 @@ export_greeter_interface (ScdmSession      *self,
 
         g_dbus_interface_skeleton_export (G_DBUS_INTERFACE_SKELETON (greeter_interface),
                                           connection,
-                                          SCDM_SESSION_DBUS_OBJECT_PATH,
+                                          GDM_SESSION_DBUS_OBJECT_PATH,
                                           NULL);
 
         self->greeter_interface = greeter_interface;
@@ -1678,7 +1678,7 @@ export_remote_greeter_interface (ScdmSession      *self,
 
         g_dbus_interface_skeleton_export (G_DBUS_INTERFACE_SKELETON (remote_greeter_interface),
                                           connection,
-                                          SCDM_SESSION_DBUS_OBJECT_PATH,
+                                          GDM_SESSION_DBUS_OBJECT_PATH,
                                           NULL);
 
         self->remote_greeter_interface = remote_greeter_interface;
@@ -1713,7 +1713,7 @@ export_chooser_interface (ScdmSession      *self,
 
         g_dbus_interface_skeleton_export (G_DBUS_INTERFACE_SKELETON (chooser_interface),
                                           connection,
-                                          SCDM_SESSION_DBUS_OBJECT_PATH,
+                                          GDM_SESSION_DBUS_OBJECT_PATH,
                                           NULL);
 
         self->chooser_interface = chooser_interface;
@@ -1768,11 +1768,11 @@ handle_connection_from_outside (GDBusServer      *server,
         export_user_verifier_interface (self, connection);
 
         switch (self->verification_mode) {
-                case SCDM_SESSION_VERIFICATION_MODE_LOGIN:
+                case GDM_SESSION_VERIFICATION_MODE_LOGIN:
                         export_greeter_interface (self, connection);
                 break;
 
-                case SCDM_SESSION_VERIFICATION_MODE_CHOOSER:
+                case GDM_SESSION_VERIFICATION_MODE_CHOOSER:
                         export_chooser_interface (self, connection);
                 break;
 
@@ -2150,7 +2150,7 @@ start_conversation (ScdmSession *self,
         scdm_session_worker_job_set_server_address (conversation->job,
                                                    g_dbus_server_get_client_address (self->worker_server));
         scdm_session_worker_job_set_for_reauth (conversation->job,
-                                               self->verification_mode == SCDM_SESSION_VERIFICATION_MODE_REAUTHENTICATE);
+                                               self->verification_mode == GDM_SESSION_VERIFICATION_MODE_REAUTHENTICATE);
 
         if (self->conversation_environment != NULL) {
                 scdm_session_worker_job_set_environment (conversation->job,
@@ -2661,7 +2661,7 @@ set_up_session_environment (ScdmSession *self)
         g_free (locale);
 
         display_mode = scdm_session_get_display_mode (self);
-        if (display_mode == SCDM_SESSION_DISPLAY_MODE_REUSE_VT) {
+        if (display_mode == GDM_SESSION_DISPLAY_MODE_REUSE_VT) {
                 scdm_session_set_environment_variable (self,
                                                       "DISPLAY",
                                                       self->display_name);
@@ -2858,8 +2858,8 @@ scdm_session_start_session (ScdmSession *self,
         is_x11 = g_strcmp0 (self->session_type, "wayland") != 0;
 #endif
 
-        if (display_mode == SCDM_SESSION_DISPLAY_MODE_LOGIND_MANAGED ||
-            display_mode == SCDM_SESSION_DISPLAY_MODE_NEW_VT) {
+        if (display_mode == GDM_SESSION_DISPLAY_MODE_LOGIND_MANAGED ||
+            display_mode == GDM_SESSION_DISPLAY_MODE_NEW_VT) {
                 run_launcher = TRUE;
         }
 
@@ -3282,7 +3282,7 @@ scdm_session_get_display_mode (ScdmSession *self)
          * for now.
          */
         if (g_strcmp0 (self->display_seat_id, "seat0") != 0) {
-                return SCDM_SESSION_DISPLAY_MODE_REUSE_VT;
+                return GDM_SESSION_DISPLAY_MODE_REUSE_VT;
         }
 
 #ifdef ENABLE_USER_DISPLAY_SERVER
@@ -3307,7 +3307,7 @@ scdm_session_get_display_mode (ScdmSession *self)
          *   right now.  It will die with an error if logind devices
          *   are paused when handed out.
          */
-        return SCDM_SESSION_DISPLAY_MODE_NEW_VT;
+        return GDM_SESSION_DISPLAY_MODE_NEW_VT;
 #else
 
 #ifdef ENABLE_WAYLAND_SUPPORT
@@ -3315,10 +3315,10 @@ scdm_session_get_display_mode (ScdmSession *self)
          * mutter-launch-like environment, so we allocate
          * a new VT for them. */
         if (g_strcmp0 (self->session_type, "wayland") == 0) {
-                return SCDM_SESSION_DISPLAY_MODE_NEW_VT;
+                return GDM_SESSION_DISPLAY_MODE_NEW_VT;
         }
 #endif
-        return SCDM_SESSION_DISPLAY_MODE_REUSE_VT;
+        return GDM_SESSION_DISPLAY_MODE_REUSE_VT;
 #endif
 }
 
@@ -3464,7 +3464,7 @@ scdm_session_set_property (GObject      *object,
 {
         ScdmSession *self;
 
-        self = SCDM_SESSION (object);
+        self = GDM_SESSION (object);
 
         switch (prop_id) {
         case PROP_SESSION_TYPE:
@@ -3522,7 +3522,7 @@ scdm_session_get_property (GObject    *object,
 {
         ScdmSession *self;
 
-        self = SCDM_SESSION (object);
+        self = GDM_SESSION (object);
 
         switch (prop_id) {
         case PROP_SESSION_TYPE:
@@ -3577,7 +3577,7 @@ scdm_session_dispose (GObject *object)
 {
         ScdmSession *self;
 
-        self = SCDM_SESSION (object);
+        self = GDM_SESSION (object);
 
         g_debug ("ScdmSession: Disposing session");
 
@@ -3634,7 +3634,7 @@ scdm_session_finalize (GObject *object)
         ScdmSession   *self;
         GObjectClass *parent_class;
 
-        self = SCDM_SESSION (object);
+        self = GDM_SESSION (object);
 
         g_free (self->selected_user);
         g_free (self->selected_session);
@@ -3656,7 +3656,7 @@ scdm_session_constructor (GType                  type,
 {
         ScdmSession *self;
 
-        self = SCDM_SESSION (G_OBJECT_CLASS (scdm_session_parent_class)->constructor (type,
+        self = GDM_SESSION (G_OBJECT_CLASS (scdm_session_parent_class)->constructor (type,
                                                                                     n_construct_properties,
                                                                                     construct_properties));
         return G_OBJECT (self);
@@ -3901,7 +3901,7 @@ scdm_session_class_init (ScdmSessionClass *session_class)
                                                             "verification mode",
                                                             "verification mode",
                                                             SCDM_TYPE_SESSION_VERIFICATION_MODE,
-                                                            SCDM_SESSION_VERIFICATION_MODE_LOGIN,
+                                                            GDM_SESSION_VERIFICATION_MODE_LOGIN,
                                                             G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS));
         g_object_class_install_property (object_class,
                                          PROP_ALLOWED_USER,
@@ -4028,11 +4028,11 @@ ScdmSessionDisplayMode
 scdm_session_display_mode_from_string (const char *str)
 {
         if (strcmp (str, "reuse-vt") == 0)
-                return SCDM_SESSION_DISPLAY_MODE_REUSE_VT;
+                return GDM_SESSION_DISPLAY_MODE_REUSE_VT;
         if (strcmp (str, "new-vt") == 0)
-                return SCDM_SESSION_DISPLAY_MODE_NEW_VT;
+                return GDM_SESSION_DISPLAY_MODE_NEW_VT;
         if (strcmp (str, "logind-managed") == 0)
-                return SCDM_SESSION_DISPLAY_MODE_LOGIND_MANAGED;
+                return GDM_SESSION_DISPLAY_MODE_LOGIND_MANAGED;
 
         g_warning ("Unknown ScdmSessionDisplayMode %s", str);
         return -1;
@@ -4042,11 +4042,11 @@ const char *
 scdm_session_display_mode_to_string (ScdmSessionDisplayMode mode)
 {
         switch (mode) {
-        case SCDM_SESSION_DISPLAY_MODE_REUSE_VT:
+        case GDM_SESSION_DISPLAY_MODE_REUSE_VT:
                 return "reuse-vt";
-        case SCDM_SESSION_DISPLAY_MODE_NEW_VT:
+        case GDM_SESSION_DISPLAY_MODE_NEW_VT:
                 return "new-vt";
-        case SCDM_SESSION_DISPLAY_MODE_LOGIND_MANAGED:
+        case GDM_SESSION_DISPLAY_MODE_LOGIND_MANAGED:
                 return "logind-managed";
         default:
                 break;

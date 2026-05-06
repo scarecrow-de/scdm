@@ -51,7 +51,7 @@
 #include "scdm-settings-keys.h"
 
 #define INITIAL_SETUP_USERNAME "gnome-initial-setup"
-#define SCDM_SESSION_MODE "scdm"
+#define GDM_SESSION_MODE "scdm"
 #define INITIAL_SETUP_SESSION_MODE "initial-setup"
 #define GNOME_SESSION_SESSIONS_PATH DATADIR "/gnome-session/sessions"
 
@@ -710,7 +710,7 @@ scdm_launch_environment_class_init (ScdmLaunchEnvironmentClass *klass)
                                                             "verification mode",
                                                             "verification mode",
                                                             SCDM_TYPE_SESSION_VERIFICATION_MODE,
-                                                            SCDM_SESSION_VERIFICATION_MODE_LOGIN,
+                                                            GDM_SESSION_VERIFICATION_MODE_LOGIN,
                                                             G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS));
         g_object_class_install_property (object_class,
                                          PROP_SESSION_TYPE,
@@ -966,7 +966,7 @@ scdm_create_greeter_launch_environment (const char *display_name,
                                                  display_name,
                                                  seat_id,
                                                  session_type,
-                                                 SCDM_SESSION_MODE,
+                                                 GDM_SESSION_MODE,
                                                  display_hostname,
                                                  display_is_local);
 }
@@ -998,7 +998,7 @@ scdm_create_chooser_launch_environment (const char *display_name,
 
         launch_environment = g_object_new (SCDM_TYPE_LAUNCH_ENVIRONMENT,
                                            "command", LIBEXECDIR "/scdm-simple-chooser",
-                                           "verification-mode", SCDM_SESSION_VERIFICATION_MODE_CHOOSER,
+                                           "verification-mode", GDM_SESSION_VERIFICATION_MODE_CHOOSER,
                                            "user-name", SCDM_USERNAME,
                                            "x11-display-name", display_name,
                                            "x11-display-seat-id", seat_id,

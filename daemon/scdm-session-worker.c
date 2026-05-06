@@ -80,11 +80,11 @@
 
 #include "scdm-session-settings.h"
 
-#define SCDM_SESSION_WORKER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), SCDM_TYPE_SESSION_WORKER, ScdmSessionWorkerPrivate))
+#define GDM_SESSION_WORKER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), SCDM_TYPE_SESSION_WORKER, ScdmSessionWorkerPrivate))
 
-#define SCDM_SESSION_DBUS_PATH         "/io/github/scarecrow_de/DisplayManager/Session"
-#define SCDM_SESSION_DBUS_NAME         "io.github.scarecrow_de.DisplayManager.Session"
-#define SCDM_SESSION_DBUS_ERROR_CANCEL "io.github.scarecrow_de.DisplayManager.Session.Error.Cancel"
+#define GDM_SESSION_DBUS_PATH         "/io/github/scarecrow_de/DisplayManager/Session"
+#define GDM_SESSION_DBUS_NAME         "io.github.scarecrow_de.DisplayManager.Session"
+#define GDM_SESSION_DBUS_ERROR_CANCEL "io.github.scarecrow_de.DisplayManager.Session.Error.Cancel"
 
 #define SCDM_WORKER_DBUS_PATH "/io/github/scarecrow_de/DisplayManager/Worker"
 
@@ -92,16 +92,16 @@
 #define SCDM_PASSWD_AUXILLARY_BUFFER_SIZE 1024
 #endif
 
-#ifndef SCDM_SESSION_DEFAULT_PATH
-#define SCDM_SESSION_DEFAULT_PATH "/usr/local/bin:/usr/bin:/bin"
+#ifndef GDM_SESSION_DEFAULT_PATH
+#define GDM_SESSION_DEFAULT_PATH "/usr/local/bin:/usr/bin:/bin"
 #endif
 
-#ifndef SCDM_SESSION_ROOT_UID
-#define SCDM_SESSION_ROOT_UID 0
+#ifndef GDM_SESSION_ROOT_UID
+#define GDM_SESSION_ROOT_UID 0
 #endif
 
-#ifndef SCDM_SESSION_LOG_FILENAME
-#define SCDM_SESSION_LOG_FILENAME "session.log"
+#ifndef GDM_SESSION_LOG_FILENAME
+#define GDM_SESSION_LOG_FILENAME "session.log"
 #endif
 
 #define MAX_FILE_SIZE     65536
@@ -1033,7 +1033,7 @@ scdm_session_worker_uninitialize_pam (ScdmSessionWorker *worker,
 
         scdm_session_worker_get_username (worker, NULL);
 
-        if (worker->priv->state >= SCDM_SESSION_WORKER_STATE_SESSION_OPENED) {
+        if (worker->priv->state >= GDM_SESSION_WORKER_STATE_SESSION_OPENED) {
                 pam_close_session (worker->priv->pam_handle, 0);
                 scdm_session_auditor_report_logout (worker->priv->auditor);
         } else {
@@ -1042,7 +1042,7 @@ scdm_session_worker_uninitialize_pam (ScdmSessionWorker *worker,
                                                           pam_strerror (worker->priv->pam_handle, status));
         }
 
-        if (worker->priv->state >= SCDM_SESSION_WORKER_STATE_ACCREDITED) {
+        if (worker->priv->state >= GDM_SESSION_WORKER_STATE_ACCREDITED) {
                 pam_setcred (worker->priv->pam_handle, PAM_DELETE_CRED);
         }
 
@@ -1066,7 +1066,7 @@ scdm_session_worker_uninitialize_pam (ScdmSessionWorker *worker,
         worker->priv->session_vt = 0;
 
         g_debug ("ScdmSessionWorker: state NONE");
-        scdm_session_worker_set_state (worker, SCDM_SESSION_WORKER_STATE_NONE);
+        scdm_session_worker_set_state (worker, GDM_SESSION_WORKER_STATE_NONE);
 }
 
 static char *
@@ -1155,8 +1155,8 @@ scdm_session_worker_initialize_pam (ScdmSessionWorker   *worker,
                  * pam handle, and if pam_start fails pam_handle is undefined
                  */
                 g_set_error (error,
-                             SCDM_SESSION_WORKER_ERROR,
-                             SCDM_SESSION_WORKER_ERROR_SERVICE_UNAVAILABLE,
+                             GDM_SESSION_WORKER_ERROR,
+                             GDM_SESSION_WORKER_ERROR_SERVICE_UNAVAILABLE,
                              "%s", "");
 
                 goto out;
@@ -1170,8 +1170,8 @@ scdm_session_worker_initialize_pam (ScdmSessionWorker   *worker,
                         g_debug ("ScdmSessionWorker: error informing authentication system of preferred username prompt: %s",
                                 pam_strerror (worker->priv->pam_handle, error_code));
                         g_set_error (error,
-                                     SCDM_SESSION_WORKER_ERROR,
-                                     SCDM_SESSION_WORKER_ERROR_AUTHENTICATING,
+                                     GDM_SESSION_WORKER_ERROR,
+                                     GDM_SESSION_WORKER_ERROR_AUTHENTICATING,
                                      "%s", "");
                         goto out;
                 }
@@ -1186,8 +1186,8 @@ scdm_session_worker_initialize_pam (ScdmSessionWorker   *worker,
 
                 if (error_code != PAM_SUCCESS) {
                         g_set_error (error,
-                                     SCDM_SESSION_WORKER_ERROR,
-                                     SCDM_SESSION_WORKER_ERROR_AUTHENTICATING,
+                                     GDM_SESSION_WORKER_ERROR,
+                                     GDM_SESSION_WORKER_ERROR_AUTHENTICATING,
                                      "%s", "");
                         goto out;
                 }
@@ -1203,7 +1203,7 @@ scdm_session_worker_initialize_pam (ScdmSessionWorker   *worker,
         }
 
         g_debug ("ScdmSessionWorker: state SETUP_COMPLETE");
-        scdm_session_worker_set_state (worker, SCDM_SESSION_WORKER_STATE_SETUP_COMPLETE);
+        scdm_session_worker_set_state (worker, GDM_SESSION_WORKER_STATE_SETUP_COMPLETE);
 
         /* Temporarily set PAM_TTY with the login VT,
            PAM_TTY will be reset with the users VT right before the user session is opened */
@@ -1244,8 +1244,8 @@ scdm_session_worker_authenticate_user (ScdmSessionWorker *worker,
                 g_debug ("ScdmSessionWorker: authentication service unavailable");
 
                 g_set_error (error,
-                             SCDM_SESSION_WORKER_ERROR,
-                             SCDM_SESSION_WORKER_ERROR_SERVICE_UNAVAILABLE,
+                             GDM_SESSION_WORKER_ERROR,
+                             GDM_SESSION_WORKER_ERROR_SERVICE_UNAVAILABLE,
                              "%s", "");
                 goto out;
         } else if (error_code != PAM_SUCCESS) {
@@ -1260,14 +1260,14 @@ scdm_session_worker_authenticate_user (ScdmSessionWorker *worker,
                 }
 
                 g_set_error (error,
-                             SCDM_SESSION_WORKER_ERROR,
-                             SCDM_SESSION_WORKER_ERROR_AUTHENTICATING,
+                             GDM_SESSION_WORKER_ERROR,
+                             GDM_SESSION_WORKER_ERROR_AUTHENTICATING,
                              "%s", get_friendly_error_message (error_code));
                 goto out;
         }
 
         g_debug ("ScdmSessionWorker: state AUTHENTICATED");
-        scdm_session_worker_set_state (worker, SCDM_SESSION_WORKER_STATE_AUTHENTICATED);
+        scdm_session_worker_set_state (worker, GDM_SESSION_WORKER_STATE_AUTHENTICATED);
 
  out:
         if (error_code != PAM_SUCCESS) {
@@ -1325,14 +1325,14 @@ scdm_session_worker_authorize_user (ScdmSessionWorker *worker,
                 g_debug ("ScdmSessionWorker: user is not authorized to log in: %s",
                          pam_strerror (worker->priv->pam_handle, error_code));
                 g_set_error (error,
-                             SCDM_SESSION_WORKER_ERROR,
-                             SCDM_SESSION_WORKER_ERROR_AUTHORIZING,
+                             GDM_SESSION_WORKER_ERROR,
+                             GDM_SESSION_WORKER_ERROR_AUTHORIZING,
                              "%s", get_friendly_error_message (error_code));
                 goto out;
         }
 
         g_debug ("ScdmSessionWorker: state AUTHORIZED");
-        scdm_session_worker_set_state (worker, SCDM_SESSION_WORKER_STATE_AUTHORIZED);
+        scdm_session_worker_set_state (worker, GDM_SESSION_WORKER_STATE_AUTHORIZED);
 
  out:
         if (error_code != PAM_SUCCESS) {
@@ -1411,7 +1411,7 @@ _change_user (ScdmSessionWorker  *worker,
          * Set the real uid and gid to the user and give the user a
          * temporary super-user effective id.
          */
-        if (setreuid (uid, SCDM_SESSION_ROOT_UID) < 0) {
+        if (setreuid (uid, GDM_SESSION_ROOT_UID) < 0) {
                 return FALSE;
         }
 #endif
@@ -1664,8 +1664,8 @@ scdm_session_worker_accredit_user (ScdmSessionWorker  *worker,
                 g_debug ("ScdmSessionWorker: Username not set");
                 error_code = PAM_USER_UNKNOWN;
                 g_set_error (error,
-                             SCDM_SESSION_WORKER_ERROR,
-                             SCDM_SESSION_WORKER_ERROR_GIVING_CREDENTIALS,
+                             GDM_SESSION_WORKER_ERROR,
+                             GDM_SESSION_WORKER_ERROR_GIVING_CREDENTIALS,
                              _("no user account available"));
                 goto out;
         }
@@ -1681,8 +1681,8 @@ scdm_session_worker_accredit_user (ScdmSessionWorker  *worker,
                 g_debug ("ScdmSessionWorker: Unable to lookup account info");
                 error_code = PAM_AUTHINFO_UNAVAIL;
                 g_set_error (error,
-                             SCDM_SESSION_WORKER_ERROR,
-                             SCDM_SESSION_WORKER_ERROR_GIVING_CREDENTIALS,
+                             GDM_SESSION_WORKER_ERROR,
+                             GDM_SESSION_WORKER_ERROR_GIVING_CREDENTIALS,
                              _("no user account available"));
                 goto out;
         }
@@ -1698,18 +1698,18 @@ scdm_session_worker_accredit_user (ScdmSessionWorker  *worker,
         if (!scdm_session_worker_environment_variable_is_set (worker, "PATH")) {
                 if (strcmp (BINDIR, "/usr/bin") == 0) {
                         scdm_session_worker_set_environment_variable (worker, "PATH",
-                                                                     SCDM_SESSION_DEFAULT_PATH);
+                                                                     GDM_SESSION_DEFAULT_PATH);
                 } else {
                         scdm_session_worker_set_environment_variable (worker, "PATH",
-                                                                     BINDIR ":" SCDM_SESSION_DEFAULT_PATH);
+                                                                     BINDIR ":" GDM_SESSION_DEFAULT_PATH);
                 }
         }
 
         if (! _change_user (worker, uid, gid)) {
                 g_debug ("ScdmSessionWorker: Unable to change to user");
                 error_code = PAM_SYSTEM_ERR;
-                g_set_error (error, SCDM_SESSION_WORKER_ERROR,
-                             SCDM_SESSION_WORKER_ERROR_GIVING_CREDENTIALS,
+                g_set_error (error, GDM_SESSION_WORKER_ERROR,
+                             GDM_SESSION_WORKER_ERROR_GIVING_CREDENTIALS,
                              "%s", _("Unable to change to user"));
                 goto out;
         }
@@ -1727,8 +1727,8 @@ scdm_session_worker_accredit_user (ScdmSessionWorker  *worker,
 
         if (error_code != PAM_SUCCESS) {
                 g_set_error (error,
-                             SCDM_SESSION_WORKER_ERROR,
-                             SCDM_SESSION_WORKER_ERROR_GIVING_CREDENTIALS,
+                             GDM_SESSION_WORKER_ERROR,
+                             GDM_SESSION_WORKER_ERROR_GIVING_CREDENTIALS,
                              "%s",
                              pam_strerror (worker->priv->pam_handle, error_code));
                 goto out;
@@ -1745,7 +1745,7 @@ scdm_session_worker_accredit_user (ScdmSessionWorker  *worker,
 
                 scdm_session_worker_get_username (worker, NULL);
                 scdm_session_auditor_report_user_accredited (worker->priv->auditor);
-                scdm_session_worker_set_state (worker, SCDM_SESSION_WORKER_STATE_ACCREDITED);
+                scdm_session_worker_set_state (worker, GDM_SESSION_WORKER_STATE_ACCREDITED);
         } else {
                 scdm_session_worker_uninitialize_pam (worker, error_code);
         }
@@ -1906,7 +1906,7 @@ _open_user_session_log (const char *dir)
         int   fd;
         char *filename;
 
-        filename = g_build_filename (dir, SCDM_SESSION_LOG_FILENAME, NULL);
+        filename = g_build_filename (dir, GDM_SESSION_LOG_FILENAME, NULL);
 
         if (g_access (dir, R_OK | W_OK | X_OK) == 0 && _is_loggable_file (filename)) {
                 char *filename_old;
@@ -1983,15 +1983,15 @@ scdm_session_worker_start_session (ScdmSessionWorker  *worker,
          * the other two modes: in the logind case, the session will activate itself when
          * ready, and in the reuse server case, we're already on the correct VT. */
         if (g_strcmp0 (worker->priv->display_seat_id, "seat0") == 0) {
-                if (worker->priv->display_mode == SCDM_SESSION_DISPLAY_MODE_NEW_VT) {
+                if (worker->priv->display_mode == GDM_SESSION_DISPLAY_MODE_NEW_VT) {
                         jump_to_vt (worker, worker->priv->session_vt);
                 }
         }
 
         if (!worker->priv->is_program_session && !run_script (worker, GDMCONFDIR "/PostLogin")) {
                 g_set_error (error,
-                             SCDM_SESSION_WORKER_ERROR,
-                             SCDM_SESSION_WORKER_ERROR_OPENING_SESSION,
+                             GDM_SESSION_WORKER_ERROR,
+                             GDM_SESSION_WORKER_ERROR_OPENING_SESSION,
                              "Failed to execute PostLogin script");
                 error_code = PAM_ABORT;
                 goto out;
@@ -1999,8 +1999,8 @@ scdm_session_worker_start_session (ScdmSessionWorker  *worker,
 
         if (!worker->priv->is_program_session && !run_script (worker, GDMCONFDIR "/PreSession")) {
                 g_set_error (error,
-                             SCDM_SESSION_WORKER_ERROR,
-                             SCDM_SESSION_WORKER_ERROR_OPENING_SESSION,
+                             GDM_SESSION_WORKER_ERROR,
+                             GDM_SESSION_WORKER_ERROR_OPENING_SESSION,
                              "Failed to execute PreSession script");
                 error_code = PAM_ABORT;
                 goto out;
@@ -2010,8 +2010,8 @@ scdm_session_worker_start_session (ScdmSessionWorker  *worker,
 
         if (session_pid < 0) {
                 g_set_error (error,
-                             SCDM_SESSION_WORKER_ERROR,
-                             SCDM_SESSION_WORKER_ERROR_OPENING_SESSION,
+                             GDM_SESSION_WORKER_ERROR,
+                             GDM_SESSION_WORKER_ERROR_OPENING_SESSION,
                              "%s", g_strerror (errno));
                 error_code = PAM_ABORT;
                 goto out;
@@ -2174,7 +2174,7 @@ scdm_session_worker_start_session (ScdmSessionWorker  *worker,
         g_assert (sizeof (GPid) <= sizeof (int));
 
         g_debug ("ScdmSessionWorker: state SESSION_STARTED");
-        scdm_session_worker_set_state (worker, SCDM_SESSION_WORKER_STATE_SESSION_STARTED);
+        scdm_session_worker_set_state (worker, GDM_SESSION_WORKER_STATE_SESSION_STARTED);
 
         scdm_session_worker_watch_child (worker);
 
@@ -2309,8 +2309,8 @@ set_up_for_current_vt (ScdmSessionWorker  *worker,
                                  pam_strerror (worker->priv->pam_handle, error_code));
                         g_free (pam_tty);
                         g_set_error (error,
-                                     SCDM_SESSION_WORKER_ERROR,
-                                     SCDM_SESSION_WORKER_ERROR_AUTHENTICATING,
+                                     GDM_SESSION_WORKER_ERROR,
+                                     GDM_SESSION_WORKER_ERROR_AUTHENTICATING,
                                      "%s", "");
                         goto out;
                 }
@@ -2326,8 +2326,8 @@ set_up_for_current_vt (ScdmSessionWorker  *worker,
                                  worker->priv->x11_display_name,
                                  pam_strerror (worker->priv->pam_handle, error_code));
                         g_set_error (error,
-                                     SCDM_SESSION_WORKER_ERROR,
-                                     SCDM_SESSION_WORKER_ERROR_AUTHENTICATING,
+                                     GDM_SESSION_WORKER_ERROR,
+                                     GDM_SESSION_WORKER_ERROR_AUTHENTICATING,
                                      "%s", "");
                         goto out;
                 }
@@ -2345,8 +2345,8 @@ set_up_for_current_vt (ScdmSessionWorker  *worker,
                         g_free (pam_xauth);
 
                         g_set_error (error,
-                                     SCDM_SESSION_WORKER_ERROR,
-                                     SCDM_SESSION_WORKER_ERROR_AUTHENTICATING,
+                                     GDM_SESSION_WORKER_ERROR,
+                                     GDM_SESSION_WORKER_ERROR_AUTHENTICATING,
                                      "%s", "");
                         goto out;
                 }
@@ -2374,21 +2374,21 @@ scdm_session_worker_open_session (ScdmSessionWorker  *worker,
         int flags;
         char *session_id = NULL;
 
-        g_assert (worker->priv->state == SCDM_SESSION_WORKER_STATE_ACCOUNT_DETAILS_SAVED);
+        g_assert (worker->priv->state == GDM_SESSION_WORKER_STATE_ACCOUNT_DETAILS_SAVED);
         g_assert (geteuid () == 0);
 
         switch (worker->priv->display_mode) {
-        case SCDM_SESSION_DISPLAY_MODE_REUSE_VT:
+        case GDM_SESSION_DISPLAY_MODE_REUSE_VT:
                 if (!set_up_for_current_vt (worker, error)) {
                         return FALSE;
                 }
                 break;
-        case SCDM_SESSION_DISPLAY_MODE_NEW_VT:
-        case SCDM_SESSION_DISPLAY_MODE_LOGIND_MANAGED:
+        case GDM_SESSION_DISPLAY_MODE_NEW_VT:
+        case GDM_SESSION_DISPLAY_MODE_LOGIND_MANAGED:
                 if (!set_up_for_new_vt (worker)) {
                         g_set_error (error,
-                                     SCDM_SESSION_WORKER_ERROR,
-                                     SCDM_SESSION_WORKER_ERROR_OPENING_SESSION,
+                                     GDM_SESSION_WORKER_ERROR,
+                                     GDM_SESSION_WORKER_ERROR_OPENING_SESSION,
                                      "Unable to open VT");
                         return FALSE;
                 }
@@ -2405,14 +2405,14 @@ scdm_session_worker_open_session (ScdmSessionWorker  *worker,
 
         if (error_code != PAM_SUCCESS) {
                 g_set_error (error,
-                             SCDM_SESSION_WORKER_ERROR,
-                             SCDM_SESSION_WORKER_ERROR_OPENING_SESSION,
+                             GDM_SESSION_WORKER_ERROR,
+                             GDM_SESSION_WORKER_ERROR_OPENING_SESSION,
                              "%s", pam_strerror (worker->priv->pam_handle, error_code));
                 goto out;
         }
 
         g_debug ("ScdmSessionWorker: state SESSION_OPENED");
-        scdm_session_worker_set_state (worker, SCDM_SESSION_WORKER_STATE_SESSION_OPENED);
+        scdm_session_worker_set_state (worker, GDM_SESSION_WORKER_STATE_SESSION_OPENED);
 
         session_id = scdm_session_worker_get_environment_variable (worker, "XDG_SESSION_ID");
 
@@ -2456,7 +2456,7 @@ scdm_session_worker_set_property (GObject      *object,
 {
         ScdmSessionWorker *self;
 
-        self = SCDM_SESSION_WORKER (object);
+        self = GDM_SESSION_WORKER (object);
 
         switch (prop_id) {
         case PROP_SERVER_ADDRESS:
@@ -2479,7 +2479,7 @@ scdm_session_worker_get_property (GObject    *object,
 {
         ScdmSessionWorker *self;
 
-        self = SCDM_SESSION_WORKER (object);
+        self = GDM_SESSION_WORKER (object);
 
         switch (prop_id) {
         case PROP_SERVER_ADDRESS:
@@ -2503,7 +2503,7 @@ scdm_session_worker_handle_set_environment_variable (ScdmDBusWorker         *obj
                                                     const char            *key,
                                                     const char            *value)
 {
-        ScdmSessionWorker *worker = SCDM_SESSION_WORKER (object);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
         scdm_session_worker_set_environment_variable (worker, key, value);
         scdm_dbus_worker_complete_set_environment_variable (object, invocation);
         return TRUE;
@@ -2514,7 +2514,7 @@ scdm_session_worker_handle_set_session_name (ScdmDBusWorker         *object,
                                             GDBusMethodInvocation *invocation,
                                             const char            *session_name)
 {
-        ScdmSessionWorker *worker = SCDM_SESSION_WORKER (object);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
         g_debug ("ScdmSessionWorker: session name set to %s", session_name);
         scdm_session_settings_set_session_name (worker->priv->user_settings,
                                                session_name);
@@ -2527,7 +2527,7 @@ scdm_session_worker_handle_set_session_display_mode (ScdmDBusWorker         *obj
                                                     GDBusMethodInvocation *invocation,
                                                     const char            *str)
 {
-        ScdmSessionWorker *worker = SCDM_SESSION_WORKER (object);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
         g_debug ("ScdmSessionWorker: session display mode set to %s", str);
         worker->priv->display_mode = scdm_session_display_mode_from_string (str);
         scdm_dbus_worker_complete_set_session_display_mode (object, invocation);
@@ -2539,7 +2539,7 @@ scdm_session_worker_handle_set_language_name (ScdmDBusWorker         *object,
                                              GDBusMethodInvocation *invocation,
                                              const char            *language_name)
 {
-        ScdmSessionWorker *worker = SCDM_SESSION_WORKER (object);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
         g_debug ("ScdmSessionWorker: language name set to %s", language_name);
         scdm_session_settings_set_language_name (worker->priv->user_settings,
                                                 language_name);
@@ -2671,10 +2671,10 @@ do_accredit (ScdmSessionWorker *worker)
 static void
 save_account_details_now (ScdmSessionWorker *worker)
 {
-        g_assert (worker->priv->state == SCDM_SESSION_WORKER_STATE_ACCREDITED);
+        g_assert (worker->priv->state == GDM_SESSION_WORKER_STATE_ACCREDITED);
 
         g_debug ("ScdmSessionWorker: saving account details for user %s", worker->priv->username);
-        scdm_session_worker_set_state (worker, SCDM_SESSION_WORKER_STATE_ACCOUNT_DETAILS_SAVED);
+        scdm_session_worker_set_state (worker, GDM_SESSION_WORKER_STATE_ACCOUNT_DETAILS_SAVED);
         if (!scdm_session_settings_save (worker->priv->user_settings,
                                         worker->priv->username)) {
                 g_warning ("could not save session and language settings");
@@ -2703,11 +2703,11 @@ on_settings_is_loaded_changed (ScdmSessionSettings *user_settings,
                                               G_CALLBACK (on_saved_language_name_read),
                                               worker);
 
-        if (worker->priv->state == SCDM_SESSION_WORKER_STATE_NONE) {
+        if (worker->priv->state == GDM_SESSION_WORKER_STATE_NONE) {
                 g_debug ("ScdmSessionWorker: queuing setup for user: %s %s",
                          worker->priv->username, worker->priv->display_device);
                 queue_state_change (worker);
-        } else if (worker->priv->state == SCDM_SESSION_WORKER_STATE_ACCREDITED) {
+        } else if (worker->priv->state == GDM_SESSION_WORKER_STATE_ACCREDITED) {
                 save_account_details_now (worker);
         } else {
                 return;
@@ -2721,7 +2721,7 @@ on_settings_is_loaded_changed (ScdmSessionSettings *user_settings,
 static void
 do_save_account_details_when_ready (ScdmSessionWorker *worker)
 {
-        g_assert (worker->priv->state == SCDM_SESSION_WORKER_STATE_ACCREDITED);
+        g_assert (worker->priv->state == GDM_SESSION_WORKER_STATE_ACCREDITED);
 
         if (!scdm_session_settings_is_loaded (worker->priv->user_settings)) {
                 g_signal_connect (G_OBJECT (worker->priv->user_settings),
@@ -2786,28 +2786,28 @@ get_state_name (int state)
         name = NULL;
 
         switch (state) {
-        case SCDM_SESSION_WORKER_STATE_NONE:
+        case GDM_SESSION_WORKER_STATE_NONE:
                 name = "NONE";
                 break;
-        case SCDM_SESSION_WORKER_STATE_SETUP_COMPLETE:
+        case GDM_SESSION_WORKER_STATE_SETUP_COMPLETE:
                 name = "SETUP_COMPLETE";
                 break;
-        case SCDM_SESSION_WORKER_STATE_AUTHENTICATED:
+        case GDM_SESSION_WORKER_STATE_AUTHENTICATED:
                 name = "AUTHENTICATED";
                 break;
-        case SCDM_SESSION_WORKER_STATE_AUTHORIZED:
+        case GDM_SESSION_WORKER_STATE_AUTHORIZED:
                 name = "AUTHORIZED";
                 break;
-        case SCDM_SESSION_WORKER_STATE_ACCREDITED:
+        case GDM_SESSION_WORKER_STATE_ACCREDITED:
                 name = "ACCREDITED";
                 break;
-        case SCDM_SESSION_WORKER_STATE_ACCOUNT_DETAILS_SAVED:
+        case GDM_SESSION_WORKER_STATE_ACCOUNT_DETAILS_SAVED:
                 name = "ACCOUNT_DETAILS_SAVED";
                 break;
-        case SCDM_SESSION_WORKER_STATE_SESSION_OPENED:
+        case GDM_SESSION_WORKER_STATE_SESSION_OPENED:
                 name = "SESSION_OPENED";
                 break;
-        case SCDM_SESSION_WORKER_STATE_SESSION_STARTED:
+        case GDM_SESSION_WORKER_STATE_SESSION_STARTED:
                 name = "SESSION_STARTED";
                 break;
         default:
@@ -2830,28 +2830,28 @@ state_change_idle (ScdmSessionWorker *worker)
         worker->priv->state_change_idle_id = 0;
 
         switch (new_state) {
-        case SCDM_SESSION_WORKER_STATE_SETUP_COMPLETE:
+        case GDM_SESSION_WORKER_STATE_SETUP_COMPLETE:
                 do_setup (worker);
                 break;
-        case SCDM_SESSION_WORKER_STATE_AUTHENTICATED:
+        case GDM_SESSION_WORKER_STATE_AUTHENTICATED:
                 do_authenticate (worker);
                 break;
-        case SCDM_SESSION_WORKER_STATE_AUTHORIZED:
+        case GDM_SESSION_WORKER_STATE_AUTHORIZED:
                 do_authorize (worker);
                 break;
-        case SCDM_SESSION_WORKER_STATE_ACCREDITED:
+        case GDM_SESSION_WORKER_STATE_ACCREDITED:
                 do_accredit (worker);
                 break;
-        case SCDM_SESSION_WORKER_STATE_ACCOUNT_DETAILS_SAVED:
+        case GDM_SESSION_WORKER_STATE_ACCOUNT_DETAILS_SAVED:
                 do_save_account_details_when_ready (worker);
                 break;
-        case SCDM_SESSION_WORKER_STATE_SESSION_OPENED:
+        case GDM_SESSION_WORKER_STATE_SESSION_OPENED:
                 do_open_session (worker);
                 break;
-        case SCDM_SESSION_WORKER_STATE_SESSION_STARTED:
+        case GDM_SESSION_WORKER_STATE_SESSION_STARTED:
                 do_start_session (worker);
                 break;
-        case SCDM_SESSION_WORKER_STATE_NONE:
+        case GDM_SESSION_WORKER_STATE_NONE:
         default:
                 g_assert_not_reached ();
         }
@@ -2875,16 +2875,16 @@ validate_state_change (ScdmSessionWorker      *worker,
 {
         if (worker->priv->pending_invocation != NULL) {
                 g_dbus_method_invocation_return_error (invocation,
-                                                       SCDM_SESSION_WORKER_ERROR,
-                                                       SCDM_SESSION_WORKER_ERROR_OUTSTANDING_REQUEST,
+                                                       GDM_SESSION_WORKER_ERROR,
+                                                       GDM_SESSION_WORKER_ERROR_OUTSTANDING_REQUEST,
                                                        "Cannot process state change to %s, as there is already an outstanding request to move to state %s",
                                                        get_state_name (new_state),
                                                        get_state_name (worker->priv->state + 1));
                 return FALSE;
         } else if (worker->priv->state != new_state - 1) {
                 g_dbus_method_invocation_return_error (invocation,
-                                                       SCDM_SESSION_WORKER_ERROR,
-                                                       SCDM_SESSION_WORKER_ERROR_WRONG_STATE,
+                                                       GDM_SESSION_WORKER_ERROR,
+                                                       GDM_SESSION_WORKER_ERROR_WRONG_STATE,
                                                        "Cannot move to state %s, in state %s, not %s",
                                                        get_state_name (new_state),
                                                        get_state_name (worker->priv->state),
@@ -2910,8 +2910,8 @@ static gboolean
 scdm_session_worker_handle_authenticate (ScdmDBusWorker         *object,
                                         GDBusMethodInvocation *invocation)
 {
-        ScdmSessionWorker *worker = SCDM_SESSION_WORKER (object);
-        validate_and_queue_state_change (worker, invocation, SCDM_SESSION_WORKER_STATE_AUTHENTICATED);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
+        validate_and_queue_state_change (worker, invocation, GDM_SESSION_WORKER_STATE_AUTHENTICATED);
         return TRUE;
 }
 
@@ -2919,8 +2919,8 @@ static gboolean
 scdm_session_worker_handle_authorize (ScdmDBusWorker         *object,
                                      GDBusMethodInvocation *invocation)
 {
-        ScdmSessionWorker *worker = SCDM_SESSION_WORKER (object);
-        validate_and_queue_state_change (worker, invocation, SCDM_SESSION_WORKER_STATE_AUTHORIZED);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
+        validate_and_queue_state_change (worker, invocation, GDM_SESSION_WORKER_STATE_AUTHORIZED);
         return TRUE;
 }
 
@@ -2928,8 +2928,8 @@ static gboolean
 scdm_session_worker_handle_establish_credentials (ScdmDBusWorker         *object,
                                                  GDBusMethodInvocation *invocation)
 {
-        ScdmSessionWorker *worker = SCDM_SESSION_WORKER (object);
-        validate_and_queue_state_change (worker, invocation, SCDM_SESSION_WORKER_STATE_ACCREDITED);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
+        validate_and_queue_state_change (worker, invocation, GDM_SESSION_WORKER_STATE_ACCREDITED);
 
         if (!worker->priv->is_reauth_session) {
                 worker->priv->cred_flags = PAM_ESTABLISH_CRED;
@@ -2944,8 +2944,8 @@ static gboolean
 scdm_session_worker_handle_open (ScdmDBusWorker         *object,
                                 GDBusMethodInvocation *invocation)
 {
-        ScdmSessionWorker *worker = SCDM_SESSION_WORKER (object);
-        validate_and_queue_state_change (worker, invocation, SCDM_SESSION_WORKER_STATE_ACCOUNT_DETAILS_SAVED);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
+        validate_and_queue_state_change (worker, invocation, GDM_SESSION_WORKER_STATE_ACCOUNT_DETAILS_SAVED);
         return TRUE;
 }
 
@@ -2980,13 +2980,13 @@ scdm_session_worker_handle_initialize (ScdmDBusWorker         *object,
                                       GDBusMethodInvocation *invocation,
                                       GVariant              *details)
 {
-        ScdmSessionWorker *worker = SCDM_SESSION_WORKER (object);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
         GVariantIter      iter;
         char             *key;
         GVariant         *value;
         gboolean          wait_for_settings = FALSE;
 
-        if (!validate_state_change (worker, invocation, SCDM_SESSION_WORKER_STATE_SETUP_COMPLETE))
+        if (!validate_state_change (worker, invocation, GDM_SESSION_WORKER_STATE_SETUP_COMPLETE))
                 return TRUE;
 
         g_variant_iter_init (&iter, details);
@@ -3063,8 +3063,8 @@ scdm_session_worker_handle_setup (ScdmDBusWorker         *object,
                                  gboolean               display_is_local,
                                  gboolean               display_is_initial)
 {
-        ScdmSessionWorker *worker = SCDM_SESSION_WORKER (object);
-        validate_and_queue_state_change (worker, invocation, SCDM_SESSION_WORKER_STATE_SETUP_COMPLETE);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
+        validate_and_queue_state_change (worker, invocation, GDM_SESSION_WORKER_STATE_SETUP_COMPLETE);
 
         worker->priv->service = g_strdup (service);
         worker->priv->x11_display_name = g_strdup (x11_display_name);
@@ -3101,9 +3101,9 @@ scdm_session_worker_handle_setup_for_user (ScdmDBusWorker         *object,
                                           gboolean               display_is_local,
                                           gboolean               display_is_initial)
 {
-        ScdmSessionWorker *worker = SCDM_SESSION_WORKER (object);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
 
-        if (!validate_state_change (worker, invocation, SCDM_SESSION_WORKER_STATE_SETUP_COMPLETE))
+        if (!validate_state_change (worker, invocation, GDM_SESSION_WORKER_STATE_SETUP_COMPLETE))
                 return TRUE;
 
         worker->priv->service = g_strdup (service);
@@ -3155,8 +3155,8 @@ scdm_session_worker_handle_setup_for_program (ScdmDBusWorker         *object,
                                              gboolean               display_is_initial,
                                              const char            *log_file)
 {
-        ScdmSessionWorker *worker = SCDM_SESSION_WORKER (object);
-        validate_and_queue_state_change (worker, invocation, SCDM_SESSION_WORKER_STATE_SETUP_COMPLETE);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
+        validate_and_queue_state_change (worker, invocation, GDM_SESSION_WORKER_STATE_SETUP_COMPLETE);
 
         worker->priv->service = g_strdup (service);
         worker->priv->x11_display_name = g_strdup (x11_display_name);
@@ -3178,14 +3178,14 @@ scdm_session_worker_handle_start_program (ScdmDBusWorker         *object,
                                          GDBusMethodInvocation *invocation,
                                          const char            *text)
 {
-        ScdmSessionWorker *worker = SCDM_SESSION_WORKER (object);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
         GError *parse_error = NULL;
-        validate_state_change (worker, invocation, SCDM_SESSION_WORKER_STATE_SESSION_STARTED);
+        validate_state_change (worker, invocation, GDM_SESSION_WORKER_STATE_SESSION_STARTED);
 
         if (worker->priv->is_reauth_session) {
                 g_dbus_method_invocation_return_error (invocation,
-                                                       SCDM_SESSION_WORKER_ERROR,
-                                                       SCDM_SESSION_WORKER_ERROR_IN_REAUTH_SESSION,
+                                                       GDM_SESSION_WORKER_ERROR,
+                                                       GDM_SESSION_WORKER_ERROR_IN_REAUTH_SESSION,
                                                        "Cannot start a program while in a reauth session");
                 return TRUE;
         }
@@ -3289,7 +3289,7 @@ reauthentication_request_new (ScdmSessionWorker      *worker,
         request->worker = worker;
         request->pid_of_caller = pid_of_caller;
         request->uid_of_caller = uid_of_caller;
-        request->session = scdm_session_new (SCDM_SESSION_VERIFICATION_MODE_REAUTHENTICATE,
+        request->session = scdm_session_new (GDM_SESSION_VERIFICATION_MODE_REAUTHENTICATE,
                                             uid_of_caller,
                                             worker->priv->x11_display_name,
                                             worker->priv->hostname,
@@ -3339,13 +3339,13 @@ scdm_session_worker_handle_start_reauthentication (ScdmDBusWorker         *objec
                                                   int                    pid_of_caller,
                                                   int                    uid_of_caller)
 {
-        ScdmSessionWorker *worker = SCDM_SESSION_WORKER (object);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
         ReauthenticationRequest *request;
 
-        if (worker->priv->state != SCDM_SESSION_WORKER_STATE_SESSION_STARTED) {
+        if (worker->priv->state != GDM_SESSION_WORKER_STATE_SESSION_STARTED) {
                 g_dbus_method_invocation_return_error (invocation,
-                                                       SCDM_SESSION_WORKER_ERROR,
-                                                       SCDM_SESSION_WORKER_ERROR_WRONG_STATE,
+                                                       GDM_SESSION_WORKER_ERROR,
+                                                       GDM_SESSION_WORKER_ERROR_WRONG_STATE,
                                                        "Cannot reauthenticate while in state %s",
                                                        get_state_name (worker->priv->state));
                 return TRUE;
@@ -3368,7 +3368,7 @@ scdm_session_worker_constructor (GType                  type,
         ScdmSessionWorker  *worker;
         GError            *error;
 
-        worker = SCDM_SESSION_WORKER (G_OBJECT_CLASS (scdm_session_worker_parent_class)->constructor (type,
+        worker = GDM_SESSION_WORKER (G_OBJECT_CLASS (scdm_session_worker_parent_class)->constructor (type,
                                                                                                     n_construct_properties,
                                                                                                     construct_properties));
 
@@ -3390,7 +3390,7 @@ scdm_session_worker_constructor (GType                  type,
         worker->priv->manager = SCDM_DBUS_WORKER_MANAGER (scdm_dbus_worker_manager_proxy_new_sync (worker->priv->connection,
                                                                                                  G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES,
                                                                                                  NULL, /* dbus name */
-                                                                                                 SCDM_SESSION_DBUS_PATH,
+                                                                                                 GDM_SESSION_DBUS_PATH,
                                                                                                  NULL,
                                                                                                  &error));
         if (worker->priv->manager == NULL) {
@@ -3472,7 +3472,7 @@ scdm_session_worker_class_init (ScdmSessionWorkerClass *klass)
                                                             "state",
                                                             "state",
                                                             SCDM_TYPE_SESSION_WORKER_STATE,
-                                                            SCDM_SESSION_WORKER_STATE_NONE,
+                                                            GDM_SESSION_WORKER_STATE_NONE,
                                                             G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
 }
 
@@ -3505,7 +3505,7 @@ reauthentication_request_free (ReauthenticationRequest *request)
 static void
 scdm_session_worker_init (ScdmSessionWorker *worker)
 {
-        worker->priv = SCDM_SESSION_WORKER_GET_PRIVATE (worker);
+        worker->priv = GDM_SESSION_WORKER_GET_PRIVATE (worker);
 
         worker->priv->user_settings = scdm_session_settings_new ();
         worker->priv->reauthentication_requests = g_hash_table_new_full (NULL,
@@ -3534,7 +3534,7 @@ scdm_session_worker_finalize (GObject *object)
         g_return_if_fail (object != NULL);
         g_return_if_fail (GDM_IS_SESSION_WORKER (object));
 
-        worker = SCDM_SESSION_WORKER (object);
+        worker = GDM_SESSION_WORKER (object);
 
         g_return_if_fail (worker->priv != NULL);
 
@@ -3577,5 +3577,5 @@ scdm_session_worker_new (const char *address,
                                "is-reauth-session", is_reauth_session,
                                NULL);
 
-        return SCDM_SESSION_WORKER (object);
+        return GDM_SESSION_WORKER (object);
 }

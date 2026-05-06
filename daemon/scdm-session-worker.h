@@ -18,8 +18,8 @@
  * 02110-1301, USA.
  */
 
-#ifndef __SCDM_SESSION_WORKER_H
-#define __SCDM_SESSION_WORKER_H
+#ifndef __GDM_SESSION_WORKER_H
+#define __GDM_SESSION_WORKER_H
 
 #include <glib-object.h>
 
@@ -30,21 +30,21 @@
 G_BEGIN_DECLS
 
 #define SCDM_TYPE_SESSION_WORKER            (scdm_session_worker_get_type ())
-#define SCDM_SESSION_WORKER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCDM_TYPE_SESSION_WORKER, ScdmSessionWorker))
-#define SCDM_SESSION_WORKER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SCDM_TYPE_SESSION_WORKER, ScdmSessionWorkerClass))
+#define GDM_SESSION_WORKER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SCDM_TYPE_SESSION_WORKER, ScdmSessionWorker))
+#define GDM_SESSION_WORKER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SCDM_TYPE_SESSION_WORKER, ScdmSessionWorkerClass))
 #define GDM_IS_SESSION_WORKER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SCDM_TYPE_SESSION_WORKER))
 #define GDM_IS_SESSION_WORKER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), SCDM_TYPE_SESSION_WORKER))
-#define SCDM_SESSION_WORKER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), SCDM_TYPE_SESSION_WORKER, ScdmSessionWorkerClass))
+#define GDM_SESSION_WORKER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), SCDM_TYPE_SESSION_WORKER, ScdmSessionWorkerClass))
 
 typedef enum {
-        SCDM_SESSION_WORKER_STATE_NONE = 0,
-        SCDM_SESSION_WORKER_STATE_SETUP_COMPLETE,
-        SCDM_SESSION_WORKER_STATE_AUTHENTICATED,
-        SCDM_SESSION_WORKER_STATE_AUTHORIZED,
-        SCDM_SESSION_WORKER_STATE_ACCREDITED,
-        SCDM_SESSION_WORKER_STATE_ACCOUNT_DETAILS_SAVED,
-        SCDM_SESSION_WORKER_STATE_SESSION_OPENED,
-        SCDM_SESSION_WORKER_STATE_SESSION_STARTED
+        GDM_SESSION_WORKER_STATE_NONE = 0,
+        GDM_SESSION_WORKER_STATE_SETUP_COMPLETE,
+        GDM_SESSION_WORKER_STATE_AUTHENTICATED,
+        GDM_SESSION_WORKER_STATE_AUTHORIZED,
+        GDM_SESSION_WORKER_STATE_ACCREDITED,
+        GDM_SESSION_WORKER_STATE_ACCOUNT_DETAILS_SAVED,
+        GDM_SESSION_WORKER_STATE_SESSION_OPENED,
+        GDM_SESSION_WORKER_STATE_SESSION_STARTED
 } ScdmSessionWorkerState;
 
 typedef struct ScdmSessionWorkerPrivate ScdmSessionWorkerPrivate;
@@ -65,4 +65,4 @@ GType              scdm_session_worker_get_type                 (void);
 ScdmSessionWorker * scdm_session_worker_new                      (const char *server_address,
                                                                 gboolean    is_for_reauth) G_GNUC_MALLOC;
 G_END_DECLS
-#endif /* SCDM_SESSION_WORKER_H */
+#endif /* GDM_SESSION_WORKER_H */

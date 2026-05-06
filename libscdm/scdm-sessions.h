@@ -34,4 +34,4 @@ char *                 scdm_get_session_name_and_description (const char  *id,
 
 G_END_DECLS
 
-#endif /* __SCDM_SESSION_H */
+#endif /* __GDM_SESSION_H */

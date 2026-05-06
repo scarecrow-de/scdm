@@ -18,8 +18,8 @@
  * 02110-1301, USA.
  */
 
-#ifndef __SCDM_SESSION_RECORD_H
-#define __SCDM_SESSION_RECORD_H
+#ifndef __GDM_SESSION_RECORD_H
+#define __GDM_SESSION_RECORD_H
 
 #include <glib.h>
 
@@ -47,4 +47,4 @@ scdm_session_record_failed (GPid                  session_pid,
 
 G_END_DECLS
 
-#endif /* SCDM_SESSION_RECORD_H */
+#endif /* GDM_SESSION_RECORD_H */

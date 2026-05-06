@@ -1054,7 +1054,7 @@ open_temporary_reauthentication_channel (ScdmManager            *self,
         display = "";
         auth_file = "/dev/null";
 
-        session = scdm_session_new (SCDM_SESSION_VERIFICATION_MODE_REAUTHENTICATE,
+        session = scdm_session_new (GDM_SESSION_VERIFICATION_MODE_REAUTHENTICATE,
                                    uid,
                                    display,
                                    NULL,
@@ -1814,7 +1814,7 @@ on_start_user_session (StartUserSessionOperation *operation)
         session_id = scdm_session_get_conversation_session_id (operation->session,
                                                               operation->service_name);
 
-        if (scdm_session_get_display_mode (operation->session) == SCDM_SESSION_DISPLAY_MODE_REUSE_VT) {
+        if (scdm_session_get_display_mode (operation->session) == GDM_SESSION_DISPLAY_MODE_REUSE_VT) {
                 /* In this case, the greeter's display is morphing into
                  * the user session display. Kill the greeter on this session
                  * and let the user session follow the same display. */
@@ -2030,7 +2030,7 @@ on_session_reauthenticated (ScdmSession *session,
 {
         gboolean fail_if_already_switched = FALSE;
 
-        if (scdm_session_get_display_mode (session) == SCDM_SESSION_DISPLAY_MODE_REUSE_VT) {
+        if (scdm_session_get_display_mode (session) == GDM_SESSION_DISPLAY_MODE_REUSE_VT) {
                 const char *seat_id;
                 char *session_id;
 
@@ -2320,7 +2320,7 @@ create_user_session_for_display (ScdmManager *manager,
                       NULL);
         display_device = get_display_device (manager, display);
 
-        session = scdm_session_new (SCDM_SESSION_VERIFICATION_MODE_LOGIN,
+        session = scdm_session_new (GDM_SESSION_VERIFICATION_MODE_LOGIN,
                                    allowed_user,
                                    display_name,
                                    remote_hostname,

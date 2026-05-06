@@ -83,7 +83,7 @@ on_state_changed (ScdmSessionWorker *worker,
 
         g_object_get (G_OBJECT (worker), "state", &state, NULL);
 
-        if (state != SCDM_SESSION_WORKER_STATE_SESSION_STARTED)
+        if (state != GDM_SESSION_WORKER_STATE_SESSION_STARTED)
                 return;
 
         g_unix_signal_add (SIGTERM, on_shutdown_signal_cb, main_loop);
@@ -137,13 +137,13 @@ main (int    argc,
 
         scdm_log_set_debug (is_debug_set ());
 
-        address = g_getenv ("SCDM_SESSION_DBUS_ADDRESS");
+        address = g_getenv ("GDM_SESSION_DBUS_ADDRESS");
         if (address == NULL) {
-                g_warning ("SCDM_SESSION_DBUS_ADDRESS not set");
+                g_warning ("GDM_SESSION_DBUS_ADDRESS not set");
                 exit (EXIT_FAILURE);
         }
 
-        is_for_reauth = g_getenv ("SCDM_SESSION_FOR_REAUTH") != NULL;
+        is_for_reauth = g_getenv ("GDM_SESSION_FOR_REAUTH") != NULL;
 
         worker = scdm_session_worker_new (address, is_for_reauth);
 

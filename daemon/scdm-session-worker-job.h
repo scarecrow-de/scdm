@@ -19,8 +19,8 @@
  */
 
 
-#ifndef __SCDM_SESSION_WORKER_JOB_H
-#define __SCDM_SESSION_WORKER_JOB_H
+#ifndef __GDM_SESSION_WORKER_JOB_H
+#define __GDM_SESSION_WORKER_JOB_H
 
 #include <glib-object.h>
 
@@ -45,4 +45,4 @@ GPid                    scdm_session_worker_job_get_pid            (ScdmSessionW
 
 G_END_DECLS
 
-#endif /* __SCDM_SESSION_WORKER_JOB_H */
+#endif /* __GDM_SESSION_WORKER_JOB_H */

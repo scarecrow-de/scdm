@@ -121,7 +121,7 @@ scdm_session_settings_finalize (GObject *object)
         ScdmSessionSettings *settings;
         GObjectClass *parent_class;
 
-        settings = SCDM_SESSION_SETTINGS (object);
+        settings = GDM_SESSION_SETTINGS (object);
 
         if (settings->priv->user != NULL) {
                 g_object_unref (settings->priv->user);
@@ -185,7 +185,7 @@ scdm_session_settings_set_property (GObject      *object,
 {
         ScdmSessionSettings *settings;
 
-        settings = SCDM_SESSION_SETTINGS (object);
+        settings = GDM_SESSION_SETTINGS (object);
 
         switch (prop_id) {
                 case PROP_LANGUAGE_NAME:
@@ -209,7 +209,7 @@ scdm_session_settings_get_property (GObject    *object,
 {
         ScdmSessionSettings *settings;
 
-        settings = SCDM_SESSION_SETTINGS (object);
+        settings = GDM_SESSION_SETTINGS (object);
 
         switch (prop_id) {
                 case PROP_SESSION_NAME:

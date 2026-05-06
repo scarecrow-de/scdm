@@ -65,7 +65,7 @@ scdm_session_solaris_auditor_report_password_changed (ScdmSessionAuditor *audito
 {
         ScdmSessionSolarisAuditor *solaris_auditor;
 
-        solaris_auditor = SCDM_SESSION_SOLARIS_AUDITOR (auditor);
+        solaris_auditor = GDM_SESSION_SOLARIS_AUDITOR (auditor);
         solaris_auditor->password_change_initiated = TRUE;
         solaris_auditor->password_changed = TRUE;
 }
@@ -75,7 +75,7 @@ scdm_session_solaris_auditor_report_password_change_failure (ScdmSessionAuditor 
 {
         ScdmSessionSolarisAuditor *solaris_auditor;
 
-        solaris_auditor = SCDM_SESSION_SOLARIS_AUDITOR (auditor);
+        solaris_auditor = GDM_SESSION_SOLARIS_AUDITOR (auditor);
         solaris_auditor->password_change_initiated = TRUE;
         solaris_auditor->password_changed = FALSE;
 }
@@ -85,7 +85,7 @@ scdm_session_solaris_auditor_report_user_accredited (ScdmSessionAuditor *auditor
 {
         ScdmSessionSolarisAuditor *solaris_auditor;
 
-        solaris_auditor = SCDM_SESSION_SOLARIS_AUDITOR (auditor);
+        solaris_auditor = GDM_SESSION_SOLARIS_AUDITOR (auditor);
         solaris_auditor->user_accredited = TRUE;
 }
 
@@ -96,7 +96,7 @@ scdm_session_solaris_auditor_report_login (ScdmSessionAuditor *auditor)
        adt_session_data_t       *adt_ah;  /* Audit session handle */
        adt_event_data_t         *event;   /* Event to generate */
 
-       solaris_auditor = SCDM_SESSION_SOLARIS_AUDITOR (auditor);
+       solaris_auditor = GDM_SESSION_SOLARIS_AUDITOR (auditor);
 
        g_return_if_fail (solaris_auditor->username != NULL);
 
@@ -159,7 +159,7 @@ scdm_session_solaris_auditor_report_login_failure (ScdmSessionAuditor *auditor,
         adt_event_data_t         *event;  /* Event to generate        */
         adt_termid_t             *tid;    /* Terminal ID for failures */
 
-        solaris_auditor = SCDM_SESSION_SOLARIS_AUDITOR (auditor);
+        solaris_auditor = GDM_SESSION_SOLARIS_AUDITOR (auditor);
         g_object_get (G_OBJECT (auditor),
                       "hostname", &hostname,
                       "display-device", &display_device, NULL);
@@ -272,7 +272,7 @@ scdm_session_solaris_auditor_report_logout (ScdmSessionAuditor *auditor)
         adt_session_data_t       *adt_ah;  /* Audit session handle */
         adt_event_data_t         *event;   /* Event to generate    */
 
-        solaris_auditor = SCDM_SESSION_SOLARIS_AUDITOR (auditor);
+        solaris_auditor = GDM_SESSION_SOLARIS_AUDITOR (auditor);
 
         adt_ah = solaris_auditor->audit_session_handle;
 
@@ -306,7 +306,7 @@ scdm_session_solaris_auditor_class_init (ScdmSessionSolarisAuditorClass *klass)
         ScdmSessionAuditorClass *auditor_class;
 
         object_class = G_OBJECT_CLASS (klass);
-        auditor_class = SCDM_SESSION_AUDITOR_CLASS (klass);
+        auditor_class = GDM_SESSION_AUDITOR_CLASS (klass);
 
         object_class->finalize = scdm_session_solaris_auditor_finalize;
 
@@ -358,7 +358,7 @@ scdm_session_solaris_auditor_finalize (GObject *object)
         ScdmSessionSolarisAuditor *solaris_auditor;
         GObjectClass *parent_class;
 
-        solaris_auditor = SCDM_SESSION_SOLARIS_AUDITOR (object);
+        solaris_auditor = GDM_SESSION_SOLARIS_AUDITOR (object);
 
         g_free (solaris_auditor->username);
         solaris_auditor->username = NULL;
@@ -381,7 +381,7 @@ scdm_session_solaris_auditor_new (const char *hostname,
                                 "display-device", display_device,
                                 NULL);
 
-        return SCDM_SESSION_AUDITOR (auditor);
+        return GDM_SESSION_AUDITOR (auditor);
 }
 
 
