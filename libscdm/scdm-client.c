@@ -99,7 +99,7 @@ on_got_manager (GObject             *object,
         g_autoptr(ScdmManager) manager = NULL;
         g_autoptr(GError)     error = NULL;
 
-        client = SCDM_CLIENT (g_async_result_get_source_object (G_ASYNC_RESULT (task)));
+        client = GDM_CLIENT (g_async_result_get_source_object (G_ASYNC_RESULT (task)));
         manager = scdm_manager_proxy_new_finish (result, &error);
 
         if (error != NULL) {
@@ -195,7 +195,7 @@ on_user_verifier_choice_list_proxy_created (GObject            *source,
         ScdmUserVerifierChoiceList *choice_list;
         g_autoptr(GError)          error = NULL;
 
-        client = SCDM_CLIENT (g_async_result_get_source_object (G_ASYNC_RESULT (data->task)));
+        client = GDM_CLIENT (g_async_result_get_source_object (G_ASYNC_RESULT (data->task)));
 
         choice_list = scdm_user_verifier_choice_list_proxy_new_finish (result, &error);
 
@@ -220,7 +220,7 @@ on_user_verifier_extensions_enabled (ScdmUserVerifier    *user_verifier,
         g_autoptr(GError) error = NULL;
         size_t     i;
 
-        client = SCDM_CLIENT (g_async_result_get_source_object (G_ASYNC_RESULT (data->task)));
+        client = GDM_CLIENT (g_async_result_get_source_object (G_ASYNC_RESULT (data->task)));
         cancellable = g_task_get_cancellable (data->task);
 
         scdm_user_verifier_call_enable_extensions_finish (user_verifier, result, &error);
@@ -291,7 +291,7 @@ on_user_verifier_proxy_created (GObject            *source,
 
         g_debug ("UserVerifier %p created", user_verifier);
 
-        self = SCDM_CLIENT (g_async_result_get_source_object (G_ASYNC_RESULT (task)));
+        self = GDM_CLIENT (g_async_result_get_source_object (G_ASYNC_RESULT (task)));
         if (self->enabled_extensions == NULL) {
                 g_debug ("no enabled extensions");
                 g_task_return_pointer (task,
@@ -475,7 +475,7 @@ on_session_opened (ScdmManager         *manager,
         g_autoptr(GError)    error = NULL;
         g_autofree char     *address = NULL;
 
-        client = SCDM_CLIENT (g_async_result_get_source_object (G_ASYNC_RESULT (task)));
+        client = GDM_CLIENT (g_async_result_get_source_object (G_ASYNC_RESULT (task)));
 
         if (!scdm_manager_call_open_session_finish (manager,
                                                    &address,
@@ -1443,7 +1443,7 @@ scdm_client_finalize (GObject *object)
         g_return_if_fail (object != NULL);
         g_return_if_fail (GDM_IS_CLIENT (object));
 
-        client = SCDM_CLIENT (object);
+        client = GDM_CLIENT (object);
 
         g_return_if_fail (client != NULL);
 
@@ -1487,7 +1487,7 @@ scdm_client_new (void)
                                            (gpointer *) &client_object);
         }
 
-        return SCDM_CLIENT (client_object);
+        return GDM_CLIENT (client_object);
 }
 
 

@@ -213,7 +213,7 @@ goto_login_session (GDBusConnection  *connection,
         free (our_session);
         if (res < 0) {
                 g_debug ("failed to determine own seat: %s", strerror (-res));
-                g_set_error (error, SCDM_CLIENT_ERROR, 0, _("Could not identify the current seat."));
+                g_set_error (error, GDM_CLIENT_ERROR, 0, _("Could not identify the current seat."));
 
                 return FALSE;
         }
@@ -223,7 +223,7 @@ goto_login_session (GDBusConnection  *connection,
                 free (seat_id);
 
                 g_debug ("failed to determine whether seat can do multi session: %s", strerror (-res));
-                g_set_error (error, SCDM_CLIENT_ERROR, 0, _("The system is unable to determine whether to switch to an existing login screen or start up a new login screen."));
+                g_set_error (error, GDM_CLIENT_ERROR, 0, _("The system is unable to determine whether to switch to an existing login screen or start up a new login screen."));
 
                 return FALSE;
         }
@@ -231,7 +231,7 @@ goto_login_session (GDBusConnection  *connection,
         if (res == 0) {
                 free (seat_id);
 
-                g_set_error (error, SCDM_CLIENT_ERROR, 0, _("The system is unable to start up a new login screen."));
+                g_set_error (error, GDM_CLIENT_ERROR, 0, _("The system is unable to start up a new login screen."));
 
                 return FALSE;
         }
