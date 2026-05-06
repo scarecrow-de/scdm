@@ -18,8 +18,8 @@
  *
  */
 
-#ifndef __SCDM_HOST_CHOOSER_DIALOG_H
-#define __SCDM_HOST_CHOOSER_DIALOG_H
+#ifndef __GDM_HOST_CHOOSER_DIALOG_H
+#define __GDM_HOST_CHOOSER_DIALOG_H
 
 #include <glib-object.h>
 #include <gtk/gtk.h>
@@ -38,4 +38,4 @@ ScdmChooserHost *       scdm_host_chooser_dialog_get_host           (ScdmHostCho
 
 G_END_DECLS
 
-#endif /* __SCDM_HOST_CHOOSER_DIALOG_H */
+#endif /* __GDM_HOST_CHOOSER_DIALOG_H */

@@ -678,7 +678,7 @@ scdm_host_chooser_widget_set_property (GObject        *object,
 {
         ScdmHostChooserWidget *self;
 
-        self = SCDM_HOST_CHOOSER_WIDGET (object);
+        self = GDM_HOST_CHOOSER_WIDGET (object);
 
         switch (prop_id) {
         case PROP_KIND_MASK:
@@ -710,7 +710,7 @@ scdm_host_chooser_widget_constructor (GType                  type,
 {
         ScdmHostChooserWidget      *widget;
 
-        widget = SCDM_HOST_CHOOSER_WIDGET (G_OBJECT_CLASS (scdm_host_chooser_widget_parent_class)->constructor (type,
+        widget = GDM_HOST_CHOOSER_WIDGET (G_OBJECT_CLASS (scdm_host_chooser_widget_parent_class)->constructor (type,
                                                                                                                            n_construct_properties,
                                                                                                                            construct_properties));
 
@@ -725,7 +725,7 @@ scdm_host_chooser_widget_dispose (GObject *object)
 {
         ScdmHostChooserWidget *widget;
 
-        widget = SCDM_HOST_CHOOSER_WIDGET (object);
+        widget = GDM_HOST_CHOOSER_WIDGET (object);
 
         g_debug ("Disposing host_chooser_widget");
 

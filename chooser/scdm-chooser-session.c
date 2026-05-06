@@ -157,7 +157,7 @@ on_dialog_response (GtkDialog         *dialog,
         host = NULL;
         switch (response_id) {
         case GTK_RESPONSE_OK:
-                host = scdm_host_chooser_dialog_get_host (SCDM_HOST_CHOOSER_DIALOG (dialog));
+                host = scdm_host_chooser_dialog_get_host (GDM_HOST_CHOOSER_DIALOG (dialog));
         case GTK_RESPONSE_NONE:
                 /* delete event */
         default:

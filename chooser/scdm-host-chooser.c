@@ -231,7 +231,7 @@ main (int argc, char *argv[])
         if (gtk_dialog_run (GTK_DIALOG (chooser)) == GTK_RESPONSE_OK) {
                 ScdmChooserHost *host;
 
-                host = scdm_host_chooser_dialog_get_host (SCDM_HOST_CHOOSER_DIALOG (chooser));
+                host = scdm_host_chooser_dialog_get_host (GDM_HOST_CHOOSER_DIALOG (chooser));
                 if (host != NULL) {
                         char *hostname;
                         /* FIXME: handle different host types here? */
