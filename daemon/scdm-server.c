@@ -877,7 +877,7 @@ scdm_server_set_property (GObject      *object,
 {
         ScdmServer *self;
 
-        self = SCDM_SERVER (object);
+        self = GDM_SERVER (object);
 
         switch (prop_id) {
         case PROP_DISPLAY_NAME:
@@ -912,7 +912,7 @@ scdm_server_get_property (GObject    *object,
 {
         ScdmServer *self;
 
-        self = SCDM_SERVER (object);
+        self = GDM_SERVER (object);
 
         switch (prop_id) {
         case PROP_DISPLAY_NAME:
@@ -1053,7 +1053,7 @@ scdm_server_finalize (GObject *object)
         g_return_if_fail (object != NULL);
         g_return_if_fail (GDM_IS_SERVER (object));
 
-        server = SCDM_SERVER (object);
+        server = GDM_SERVER (object);
 
         scdm_server_stop (server);
 
@@ -1084,5 +1084,5 @@ scdm_server_new (const char *display_name,
                                "is-initial", initial,
                                NULL);
 
-        return SCDM_SERVER (object);
+        return GDM_SERVER (object);
 }

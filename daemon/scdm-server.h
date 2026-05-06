@@ -19,8 +19,8 @@
  */
 
 
-#ifndef __SCDM_SERVER_H
-#define __SCDM_SERVER_H
+#ifndef __GDM_SERVER_H
+#define __GDM_SERVER_H
 
 #include <glib-object.h>
 
@@ -39,4 +39,4 @@ char *              scdm_server_get_display_device (ScdmServer *server);
 
 G_END_DECLS
 
-#endif /* __SCDM_SERVER_H */
+#endif /* __GDM_SERVER_H */
