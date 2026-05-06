@@ -62,7 +62,7 @@ scdm_local_display_constructor (GType                  type,
 {
         ScdmLocalDisplay      *display;
 
-        display = SCDM_LOCAL_DISPLAY (G_OBJECT_CLASS (scdm_local_display_parent_class)->constructor (type,
+        display = GDM_LOCAL_DISPLAY (G_OBJECT_CLASS (scdm_local_display_parent_class)->constructor (type,
                                                                                                    n_construct_properties,
                                                                                                    construct_properties));
 
@@ -77,7 +77,7 @@ scdm_local_display_constructor (GType                  type,
 static void
 scdm_local_display_finalize (GObject *object)
 {
-        ScdmLocalDisplay *display = SCDM_LOCAL_DISPLAY (object);
+        ScdmLocalDisplay *display = GDM_LOCAL_DISPLAY (object);
 
         g_clear_object (&display->skeleton);
 
@@ -87,7 +87,7 @@ scdm_local_display_finalize (GObject *object)
 static gboolean
 scdm_local_display_prepare (ScdmDisplay *display)
 {
-        ScdmLocalDisplay *self = SCDM_LOCAL_DISPLAY (display);
+        ScdmLocalDisplay *self = GDM_LOCAL_DISPLAY (display);
         ScdmLaunchEnvironment *launch_environment;
         char          *seat_id;
         char          *session_class;

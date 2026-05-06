@@ -43,7 +43,7 @@
 #include "scdm-legacy-display.h"
 
 #define SCDM_DBUS_PATH                       "/io/github/scarecrow_de/DisplayManager"
-#define SCDM_LOCAL_DISPLAY_FACTORY_DBUS_PATH SCDM_DBUS_PATH "/LocalDisplayFactory"
+#define GDM_LOCAL_DISPLAY_FACTORY_DBUS_PATH SCDM_DBUS_PATH "/LocalDisplayFactory"
 #define SCDM_MANAGER_DBUS_NAME               "io.github.scarecrow_de.DisplayManager.LocalDisplayFactory"
 
 #define MAX_DISPLAY_FAILURES 5
@@ -315,7 +315,7 @@ on_session_registered_cb (GObject *gobject,
                           gpointer user_data)
 {
         ScdmDisplay *display = GDM_DISPLAY (gobject);
-        ScdmLocalDisplayFactory *factory = SCDM_LOCAL_DISPLAY_FACTORY (user_data);
+        ScdmLocalDisplayFactory *factory = GDM_LOCAL_DISPLAY_FACTORY (user_data);
         gboolean registered;
 
         g_object_get (display, "session-registered", &registered, NULL);
@@ -610,7 +610,7 @@ on_seat_new (GDBusConnection *connection,
         const char *seat;
 
         g_variant_get (parameters, "(&s&o)", &seat, NULL);
-        create_display (SCDM_LOCAL_DISPLAY_FACTORY (user_data), seat, NULL, FALSE);
+        create_display (GDM_LOCAL_DISPLAY_FACTORY (user_data), seat, NULL, FALSE);
 }
 
 static void
@@ -625,7 +625,7 @@ on_seat_removed (GDBusConnection *connection,
         const char *seat;
 
         g_variant_get (parameters, "(&s&o)", &seat, NULL);
-        delete_display (SCDM_LOCAL_DISPLAY_FACTORY (user_data), seat);
+        delete_display (GDM_LOCAL_DISPLAY_FACTORY (user_data), seat);
 }
 
 static gboolean
@@ -937,7 +937,7 @@ on_display_removed (ScdmDisplayStore        *display_store,
 static gboolean
 scdm_local_display_factory_start (ScdmDisplayFactory *base_factory)
 {
-        ScdmLocalDisplayFactory *factory = SCDM_LOCAL_DISPLAY_FACTORY (base_factory);
+        ScdmLocalDisplayFactory *factory = GDM_LOCAL_DISPLAY_FACTORY (base_factory);
         ScdmDisplayStore *store;
 
         g_return_val_if_fail (GDM_IS_LOCAL_DISPLAY_FACTORY (factory), FALSE);
@@ -963,7 +963,7 @@ scdm_local_display_factory_start (ScdmDisplayFactory *base_factory)
 static gboolean
 scdm_local_display_factory_stop (ScdmDisplayFactory *base_factory)
 {
-        ScdmLocalDisplayFactory *factory = SCDM_LOCAL_DISPLAY_FACTORY (base_factory);
+        ScdmLocalDisplayFactory *factory = GDM_LOCAL_DISPLAY_FACTORY (base_factory);
         ScdmDisplayStore *store;
 
         g_return_val_if_fail (GDM_IS_LOCAL_DISPLAY_FACTORY (factory), FALSE);
@@ -1052,7 +1052,7 @@ register_factory (ScdmLocalDisplayFactory *factory)
 
         if (!g_dbus_interface_skeleton_export (G_DBUS_INTERFACE_SKELETON (factory->skeleton),
                                                factory->connection,
-                                               SCDM_LOCAL_DISPLAY_FACTORY_DBUS_PATH,
+                                               GDM_LOCAL_DISPLAY_FACTORY_DBUS_PATH,
                                                &error)) {
                 g_critical ("error exporting LocalDisplayFactory object: %s", error->message);
                 g_error_free (error);
@@ -1070,7 +1070,7 @@ scdm_local_display_factory_constructor (GType                  type,
         ScdmLocalDisplayFactory      *factory;
         gboolean                     res;
 
-        factory = SCDM_LOCAL_DISPLAY_FACTORY (G_OBJECT_CLASS (scdm_local_display_factory_parent_class)->constructor (type,
+        factory = GDM_LOCAL_DISPLAY_FACTORY (G_OBJECT_CLASS (scdm_local_display_factory_parent_class)->constructor (type,
                                                                                                                    n_construct_properties,
                                                                                                                    construct_properties));
 
@@ -1111,7 +1111,7 @@ scdm_local_display_factory_finalize (GObject *object)
         g_return_if_fail (object != NULL);
         g_return_if_fail (GDM_IS_LOCAL_DISPLAY_FACTORY (object));
 
-        factory = SCDM_LOCAL_DISPLAY_FACTORY (object);
+        factory = GDM_LOCAL_DISPLAY_FACTORY (object);
 
         g_return_if_fail (factory != NULL);
 
@@ -1138,5 +1138,5 @@ scdm_local_display_factory_new (ScdmDisplayStore *store)
                                            (gpointer *) &local_display_factory_object);
         }
 
-        return SCDM_LOCAL_DISPLAY_FACTORY (local_display_factory_object);
+        return GDM_LOCAL_DISPLAY_FACTORY (local_display_factory_object);
 }

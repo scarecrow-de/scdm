@@ -19,8 +19,8 @@
  */
 
 
-#ifndef __SCDM_LOCAL_DISPLAY_H
-#define __SCDM_LOCAL_DISPLAY_H
+#ifndef __GDM_LOCAL_DISPLAY_H
+#define __GDM_LOCAL_DISPLAY_H
 
 #include <glib-object.h>
 #include "scdm-display.h"
@@ -35,4 +35,4 @@ ScdmDisplay *        scdm_local_display_new                     (void);
 
 G_END_DECLS
 
-#endif /* __SCDM_LOCAL_DISPLAY_H */
+#endif /* __GDM_LOCAL_DISPLAY_H */
