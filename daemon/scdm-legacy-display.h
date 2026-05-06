@@ -19,8 +19,8 @@
  */
 
 
-#ifndef __SCDM_LEGACY_DISPLAY_H
-#define __SCDM_LEGACY_DISPLAY_H
+#ifndef __GDM_LEGACY_DISPLAY_H
+#define __GDM_LEGACY_DISPLAY_H
 
 #include <glib-object.h>
 #include "scdm-display.h"
@@ -35,4 +35,4 @@ ScdmDisplay *        scdm_legacy_display_new                     (int display_nu
 
 G_END_DECLS
 
-#endif /* __SCDM_LEGACY_DISPLAY_H */
+#endif /* __GDM_LEGACY_DISPLAY_H */

@@ -66,7 +66,7 @@ scdm_legacy_display_constructor (GType                  type,
 {
         ScdmLegacyDisplay      *display;
 
-        display = SCDM_LEGACY_DISPLAY (G_OBJECT_CLASS (scdm_legacy_display_parent_class)->constructor (type,
+        display = GDM_LEGACY_DISPLAY (G_OBJECT_CLASS (scdm_legacy_display_parent_class)->constructor (type,
                                                                                                      n_construct_properties,
                                                                                                      construct_properties));
 
@@ -81,7 +81,7 @@ scdm_legacy_display_constructor (GType                  type,
 static void
 scdm_legacy_display_finalize (GObject *object)
 {
-        ScdmLegacyDisplay *display = SCDM_LEGACY_DISPLAY (object);
+        ScdmLegacyDisplay *display = GDM_LEGACY_DISPLAY (object);
 
         g_clear_object (&display->skeleton);
         g_clear_object (&display->server);
@@ -92,7 +92,7 @@ scdm_legacy_display_finalize (GObject *object)
 static gboolean
 scdm_legacy_display_prepare (ScdmDisplay *display)
 {
-        ScdmLegacyDisplay *self = SCDM_LEGACY_DISPLAY (display);
+        ScdmLegacyDisplay *self = GDM_LEGACY_DISPLAY (display);
         ScdmLaunchEnvironment *launch_environment;
         char          *display_name;
         char          *seat_id;
@@ -190,7 +190,7 @@ on_server_died (ScdmServer  *server,
 static void
 scdm_legacy_display_manage (ScdmDisplay *display)
 {
-        ScdmLegacyDisplay *self = SCDM_LEGACY_DISPLAY (display);
+        ScdmLegacyDisplay *self = GDM_LEGACY_DISPLAY (display);
         char            *display_name;
         char            *auth_file;
         char            *seat_id;
