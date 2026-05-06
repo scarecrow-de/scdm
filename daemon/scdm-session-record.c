@@ -40,23 +40,23 @@
 
 #include "scdm-session-record.h"
 
-#ifndef GDM_BAD_SESSION_RECORDS_FILE
-#define GDM_BAD_SESSION_RECORDS_FILE "/var/log/btmp"
+#ifndef SCDM_BAD_SESSION_RECORDS_FILE
+#define SCDM_BAD_SESSION_RECORDS_FILE "/var/log/btmp"
 #endif
 
-#if !defined(GDM_NEW_SESSION_RECORDS_FILE)
+#if !defined(SCDM_NEW_SESSION_RECORDS_FILE)
 #    if defined(WTMPX_FILE)
-#        define GDM_NEW_SESSION_RECORDS_FILE WTMPX_FILE
+#        define SCDM_NEW_SESSION_RECORDS_FILE WTMPX_FILE
 #    elif defined(_PATH_WTMPX)
-#        define GDM_NEW_SESSION_RECORDS_FILE _PATH_WTMPX
+#        define SCDM_NEW_SESSION_RECORDS_FILE _PATH_WTMPX
 #    elif defined(WTMPX_FILENAME)
-#        define GDM_NEW_SESSION_RECORDS_FILE WTMPX_FILENAME
+#        define SCDM_NEW_SESSION_RECORDS_FILE WTMPX_FILENAME
 #    elif defined(WTMP_FILE)
-#        define GDM_NEW_SESSION_RECORDS_FILE WTMP_FILE
+#        define SCDM_NEW_SESSION_RECORDS_FILE WTMP_FILE
 #    elif defined(_PATH_WTMP) /* BSD systems */
-#        define GDM_NEW_SESSION_RECORDS_FILE _PATH_WTMP
+#        define SCDM_NEW_SESSION_RECORDS_FILE _PATH_WTMP
 #    else
-#        define GDM_NEW_SESSION_RECORDS_FILE "/var/log/wtmp"
+#        define SCDM_NEW_SESSION_RECORDS_FILE "/var/log/wtmp"
 #    endif
 #endif
 
@@ -196,11 +196,11 @@ scdm_session_record_login (GPid                  session_pid,
         record_set_line (&session_record, display_device, x11_display_name);
 
         /* Handle wtmp */
-        g_debug ("Writing wtmp session record to " GDM_NEW_SESSION_RECORDS_FILE);
+        g_debug ("Writing wtmp session record to " SCDM_NEW_SESSION_RECORDS_FILE);
 #if defined(HAVE_UPDWTMPX)
-        updwtmpx (GDM_NEW_SESSION_RECORDS_FILE, &session_record);
+        updwtmpx (SCDM_NEW_SESSION_RECORDS_FILE, &session_record);
 #elif defined(HAVE_UPDWTMP)
-        updwtmp (GDM_NEW_SESSION_RECORDS_FILE, &session_record);
+        updwtmp (SCDM_NEW_SESSION_RECORDS_FILE, &session_record);
 #elif defined(HAVE_LOGWTMP) && defined(HAVE_UT_UT_HOST)
 #if defined(HAVE_UT_UT_USER)
         logwtmp (session_record.ut_line, session_record.ut_user, session_record.ut_host);
@@ -245,11 +245,11 @@ scdm_session_record_logout (GPid                  session_pid,
         record_set_line (&session_record, display_device, x11_display_name);
 
         /* Handle wtmp */
-        g_debug ("Writing wtmp logout record to " GDM_NEW_SESSION_RECORDS_FILE);
+        g_debug ("Writing wtmp logout record to " SCDM_NEW_SESSION_RECORDS_FILE);
 #if defined(HAVE_UPDWTMPX)
-        updwtmpx (GDM_NEW_SESSION_RECORDS_FILE, &session_record);
+        updwtmpx (SCDM_NEW_SESSION_RECORDS_FILE, &session_record);
 #elif defined (HAVE_UPDWTMP)
-        updwtmp (GDM_NEW_SESSION_RECORDS_FILE, &session_record);
+        updwtmp (SCDM_NEW_SESSION_RECORDS_FILE, &session_record);
 #elif defined(HAVE_LOGWTMP)
         logwtmp (session_record.ut_line, "", "");
 #endif
@@ -294,13 +294,13 @@ scdm_session_record_failed (GPid                  session_pid,
 #if defined(HAVE_UPDWTMPX) || defined(HAVE_UPDWTMP)
         /* Handle btmp */
         g_debug ("Writing btmp failed session attempt record to "
-                 GDM_BAD_SESSION_RECORDS_FILE);
+                 SCDM_BAD_SESSION_RECORDS_FILE);
 #endif
 
 #if defined(HAVE_UPDWTMPX)
-        updwtmpx (GDM_BAD_SESSION_RECORDS_FILE, &session_record);
+        updwtmpx (SCDM_BAD_SESSION_RECORDS_FILE, &session_record);
 #elif defined(HAVE_UPDWTMP)
-        updwtmp(GDM_BAD_SESSION_RECORDS_FILE, &session_record);
+        updwtmp(SCDM_BAD_SESSION_RECORDS_FILE, &session_record);
 #endif
 
 }

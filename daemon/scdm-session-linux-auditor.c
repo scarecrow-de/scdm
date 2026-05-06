@@ -45,7 +45,7 @@ struct _ScdmSessionLinuxAuditor
 
 static void scdm_session_linux_auditor_finalize (GObject *object);
 
-G_DEFINE_TYPE (ScdmSessionLinuxAuditor, scdm_session_linux_auditor, GDM_TYPE_SESSION_AUDITOR)
+G_DEFINE_TYPE (ScdmSessionLinuxAuditor, scdm_session_linux_auditor, SCDM_TYPE_SESSION_AUDITOR)
 
 static void
 log_user_message (ScdmSessionAuditor *auditor,
@@ -59,7 +59,7 @@ log_user_message (ScdmSessionAuditor *auditor,
         char                     *display_device;
         struct passwd            *pw;
 
-        linux_auditor = GDM_SESSION_LINUX_AUDITOR (auditor);
+        linux_auditor = SCDM_SESSION_LINUX_AUDITOR (auditor);
 
         g_object_get (G_OBJECT (auditor), "username", &username, NULL);
         g_object_get (G_OBJECT (auditor), "hostname", &hostname, NULL);
@@ -116,7 +116,7 @@ scdm_session_linux_auditor_class_init (ScdmSessionLinuxAuditorClass *klass)
         ScdmSessionAuditorClass *auditor_class;
 
         object_class = G_OBJECT_CLASS (klass);
-        auditor_class = GDM_SESSION_AUDITOR_CLASS (klass);
+        auditor_class = SCDM_SESSION_AUDITOR_CLASS (klass);
 
         object_class->finalize = scdm_session_linux_auditor_finalize;
 
@@ -137,7 +137,7 @@ scdm_session_linux_auditor_finalize (GObject *object)
         ScdmSessionLinuxAuditor *linux_auditor;
         GObjectClass *parent_class;
 
-        linux_auditor = GDM_SESSION_LINUX_AUDITOR (object);
+        linux_auditor = SCDM_SESSION_LINUX_AUDITOR (object);
 
         close (linux_auditor->audit_fd);
 
@@ -154,12 +154,12 @@ scdm_session_linux_auditor_new (const char *hostname,
 {
         GObject *auditor;
 
-        auditor = g_object_new (GDM_TYPE_SESSION_LINUX_AUDITOR,
+        auditor = g_object_new (SCDM_TYPE_SESSION_LINUX_AUDITOR,
                                 "hostname", hostname,
                                 "display-device", display_device,
                                 NULL);
 
-        return GDM_SESSION_AUDITOR (auditor);
+        return SCDM_SESSION_AUDITOR (auditor);
 }
 
 

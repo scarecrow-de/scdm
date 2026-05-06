@@ -65,7 +65,7 @@ scdm_settings_backend_real_get_value (ScdmSettingsBackend *settings_backend,
                                      char              **value,
                                      GError            **error)
 {
-        g_return_val_if_fail (GDM_IS_SETTINGS_BACKEND (settings_backend), FALSE);
+        g_return_val_if_fail (SCDM_IS_SETTINGS_BACKEND (settings_backend), FALSE);
 
         return FALSE;
 }
@@ -76,7 +76,7 @@ scdm_settings_backend_real_set_value (ScdmSettingsBackend *settings_backend,
                                      const char         *value,
                                      GError            **error)
 {
-        g_return_val_if_fail (GDM_IS_SETTINGS_BACKEND (settings_backend), FALSE);
+        g_return_val_if_fail (SCDM_IS_SETTINGS_BACKEND (settings_backend), FALSE);
 
         return FALSE;
 }
@@ -89,10 +89,10 @@ scdm_settings_backend_get_value (ScdmSettingsBackend *settings_backend,
 {
         gboolean ret;
 
-        g_return_val_if_fail (GDM_IS_SETTINGS_BACKEND (settings_backend), FALSE);
+        g_return_val_if_fail (SCDM_IS_SETTINGS_BACKEND (settings_backend), FALSE);
 
         g_object_ref (settings_backend);
-        ret = GDM_SETTINGS_BACKEND_GET_CLASS (settings_backend)->get_value (settings_backend, key, value, error);
+        ret = SCDM_SETTINGS_BACKEND_GET_CLASS (settings_backend)->get_value (settings_backend, key, value, error);
         g_object_unref (settings_backend);
 
         return ret;
@@ -106,10 +106,10 @@ scdm_settings_backend_set_value (ScdmSettingsBackend *settings_backend,
 {
         gboolean ret;
 
-        g_return_val_if_fail (GDM_IS_SETTINGS_BACKEND (settings_backend), FALSE);
+        g_return_val_if_fail (SCDM_IS_SETTINGS_BACKEND (settings_backend), FALSE);
 
         g_object_ref (settings_backend);
-        ret = GDM_SETTINGS_BACKEND_GET_CLASS (settings_backend)->set_value (settings_backend, key, value, error);
+        ret = SCDM_SETTINGS_BACKEND_GET_CLASS (settings_backend)->set_value (settings_backend, key, value, error);
         g_object_unref (settings_backend);
 
         return ret;
@@ -121,7 +121,7 @@ scdm_settings_backend_value_changed (ScdmSettingsBackend *settings_backend,
                                     const char         *old_value,
                                     const char         *new_value)
 {
-        g_return_if_fail (GDM_IS_SETTINGS_BACKEND (settings_backend));
+        g_return_if_fail (SCDM_IS_SETTINGS_BACKEND (settings_backend));
 
         g_signal_emit (settings_backend, signals[VALUE_CHANGED], 0, key, old_value, new_value);
 }
@@ -159,7 +159,7 @@ scdm_settings_backend_init (ScdmSettingsBackend *settings_backend)
 static void
 scdm_settings_backend_finalize (GObject *object)
 {
-        g_return_if_fail (GDM_IS_SETTINGS_BACKEND (object));
+        g_return_if_fail (SCDM_IS_SETTINGS_BACKEND (object));
 
         G_OBJECT_CLASS (scdm_settings_backend_parent_class)->finalize (object);
 }

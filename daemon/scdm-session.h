@@ -18,39 +18,39 @@
  * 02110-1301, USA.
  */
 
-#ifndef __GDM_SESSION_H
-#define __GDM_SESSION_H
+#ifndef __SCDM_SESSION_H
+#define __SCDM_SESSION_H
 
 #include <glib-object.h>
 #include <sys/types.h>
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_SESSION (scdm_session_get_type ())
+#define SCDM_TYPE_SESSION (scdm_session_get_type ())
 G_DECLARE_FINAL_TYPE (ScdmSession, scdm_session, GDM, SESSION, GObject)
 
 typedef enum
 {
-        GDM_SESSION_VERIFICATION_MODE_LOGIN,
-        GDM_SESSION_VERIFICATION_MODE_CHOOSER,
-        GDM_SESSION_VERIFICATION_MODE_REAUTHENTICATE
+        SCDM_SESSION_VERIFICATION_MODE_LOGIN,
+        SCDM_SESSION_VERIFICATION_MODE_CHOOSER,
+        SCDM_SESSION_VERIFICATION_MODE_REAUTHENTICATE
 } ScdmSessionVerificationMode;
 
 typedef enum {
         /* We reuse the existing display server, e.g. X server
          * in "classic" mode from the greeter for the first seat. */
-        GDM_SESSION_DISPLAY_MODE_REUSE_VT,
+        SCDM_SESSION_DISPLAY_MODE_REUSE_VT,
 
         /* Doesn't know anything about VTs. Tries to set DRM
          * master and will throw a tantrum if something bad
          * happens. e.g. weston-launch or mutter-launch. */
-        GDM_SESSION_DISPLAY_MODE_NEW_VT,
+        SCDM_SESSION_DISPLAY_MODE_NEW_VT,
 
         /* Uses logind sessions to manage itself. We need to set an
          * XDG_VTNR and it will switch to the correct VT on startup.
          * e.g. mutter-wayland with logind integration, X server with
          * logind integration. */
-        GDM_SESSION_DISPLAY_MODE_LOGIND_MANAGED,
+        SCDM_SESSION_DISPLAY_MODE_LOGIND_MANAGED,
 } ScdmSessionDisplayMode;
 
 ScdmSessionDisplayMode scdm_session_display_mode_from_string (const char *str);
@@ -135,4 +135,4 @@ GPid              scdm_session_get_pid                     (ScdmSession *session
 
 G_END_DECLS
 
-#endif /* GDM_SESSION_H */
+#endif /* SCDM_SESSION_H */

@@ -894,7 +894,7 @@ main (int    argc,
                 goto out;
         }
 
-        scdm_settings_direct_get_boolean (GDM_KEY_DEBUG, &debug);
+        scdm_settings_direct_get_boolean (SCDM_KEY_DEBUG, &debug);
         state->debug_enabled = debug;
 
         scdm_log_set_debug (debug);

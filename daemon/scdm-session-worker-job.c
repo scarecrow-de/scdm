@@ -242,10 +242,10 @@ get_job_environment (ScdmSessionWorkerJob *job)
         hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
         copy_environment_to_hash (job, hash);
 
-        g_hash_table_insert (hash, g_strdup ("GDM_SESSION_DBUS_ADDRESS"), g_strdup (job->server_address));
+        g_hash_table_insert (hash, g_strdup ("SCDM_SESSION_DBUS_ADDRESS"), g_strdup (job->server_address));
 
         if (job->for_reauth) {
-                g_hash_table_insert (hash, g_strdup ("GDM_SESSION_FOR_REAUTH"), g_strdup ("1"));
+                g_hash_table_insert (hash, g_strdup ("SCDM_SESSION_FOR_REAUTH"), g_strdup ("1"));
         }
 
         g_hash_table_foreach (hash, (GHFunc)listify_hash, env);
@@ -389,7 +389,7 @@ scdm_session_worker_job_stop (ScdmSessionWorkerJob *session_worker_job)
 GPid
 scdm_session_worker_job_get_pid (ScdmSessionWorkerJob *session_worker_job)
 {
-        g_return_val_if_fail (GDM_IS_SESSION_WORKER_JOB (session_worker_job), 0);
+        g_return_val_if_fail (SCDM_IS_SESSION_WORKER_JOB (session_worker_job), 0);
         return session_worker_job->pid;
 }
 
@@ -397,7 +397,7 @@ void
 scdm_session_worker_job_set_server_address (ScdmSessionWorkerJob *session_worker_job,
                                            const char      *address)
 {
-        g_return_if_fail (GDM_IS_SESSION_WORKER_JOB (session_worker_job));
+        g_return_if_fail (SCDM_IS_SESSION_WORKER_JOB (session_worker_job));
 
         g_free (session_worker_job->server_address);
         session_worker_job->server_address = g_strdup (address);
@@ -407,7 +407,7 @@ void
 scdm_session_worker_job_set_for_reauth (ScdmSessionWorkerJob *session_worker_job,
                                        gboolean             for_reauth)
 {
-        g_return_if_fail (GDM_IS_SESSION_WORKER_JOB (session_worker_job));
+        g_return_if_fail (SCDM_IS_SESSION_WORKER_JOB (session_worker_job));
 
         session_worker_job->for_reauth = for_reauth;
 }
@@ -416,7 +416,7 @@ void
 scdm_session_worker_job_set_environment (ScdmSessionWorkerJob *session_worker_job,
                                         const char * const  *environment)
 {
-        g_return_if_fail (GDM_IS_SESSION_WORKER_JOB (session_worker_job));
+        g_return_if_fail (SCDM_IS_SESSION_WORKER_JOB (session_worker_job));
 
         session_worker_job->environment = g_strdupv ((char **) environment);
 }
@@ -429,7 +429,7 @@ scdm_session_worker_job_set_property (GObject      *object,
 {
         ScdmSessionWorkerJob *self;
 
-        self = GDM_SESSION_WORKER_JOB (object);
+        self = SCDM_SESSION_WORKER_JOB (object);
 
         switch (prop_id) {
         case PROP_SERVER_ADDRESS:
@@ -455,7 +455,7 @@ scdm_session_worker_job_get_property (GObject    *object,
 {
         ScdmSessionWorkerJob *self;
 
-        self = GDM_SESSION_WORKER_JOB (object);
+        self = SCDM_SESSION_WORKER_JOB (object);
 
         switch (prop_id) {
         case PROP_SERVER_ADDRESS:
@@ -480,7 +480,7 @@ scdm_session_worker_job_constructor (GType                  type,
 {
         ScdmSessionWorkerJob      *session_worker_job;
 
-        session_worker_job = GDM_SESSION_WORKER_JOB (G_OBJECT_CLASS (scdm_session_worker_job_parent_class)->constructor (type,
+        session_worker_job = SCDM_SESSION_WORKER_JOB (G_OBJECT_CLASS (scdm_session_worker_job_parent_class)->constructor (type,
                                                                                        n_construct_properties,
                                                                                        construct_properties));
 
@@ -566,9 +566,9 @@ scdm_session_worker_job_finalize (GObject *object)
         ScdmSessionWorkerJob *session_worker_job;
 
         g_return_if_fail (object != NULL);
-        g_return_if_fail (GDM_IS_SESSION_WORKER_JOB (object));
+        g_return_if_fail (SCDM_IS_SESSION_WORKER_JOB (object));
 
-        session_worker_job = GDM_SESSION_WORKER_JOB (object);
+        session_worker_job = SCDM_SESSION_WORKER_JOB (object);
 
         scdm_session_worker_job_stop (session_worker_job);
 
@@ -583,8 +583,8 @@ scdm_session_worker_job_new (void)
 {
         GObject *object;
 
-        object = g_object_new (GDM_TYPE_SESSION_WORKER_JOB,
+        object = g_object_new (SCDM_TYPE_SESSION_WORKER_JOB,
                                NULL);
 
-        return GDM_SESSION_WORKER_JOB (object);
+        return SCDM_SESSION_WORKER_JOB (object);
 }

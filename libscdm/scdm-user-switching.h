@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __GDM_USER_SWITCHING_H
-#define __GDM_USER_SWITCHING_H
+#ifndef __SCDM_USER_SWITCHING_H
+#define __SCDM_USER_SWITCHING_H
 
 #include <glib-object.h>
 #include <gio/gio.h>

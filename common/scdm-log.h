@@ -20,8 +20,8 @@
  *
  */
 
-#ifndef __GDM_LOG_H
-#define __GDM_LOG_H
+#ifndef __SCDM_LOG_H
+#define __SCDM_LOG_H
 
 #include <stdarg.h>
 #include <glib.h>
@@ -44,4 +44,4 @@ void      scdm_log_shutdown        (void);
 
 G_END_DECLS
 
-#endif /* __GDM_LOG_H */
+#endif /* __SCDM_LOG_H */

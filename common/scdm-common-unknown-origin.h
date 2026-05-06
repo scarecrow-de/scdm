@@ -19,8 +19,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef _GDM_COMMON_UNKNOWN_H
-#define _GDM_COMMON_UNKNOWN_H
+#ifndef _SCDM_COMMON_UNKNOWN_H
+#define _SCDM_COMMON_UNKNOWN_H
 
 #include <sys/stat.h>
 #include <stdio.h>
@@ -32,4 +32,4 @@ G_BEGIN_DECLS
 
 G_END_DECLS
 
-#endif /* _GDM_COMMON_UNKNOWN_H */
+#endif /* _SCDM_COMMON_UNKNOWN_H */

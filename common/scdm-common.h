@@ -18,8 +18,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef _GDM_COMMON_H
-#define _GDM_COMMON_H
+#ifndef _SCDM_COMMON_H
+#define _SCDM_COMMON_H
 
 #include <glib-unix.h>
 #include <gio/gio.h>
@@ -35,10 +35,10 @@
                 expr;                \
         } while G_UNLIKELY (errno == EINTR);
 
-#define GDM_SYSTEMD_SESSION_REQUIRE_ONLINE 0
+#define SCDM_SYSTEMD_SESSION_REQUIRE_ONLINE 0
 
 GQuark scdm_common_error_quark (void);
-#define GDM_COMMON_ERROR scdm_common_error_quark()
+#define SCDM_COMMON_ERROR scdm_common_error_quark()
 
 typedef char * (*ScdmExpandVarFunc) (const char *var,
                                     gpointer user_data);
@@ -89,4 +89,4 @@ gboolean      scdm_activate_session_by_id (GDBusConnection *connection,
 
 G_END_DECLS
 
-#endif /* _GDM_COMMON_H */
+#endif /* _SCDM_COMMON_H */

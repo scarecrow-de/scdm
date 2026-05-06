@@ -63,7 +63,7 @@
            send_member="CreateTransientDisplay"/>
   </policy>
 
-  <policy user="@GDM_USERNAME@">
+  <policy user="@SCDM_USERNAME@">
     <allow send_destination="io.github.scarecrow_de.DisplayManager"
            send_interface="io.github.scarecrow_de.DisplayManager.Manager"/>
     <allow send_destination="io.github.scarecrow_de.DisplayManager"

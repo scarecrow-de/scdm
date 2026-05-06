@@ -91,7 +91,7 @@ static void     scdm_host_chooser_widget_init        (ScdmHostChooserWidget     
 
 G_DEFINE_TYPE (ScdmHostChooserWidget, scdm_host_chooser_widget, GTK_TYPE_BOX)
 
-#define GDM_XDMCP_PROTOCOL_VERSION 1001
+#define SCDM_XDMCP_PROTOCOL_VERSION 1001
 #define SCAN_TIMEOUT 30
 #define PING_TIMEOUT 2
 #define PING_TRIES 3
@@ -261,7 +261,7 @@ decode_packet (GIOChannel           *source,
         }
 
         if G_UNLIKELY (header.version != XDM_PROTOCOL_VERSION &&
-                       header.version != GDM_XDMCP_PROTOCOL_VERSION) {
+                       header.version != SCDM_XDMCP_PROTOCOL_VERSION) {
                 g_warning (_("XDMCP: Incorrect XDMCP version!"));
                 return TRUE;
         }
@@ -299,11 +299,11 @@ decode_packet (GIOChannel           *source,
 
         chooser_host = find_known_host (widget, address);
         if (chooser_host == NULL) {
-                chooser_host = g_object_new (GDM_TYPE_CHOOSER_HOST,
+                chooser_host = g_object_new (SCDM_TYPE_CHOOSER_HOST,
                                              "address", address,
                                              "description", status,
                                              "willing", (header.opcode == WILLING),
-                                             "kind", GDM_CHOOSER_HOST_KIND_XDMCP,
+                                             "kind", SCDM_CHOOSER_HOST_KIND_XDMCP,
                                              NULL);
                 chooser_host_add (widget, chooser_host);
                 browser_add_host (widget, chooser_host);
@@ -641,7 +641,7 @@ xdmcp_init (ScdmHostChooserWidget *widget)
 void
 scdm_host_chooser_widget_refresh (ScdmHostChooserWidget *widget)
 {
-        g_return_if_fail (GDM_IS_HOST_CHOOSER_WIDGET (widget));
+        g_return_if_fail (SCDM_IS_HOST_CHOOSER_WIDGET (widget));
 
         xdmcp_discover (widget);
 }
@@ -651,7 +651,7 @@ scdm_host_chooser_widget_get_host (ScdmHostChooserWidget *widget)
 {
         ScdmChooserHost *host;
 
-        g_return_val_if_fail (GDM_IS_HOST_CHOOSER_WIDGET (widget), NULL);
+        g_return_val_if_fail (SCDM_IS_HOST_CHOOSER_WIDGET (widget), NULL);
 
         host = NULL;
         if (widget->current_host != NULL) {
@@ -678,7 +678,7 @@ scdm_host_chooser_widget_set_property (GObject        *object,
 {
         ScdmHostChooserWidget *self;
 
-        self = GDM_HOST_CHOOSER_WIDGET (object);
+        self = SCDM_HOST_CHOOSER_WIDGET (object);
 
         switch (prop_id) {
         case PROP_KIND_MASK:
@@ -710,7 +710,7 @@ scdm_host_chooser_widget_constructor (GType                  type,
 {
         ScdmHostChooserWidget      *widget;
 
-        widget = GDM_HOST_CHOOSER_WIDGET (G_OBJECT_CLASS (scdm_host_chooser_widget_parent_class)->constructor (type,
+        widget = SCDM_HOST_CHOOSER_WIDGET (G_OBJECT_CLASS (scdm_host_chooser_widget_parent_class)->constructor (type,
                                                                                                                            n_construct_properties,
                                                                                                                            construct_properties));
 
@@ -725,7 +725,7 @@ scdm_host_chooser_widget_dispose (GObject *object)
 {
         ScdmHostChooserWidget *widget;
 
-        widget = GDM_HOST_CHOOSER_WIDGET (object);
+        widget = SCDM_HOST_CHOOSER_WIDGET (object);
 
         g_debug ("Disposing host_chooser_widget");
 
@@ -870,7 +870,7 @@ scdm_host_chooser_widget_new (int kind_mask)
 {
         GObject *object;
 
-        object = g_object_new (GDM_TYPE_HOST_CHOOSER_WIDGET,
+        object = g_object_new (SCDM_TYPE_HOST_CHOOSER_WIDGET,
                                "orientation", GTK_ORIENTATION_VERTICAL,
                                "kind-mask", kind_mask,
                                NULL);

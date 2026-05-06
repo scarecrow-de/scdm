@@ -23,15 +23,15 @@
  *             Ray Strode <rstrode@redhat.com>
  *             Steve Grubb <sgrubb@redhat.com>
  */
-#ifndef GDM_SESSION_AUDITOR_H
-#define GDM_SESSION_AUDITOR_H
+#ifndef SCDM_SESSION_AUDITOR_H
+#define SCDM_SESSION_AUDITOR_H
 
 #include <glib.h>
 #include <glib-object.h>
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_SESSION_AUDITOR (scdm_session_auditor_get_type ())
+#define SCDM_TYPE_SESSION_AUDITOR (scdm_session_auditor_get_type ())
 G_DECLARE_DERIVABLE_TYPE (ScdmSessionAuditor, scdm_session_auditor, GDM, SESSION_AUDITOR, GObject)
 
 struct _ScdmSessionAuditorClass
@@ -62,4 +62,4 @@ void                      scdm_session_auditor_report_login_failure (ScdmSession
 void                      scdm_session_auditor_report_logout (ScdmSessionAuditor *auditor);
 
 G_END_DECLS
-#endif /* GDM_SESSION_AUDITOR_H */
+#endif /* SCDM_SESSION_AUDITOR_H */

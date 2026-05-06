@@ -56,9 +56,9 @@ scdm_host_chooser_dialog_get_host (ScdmHostChooserDialog *dialog)
 {
         ScdmChooserHost *host;
 
-        g_return_val_if_fail (GDM_IS_HOST_CHOOSER_DIALOG (dialog), NULL);
+        g_return_val_if_fail (SCDM_IS_HOST_CHOOSER_DIALOG (dialog), NULL);
 
-        host = scdm_host_chooser_widget_get_host (GDM_HOST_CHOOSER_WIDGET (dialog->chooser_widget));
+        host = scdm_host_chooser_widget_get_host (SCDM_HOST_CHOOSER_WIDGET (dialog->chooser_widget));
 
         return host;
 }
@@ -80,7 +80,7 @@ scdm_host_chooser_dialog_set_property (GObject        *object,
 {
         ScdmHostChooserDialog *self;
 
-        self = GDM_HOST_CHOOSER_DIALOG (object);
+        self = SCDM_HOST_CHOOSER_DIALOG (object);
 
         switch (prop_id) {
         case PROP_KIND_MASK:
@@ -111,7 +111,7 @@ on_response (ScdmHostChooserDialog *dialog,
 {
         switch (response_id) {
         case GTK_RESPONSE_APPLY:
-                scdm_host_chooser_widget_refresh (GDM_HOST_CHOOSER_WIDGET (dialog->chooser_widget));
+                scdm_host_chooser_widget_refresh (SCDM_HOST_CHOOSER_WIDGET (dialog->chooser_widget));
                 g_signal_stop_emission_by_name (dialog, "response");
                 break;
         default:
@@ -126,7 +126,7 @@ scdm_host_chooser_dialog_constructor (GType                  type,
 {
         ScdmHostChooserDialog      *dialog;
 
-        dialog = GDM_HOST_CHOOSER_DIALOG (G_OBJECT_CLASS (scdm_host_chooser_dialog_parent_class)->constructor (type,
+        dialog = SCDM_HOST_CHOOSER_DIALOG (G_OBJECT_CLASS (scdm_host_chooser_dialog_parent_class)->constructor (type,
                                                                                                                            n_construct_properties,
                                                                                                                            construct_properties));
 
@@ -195,7 +195,7 @@ scdm_host_chooser_dialog_new (int kind_mask)
 {
         GObject *object;
 
-        object = g_object_new (GDM_TYPE_HOST_CHOOSER_DIALOG,
+        object = g_object_new (SCDM_TYPE_HOST_CHOOSER_DIALOG,
                                "kind-mask", kind_mask,
                                NULL);
 

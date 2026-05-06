@@ -19,8 +19,8 @@
  */
 
 
-#ifndef __GDM_XDMCP_DISPLAY_H
-#define __GDM_XDMCP_DISPLAY_H
+#ifndef __SCDM_XDMCP_DISPLAY_H
+#define __SCDM_XDMCP_DISPLAY_H
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -31,7 +31,7 @@
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_XDMCP_DISPLAY (scdm_xdmcp_display_get_type ())
+#define SCDM_TYPE_XDMCP_DISPLAY (scdm_xdmcp_display_get_type ())
 G_DECLARE_DERIVABLE_TYPE (ScdmXdmcpDisplay, scdm_xdmcp_display, GDM, XDMCP_DISPLAY, ScdmDisplay)
 
 struct _ScdmXdmcpDisplayClass
@@ -49,4 +49,4 @@ ScdmDisplay              * scdm_xdmcp_display_new                      (const ch
 
 G_END_DECLS
 
-#endif /* __GDM_XDMCP_DISPLAY_H */
+#endif /* __SCDM_XDMCP_DISPLAY_H */

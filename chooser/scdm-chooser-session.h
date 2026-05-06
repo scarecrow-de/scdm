@@ -18,14 +18,14 @@
  *
  */
 
-#ifndef __GDM_CHOOSER_SESSION_H
-#define __GDM_CHOOSER_SESSION_H
+#ifndef __SCDM_CHOOSER_SESSION_H
+#define __SCDM_CHOOSER_SESSION_H
 
 #include <glib-object.h>
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_CHOOSER_SESSION (scdm_chooser_session_get_type ())
+#define SCDM_TYPE_CHOOSER_SESSION (scdm_chooser_session_get_type ())
 G_DECLARE_FINAL_TYPE (ScdmChooserSession, scdm_chooser_session, GDM, CHOOSER_SESSION, GObject)
 
 ScdmChooserSession    * scdm_chooser_session_new                            (void);
@@ -36,4 +36,4 @@ void                   scdm_chooser_session_stop                           (Scdm
 
 G_END_DECLS
 
-#endif /* __GDM_CHOOSER_SESSION_H */
+#endif /* __SCDM_CHOOSER_SESSION_H */

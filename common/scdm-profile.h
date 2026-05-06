@@ -20,8 +20,8 @@
  *
  */
 
-#ifndef __GDM_PROFILE_H
-#define __GDM_PROFILE_H
+#ifndef __SCDM_PROFILE_H
+#define __SCDM_PROFILE_H
 
 #include <glib.h>
 
@@ -50,4 +50,4 @@ void            _scdm_profile_log    (const char *func,
 
 G_END_DECLS
 
-#endif /* __GDM_PROFILE_H */
+#endif /* __SCDM_PROFILE_H */

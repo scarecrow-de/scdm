@@ -39,9 +39,9 @@ main (int argc, char *argv[])
 
         g_key_file_set_boolean (key_file, "daemon", "WaylandEnable", FALSE);
 
-        g_mkdir_with_parents (GDM_RUN_DIR, 0711);
+        g_mkdir_with_parents (SCDM_RUN_DIR, 0711);
 
-        saved_okay = g_key_file_save_to_file (key_file, GDM_RUNTIME_CONF, &error);
+        saved_okay = g_key_file_save_to_file (key_file, SCDM_RUNTIME_CONF, &error);
 
         if (!saved_okay) {
                 g_printerr ("scdm-disable-wayland: unable to disable wayland: %s",

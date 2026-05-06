@@ -57,7 +57,7 @@ struct _ScdmLegacyDisplay
 static void     scdm_legacy_display_class_init   (ScdmLegacyDisplayClass *klass);
 static void     scdm_legacy_display_init         (ScdmLegacyDisplay      *legacy_display);
 
-G_DEFINE_TYPE (ScdmLegacyDisplay, scdm_legacy_display, GDM_TYPE_DISPLAY)
+G_DEFINE_TYPE (ScdmLegacyDisplay, scdm_legacy_display, SCDM_TYPE_DISPLAY)
 
 static GObject *
 scdm_legacy_display_constructor (GType                  type,
@@ -66,13 +66,13 @@ scdm_legacy_display_constructor (GType                  type,
 {
         ScdmLegacyDisplay      *display;
 
-        display = GDM_LEGACY_DISPLAY (G_OBJECT_CLASS (scdm_legacy_display_parent_class)->constructor (type,
+        display = SCDM_LEGACY_DISPLAY (G_OBJECT_CLASS (scdm_legacy_display_parent_class)->constructor (type,
                                                                                                      n_construct_properties,
                                                                                                      construct_properties));
 
-        display->skeleton = GDM_DBUS_LOCAL_DISPLAY (scdm_dbus_local_display_skeleton_new ());
+        display->skeleton = SCDM_DBUS_LOCAL_DISPLAY (scdm_dbus_local_display_skeleton_new ());
 
-        g_dbus_object_skeleton_add_interface (scdm_display_get_object_skeleton (GDM_DISPLAY (display)),
+        g_dbus_object_skeleton_add_interface (scdm_display_get_object_skeleton (SCDM_DISPLAY (display)),
                                               G_DBUS_INTERFACE_SKELETON (display->skeleton));
 
         return G_OBJECT (display);
@@ -81,7 +81,7 @@ scdm_legacy_display_constructor (GType                  type,
 static void
 scdm_legacy_display_finalize (GObject *object)
 {
-        ScdmLegacyDisplay *display = GDM_LEGACY_DISPLAY (object);
+        ScdmLegacyDisplay *display = SCDM_LEGACY_DISPLAY (object);
 
         g_clear_object (&display->skeleton);
         g_clear_object (&display->server);
@@ -92,7 +92,7 @@ scdm_legacy_display_finalize (GObject *object)
 static gboolean
 scdm_legacy_display_prepare (ScdmDisplay *display)
 {
-        ScdmLegacyDisplay *self = GDM_LEGACY_DISPLAY (display);
+        ScdmLegacyDisplay *self = SCDM_LEGACY_DISPLAY (display);
         ScdmLaunchEnvironment *launch_environment;
         char          *display_name;
         char          *seat_id;
@@ -130,7 +130,7 @@ scdm_legacy_display_prepare (ScdmDisplay *display)
                 return FALSE;
         }
 
-        return GDM_DISPLAY_CLASS (scdm_legacy_display_parent_class)->prepare (display);
+        return SCDM_DISPLAY_CLASS (scdm_legacy_display_parent_class)->prepare (display);
 }
 
 static void
@@ -139,11 +139,11 @@ on_server_ready (ScdmServer       *server,
 {
         gboolean ret;
 
-        ret = scdm_display_connect (GDM_DISPLAY (self));
+        ret = scdm_display_connect (SCDM_DISPLAY (self));
 
         if (!ret) {
                 g_debug ("ScdmDisplay: could not connect to display");
-                scdm_display_unmanage (GDM_DISPLAY (self));
+                scdm_display_unmanage (SCDM_DISPLAY (self));
         } else {
                 ScdmLaunchEnvironment *launch_environment;
                 char *display_device;
@@ -161,7 +161,7 @@ on_server_ready (ScdmServer       *server,
                 g_clear_object (&launch_environment);
 
                 g_debug ("ScdmDisplay: connected to display");
-                g_object_set (G_OBJECT (self), "status", GDM_DISPLAY_MANAGED, NULL);
+                g_object_set (G_OBJECT (self), "status", SCDM_DISPLAY_MANAGED, NULL);
         }
 }
 
@@ -172,7 +172,7 @@ on_server_exited (ScdmServer  *server,
 {
         g_debug ("ScdmDisplay: server exited with code %d\n", exit_code);
 
-        scdm_display_unmanage (GDM_DISPLAY (self));
+        scdm_display_unmanage (SCDM_DISPLAY (self));
 }
 
 static void
@@ -184,13 +184,13 @@ on_server_died (ScdmServer  *server,
                  signal_number,
                  g_strsignal (signal_number));
 
-        scdm_display_unmanage (GDM_DISPLAY (self));
+        scdm_display_unmanage (SCDM_DISPLAY (self));
 }
 
 static void
 scdm_legacy_display_manage (ScdmDisplay *display)
 {
-        ScdmLegacyDisplay *self = GDM_LEGACY_DISPLAY (display);
+        ScdmLegacyDisplay *self = SCDM_LEGACY_DISPLAY (display);
         char            *display_name;
         char            *auth_file;
         char            *seat_id;
@@ -212,7 +212,7 @@ scdm_legacy_display_manage (ScdmDisplay *display)
         g_free (seat_id);
 
         disable_tcp = TRUE;
-        if (scdm_settings_direct_get_boolean (GDM_KEY_DISALLOW_TCP, &disable_tcp)) {
+        if (scdm_settings_direct_get_boolean (SCDM_KEY_DISALLOW_TCP, &disable_tcp)) {
                 g_object_set (self->server,
                               "disable-tcp", disable_tcp,
                               NULL);
@@ -241,7 +241,7 @@ scdm_legacy_display_manage (ScdmDisplay *display)
                              "In the meantime this display will be "
                              "disabled.  Please restart GDM when "
                              "the problem is corrected."));
-                scdm_display_unmanage (GDM_DISPLAY (self));
+                scdm_display_unmanage (SCDM_DISPLAY (self));
         }
 
         g_debug ("ScdmDisplay: Started X server");
@@ -252,7 +252,7 @@ static void
 scdm_legacy_display_class_init (ScdmLegacyDisplayClass *klass)
 {
         GObjectClass *object_class = G_OBJECT_CLASS (klass);
-        ScdmDisplayClass *display_class = GDM_DISPLAY_CLASS (klass);
+        ScdmDisplayClass *display_class = SCDM_DISPLAY_CLASS (klass);
 
         object_class->constructor = scdm_legacy_display_constructor;
         object_class->finalize = scdm_legacy_display_finalize;
@@ -266,10 +266,10 @@ on_display_status_changed (ScdmLegacyDisplay *self)
 {
         int status;
 
-        status = scdm_display_get_status (GDM_DISPLAY (self));
+        status = scdm_display_get_status (SCDM_DISPLAY (self));
 
         switch (status) {
-            case GDM_DISPLAY_UNMANAGED:
+            case SCDM_DISPLAY_UNMANAGED:
                 if (self->server != NULL)
                         scdm_server_stop (self->server);
                 break;
@@ -293,11 +293,11 @@ scdm_legacy_display_new (int display_number)
         char    *x11_display;
 
         x11_display = g_strdup_printf (":%d", display_number);
-        object = g_object_new (GDM_TYPE_LEGACY_DISPLAY,
+        object = g_object_new (SCDM_TYPE_LEGACY_DISPLAY,
                                "x11-display-number", display_number,
                                "x11-display-name", x11_display,
                                NULL);
         g_free (x11_display);
 
-        return GDM_DISPLAY (object);
+        return SCDM_DISPLAY (object);
 }

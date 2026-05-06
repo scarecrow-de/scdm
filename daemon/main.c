@@ -48,7 +48,7 @@
 #include "scdm-settings-direct.h"
 #include "scdm-settings-keys.h"
 
-#define GDM_DBUS_NAME "io.github.scarecrow_de.DisplayManager"
+#define SCDM_DBUS_NAME "io.github.scarecrow_de.DisplayManager"
 
 static GDBusConnection *get_system_bus (void);
 static gboolean         bus_reconnect (void);
@@ -109,7 +109,7 @@ get_system_bus (void)
 static void
 delete_pid (void)
 {
-        g_unlink (GDM_PID_FILE);
+        g_unlink (SCDM_PID_FILE);
 }
 
 static void
@@ -120,10 +120,10 @@ write_pid (void)
         char    pid[9];
 
         errno = 0;
-        pf = open (GDM_PID_FILE, O_WRONLY|O_CREAT|O_TRUNC|O_EXCL, 0644);
+        pf = open (SCDM_PID_FILE, O_WRONLY|O_CREAT|O_TRUNC|O_EXCL, 0644);
         if (pf < 0) {
                 g_warning (_("Cannot write PID file %s: possibly out of disk space: %s"),
-                           GDM_PID_FILE,
+                           SCDM_PID_FILE,
                            g_strerror (errno));
 
                 return;
@@ -136,7 +136,7 @@ write_pid (void)
 
         if (written < 0) {
                 g_warning (_("Cannot write PID file %s: possibly out of disk space: %s"),
-                           GDM_PID_FILE,
+                           SCDM_PID_FILE,
                            g_strerror (errno));
                 return;
         }
@@ -178,9 +178,9 @@ scdm_daemon_ensure_dirs (uid_t uid,
         GError *error = NULL;
 
         /* Set up /var/run/scdm */
-        if (!ensure_dir_with_perms (GDM_RAN_ONCE_MARKER_DIR, 0, gid, 0711, &error)) {
+        if (!ensure_dir_with_perms (SCDM_RAN_ONCE_MARKER_DIR, 0, gid, 0711, &error)) {
                 scdm_fail (_("Failed to create ran once marker dir %s: %s"),
-                          GDM_RAN_ONCE_MARKER_DIR, error->message);
+                          SCDM_RAN_ONCE_MARKER_DIR, error->message);
         }
 
         /* Set up /var/log/scdm */
@@ -206,8 +206,8 @@ scdm_daemon_lookup_user (uid_t *uidp,
         uid = 0;
         gid = 0;
 
-        scdm_settings_direct_get_string (GDM_KEY_USER, &username);
-        scdm_settings_direct_get_string (GDM_KEY_GROUP, &groupname);
+        scdm_settings_direct_get_string (SCDM_KEY_USER, &username);
+        scdm_settings_direct_get_string (SCDM_KEY_GROUP, &groupname);
 
         if (username == NULL || groupname == NULL) {
                 return;
@@ -285,7 +285,7 @@ static gboolean
 is_debug_set (void)
 {
         gboolean debug;
-        scdm_settings_direct_get_boolean (GDM_KEY_DEBUG, &debug);
+        scdm_settings_direct_get_boolean (SCDM_KEY_DEBUG, &debug);
         return debug;
 }
 
@@ -424,11 +424,11 @@ on_name_acquired (GDBusConnection *bus,
         g_debug ("Successfully connected to D-Bus");
 
         show_local_greeter = TRUE;
-        scdm_settings_direct_get_boolean (GDM_KEY_SHOW_LOCAL_GREETER, &show_local_greeter);
+        scdm_settings_direct_get_boolean (SCDM_KEY_SHOW_LOCAL_GREETER, &show_local_greeter);
         scdm_manager_set_show_local_greeter (manager, show_local_greeter);
 
         xdmcp_enabled = FALSE;
-        scdm_settings_direct_get_boolean (GDM_KEY_XDMCP_ENABLE, &xdmcp_enabled);
+        scdm_settings_direct_get_boolean (SCDM_KEY_XDMCP_ENABLE, &xdmcp_enabled);
         scdm_manager_set_xdmcp_enabled (manager, xdmcp_enabled);
 
         scdm_manager_start (manager);
@@ -458,7 +458,7 @@ bus_reconnect ()
         }
 
         name_id = g_bus_own_name_on_connection (bus,
-                                                GDM_DBUS_NAME,
+                                                SCDM_DBUS_NAME,
                                                 G_BUS_NAME_OWNER_FLAGS_NONE,
                                                 on_name_acquired,
                                                 on_name_lost,

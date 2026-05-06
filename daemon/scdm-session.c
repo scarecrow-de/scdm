@@ -57,10 +57,10 @@
 #include "scdm-settings-direct.h"
 #include "scdm-settings-keys.h"
 
-#define GDM_SESSION_DBUS_ERROR_CANCEL "io.github.scarecrow_de.DisplayManager.Session.Error.Cancel"
-#define GDM_SESSION_DBUS_OBJECT_PATH "/io/github/scarecrow_de/DisplayManager/Session"
+#define SCDM_SESSION_DBUS_ERROR_CANCEL "io.github.scarecrow_de.DisplayManager.Session.Error.Cancel"
+#define SCDM_SESSION_DBUS_OBJECT_PATH "/io/github/scarecrow_de/DisplayManager/Session"
 
-#define GDM_WORKER_DBUS_PATH "/io/github/scarecrow_de/DisplayManager/Worker"
+#define SCDM_WORKER_DBUS_PATH "/io/github/scarecrow_de/DisplayManager/Worker"
 
 typedef struct
 {
@@ -219,8 +219,8 @@ report_and_stop_conversation (ScdmSession *self,
 
         if (self->user_verifier_interface != NULL) {
                 if (g_error_matches (error,
-                                     GDM_SESSION_WORKER_ERROR,
-                                     GDM_SESSION_WORKER_ERROR_SERVICE_UNAVAILABLE)) {
+                                     SCDM_SESSION_WORKER_ERROR,
+                                     SCDM_SESSION_WORKER_ERROR_SERVICE_UNAVAILABLE)) {
                         scdm_dbus_user_verifier_emit_service_unavailable (self->user_verifier_interface,
                                                                          service_name,
                                                                          error->message);
@@ -326,11 +326,11 @@ on_establish_credentials_cb (ScdmDBusWorker *proxy,
                 }
 
                 switch (self->verification_mode) {
-                case GDM_SESSION_VERIFICATION_MODE_LOGIN:
-                case GDM_SESSION_VERIFICATION_MODE_CHOOSER:
+                case SCDM_SESSION_VERIFICATION_MODE_LOGIN:
+                case SCDM_SESSION_VERIFICATION_MODE_CHOOSER:
                         scdm_session_open_session (self, service_name);
                         break;
-                case GDM_SESSION_VERIFICATION_MODE_REAUTHENTICATE:
+                case SCDM_SESSION_VERIFICATION_MODE_REAUTHENTICATE:
                 default:
                         break;
                 }
@@ -681,7 +681,7 @@ cancel_pending_query (ScdmSessionConversation *conversation)
         g_debug ("ScdmSession: Cancelling pending query");
 
         g_dbus_method_invocation_return_dbus_error (conversation->pending_invocation,
-                                                    GDM_SESSION_DBUS_ERROR_CANCEL,
+                                                    SCDM_SESSION_DBUS_ERROR_CANCEL,
                                                     "Operation cancelled");
         conversation->pending_invocation = NULL;
 }
@@ -1115,7 +1115,7 @@ register_worker (ScdmDBusWorkerManager  *worker_manager_interface,
         conversation->worker_proxy = scdm_dbus_worker_proxy_new_sync (connection,
                                                                      G_DBUS_PROXY_FLAGS_NONE,
                                                                      NULL,
-                                                                     GDM_WORKER_DBUS_PATH,
+                                                                     SCDM_WORKER_DBUS_PATH,
                                                                      NULL, NULL);
         /* drop the reference we stole from the pending connections list
          * since the proxy owns the connection now */
@@ -1178,7 +1178,7 @@ export_worker_manager_interface (ScdmSession      *self,
 {
         ScdmDBusWorkerManager *worker_manager_interface;
 
-        worker_manager_interface = GDM_DBUS_WORKER_MANAGER (scdm_dbus_worker_manager_skeleton_new ());
+        worker_manager_interface = SCDM_DBUS_WORKER_MANAGER (scdm_dbus_worker_manager_skeleton_new ());
         g_signal_connect (worker_manager_interface,
                           "handle-hello",
                           G_CALLBACK (register_worker),
@@ -1206,7 +1206,7 @@ export_worker_manager_interface (ScdmSession      *self,
 
         g_dbus_interface_skeleton_export (G_DBUS_INTERFACE_SKELETON (worker_manager_interface),
                                           connection,
-                                          GDM_SESSION_DBUS_OBJECT_PATH,
+                                          SCDM_SESSION_DBUS_OBJECT_PATH,
                                           NULL);
 }
 
@@ -1307,7 +1307,7 @@ export_user_verifier_choice_list_interface (ScdmSession      *self,
 {
         ScdmDBusUserVerifierChoiceList   *interface;
 
-        interface = GDM_DBUS_USER_VERIFIER_CHOICE_LIST (scdm_dbus_user_verifier_choice_list_skeleton_new ());
+        interface = SCDM_DBUS_USER_VERIFIER_CHOICE_LIST (scdm_dbus_user_verifier_choice_list_skeleton_new ());
 
         g_signal_connect (interface,
                           "handle-select-choice",
@@ -1316,7 +1316,7 @@ export_user_verifier_choice_list_interface (ScdmSession      *self,
 
         g_dbus_interface_skeleton_export (G_DBUS_INTERFACE_SKELETON (interface),
                                           connection,
-                                          GDM_SESSION_DBUS_OBJECT_PATH,
+                                          SCDM_SESSION_DBUS_OBJECT_PATH,
                                           NULL);
 
         g_hash_table_insert (self->user_verifier_extensions,
@@ -1581,7 +1581,7 @@ export_user_verifier_interface (ScdmSession      *self,
                                 GDBusConnection *connection)
 {
         ScdmDBusUserVerifier   *user_verifier_interface;
-        user_verifier_interface = GDM_DBUS_USER_VERIFIER (scdm_dbus_user_verifier_skeleton_new ());
+        user_verifier_interface = SCDM_DBUS_USER_VERIFIER (scdm_dbus_user_verifier_skeleton_new ());
 
         g_object_set_data (G_OBJECT (connection), "scdm-session", self);
 
@@ -1608,7 +1608,7 @@ export_user_verifier_interface (ScdmSession      *self,
 
         g_dbus_interface_skeleton_export (G_DBUS_INTERFACE_SKELETON (user_verifier_interface),
                                           connection,
-                                          GDM_SESSION_DBUS_OBJECT_PATH,
+                                          SCDM_SESSION_DBUS_OBJECT_PATH,
                                           NULL);
 
         self->user_verifier_interface = user_verifier_interface;
@@ -1620,7 +1620,7 @@ export_greeter_interface (ScdmSession      *self,
 {
         ScdmDBusGreeter *greeter_interface;
 
-        greeter_interface = GDM_DBUS_GREETER (scdm_dbus_greeter_skeleton_new ());
+        greeter_interface = SCDM_DBUS_GREETER (scdm_dbus_greeter_skeleton_new ());
 
         g_signal_connect (greeter_interface,
                           "handle-begin-auto-login",
@@ -1645,7 +1645,7 @@ export_greeter_interface (ScdmSession      *self,
 
         g_dbus_interface_skeleton_export (G_DBUS_INTERFACE_SKELETON (greeter_interface),
                                           connection,
-                                          GDM_SESSION_DBUS_OBJECT_PATH,
+                                          SCDM_SESSION_DBUS_OBJECT_PATH,
                                           NULL);
 
         self->greeter_interface = greeter_interface;
@@ -1669,7 +1669,7 @@ export_remote_greeter_interface (ScdmSession      *self,
 {
         ScdmDBusRemoteGreeter *remote_greeter_interface;
 
-        remote_greeter_interface = GDM_DBUS_REMOTE_GREETER (scdm_dbus_remote_greeter_skeleton_new ());
+        remote_greeter_interface = SCDM_DBUS_REMOTE_GREETER (scdm_dbus_remote_greeter_skeleton_new ());
 
         g_signal_connect (remote_greeter_interface,
                           "handle-disconnect",
@@ -1678,7 +1678,7 @@ export_remote_greeter_interface (ScdmSession      *self,
 
         g_dbus_interface_skeleton_export (G_DBUS_INTERFACE_SKELETON (remote_greeter_interface),
                                           connection,
-                                          GDM_SESSION_DBUS_OBJECT_PATH,
+                                          SCDM_SESSION_DBUS_OBJECT_PATH,
                                           NULL);
 
         self->remote_greeter_interface = remote_greeter_interface;
@@ -1704,7 +1704,7 @@ export_chooser_interface (ScdmSession      *self,
 {
         ScdmDBusChooser *chooser_interface;
 
-        chooser_interface = GDM_DBUS_CHOOSER (scdm_dbus_chooser_skeleton_new ());
+        chooser_interface = SCDM_DBUS_CHOOSER (scdm_dbus_chooser_skeleton_new ());
 
         g_signal_connect (chooser_interface,
                           "handle-select-hostname",
@@ -1713,7 +1713,7 @@ export_chooser_interface (ScdmSession      *self,
 
         g_dbus_interface_skeleton_export (G_DBUS_INTERFACE_SKELETON (chooser_interface),
                                           connection,
-                                          GDM_SESSION_DBUS_OBJECT_PATH,
+                                          SCDM_SESSION_DBUS_OBJECT_PATH,
                                           NULL);
 
         self->chooser_interface = chooser_interface;
@@ -1768,11 +1768,11 @@ handle_connection_from_outside (GDBusServer      *server,
         export_user_verifier_interface (self, connection);
 
         switch (self->verification_mode) {
-                case GDM_SESSION_VERIFICATION_MODE_LOGIN:
+                case SCDM_SESSION_VERIFICATION_MODE_LOGIN:
                         export_greeter_interface (self, connection);
                 break;
 
-                case GDM_SESSION_VERIFICATION_MODE_CHOOSER:
+                case SCDM_SESSION_VERIFICATION_MODE_CHOOSER:
                         export_chooser_interface (self, connection);
                 break;
 
@@ -2150,7 +2150,7 @@ start_conversation (ScdmSession *self,
         scdm_session_worker_job_set_server_address (conversation->job,
                                                    g_dbus_server_get_client_address (self->worker_server));
         scdm_session_worker_job_set_for_reauth (conversation->job,
-                                               self->verification_mode == GDM_SESSION_VERIFICATION_MODE_REAUTHENTICATE);
+                                               self->verification_mode == SCDM_SESSION_VERIFICATION_MODE_REAUTHENTICATE);
 
         if (self->conversation_environment != NULL) {
                 scdm_session_worker_job_set_environment (conversation->job,
@@ -2236,7 +2236,7 @@ scdm_session_start_conversation (ScdmSession *self,
 {
         ScdmSessionConversation *conversation;
 
-        g_return_val_if_fail (GDM_IS_SESSION (self), FALSE);
+        g_return_val_if_fail (SCDM_IS_SESSION (self), FALSE);
 
         conversation = g_hash_table_lookup (self->conversations,
                                             service_name);
@@ -2267,7 +2267,7 @@ scdm_session_stop_conversation (ScdmSession *self,
 {
         ScdmSessionConversation *conversation;
 
-        g_return_if_fail (GDM_IS_SESSION (self));
+        g_return_if_fail (SCDM_IS_SESSION (self));
 
         g_debug ("ScdmSession: stopping conversation %s", service_name);
 
@@ -2391,7 +2391,7 @@ scdm_session_setup (ScdmSession *self,
                    const char *service_name)
 {
 
-        g_return_if_fail (GDM_IS_SESSION (self));
+        g_return_if_fail (SCDM_IS_SESSION (self));
 
         update_session_type (self);
 
@@ -2406,7 +2406,7 @@ scdm_session_setup_for_user (ScdmSession *self,
                             const char *username)
 {
 
-        g_return_if_fail (GDM_IS_SESSION (self));
+        g_return_if_fail (SCDM_IS_SESSION (self));
         g_return_if_fail (username != NULL);
 
         update_session_type (self);
@@ -2429,7 +2429,7 @@ scdm_session_setup_for_program (ScdmSession *self,
                                const char *log_file)
 {
 
-        g_return_if_fail (GDM_IS_SESSION (self));
+        g_return_if_fail (SCDM_IS_SESSION (self));
 
         self->is_program_session = TRUE;
         initialize (self, service_name, username, log_file);
@@ -2441,7 +2441,7 @@ scdm_session_authenticate (ScdmSession *self,
 {
         ScdmSessionConversation *conversation;
 
-        g_return_if_fail (GDM_IS_SESSION (self));
+        g_return_if_fail (SCDM_IS_SESSION (self));
 
         conversation = find_conversation_by_name (self, service_name);
         if (conversation != NULL) {
@@ -2458,7 +2458,7 @@ scdm_session_authorize (ScdmSession *self,
 {
         ScdmSessionConversation *conversation;
 
-        g_return_if_fail (GDM_IS_SESSION (self));
+        g_return_if_fail (SCDM_IS_SESSION (self));
 
         conversation = find_conversation_by_name (self, service_name);
         if (conversation != NULL) {
@@ -2475,7 +2475,7 @@ scdm_session_accredit (ScdmSession *self,
 {
         ScdmSessionConversation *conversation;
 
-        g_return_if_fail (GDM_IS_SESSION (self));
+        g_return_if_fail (SCDM_IS_SESSION (self));
 
         conversation = find_conversation_by_name (self, service_name);
         if (conversation != NULL) {
@@ -2514,7 +2514,7 @@ scdm_session_send_environment (ScdmSession *self,
 {
         ScdmSessionConversation *conversation;
 
-        g_return_if_fail (GDM_IS_SESSION (self));
+        g_return_if_fail (SCDM_IS_SESSION (self));
 
         conversation = find_conversation_by_name (self, service_name);
         if (conversation != NULL) {
@@ -2654,14 +2654,14 @@ set_up_session_environment (ScdmSession *self)
                                                       "LANG",
                                                       locale);
                 scdm_session_set_environment_variable (self,
-                                                      "GDM_LANG",
+                                                      "SCDM_LANG",
                                                       locale);
         }
 
         g_free (locale);
 
         display_mode = scdm_session_get_display_mode (self);
-        if (display_mode == GDM_SESSION_DISPLAY_MODE_REUSE_VT) {
+        if (display_mode == SCDM_SESSION_DISPLAY_MODE_REUSE_VT) {
                 scdm_session_set_environment_variable (self,
                                                       "DISPLAY",
                                                       self->display_name);
@@ -2718,7 +2718,7 @@ scdm_session_open_session (ScdmSession *self,
 {
         ScdmSessionConversation *conversation;
 
-        g_return_if_fail (GDM_IS_SESSION (self));
+        g_return_if_fail (SCDM_IS_SESSION (self));
 
         conversation = find_conversation_by_name (self, service_name);
 
@@ -2839,7 +2839,7 @@ scdm_session_start_session (ScdmSession *self,
         char                   *program;
         gboolean               register_session;
 
-        g_return_if_fail (GDM_IS_SESSION (self));
+        g_return_if_fail (SCDM_IS_SESSION (self));
         g_return_if_fail (self->session_conversation == NULL);
 
         conversation = find_conversation_by_name (self, service_name);
@@ -2858,8 +2858,8 @@ scdm_session_start_session (ScdmSession *self,
         is_x11 = g_strcmp0 (self->session_type, "wayland") != 0;
 #endif
 
-        if (display_mode == GDM_SESSION_DISPLAY_MODE_LOGIND_MANAGED ||
-            display_mode == GDM_SESSION_DISPLAY_MODE_NEW_VT) {
+        if (display_mode == SCDM_SESSION_DISPLAY_MODE_LOGIND_MANAGED ||
+            display_mode == SCDM_SESSION_DISPLAY_MODE_NEW_VT) {
                 run_launcher = TRUE;
         }
 
@@ -2874,7 +2874,7 @@ scdm_session_start_session (ScdmSession *self,
 
                 if (self->display_is_local) {
                         gboolean disallow_tcp = TRUE;
-                        scdm_settings_direct_get_boolean (GDM_KEY_DISALLOW_TCP, &disallow_tcp);
+                        scdm_settings_direct_get_boolean (SCDM_KEY_DISALLOW_TCP, &disallow_tcp);
                         allow_remote_connections = !disallow_tcp;
                 } else {
                         allow_remote_connections = TRUE;
@@ -2980,7 +2980,7 @@ void
 scdm_session_close (ScdmSession *self)
 {
 
-        g_return_if_fail (GDM_IS_SESSION (self));
+        g_return_if_fail (SCDM_IS_SESSION (self));
 
         g_debug ("ScdmSession: Closing session");
         do_reset (self);
@@ -2996,7 +2996,7 @@ scdm_session_answer_query (ScdmSession *self,
 {
         ScdmSessionConversation *conversation;
 
-        g_return_if_fail (GDM_IS_SESSION (self));
+        g_return_if_fail (SCDM_IS_SESSION (self));
 
         conversation = find_conversation_by_name (self, service_name);
 
@@ -3008,7 +3008,7 @@ scdm_session_answer_query (ScdmSession *self,
 void
 scdm_session_cancel  (ScdmSession *self)
 {
-        g_return_if_fail (GDM_IS_SESSION (self));
+        g_return_if_fail (SCDM_IS_SESSION (self));
 
         g_signal_emit (G_OBJECT (self), signals [CANCELLED], 0);
 }
@@ -3042,7 +3042,7 @@ scdm_session_is_running (ScdmSession *self)
 gboolean
 scdm_session_client_is_connected (ScdmSession *self)
 {
-        g_return_val_if_fail (GDM_IS_SESSION (self), FALSE);
+        g_return_val_if_fail (SCDM_IS_SESSION (self), FALSE);
 
         return self->outside_connections != NULL;
 }
@@ -3079,7 +3079,7 @@ scdm_session_start_reauthentication (ScdmSession *session,
 const char *
 scdm_session_get_server_address (ScdmSession *self)
 {
-        g_return_val_if_fail (GDM_IS_SESSION (self), NULL);
+        g_return_val_if_fail (SCDM_IS_SESSION (self), NULL);
 
         return g_dbus_server_get_client_address (self->outside_server);
 }
@@ -3087,7 +3087,7 @@ scdm_session_get_server_address (ScdmSession *self)
 const char *
 scdm_session_get_username (ScdmSession *self)
 {
-        g_return_val_if_fail (GDM_IS_SESSION (self), NULL);
+        g_return_val_if_fail (SCDM_IS_SESSION (self), NULL);
 
         return self->selected_user;
 }
@@ -3095,7 +3095,7 @@ scdm_session_get_username (ScdmSession *self)
 const char *
 scdm_session_get_display_device (ScdmSession *self)
 {
-        g_return_val_if_fail (GDM_IS_SESSION (self), NULL);
+        g_return_val_if_fail (SCDM_IS_SESSION (self), NULL);
 
         return self->display_device;
 }
@@ -3103,7 +3103,7 @@ scdm_session_get_display_device (ScdmSession *self)
 const char *
 scdm_session_get_display_seat_id (ScdmSession *self)
 {
-        g_return_val_if_fail (GDM_IS_SESSION (self), NULL);
+        g_return_val_if_fail (SCDM_IS_SESSION (self), NULL);
 
         return g_strdup (self->display_seat_id);
 }
@@ -3113,7 +3113,7 @@ scdm_session_get_session_id (ScdmSession *self)
 {
         ScdmSessionConversation *conversation;
 
-        g_return_val_if_fail (GDM_IS_SESSION (self), NULL);
+        g_return_val_if_fail (SCDM_IS_SESSION (self), NULL);
 
         conversation = self->session_conversation;
 
@@ -3130,7 +3130,7 @@ scdm_session_get_conversation_session_id (ScdmSession *self,
 {
         ScdmSessionConversation *conversation;
 
-        g_return_val_if_fail (GDM_IS_SESSION (self), NULL);
+        g_return_val_if_fail (SCDM_IS_SESSION (self), NULL);
 
         conversation = find_conversation_by_name (self, service_name);
 
@@ -3157,7 +3157,7 @@ scdm_session_is_wayland_session (ScdmSession *self)
         char       *full_path = NULL;
 
         g_return_val_if_fail (self != NULL, FALSE);
-        g_return_val_if_fail (GDM_IS_SESSION (self), FALSE);
+        g_return_val_if_fail (SCDM_IS_SESSION (self), FALSE);
 
         filename = get_session_filename (self);
 
@@ -3203,7 +3203,7 @@ scdm_session_session_registers (ScdmSession *self)
         g_autofree char *filename = NULL;
 
         g_return_val_if_fail (self != NULL, FALSE);
-        g_return_val_if_fail (GDM_IS_SESSION (self), FALSE);
+        g_return_val_if_fail (SCDM_IS_SESSION (self), FALSE);
 
         filename = get_session_filename (self);
 
@@ -3236,7 +3236,7 @@ scdm_session_bypasses_xsession (ScdmSession *self)
         char       *filename = NULL;
 
         g_return_val_if_fail (self != NULL, FALSE);
-        g_return_val_if_fail (GDM_IS_SESSION (self), FALSE);
+        g_return_val_if_fail (SCDM_IS_SESSION (self), FALSE);
 
 #ifdef ENABLE_WAYLAND_SUPPORT
         if (scdm_session_is_wayland_session (self)) {
@@ -3282,7 +3282,7 @@ scdm_session_get_display_mode (ScdmSession *self)
          * for now.
          */
         if (g_strcmp0 (self->display_seat_id, "seat0") != 0) {
-                return GDM_SESSION_DISPLAY_MODE_REUSE_VT;
+                return SCDM_SESSION_DISPLAY_MODE_REUSE_VT;
         }
 
 #ifdef ENABLE_USER_DISPLAY_SERVER
@@ -3307,7 +3307,7 @@ scdm_session_get_display_mode (ScdmSession *self)
          *   right now.  It will die with an error if logind devices
          *   are paused when handed out.
          */
-        return GDM_SESSION_DISPLAY_MODE_NEW_VT;
+        return SCDM_SESSION_DISPLAY_MODE_NEW_VT;
 #else
 
 #ifdef ENABLE_WAYLAND_SUPPORT
@@ -3315,10 +3315,10 @@ scdm_session_get_display_mode (ScdmSession *self)
          * mutter-launch-like environment, so we allocate
          * a new VT for them. */
         if (g_strcmp0 (self->session_type, "wayland") == 0) {
-                return GDM_SESSION_DISPLAY_MODE_NEW_VT;
+                return SCDM_SESSION_DISPLAY_MODE_NEW_VT;
         }
 #endif
-        return GDM_SESSION_DISPLAY_MODE_REUSE_VT;
+        return SCDM_SESSION_DISPLAY_MODE_REUSE_VT;
 #endif
 }
 
@@ -3464,7 +3464,7 @@ scdm_session_set_property (GObject      *object,
 {
         ScdmSession *self;
 
-        self = GDM_SESSION (object);
+        self = SCDM_SESSION (object);
 
         switch (prop_id) {
         case PROP_SESSION_TYPE:
@@ -3522,7 +3522,7 @@ scdm_session_get_property (GObject    *object,
 {
         ScdmSession *self;
 
-        self = GDM_SESSION (object);
+        self = SCDM_SESSION (object);
 
         switch (prop_id) {
         case PROP_SESSION_TYPE:
@@ -3577,7 +3577,7 @@ scdm_session_dispose (GObject *object)
 {
         ScdmSession *self;
 
-        self = GDM_SESSION (object);
+        self = SCDM_SESSION (object);
 
         g_debug ("ScdmSession: Disposing session");
 
@@ -3634,7 +3634,7 @@ scdm_session_finalize (GObject *object)
         ScdmSession   *self;
         GObjectClass *parent_class;
 
-        self = GDM_SESSION (object);
+        self = SCDM_SESSION (object);
 
         g_free (self->selected_user);
         g_free (self->selected_session);
@@ -3656,7 +3656,7 @@ scdm_session_constructor (GType                  type,
 {
         ScdmSession *self;
 
-        self = GDM_SESSION (G_OBJECT_CLASS (scdm_session_parent_class)->constructor (type,
+        self = SCDM_SESSION (G_OBJECT_CLASS (scdm_session_parent_class)->constructor (type,
                                                                                     n_construct_properties,
                                                                                     construct_properties));
         return G_OBJECT (self);
@@ -3677,7 +3677,7 @@ scdm_session_class_init (ScdmSessionClass *session_class)
 
         signals [CONVERSATION_STARTED] =
                 g_signal_new ("conversation-started",
-                              GDM_TYPE_SESSION,
+                              SCDM_TYPE_SESSION,
                               G_SIGNAL_RUN_FIRST,
                               0,
                               NULL,
@@ -3687,7 +3687,7 @@ scdm_session_class_init (ScdmSessionClass *session_class)
                               1, G_TYPE_STRING);
         signals [CONVERSATION_STOPPED] =
                 g_signal_new ("conversation-stopped",
-                              GDM_TYPE_SESSION,
+                              SCDM_TYPE_SESSION,
                               G_SIGNAL_RUN_FIRST,
                               0,
                               NULL,
@@ -3697,7 +3697,7 @@ scdm_session_class_init (ScdmSessionClass *session_class)
                               1, G_TYPE_STRING);
         signals [SETUP_COMPLETE] =
                 g_signal_new ("setup-complete",
-                              GDM_TYPE_SESSION,
+                              SCDM_TYPE_SESSION,
                               G_SIGNAL_RUN_FIRST,
                               0,
                               NULL,
@@ -3709,7 +3709,7 @@ scdm_session_class_init (ScdmSessionClass *session_class)
 
         signals [AUTHENTICATION_FAILED] =
                 g_signal_new ("authentication-failed",
-                              GDM_TYPE_SESSION,
+                              SCDM_TYPE_SESSION,
                               G_SIGNAL_RUN_FIRST,
                               0,
                               NULL,
@@ -3721,7 +3721,7 @@ scdm_session_class_init (ScdmSessionClass *session_class)
                               G_TYPE_INT);
         signals [VERIFICATION_COMPLETE] =
                 g_signal_new ("verification-complete",
-                              GDM_TYPE_SESSION,
+                              SCDM_TYPE_SESSION,
                               G_SIGNAL_RUN_FIRST,
                               0,
                               NULL,
@@ -3732,7 +3732,7 @@ scdm_session_class_init (ScdmSessionClass *session_class)
                               G_TYPE_STRING);
         signals [SESSION_OPENED] =
                 g_signal_new ("session-opened",
-                              GDM_TYPE_SESSION,
+                              SCDM_TYPE_SESSION,
                               G_SIGNAL_RUN_FIRST,
                               0,
                               NULL,
@@ -3744,7 +3744,7 @@ scdm_session_class_init (ScdmSessionClass *session_class)
                               G_TYPE_STRING);
         signals [SESSION_STARTED] =
                 g_signal_new ("session-started",
-                              GDM_TYPE_SESSION,
+                              SCDM_TYPE_SESSION,
                               G_SIGNAL_RUN_FIRST,
                               0,
                               NULL,
@@ -3756,7 +3756,7 @@ scdm_session_class_init (ScdmSessionClass *session_class)
                               G_TYPE_INT);
         signals [SESSION_START_FAILED] =
                 g_signal_new ("session-start-failed",
-                              GDM_TYPE_SESSION,
+                              SCDM_TYPE_SESSION,
                               G_SIGNAL_RUN_FIRST,
                               0,
                               NULL,
@@ -3767,7 +3767,7 @@ scdm_session_class_init (ScdmSessionClass *session_class)
                               G_TYPE_STRING, G_TYPE_STRING);
         signals [SESSION_EXITED] =
                 g_signal_new ("session-exited",
-                              GDM_TYPE_SESSION,
+                              SCDM_TYPE_SESSION,
                               G_SIGNAL_RUN_FIRST,
                               0,
                               NULL,
@@ -3778,7 +3778,7 @@ scdm_session_class_init (ScdmSessionClass *session_class)
                               G_TYPE_INT);
         signals [SESSION_DIED] =
                 g_signal_new ("session-died",
-                              GDM_TYPE_SESSION,
+                              SCDM_TYPE_SESSION,
                               G_SIGNAL_RUN_FIRST,
                               0,
                               NULL,
@@ -3790,7 +3790,7 @@ scdm_session_class_init (ScdmSessionClass *session_class)
 
         signals [REAUTHENTICATION_STARTED] =
                 g_signal_new ("reauthentication-started",
-                              GDM_TYPE_SESSION,
+                              SCDM_TYPE_SESSION,
                               G_SIGNAL_RUN_FIRST,
                               0,
                               NULL,
@@ -3802,7 +3802,7 @@ scdm_session_class_init (ScdmSessionClass *session_class)
                               G_TYPE_STRING);
         signals [REAUTHENTICATED] =
                 g_signal_new ("reauthenticated",
-                              GDM_TYPE_SESSION,
+                              SCDM_TYPE_SESSION,
                               G_SIGNAL_RUN_FIRST,
                               0,
                               NULL,
@@ -3813,7 +3813,7 @@ scdm_session_class_init (ScdmSessionClass *session_class)
                               G_TYPE_STRING);
         signals [CANCELLED] =
                 g_signal_new ("cancelled",
-                              GDM_TYPE_SESSION,
+                              SCDM_TYPE_SESSION,
                               G_SIGNAL_RUN_FIRST,
                               0,
                               NULL,
@@ -3824,7 +3824,7 @@ scdm_session_class_init (ScdmSessionClass *session_class)
 
         signals [CLIENT_REJECTED] =
                 g_signal_new ("client-rejected",
-                              GDM_TYPE_SESSION,
+                              SCDM_TYPE_SESSION,
                               G_SIGNAL_RUN_FIRST,
                               0,
                               NULL,
@@ -3837,7 +3837,7 @@ scdm_session_class_init (ScdmSessionClass *session_class)
 
         signals [CLIENT_CONNECTED] =
                 g_signal_new ("client-connected",
-                              GDM_TYPE_SESSION,
+                              SCDM_TYPE_SESSION,
                               G_SIGNAL_RUN_FIRST,
                               0,
                               NULL,
@@ -3850,7 +3850,7 @@ scdm_session_class_init (ScdmSessionClass *session_class)
 
         signals [CLIENT_DISCONNECTED] =
                 g_signal_new ("client-disconnected",
-                              GDM_TYPE_SESSION,
+                              SCDM_TYPE_SESSION,
                               G_SIGNAL_RUN_FIRST,
                               0,
                               NULL,
@@ -3862,7 +3862,7 @@ scdm_session_class_init (ScdmSessionClass *session_class)
                               G_TYPE_UINT);
         signals [CLIENT_READY_FOR_SESSION_TO_START] =
                 g_signal_new ("client-ready-for-session-to-start",
-                              GDM_TYPE_SESSION,
+                              SCDM_TYPE_SESSION,
                               G_SIGNAL_RUN_FIRST,
                               0,
                               NULL,
@@ -3875,7 +3875,7 @@ scdm_session_class_init (ScdmSessionClass *session_class)
 
         signals [HOSTNAME_SELECTED] =
                 g_signal_new ("hostname-selected",
-                              GDM_TYPE_SESSION,
+                              SCDM_TYPE_SESSION,
                               G_SIGNAL_RUN_FIRST,
                               0,
                               NULL,
@@ -3886,7 +3886,7 @@ scdm_session_class_init (ScdmSessionClass *session_class)
                               G_TYPE_STRING);
         signals [DISCONNECTED] =
                 g_signal_new ("disconnected",
-                              GDM_TYPE_SESSION,
+                              SCDM_TYPE_SESSION,
                               G_SIGNAL_RUN_FIRST,
                               0,
                               NULL,
@@ -3900,8 +3900,8 @@ scdm_session_class_init (ScdmSessionClass *session_class)
                                          g_param_spec_enum ("verification-mode",
                                                             "verification mode",
                                                             "verification mode",
-                                                            GDM_TYPE_SESSION_VERIFICATION_MODE,
-                                                            GDM_SESSION_VERIFICATION_MODE_LOGIN,
+                                                            SCDM_TYPE_SESSION_VERIFICATION_MODE,
+                                                            SCDM_SESSION_VERIFICATION_MODE_LOGIN,
                                                             G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS));
         g_object_class_install_property (object_class,
                                          PROP_ALLOWED_USER,
@@ -4009,7 +4009,7 @@ scdm_session_new (ScdmSessionVerificationMode  verification_mode,
 {
         ScdmSession *self;
 
-        self = g_object_new (GDM_TYPE_SESSION,
+        self = g_object_new (SCDM_TYPE_SESSION,
                              "verification-mode", verification_mode,
                              "allowed-user", (guint) allowed_user,
                              "display-name", display_name,
@@ -4028,11 +4028,11 @@ ScdmSessionDisplayMode
 scdm_session_display_mode_from_string (const char *str)
 {
         if (strcmp (str, "reuse-vt") == 0)
-                return GDM_SESSION_DISPLAY_MODE_REUSE_VT;
+                return SCDM_SESSION_DISPLAY_MODE_REUSE_VT;
         if (strcmp (str, "new-vt") == 0)
-                return GDM_SESSION_DISPLAY_MODE_NEW_VT;
+                return SCDM_SESSION_DISPLAY_MODE_NEW_VT;
         if (strcmp (str, "logind-managed") == 0)
-                return GDM_SESSION_DISPLAY_MODE_LOGIND_MANAGED;
+                return SCDM_SESSION_DISPLAY_MODE_LOGIND_MANAGED;
 
         g_warning ("Unknown ScdmSessionDisplayMode %s", str);
         return -1;
@@ -4042,11 +4042,11 @@ const char *
 scdm_session_display_mode_to_string (ScdmSessionDisplayMode mode)
 {
         switch (mode) {
-        case GDM_SESSION_DISPLAY_MODE_REUSE_VT:
+        case SCDM_SESSION_DISPLAY_MODE_REUSE_VT:
                 return "reuse-vt";
-        case GDM_SESSION_DISPLAY_MODE_NEW_VT:
+        case SCDM_SESSION_DISPLAY_MODE_NEW_VT:
                 return "new-vt";
-        case GDM_SESSION_DISPLAY_MODE_LOGIND_MANAGED:
+        case SCDM_SESSION_DISPLAY_MODE_LOGIND_MANAGED:
                 return "logind-managed";
         default:
                 break;

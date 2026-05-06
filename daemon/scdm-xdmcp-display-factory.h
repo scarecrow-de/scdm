@@ -19,8 +19,8 @@
  */
 
 
-#ifndef __GDM_XDMCP_DISPLAY_FACTORY_H
-#define __GDM_XDMCP_DISPLAY_FACTORY_H
+#ifndef __SCDM_XDMCP_DISPLAY_FACTORY_H
+#define __SCDM_XDMCP_DISPLAY_FACTORY_H
 
 #include <glib-object.h>
 
@@ -29,15 +29,15 @@
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_XDMCP_DISPLAY_FACTORY (scdm_xdmcp_display_factory_get_type ())
+#define SCDM_TYPE_XDMCP_DISPLAY_FACTORY (scdm_xdmcp_display_factory_get_type ())
 G_DECLARE_FINAL_TYPE (ScdmXdmcpDisplayFactory, scdm_xdmcp_display_factory, GDM, XDMCP_DISPLAY_FACTORY, ScdmDisplayFactory)
 
 typedef enum
 {
-         GDM_XDMCP_DISPLAY_FACTORY_ERROR_GENERAL
+         SCDM_XDMCP_DISPLAY_FACTORY_ERROR_GENERAL
 } ScdmXdmcpDisplayFactoryError;
 
-#define GDM_XDMCP_DISPLAY_FACTORY_ERROR scdm_xdmcp_display_factory_error_quark ()
+#define SCDM_XDMCP_DISPLAY_FACTORY_ERROR scdm_xdmcp_display_factory_error_quark ()
 
 GQuark                     scdm_xdmcp_display_factory_error_quark      (void);
 
@@ -48,4 +48,4 @@ void                       scdm_xdmcp_display_factory_set_port         (ScdmXdmc
 
 G_END_DECLS
 
-#endif /* __GDM_XDMCP_DISPLAY_FACTORY_H */
+#endif /* __SCDM_XDMCP_DISPLAY_FACTORY_H */

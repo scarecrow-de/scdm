@@ -50,8 +50,8 @@ struct _ScdmDisplayAccessFile
         char *path;
 };
 
-#ifndef GDM_DISPLAY_ACCESS_COOKIE_SIZE
-#define GDM_DISPLAY_ACCESS_COOKIE_SIZE 16
+#ifndef SCDM_DISPLAY_ACCESS_COOKIE_SIZE
+#define SCDM_DISPLAY_ACCESS_COOKIE_SIZE 16
 #endif
 
 #ifndef O_BINARY
@@ -77,7 +77,7 @@ scdm_display_access_file_get_property (GObject    *object,
 {
         ScdmDisplayAccessFile *access_file;
 
-        access_file = GDM_DISPLAY_ACCESS_FILE (object);
+        access_file = SCDM_DISPLAY_ACCESS_FILE (object);
 
         switch (prop_id) {
             case PROP_USERNAME:
@@ -101,7 +101,7 @@ scdm_display_access_file_set_property (GObject      *object,
 {
         ScdmDisplayAccessFile *access_file;
 
-        access_file = GDM_DISPLAY_ACCESS_FILE (object);
+        access_file = SCDM_DISPLAY_ACCESS_FILE (object);
 
         switch (prop_id) {
             case PROP_USERNAME:
@@ -151,7 +151,7 @@ scdm_display_access_file_finalize (GObject *object)
         ScdmDisplayAccessFile *file;
         GObjectClass *parent_class;
 
-        file = GDM_DISPLAY_ACCESS_FILE (object);
+        file = SCDM_DISPLAY_ACCESS_FILE (object);
         parent_class = G_OBJECT_CLASS (scdm_display_access_file_parent_class);
 
         if (file->fp != NULL) {
@@ -188,7 +188,7 @@ scdm_display_access_file_new (const char *username)
         ScdmDisplayAccessFile *access_file;
         g_return_val_if_fail (username != NULL, NULL);
 
-        access_file = g_object_new (GDM_TYPE_DISPLAY_ACCESS_FILE,
+        access_file = g_object_new (SCDM_TYPE_DISPLAY_ACCESS_FILE,
                                     "username", username,
                                     NULL);
 
@@ -225,7 +225,7 @@ clean_up_stale_auth_subdirs (void)
         GDir *dir;
         const char *filename;
 
-        dir = g_dir_open (GDM_XAUTH_DIR, 0, NULL);
+        dir = g_dir_open (SCDM_XAUTH_DIR, 0, NULL);
 
         if (dir == NULL) {
                 return;
@@ -234,7 +234,7 @@ clean_up_stale_auth_subdirs (void)
         while ((filename = g_dir_read_name (dir)) != NULL) {
                 char *path;
 
-                path = g_build_filename (GDM_XAUTH_DIR, filename, NULL);
+                path = g_build_filename (SCDM_XAUTH_DIR, filename, NULL);
 
                 /* Will only succeed if the directory is empty
                  */
@@ -267,9 +267,9 @@ _create_xauth_file_for_user (const char  *username,
         fd = -1;
 
         /* Create directory if not exist, then set permission 0711 and ownership root:scdm */
-        if (g_file_test (GDM_XAUTH_DIR, G_FILE_TEST_IS_DIR) == FALSE) {
-                g_remove (GDM_XAUTH_DIR);
-                if (g_mkdir (GDM_XAUTH_DIR, 0711) != 0) {
+        if (g_file_test (SCDM_XAUTH_DIR, G_FILE_TEST_IS_DIR) == FALSE) {
+                g_remove (SCDM_XAUTH_DIR);
+                if (g_mkdir (SCDM_XAUTH_DIR, 0711) != 0) {
                         g_set_error (error,
                                      G_FILE_ERROR,
                                      g_file_error_from_errno (errno),
@@ -277,15 +277,15 @@ _create_xauth_file_for_user (const char  *username,
                         goto out;
                 }
 
-                g_chmod (GDM_XAUTH_DIR, 0711);
-                _get_uid_and_gid_for_user (GDM_USERNAME, &uid, &gid);
-                if (chown (GDM_XAUTH_DIR, 0, gid) != 0) {
+                g_chmod (SCDM_XAUTH_DIR, 0711);
+                _get_uid_and_gid_for_user (SCDM_USERNAME, &uid, &gid);
+                if (chown (SCDM_XAUTH_DIR, 0, gid) != 0) {
                         g_warning ("Unable to change owner of '%s'",
-                                   GDM_XAUTH_DIR);
+                                   SCDM_XAUTH_DIR);
                 }
         } else {
                 /* if it does exist make sure it has correct mode 0711 */
-                g_chmod (GDM_XAUTH_DIR, 0711);
+                g_chmod (SCDM_XAUTH_DIR, 0711);
 
                 /* and clean up any stale auth subdirs */
                 clean_up_stale_auth_subdirs ();
@@ -293,15 +293,15 @@ _create_xauth_file_for_user (const char  *username,
 
         if (!_get_uid_and_gid_for_user (username, &uid, &gid)) {
                 g_set_error (error,
-                             GDM_DISPLAY_ERROR,
-                             GDM_DISPLAY_ERROR_GETTING_USER_INFO,
+                             SCDM_DISPLAY_ERROR,
+                             SCDM_DISPLAY_ERROR_GETTING_USER_INFO,
                              _("could not find user “%s” on system"),
                              username);
                 goto out;
 
         }
 
-        template = g_strdup_printf (GDM_XAUTH_DIR
+        template = g_strdup_printf (SCDM_XAUTH_DIR
                                     "/auth-for-%s-XXXXXX",
                                     username);
 
@@ -477,7 +477,7 @@ scdm_display_access_file_add_display (ScdmDisplayAccessFile  *file,
         g_return_val_if_fail (cookie != NULL, FALSE);
 
         add_error = NULL;
-        *cookie = scdm_generate_random_bytes (GDM_DISPLAY_ACCESS_COOKIE_SIZE,
+        *cookie = scdm_generate_random_bytes (SCDM_DISPLAY_ACCESS_COOKIE_SIZE,
                                              &add_error);
 
         if (*cookie == NULL) {
@@ -485,7 +485,7 @@ scdm_display_access_file_add_display (ScdmDisplayAccessFile  *file,
                 return FALSE;
         }
 
-        *cookie_size = GDM_DISPLAY_ACCESS_COOKIE_SIZE;
+        *cookie_size = SCDM_DISPLAY_ACCESS_COOKIE_SIZE;
 
         display_added = scdm_display_access_file_add_display_with_cookie (file, display,
                                                                          *cookie,

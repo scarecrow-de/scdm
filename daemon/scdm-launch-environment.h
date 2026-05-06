@@ -19,20 +19,20 @@
  */
 
 
-#ifndef __GDM_LAUNCH_ENVIRONMENT_H
-#define __GDM_LAUNCH_ENVIRONMENT_H
+#ifndef __SCDM_LAUNCH_ENVIRONMENT_H
+#define __SCDM_LAUNCH_ENVIRONMENT_H
 
 #include <glib-object.h>
 #include "scdm-session.h"
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_LAUNCH_ENVIRONMENT         (scdm_launch_environment_get_type ())
-#define GDM_LAUNCH_ENVIRONMENT(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GDM_TYPE_LAUNCH_ENVIRONMENT, ScdmLaunchEnvironment))
-#define GDM_LAUNCH_ENVIRONMENT_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), GDM_TYPE_LAUNCH_ENVIRONMENT, ScdmLaunchEnvironmentClass))
-#define GDM_IS_LAUNCH_ENVIRONMENT(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDM_TYPE_LAUNCH_ENVIRONMENT))
-#define GDM_IS_LAUNCH_ENVIRONMENT_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), GDM_TYPE_LAUNCH_ENVIRONMENT))
-#define GDM_LAUNCH_ENVIRONMENT_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), GDM_TYPE_LAUNCH_ENVIRONMENT, ScdmLaunchEnvironmentClass))
+#define SCDM_TYPE_LAUNCH_ENVIRONMENT         (scdm_launch_environment_get_type ())
+#define SCDM_LAUNCH_ENVIRONMENT(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), SCDM_TYPE_LAUNCH_ENVIRONMENT, ScdmLaunchEnvironment))
+#define SCDM_LAUNCH_ENVIRONMENT_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), SCDM_TYPE_LAUNCH_ENVIRONMENT, ScdmLaunchEnvironmentClass))
+#define SCDM_IS_LAUNCH_ENVIRONMENT(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), SCDM_TYPE_LAUNCH_ENVIRONMENT))
+#define SCDM_IS_LAUNCH_ENVIRONMENT_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), SCDM_TYPE_LAUNCH_ENVIRONMENT))
+#define SCDM_LAUNCH_ENVIRONMENT_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), SCDM_TYPE_LAUNCH_ENVIRONMENT, ScdmLaunchEnvironmentClass))
 
 typedef struct ScdmLaunchEnvironmentPrivate ScdmLaunchEnvironmentPrivate;
 
@@ -86,4 +86,4 @@ ScdmLaunchEnvironment *scdm_create_chooser_launch_environment (const char *displ
 
 G_END_DECLS
 
-#endif /* __GDM_LAUNCH_ENVIRONMENT_H */
+#endif /* __SCDM_LAUNCH_ENVIRONMENT_H */

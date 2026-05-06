@@ -21,8 +21,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
  */
-#ifndef __GDM_DISPLAY_ACCESS_FILE_H__
-#define __GDM_DISPLAY_ACCESS_FILE_H__
+#ifndef __SCDM_DISPLAY_ACCESS_FILE_H__
+#define __SCDM_DISPLAY_ACCESS_FILE_H__
 
 #include <glib.h>
 #include <glib-object.h>
@@ -31,17 +31,17 @@
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_DISPLAY_ACCESS_FILE (scdm_display_access_file_get_type ())
+#define SCDM_TYPE_DISPLAY_ACCESS_FILE (scdm_display_access_file_get_type ())
 G_DECLARE_FINAL_TYPE (ScdmDisplayAccessFile, scdm_display_access_file, GDM, DISPLAY_ACCESS_FILE, GObject)
 
-#define GDM_DISPLAY_ACCESS_FILE_ERROR           (scdm_display_access_file_error_quark ())
+#define SCDM_DISPLAY_ACCESS_FILE_ERROR           (scdm_display_access_file_error_quark ())
 
 typedef enum _ScdmDisplayAccessFileError ScdmDisplayAccessFileError;
 
 enum _ScdmDisplayAccessFileError
 {
-        GDM_DISPLAY_ACCESS_FILE_ERROR_GENERAL = 0,
-        GDM_DISPLAY_ACCESS_FILE_ERROR_FINDING_AUTH_ENTRY
+        SCDM_DISPLAY_ACCESS_FILE_ERROR_GENERAL = 0,
+        SCDM_DISPLAY_ACCESS_FILE_ERROR_FINDING_AUTH_ENTRY
 };
 
 GQuark                scdm_display_access_file_error_quark             (void);
@@ -64,4 +64,4 @@ void                  scdm_display_access_file_close                   (ScdmDisp
 char                 *scdm_display_access_file_get_path                (ScdmDisplayAccessFile  *file);
 
 G_END_DECLS
-#endif /* __GDM_DISPLAY_ACCESS_FILE_H__ */
+#endif /* __SCDM_DISPLAY_ACCESS_FILE_H__ */

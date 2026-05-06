@@ -19,14 +19,14 @@
  */
 
 
-#ifndef __GDM_SESSION_WORKER_JOB_H
-#define __GDM_SESSION_WORKER_JOB_H
+#ifndef __SCDM_SESSION_WORKER_JOB_H
+#define __SCDM_SESSION_WORKER_JOB_H
 
 #include <glib-object.h>
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_SESSION_WORKER_JOB (scdm_session_worker_job_get_type ())
+#define SCDM_TYPE_SESSION_WORKER_JOB (scdm_session_worker_job_get_type ())
 G_DECLARE_FINAL_TYPE (ScdmSessionWorkerJob, scdm_session_worker_job, GDM, SESSION_WORKER_JOB, GObject)
 
 ScdmSessionWorkerJob *   scdm_session_worker_job_new                (void);
@@ -45,4 +45,4 @@ GPid                    scdm_session_worker_job_get_pid            (ScdmSessionW
 
 G_END_DECLS
 
-#endif /* __GDM_SESSION_WORKER_JOB_H */
+#endif /* __SCDM_SESSION_WORKER_JOB_H */

@@ -82,7 +82,7 @@ scdm_settings_get_value (ScdmSettings *settings,
         gboolean res;
         GList   *l;
 
-        g_return_val_if_fail (GDM_IS_SETTINGS (settings), FALSE);
+        g_return_val_if_fail (SCDM_IS_SETTINGS (settings), FALSE);
         g_return_val_if_fail (key != NULL, FALSE);
 
         local_error = NULL;
@@ -119,7 +119,7 @@ scdm_settings_set_value (ScdmSettings *settings,
         gboolean res;
         GList   *l;
 
-        g_return_val_if_fail (GDM_IS_SETTINGS (settings), FALSE);
+        g_return_val_if_fail (SCDM_IS_SETTINGS (settings), FALSE);
         g_return_val_if_fail (key != NULL, FALSE);
 
         g_debug ("Setting value %s", key);
@@ -190,11 +190,11 @@ scdm_settings_init (ScdmSettings *settings)
         GList *l;
         ScdmSettingsBackend *backend;
 
-        backend = scdm_settings_desktop_backend_new (GDM_CUSTOM_CONF);
+        backend = scdm_settings_desktop_backend_new (SCDM_CUSTOM_CONF);
         if (backend)
                 settings->backends = g_list_prepend (NULL, backend);
 
-        backend = scdm_settings_desktop_backend_new (GDM_RUNTIME_CONF);
+        backend = scdm_settings_desktop_backend_new (SCDM_RUNTIME_CONF);
         if (backend)
                 settings->backends = g_list_prepend (settings->backends, backend);
 
@@ -214,9 +214,9 @@ scdm_settings_finalize (GObject *object)
         ScdmSettings *settings;
 
         g_return_if_fail (object != NULL);
-        g_return_if_fail (GDM_IS_SETTINGS (object));
+        g_return_if_fail (SCDM_IS_SETTINGS (object));
 
-        settings = GDM_SETTINGS (object);
+        settings = SCDM_SETTINGS (object);
 
         g_return_if_fail (settings != NULL);
 
@@ -235,8 +235,8 @@ scdm_settings_new (void)
         if (settings_object != NULL) {
                 g_object_ref (settings_object);
         } else {
-                settings_object = g_object_new (GDM_TYPE_SETTINGS, NULL);
+                settings_object = g_object_new (SCDM_TYPE_SETTINGS, NULL);
         }
 
-        return GDM_SETTINGS (settings_object);
+        return SCDM_SETTINGS (settings_object);
 }

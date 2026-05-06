@@ -19,8 +19,8 @@
  */
 
 
-#ifndef __GDM_MANAGER_H
-#define __GDM_MANAGER_H
+#ifndef __SCDM_MANAGER_H
+#define __SCDM_MANAGER_H
 
 #include <glib-object.h>
 
@@ -29,12 +29,12 @@
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_MANAGER         (scdm_manager_get_type ())
-#define GDM_MANAGER(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GDM_TYPE_MANAGER, ScdmManager))
-#define GDM_MANAGER_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), GDM_TYPE_MANAGER, ScdmManagerClass))
-#define GDM_IS_MANAGER(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDM_TYPE_MANAGER))
-#define GDM_IS_MANAGER_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), GDM_TYPE_MANAGER))
-#define GDM_MANAGER_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), GDM_TYPE_MANAGER, ScdmManagerClass))
+#define SCDM_TYPE_MANAGER         (scdm_manager_get_type ())
+#define SCDM_MANAGER(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), SCDM_TYPE_MANAGER, ScdmManager))
+#define SCDM_MANAGER_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), SCDM_TYPE_MANAGER, ScdmManagerClass))
+#define SCDM_IS_MANAGER(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), SCDM_TYPE_MANAGER))
+#define SCDM_IS_MANAGER_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), SCDM_TYPE_MANAGER))
+#define SCDM_MANAGER_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), SCDM_TYPE_MANAGER, ScdmManagerClass))
 
 typedef struct ScdmManagerPrivate ScdmManagerPrivate;
 
@@ -56,10 +56,10 @@ typedef struct
 
 typedef enum
 {
-         GDM_MANAGER_ERROR_GENERAL
+         SCDM_MANAGER_ERROR_GENERAL
 } ScdmManagerError;
 
-#define GDM_MANAGER_ERROR scdm_manager_error_quark ()
+#define SCDM_MANAGER_ERROR scdm_manager_error_quark ()
 
 GQuark              scdm_manager_error_quark                    (void);
 GType               scdm_manager_get_type                       (void);
@@ -79,4 +79,4 @@ gboolean            scdm_manager_get_displays                   (ScdmManager *ma
 
 G_END_DECLS
 
-#endif /* __GDM_MANAGER_H */
+#endif /* __SCDM_MANAGER_H */

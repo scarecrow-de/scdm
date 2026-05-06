@@ -53,7 +53,7 @@ struct _ScdmLocalDisplay
 static void     scdm_local_display_class_init   (ScdmLocalDisplayClass *klass);
 static void     scdm_local_display_init         (ScdmLocalDisplay      *local_display);
 
-G_DEFINE_TYPE (ScdmLocalDisplay, scdm_local_display, GDM_TYPE_DISPLAY)
+G_DEFINE_TYPE (ScdmLocalDisplay, scdm_local_display, SCDM_TYPE_DISPLAY)
 
 static GObject *
 scdm_local_display_constructor (GType                  type,
@@ -62,13 +62,13 @@ scdm_local_display_constructor (GType                  type,
 {
         ScdmLocalDisplay      *display;
 
-        display = GDM_LOCAL_DISPLAY (G_OBJECT_CLASS (scdm_local_display_parent_class)->constructor (type,
+        display = SCDM_LOCAL_DISPLAY (G_OBJECT_CLASS (scdm_local_display_parent_class)->constructor (type,
                                                                                                    n_construct_properties,
                                                                                                    construct_properties));
 
-        display->skeleton = GDM_DBUS_LOCAL_DISPLAY (scdm_dbus_local_display_skeleton_new ());
+        display->skeleton = SCDM_DBUS_LOCAL_DISPLAY (scdm_dbus_local_display_skeleton_new ());
 
-        g_dbus_object_skeleton_add_interface (scdm_display_get_object_skeleton (GDM_DISPLAY (display)),
+        g_dbus_object_skeleton_add_interface (scdm_display_get_object_skeleton (SCDM_DISPLAY (display)),
                                               G_DBUS_INTERFACE_SKELETON (display->skeleton));
 
         return G_OBJECT (display);
@@ -77,7 +77,7 @@ scdm_local_display_constructor (GType                  type,
 static void
 scdm_local_display_finalize (GObject *object)
 {
-        ScdmLocalDisplay *display = GDM_LOCAL_DISPLAY (object);
+        ScdmLocalDisplay *display = SCDM_LOCAL_DISPLAY (object);
 
         g_clear_object (&display->skeleton);
 
@@ -87,7 +87,7 @@ scdm_local_display_finalize (GObject *object)
 static gboolean
 scdm_local_display_prepare (ScdmDisplay *display)
 {
-        ScdmLocalDisplay *self = GDM_LOCAL_DISPLAY (display);
+        ScdmLocalDisplay *self = SCDM_LOCAL_DISPLAY (display);
         ScdmLaunchEnvironment *launch_environment;
         char          *seat_id;
         char          *session_class;
@@ -135,14 +135,14 @@ out:
         if (failed) {
                 return FALSE;
         }
-        return GDM_DISPLAY_CLASS (scdm_local_display_parent_class)->prepare (display);
+        return SCDM_DISPLAY_CLASS (scdm_local_display_parent_class)->prepare (display);
 }
 
 static void
 scdm_local_display_class_init (ScdmLocalDisplayClass *klass)
 {
         GObjectClass *object_class = G_OBJECT_CLASS (klass);
-        ScdmDisplayClass *display_class = GDM_DISPLAY_CLASS (klass);
+        ScdmDisplayClass *display_class = SCDM_DISPLAY_CLASS (klass);
 
         object_class->constructor = scdm_local_display_constructor;
         object_class->finalize = scdm_local_display_finalize;
@@ -160,7 +160,7 @@ scdm_local_display_new (void)
 {
         GObject *object;
 
-        object = g_object_new (GDM_TYPE_LOCAL_DISPLAY, NULL);
+        object = g_object_new (SCDM_TYPE_LOCAL_DISPLAY, NULL);
 
-        return GDM_DISPLAY (object);
+        return SCDM_DISPLAY (object);
 }

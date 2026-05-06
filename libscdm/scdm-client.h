@@ -19,21 +19,21 @@
  *
  */
 
-#ifndef __GDM_CLIENT_H
-#define __GDM_CLIENT_H
+#ifndef __SCDM_CLIENT_H
+#define __SCDM_CLIENT_H
 
 #include <glib-object.h>
 #include "scdm-client-glue.h"
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_CLIENT (scdm_client_get_type ())
+#define SCDM_TYPE_CLIENT (scdm_client_get_type ())
 G_DECLARE_FINAL_TYPE (ScdmClient, scdm_client, GDM, CLIENT, GObject)
 
-#define GDM_CLIENT_ERROR (scdm_client_error_quark ())
+#define SCDM_CLIENT_ERROR (scdm_client_error_quark ())
 
 typedef enum _ScdmClientError {
-        GDM_CLIENT_ERROR_GENERIC = 0,
+        SCDM_CLIENT_ERROR_GENERIC = 0,
 } ScdmClientError;
 
 GQuark             scdm_client_error_quark              (void);
@@ -105,4 +105,4 @@ ScdmChooser        *scdm_client_get_chooser_sync          (ScdmClient *client,
 
 G_END_DECLS
 
-#endif /* __GDM_CLIENT_H */
+#endif /* __SCDM_CLIENT_H */

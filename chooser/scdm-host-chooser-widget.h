@@ -18,8 +18,8 @@
  *
  */
 
-#ifndef __GDM_HOST_CHOOSER_WIDGET_H
-#define __GDM_HOST_CHOOSER_WIDGET_H
+#ifndef __SCDM_HOST_CHOOSER_WIDGET_H
+#define __SCDM_HOST_CHOOSER_WIDGET_H
 
 #include <glib-object.h>
 #include <gtk/gtk.h>
@@ -27,7 +27,7 @@
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_HOST_CHOOSER_WIDGET (scdm_host_chooser_widget_get_type ())
+#define SCDM_TYPE_HOST_CHOOSER_WIDGET (scdm_host_chooser_widget_get_type ())
 G_DECLARE_FINAL_TYPE (ScdmHostChooserWidget, scdm_host_chooser_widget, GDM, HOST_CHOOSER_WIDGET, GtkBox)
 
 GtkWidget *            scdm_host_chooser_widget_new                (int                   kind_mask);
@@ -41,4 +41,4 @@ ScdmChooserHost *       scdm_host_chooser_widget_get_host           (ScdmHostCho
 
 G_END_DECLS
 
-#endif /* __GDM_HOST_CHOOSER_WIDGET_H */
+#endif /* __SCDM_HOST_CHOOSER_WIDGET_H */

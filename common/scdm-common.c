@@ -38,9 +38,9 @@
 
 #include <systemd/sd-login.h>
 
-#define GDM_DBUS_NAME                            "io.github.scarecrow_de.DisplayManager"
-#define GDM_DBUS_LOCAL_DISPLAY_FACTORY_PATH      "/io/github/scarecrow_de/DisplayManager/LocalDisplayFactory"
-#define GDM_DBUS_LOCAL_DISPLAY_FACTORY_INTERFACE "io.github.scarecrow_de.DisplayManager.LocalDisplayFactory"
+#define SCDM_DBUS_NAME                            "io.github.scarecrow_de.DisplayManager"
+#define SCDM_DBUS_LOCAL_DISPLAY_FACTORY_PATH      "/io/github/scarecrow_de/DisplayManager/LocalDisplayFactory"
+#define SCDM_DBUS_LOCAL_DISPLAY_FACTORY_INTERFACE "io.github.scarecrow_de.DisplayManager.LocalDisplayFactory"
 
 G_DEFINE_QUARK (scdm-common-error, scdm_common_error);
 
@@ -330,9 +330,9 @@ create_transient_display (GDBusConnection *connection,
         const char     *value;
 
         reply = g_dbus_connection_call_sync (connection,
-                                             GDM_DBUS_NAME,
-                                             GDM_DBUS_LOCAL_DISPLAY_FACTORY_PATH,
-                                             GDM_DBUS_LOCAL_DISPLAY_FACTORY_INTERFACE,
+                                             SCDM_DBUS_NAME,
+                                             SCDM_DBUS_LOCAL_DISPLAY_FACTORY_PATH,
+                                             SCDM_DBUS_LOCAL_DISPLAY_FACTORY_INTERFACE,
                                              "CreateTransientDisplay",
                                              NULL, /* parameters */
                                              G_VARIANT_TYPE ("(o)"),
@@ -507,7 +507,7 @@ goto_login_session (GDBusConnection  *connection,
         free (our_session);
         if (res < 0) {
                 g_debug ("failed to determine own seat: %s", strerror (-res));
-                g_set_error (error, GDM_COMMON_ERROR, 0, _("Could not identify the current seat."));
+                g_set_error (error, SCDM_COMMON_ERROR, 0, _("Could not identify the current seat."));
 
                 return FALSE;
         }
@@ -517,7 +517,7 @@ goto_login_session (GDBusConnection  *connection,
                 free (seat_id);
 
                 g_debug ("failed to determine whether seat can do multi session: %s", strerror (-res));
-                g_set_error (error, GDM_COMMON_ERROR, 0, _("The system is unable to determine whether to switch to an existing login screen or start up a new login screen."));
+                g_set_error (error, SCDM_COMMON_ERROR, 0, _("The system is unable to determine whether to switch to an existing login screen or start up a new login screen."));
 
                 return FALSE;
         }
@@ -525,7 +525,7 @@ goto_login_session (GDBusConnection  *connection,
         if (res == 0) {
                 free (seat_id);
 
-                g_set_error (error, GDM_COMMON_ERROR, 0, _("The system is unable to start up a new login screen."));
+                g_set_error (error, SCDM_COMMON_ERROR, 0, _("The system is unable to start up a new login screen."));
 
                 return FALSE;
         }
@@ -641,7 +641,7 @@ scdm_get_script_environment (const char *username,
         if (display_name) {
                 g_hash_table_insert (hash, g_strdup ("DISPLAY"), g_strdup (display_name));
         }
-        g_hash_table_insert (hash, g_strdup ("PATH"), g_strdup (GDM_SESSION_DEFAULT_PATH));
+        g_hash_table_insert (hash, g_strdup ("PATH"), g_strdup (SCDM_SESSION_DEFAULT_PATH));
         g_hash_table_insert (hash, g_strdup ("RUNNING_UNDER_GDM"), g_strdup ("true"));
 
         g_hash_table_remove (hash, "MAIL");
@@ -879,7 +879,7 @@ _systemd_session_is_active (const char *session_id)
          * display sessions can be 'closing' if they are logged out but some
          * processes are lingering; we shouldn't consider these (this is
          * checking for a race condition since we specified
-         * GDM_SYSTEMD_SESSION_REQUIRE_ONLINE)
+         * SCDM_SYSTEMD_SESSION_REQUIRE_ONLINE)
          */
         saved_errno = sd_session_get_state (session_id, &state);
         if (saved_errno < 0) {
@@ -933,12 +933,12 @@ scdm_find_display_session (GPid        pid,
         g_debug ("Finding a graphical session for user %d", uid);
 
         n_sessions = sd_uid_get_sessions (uid,
-                                          GDM_SYSTEMD_SESSION_REQUIRE_ONLINE,
+                                          SCDM_SYSTEMD_SESSION_REQUIRE_ONLINE,
                                           &sessions);
 
         if (n_sessions < 0) {
                 g_set_error (error,
-                             GDM_COMMON_ERROR,
+                             SCDM_COMMON_ERROR,
                              0,
                              "Failed to get sessions for user %d",
                              uid);
@@ -963,7 +963,7 @@ scdm_find_display_session (GPid        pid,
 
         if (local_session_id == NULL) {
                 g_set_error (error,
-                             GDM_COMMON_ERROR,
+                             SCDM_COMMON_ERROR,
                              0,
                              "Could not find a graphical session for user %d",
                              uid);

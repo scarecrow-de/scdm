@@ -19,14 +19,14 @@
  */
 
 
-#ifndef __GDM_SERVER_H
-#define __GDM_SERVER_H
+#ifndef __SCDM_SERVER_H
+#define __SCDM_SERVER_H
 
 #include <glib-object.h>
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_SERVER (scdm_server_get_type ())
+#define SCDM_TYPE_SERVER (scdm_server_get_type ())
 G_DECLARE_FINAL_TYPE (ScdmServer, scdm_server, GDM, SERVER, GObject);
 
 ScdmServer *         scdm_server_new       (const char *display_id,
@@ -39,4 +39,4 @@ char *              scdm_server_get_display_device (ScdmServer *server);
 
 G_END_DECLS
 
-#endif /* __GDM_SERVER_H */
+#endif /* __SCDM_SERVER_H */

@@ -19,8 +19,8 @@
  */
 
 
-#ifndef __GDM_SETTINGS_UTILS_H
-#define __GDM_SETTINGS_UTILS_H
+#ifndef __SCDM_SETTINGS_UTILS_H
+#define __SCDM_SETTINGS_UTILS_H
 
 #include <glib-object.h>
 #include <glib.h>
@@ -60,4 +60,4 @@ char *                    scdm_settings_parse_double_as_value   (gdouble     dou
 
 G_END_DECLS
 
-#endif /* __GDM_SETTINGS_UTILS_H */
+#endif /* __SCDM_SETTINGS_UTILS_H */

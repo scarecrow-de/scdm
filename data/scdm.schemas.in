@@ -15,12 +15,12 @@
     <schema>
       <key>daemon/User</key>
       <signature>s</signature>
-      <default>@GDM_USERNAME@</default>
+      <default>@SCDM_USERNAME@</default>
     </schema>
     <schema>
       <key>daemon/Group</key>
       <signature>s</signature>
-      <default>@GDM_GROUPNAME@</default>
+      <default>@SCDM_GROUPNAME@</default>
     </schema>
     <schema>
       <key>daemon/AutomaticLoginEnable</key>

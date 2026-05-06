@@ -33,7 +33,7 @@
 #include <X11/Xatom.h>
 #include <gdk/gdkx.h>
 
-#define SELECTION_NAME "_GDM_SCREENSHOT"
+#define SELECTION_NAME "_SCDM_SCREENSHOT"
 static GtkWidget *selection_window;
 
 static gboolean debug_in;
@@ -160,7 +160,7 @@ screenshot_save (GdkPixbuf *pixbuf)
         gboolean    res;
         GError     *error;
 
-        filename = g_build_filename (GDM_SCREENSHOT_DIR,
+        filename = g_build_filename (SCDM_SCREENSHOT_DIR,
                                      "GDM-Screenshot.png",
                                      NULL);
 

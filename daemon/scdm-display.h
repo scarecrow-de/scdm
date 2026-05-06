@@ -19,24 +19,24 @@
  */
 
 
-#ifndef __GDM_DISPLAY_H
-#define __GDM_DISPLAY_H
+#ifndef __SCDM_DISPLAY_H
+#define __SCDM_DISPLAY_H
 
 #include <glib-object.h>
 #include <gio/gio.h>
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_DISPLAY (scdm_display_get_type ())
+#define SCDM_TYPE_DISPLAY (scdm_display_get_type ())
 G_DECLARE_DERIVABLE_TYPE (ScdmDisplay, scdm_display, GDM, DISPLAY, GObject)
 
 typedef enum {
-        GDM_DISPLAY_UNMANAGED = 0,
-        GDM_DISPLAY_PREPARED,
-        GDM_DISPLAY_MANAGED,
-        GDM_DISPLAY_WAITING_TO_FINISH,
-        GDM_DISPLAY_FINISHED,
-        GDM_DISPLAY_FAILED,
+        SCDM_DISPLAY_UNMANAGED = 0,
+        SCDM_DISPLAY_PREPARED,
+        SCDM_DISPLAY_MANAGED,
+        SCDM_DISPLAY_WAITING_TO_FINISH,
+        SCDM_DISPLAY_FINISHED,
+        SCDM_DISPLAY_FAILED,
 } ScdmDisplayStatus;
 
 struct _ScdmDisplayClass
@@ -50,12 +50,12 @@ struct _ScdmDisplayClass
 
 typedef enum
 {
-         GDM_DISPLAY_ERROR_GENERAL,
-         GDM_DISPLAY_ERROR_GETTING_USER_INFO,
-         GDM_DISPLAY_ERROR_GETTING_SESSION_INFO,
+         SCDM_DISPLAY_ERROR_GENERAL,
+         SCDM_DISPLAY_ERROR_GETTING_USER_INFO,
+         SCDM_DISPLAY_ERROR_GETTING_SESSION_INFO,
 } ScdmDisplayError;
 
-#define GDM_DISPLAY_ERROR scdm_display_error_quark ()
+#define SCDM_DISPLAY_ERROR scdm_display_error_quark ()
 
 GQuark              scdm_display_error_quark                    (void);
 
@@ -126,4 +126,4 @@ gboolean            scdm_display_connect                        (ScdmDisplay *se
 
 G_END_DECLS
 
-#endif /* __GDM_DISPLAY_H */
+#endif /* __SCDM_DISPLAY_H */

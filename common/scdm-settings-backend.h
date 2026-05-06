@@ -19,14 +19,14 @@
  */
 
 
-#ifndef __GDM_SETTINGS_BACKEND_H
-#define __GDM_SETTINGS_BACKEND_H
+#ifndef __SCDM_SETTINGS_BACKEND_H
+#define __SCDM_SETTINGS_BACKEND_H
 
 #include <glib-object.h>
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_SETTINGS_BACKEND (scdm_settings_backend_get_type ())
+#define SCDM_TYPE_SETTINGS_BACKEND (scdm_settings_backend_get_type ())
 G_DECLARE_DERIVABLE_TYPE (ScdmSettingsBackend, scdm_settings_backend, GDM, SETTINGS_BACKEND, GObject)
 
 struct _ScdmSettingsBackendClass
@@ -52,11 +52,11 @@ struct _ScdmSettingsBackendClass
 
 typedef enum
 {
-        GDM_SETTINGS_BACKEND_ERROR_GENERAL,
-        GDM_SETTINGS_BACKEND_ERROR_KEY_NOT_FOUND
+        SCDM_SETTINGS_BACKEND_ERROR_GENERAL,
+        SCDM_SETTINGS_BACKEND_ERROR_KEY_NOT_FOUND
 } ScdmSettingsBackendError;
 
-#define GDM_SETTINGS_BACKEND_ERROR scdm_settings_backend_error_quark ()
+#define SCDM_SETTINGS_BACKEND_ERROR scdm_settings_backend_error_quark ()
 
 GQuark              scdm_settings_backend_error_quark            (void);
 
@@ -76,4 +76,4 @@ void                scdm_settings_backend_value_changed          (ScdmSettingsBa
 
 G_END_DECLS
 
-#endif /* __GDM_SETTINGS_BACKEND_H */
+#endif /* __SCDM_SETTINGS_BACKEND_H */

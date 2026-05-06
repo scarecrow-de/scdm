@@ -19,8 +19,8 @@
  */
 
 
-#ifndef __GDM_LOCAL_DISPLAY_FACTORY_H
-#define __GDM_LOCAL_DISPLAY_FACTORY_H
+#ifndef __SCDM_LOCAL_DISPLAY_FACTORY_H
+#define __SCDM_LOCAL_DISPLAY_FACTORY_H
 
 #include <glib-object.h>
 
@@ -29,15 +29,15 @@
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_LOCAL_DISPLAY_FACTORY (scdm_local_display_factory_get_type ())
+#define SCDM_TYPE_LOCAL_DISPLAY_FACTORY (scdm_local_display_factory_get_type ())
 G_DECLARE_FINAL_TYPE (ScdmLocalDisplayFactory, scdm_local_display_factory, GDM, LOCAL_DISPLAY_FACTORY, ScdmDisplayFactory)
 
 typedef enum
 {
-         GDM_LOCAL_DISPLAY_FACTORY_ERROR_GENERAL
+         SCDM_LOCAL_DISPLAY_FACTORY_ERROR_GENERAL
 } ScdmLocalDisplayFactoryError;
 
-#define GDM_LOCAL_DISPLAY_FACTORY_ERROR scdm_local_display_factory_error_quark ()
+#define SCDM_LOCAL_DISPLAY_FACTORY_ERROR scdm_local_display_factory_error_quark ()
 
 GQuark                     scdm_local_display_factory_error_quark              (void);
 
@@ -48,4 +48,4 @@ gboolean                   scdm_local_display_factory_create_transient_display (
                                                                                GError                **error);
 G_END_DECLS
 
-#endif /* __GDM_LOCAL_DISPLAY_FACTORY_H */
+#endif /* __SCDM_LOCAL_DISPLAY_FACTORY_H */

@@ -17,8 +17,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
  */
-#ifndef GDM_PAM_EXTENSIONS_H
-#define GDM_PAM_EXTENSIONS_H
+#ifndef SCDM_PAM_EXTENSIONS_H
+#define SCDM_PAM_EXTENSIONS_H
 
 #include <alloca.h>
 #include <endian.h>
@@ -36,20 +36,20 @@ typedef struct {
         unsigned char data[];
 } ScdmPamExtensionMessage;
 
-#define GDM_PAM_EXTENSION_MESSAGE_FROM_PAM_MESSAGE(query) (ScdmPamExtensionMessage *) (void *) query->msg
-#define GDM_PAM_EXTENSION_MESSAGE_TO_PAM_REPLY(msg) (char *) (void *) msg
-#define GDM_PAM_EXTENSION_MESSAGE_TO_BINARY_PROMPT_MESSAGE(extended_message, binary_message) \
+#define SCDM_PAM_EXTENSION_MESSAGE_FROM_PAM_MESSAGE(query) (ScdmPamExtensionMessage *) (void *) query->msg
+#define SCDM_PAM_EXTENSION_MESSAGE_TO_PAM_REPLY(msg) (char *) (void *) msg
+#define SCDM_PAM_EXTENSION_MESSAGE_TO_BINARY_PROMPT_MESSAGE(extended_message, binary_message) \
 { \
         (binary_message)->msg_style = PAM_BINARY_PROMPT; \
         (binary_message)->msg = (void *) extended_message; \
 }
-#define GDM_PAM_EXTENSION_MESSAGE_TRUNCATED(msg) be32toh(msg->length) < sizeof (ScdmPamExtensionMessage)
-#define GDM_PAM_EXTENSION_MESSAGE_INVALID_TYPE(msg) \
+#define SCDM_PAM_EXTENSION_MESSAGE_TRUNCATED(msg) be32toh(msg->length) < sizeof (ScdmPamExtensionMessage)
+#define SCDM_PAM_EXTENSION_MESSAGE_INVALID_TYPE(msg) \
 ({ \
         bool _invalid = true; \
         int _n = -1; \
         const char *_supported_extensions; \
-        _supported_extensions = getenv ("GDM_SUPPORTED_PAM_EXTENSIONS"); \
+        _supported_extensions = getenv ("SCDM_SUPPORTED_PAM_EXTENSIONS"); \
         if (_supported_extensions != NULL) { \
                 const char *_p = _supported_extensions; \
                 while (*_p != '\0' && _n < UCHAR_MAX) { \
@@ -66,18 +66,18 @@ typedef struct {
         } \
         _invalid; \
 })
-#define GDM_PAM_EXTENSION_MESSAGE_MATCH(msg, supported_extensions, name) (strcmp (supported_extensions[msg->type], name) == 0)
+#define SCDM_PAM_EXTENSION_MESSAGE_MATCH(msg, supported_extensions, name) (strcmp (supported_extensions[msg->type], name) == 0)
 
 /* environment block should be a statically allocated chunk of memory.  This is important because
  * putenv() will leak otherwise (and setenv isn't thread safe)
  */
-#define GDM_PAM_EXTENSION_ADVERTISE_SUPPORTED_EXTENSIONS(environment_block, supported_extensions) \
+#define SCDM_PAM_EXTENSION_ADVERTISE_SUPPORTED_EXTENSIONS(environment_block, supported_extensions) \
 { \
         size_t _size = 0; \
         unsigned char _t, _num_chunks; \
         char *_p; \
         _p = environment_block; \
-        _p = stpncpy (_p, "GDM_SUPPORTED_PAM_EXTENSIONS", sizeof(environment_block)); \
+        _p = stpncpy (_p, "SCDM_SUPPORTED_PAM_EXTENSIONS", sizeof(environment_block)); \
         *_p = '\0'; \
         _size += strlen (_p); \
         for (_t = 0; supported_extensions[_t] != NULL && _t < UCHAR_MAX; _t++) {\
@@ -99,12 +99,12 @@ typedef struct {
         } \
 }
 
-#define GDM_PAM_EXTENSION_LOOK_UP_TYPE(name, extension_type) \
+#define SCDM_PAM_EXTENSION_LOOK_UP_TYPE(name, extension_type) \
 ({ \
         bool _supported = false; \
         unsigned char _t = 0; \
         const char *_supported_extensions; \
-        _supported_extensions = getenv ("GDM_SUPPORTED_PAM_EXTENSIONS"); \
+        _supported_extensions = getenv ("SCDM_SUPPORTED_PAM_EXTENSIONS"); \
         if (_supported_extensions != NULL) { \
                 const char *_p = _supported_extensions; \
                 while (*_p != '\0') { \
@@ -128,7 +128,7 @@ typedef struct {
         _supported; \
 })
 
-#define GDM_PAM_EXTENSION_SUPPORTED(name) GDM_PAM_EXTENSION_LOOK_UP_TYPE(name, (unsigned char *) NULL)
+#define SCDM_PAM_EXTENSION_SUPPORTED(name) SCDM_PAM_EXTENSION_LOOK_UP_TYPE(name, (unsigned char *) NULL)
 
 typedef struct {
         const char *key;
@@ -153,26 +153,26 @@ typedef struct {
         char *key;
 } ScdmPamExtensionChoiceListResponse;
 
-#define GDM_PAM_EXTENSION_CHOICE_LIST "io.github.scarecrow_de.DisplayManager.UserVerifier.ChoiceList"
+#define SCDM_PAM_EXTENSION_CHOICE_LIST "io.github.scarecrow_de.DisplayManager.UserVerifier.ChoiceList"
 
-#define GDM_CHOICE_LIST_SIZE(num_items) (offsetof(ScdmChoiceList, items) + (num_items) * sizeof (ScdmChoiceListItems))
-#define GDM_PAM_EXTENSION_CHOICE_LIST_REQUEST_SIZE(num_items) (offsetof(ScdmPamExtensionChoiceListRequest, list) + GDM_CHOICE_LIST_SIZE((num_items)))
-#define GDM_PAM_EXTENSION_CHOICE_LIST_REQUEST_INIT(request, title, num_items) \
+#define SCDM_CHOICE_LIST_SIZE(num_items) (offsetof(ScdmChoiceList, items) + (num_items) * sizeof (ScdmChoiceListItems))
+#define SCDM_PAM_EXTENSION_CHOICE_LIST_REQUEST_SIZE(num_items) (offsetof(ScdmPamExtensionChoiceListRequest, list) + SCDM_CHOICE_LIST_SIZE((num_items)))
+#define SCDM_PAM_EXTENSION_CHOICE_LIST_REQUEST_INIT(request, title, num_items) \
 { \
         int _n = num_items; \
-        GDM_PAM_EXTENSION_LOOK_UP_TYPE (GDM_PAM_EXTENSION_CHOICE_LIST, &request->header.type); \
-        request->header.length = htobe32 (GDM_PAM_EXTENSION_CHOICE_LIST_REQUEST_SIZE(_n)); \
+        SCDM_PAM_EXTENSION_LOOK_UP_TYPE (SCDM_PAM_EXTENSION_CHOICE_LIST, &request->header.type); \
+        request->header.length = htobe32 (SCDM_PAM_EXTENSION_CHOICE_LIST_REQUEST_SIZE(_n)); \
         request->prompt_message = title; \
         request->list.number_of_items = _n; \
 }
 
-#define GDM_PAM_EXTENSION_CHOICE_LIST_RESPONSE_SIZE sizeof (ScdmPamExtensionChoiceListResponse)
-#define GDM_PAM_EXTENSION_CHOICE_LIST_RESPONSE_INIT(response) \
+#define SCDM_PAM_EXTENSION_CHOICE_LIST_RESPONSE_SIZE sizeof (ScdmPamExtensionChoiceListResponse)
+#define SCDM_PAM_EXTENSION_CHOICE_LIST_RESPONSE_INIT(response) \
 { \
-        GDM_PAM_EXTENSION_LOOK_UP_TYPE (GDM_PAM_EXTENSION_CHOICE_LIST, &response->header.type); \
-        response->header.length = htobe32 (GDM_PAM_EXTENSION_CHOICE_LIST_RESPONSE_SIZE); \
+        SCDM_PAM_EXTENSION_LOOK_UP_TYPE (SCDM_PAM_EXTENSION_CHOICE_LIST, &response->header.type); \
+        response->header.length = htobe32 (SCDM_PAM_EXTENSION_CHOICE_LIST_RESPONSE_SIZE); \
         response->key = NULL; \
 }
-#define GDM_PAM_EXTENSION_REPLY_TO_CHOICE_LIST_RESPONSE(reply) ((ScdmPamExtensionChoiceListResponse *) (void *) reply->resp)
+#define SCDM_PAM_EXTENSION_REPLY_TO_CHOICE_LIST_RESPONSE(reply) ((ScdmPamExtensionChoiceListResponse *) (void *) reply->resp)
 
 #endif

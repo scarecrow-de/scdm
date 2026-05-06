@@ -126,7 +126,7 @@ scdm_server_ready (ScdmServer *server)
 {
         g_debug ("ScdmServer: Got USR1 from X server - emitting READY");
 
-        scdm_run_script (GDMCONFDIR "/Init", GDM_USERNAME,
+        scdm_run_script (GDMCONFDIR "/Init", SCDM_USERNAME,
                         server->display_name,
                         NULL, /* hostname */
                         server->auth_file);
@@ -211,7 +211,7 @@ scdm_server_init_command (ScdmServer *server)
                 return;
         }
 
-        scdm_settings_direct_get_boolean (GDM_KEY_DEBUG, &debug);
+        scdm_settings_direct_get_boolean (SCDM_KEY_DEBUG, &debug);
         if (debug) {
                 debug_options = " -logverbose 7 -core ";
         } else {
@@ -753,7 +753,7 @@ scdm_server_start (ScdmServer *server)
 
         /* Hardcode the VT for the initial X server, but nothing else */
         if (server->is_initial) {
-                vtarg = "vt" G_STRINGIFY (GDM_INITIAL_VT);
+                vtarg = "vt" G_STRINGIFY (SCDM_INITIAL_VT);
         }
 
         /* fork X server process */
@@ -877,7 +877,7 @@ scdm_server_set_property (GObject      *object,
 {
         ScdmServer *self;
 
-        self = GDM_SERVER (object);
+        self = SCDM_SERVER (object);
 
         switch (prop_id) {
         case PROP_DISPLAY_NAME:
@@ -912,7 +912,7 @@ scdm_server_get_property (GObject    *object,
 {
         ScdmServer *self;
 
-        self = GDM_SERVER (object);
+        self = SCDM_SERVER (object);
 
         switch (prop_id) {
         case PROP_DISPLAY_NAME:
@@ -1051,9 +1051,9 @@ scdm_server_finalize (GObject *object)
         ScdmServer *server;
 
         g_return_if_fail (object != NULL);
-        g_return_if_fail (GDM_IS_SERVER (object));
+        g_return_if_fail (SCDM_IS_SERVER (object));
 
-        server = GDM_SERVER (object);
+        server = SCDM_SERVER (object);
 
         scdm_server_stop (server);
 
@@ -1077,12 +1077,12 @@ scdm_server_new (const char *display_name,
 {
         GObject *object;
 
-        object = g_object_new (GDM_TYPE_SERVER,
+        object = g_object_new (SCDM_TYPE_SERVER,
                                "display-name", display_name,
                                "display-seat-id", seat_id,
                                "auth-file", auth_file,
                                "is-initial", initial,
                                NULL);
 
-        return GDM_SERVER (object);
+        return SCDM_SERVER (object);
 }

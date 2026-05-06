@@ -18,8 +18,8 @@
  *
  */
 
-#ifndef __GDM_DBUS_UTIL_H
-#define __GDM_DBUS_UTIL_H
+#ifndef __SCDM_DBUS_UTIL_H
+#define __SCDM_DBUS_UTIL_H
 
 #include <gio/gio.h>
 #include <unistd.h>

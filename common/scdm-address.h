@@ -19,8 +19,8 @@
  */
 
 
-#ifndef __GDM_ADDRESS_H
-#define __GDM_ADDRESS_H
+#ifndef __SCDM_ADDRESS_H
+#define __SCDM_ADDRESS_H
 
 #include <glib-object.h>
 #ifndef G_OS_WIN32
@@ -34,7 +34,7 @@
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_ADDRESS (scdm_address_get_type ())
+#define SCDM_TYPE_ADDRESS (scdm_address_get_type ())
 #define	scdm_sockaddr_len(sa) ((sa)->ss_family == AF_INET6 ? sizeof(struct sockaddr_in6) : sizeof(struct sockaddr_in))
 
 typedef struct _ScdmAddress ScdmAddress;
@@ -70,4 +70,4 @@ const GList *            scdm_address_peek_local_list           (void);
 
 G_END_DECLS
 
-#endif /* __GDM_ADDRESS_H */
+#endif /* __SCDM_ADDRESS_H */

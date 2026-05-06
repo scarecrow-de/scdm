@@ -33,12 +33,12 @@ sysmodmap=/etc/X11/Xmodmap
 
 XMODMAP=`scdmwhich xmodmap`
 if [ "x$XMODMAP" != "x" ] ; then
-  if [ "x$GDM_PARENT_DISPLAY" = "x" ]; then
+  if [ "x$SCDM_PARENT_DISPLAY" = "x" ]; then
     if [ -f $sysmodmap ]; then
       $XMODMAP $sysmodmap
     fi
   else
-    ( DISPLAY=$GDM_PARENT_DISPLAY XAUTHORITY=$GDM_PARENT_XAUTHORITY $XMODMAP -pke ) | $XMODMAP -
+    ( DISPLAY=$SCDM_PARENT_DISPLAY XAUTHORITY=$SCDM_PARENT_XAUTHORITY $XMODMAP -pke ) | $XMODMAP -
   fi
 
   #
@@ -63,10 +63,10 @@ fi
 SETXKBMAP=`scdmwhich setxkbmap`
 if [ "x$SETXKBMAP" != "x" ] ; then
   # FIXME: is this all right?  Is this completely on crack?
-  # What this does is move the xkb configuration from the GDM_PARENT_DISPLAY
+  # What this does is move the xkb configuration from the SCDM_PARENT_DISPLAY
   # FIXME: This should be done in code.  Or there must be an easier way ...
-  if [ -n "$GDM_PARENT_DISPLAY" ]; then
-    XKBSETUP=`( DISPLAY=$GDM_PARENT_DISPLAY XAUTHORITY=$GDM_PARENT_XAUTHORITY $SETXKBMAP -v )`
+  if [ -n "$SCDM_PARENT_DISPLAY" ]; then
+    XKBSETUP=`( DISPLAY=$SCDM_PARENT_DISPLAY XAUTHORITY=$SCDM_PARENT_XAUTHORITY $SETXKBMAP -v )`
     if [ -n "$XKBSETUP" ]; then
       XKBKEYMAP=`echo "$XKBSETUP" | grep '^keymap' | awk '{ print $2 }'`
       XKBTYPES=`echo "$XKBSETUP" | grep '^types' | awk '{ print $2 }'`

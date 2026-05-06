@@ -108,7 +108,7 @@ static void
 scdm_session_settings_init (ScdmSessionSettings *settings)
 {
         settings->priv = G_TYPE_INSTANCE_GET_PRIVATE (settings,
-                                                     GDM_TYPE_SESSION_SETTINGS,
+                                                     SCDM_TYPE_SESSION_SETTINGS,
                                                      ScdmSessionSettingsPrivate);
 
         settings->priv->user_manager = act_user_manager_get_default ();
@@ -121,7 +121,7 @@ scdm_session_settings_finalize (GObject *object)
         ScdmSessionSettings *settings;
         GObjectClass *parent_class;
 
-        settings = GDM_SESSION_SETTINGS (object);
+        settings = SCDM_SESSION_SETTINGS (object);
 
         if (settings->priv->user != NULL) {
                 g_object_unref (settings->priv->user);
@@ -141,7 +141,7 @@ void
 scdm_session_settings_set_language_name (ScdmSessionSettings *settings,
                                         const char         *language_name)
 {
-        g_return_if_fail (GDM_IS_SESSION_SETTINGS (settings));
+        g_return_if_fail (SCDM_IS_SESSION_SETTINGS (settings));
 
         if (settings->priv->language_name == NULL ||
             strcmp (settings->priv->language_name, language_name) != 0) {
@@ -154,7 +154,7 @@ void
 scdm_session_settings_set_session_name (ScdmSessionSettings *settings,
                                        const char         *session_name)
 {
-        g_return_if_fail (GDM_IS_SESSION_SETTINGS (settings));
+        g_return_if_fail (SCDM_IS_SESSION_SETTINGS (settings));
 
         if (settings->priv->session_name == NULL ||
             strcmp (settings->priv->session_name, session_name) != 0) {
@@ -166,14 +166,14 @@ scdm_session_settings_set_session_name (ScdmSessionSettings *settings,
 char *
 scdm_session_settings_get_language_name (ScdmSessionSettings *settings)
 {
-        g_return_val_if_fail (GDM_IS_SESSION_SETTINGS (settings), NULL);
+        g_return_val_if_fail (SCDM_IS_SESSION_SETTINGS (settings), NULL);
         return g_strdup (settings->priv->language_name);
 }
 
 char *
 scdm_session_settings_get_session_name (ScdmSessionSettings *settings)
 {
-        g_return_val_if_fail (GDM_IS_SESSION_SETTINGS (settings), NULL);
+        g_return_val_if_fail (SCDM_IS_SESSION_SETTINGS (settings), NULL);
         return g_strdup (settings->priv->session_name);
 }
 
@@ -185,7 +185,7 @@ scdm_session_settings_set_property (GObject      *object,
 {
         ScdmSessionSettings *settings;
 
-        settings = GDM_SESSION_SETTINGS (object);
+        settings = SCDM_SESSION_SETTINGS (object);
 
         switch (prop_id) {
                 case PROP_LANGUAGE_NAME:
@@ -209,7 +209,7 @@ scdm_session_settings_get_property (GObject    *object,
 {
         ScdmSessionSettings *settings;
 
-        settings = GDM_SESSION_SETTINGS (object);
+        settings = SCDM_SESSION_SETTINGS (object);
 
         switch (prop_id) {
                 case PROP_SESSION_NAME:
@@ -234,7 +234,7 @@ scdm_session_settings_new (void)
 {
         ScdmSessionSettings *settings;
 
-        settings = g_object_new (GDM_TYPE_SESSION_SETTINGS,
+        settings = g_object_new (SCDM_TYPE_SESSION_SETTINGS,
                                  NULL);
 
         return settings;
@@ -335,7 +335,7 @@ scdm_session_settings_save (ScdmSessionSettings  *settings,
 {
         ActUser  *user;
 
-        g_return_val_if_fail (GDM_IS_SESSION_SETTINGS (settings), FALSE);
+        g_return_val_if_fail (SCDM_IS_SESSION_SETTINGS (settings), FALSE);
         g_return_val_if_fail (username != NULL, FALSE);
         g_return_val_if_fail (scdm_session_settings_is_loaded (settings), FALSE);
 

@@ -28,7 +28,7 @@ configure_file(
   input: 'scdm.conf.in',
   output: '@BASENAME@',
   configuration: {
-    'GDM_USERNAME': get_option('user')
+    'SCDM_USERNAME': get_option('user')
   },
   install_dir: dbus_sys_dir,
 )
@@ -51,8 +51,8 @@ scdm_schema = configure_file(
   input: 'scdm.schemas.in',
   output: '@BASENAME@',
   configuration: {
-    'GDM_USERNAME': get_option('user'),
-    'GDM_GROUPNAME': get_option('group'),
+    'SCDM_USERNAME': get_option('user'),
+    'SCDM_GROUPNAME': get_option('group'),
     'scdmconfdir': scdmconfdir,
   },
   install_dir: get_option('datadir') / 'scdm',
@@ -162,7 +162,7 @@ scdm_rules = configure_file(
 # DBus service files
 service_config = configuration_data()
 service_config.set('sbindir', scdm_prefix / get_option('sbindir'))
-service_config.set('GDM_INITIAL_VT', get_option('initial-vt'))
+service_config.set('SCDM_INITIAL_VT', get_option('initial-vt'))
 service_config.set('LANG_CONFIG_FILE', lang_config_file)
 if plymouth_dep.found()
   service_config.set('PLYMOUTH_QUIT_SERVICE', 'plymouth-quit.service')

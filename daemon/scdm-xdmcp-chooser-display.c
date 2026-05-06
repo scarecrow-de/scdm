@@ -53,7 +53,7 @@ static void     scdm_xdmcp_chooser_display_class_init    (ScdmXdmcpChooserDispla
 static void     scdm_xdmcp_chooser_display_init          (ScdmXdmcpChooserDisplay      *xdmcp_chooser_display);
 static gboolean scdm_xdmcp_chooser_display_prepare       (ScdmDisplay *display);
 
-G_DEFINE_TYPE (ScdmXdmcpChooserDisplay, scdm_xdmcp_chooser_display, GDM_TYPE_XDMCP_DISPLAY)
+G_DEFINE_TYPE (ScdmXdmcpChooserDisplay, scdm_xdmcp_chooser_display, SCDM_TYPE_XDMCP_DISPLAY)
 
 static void
 on_hostname_selected (ScdmLaunchEnvironment     *launch_environment,
@@ -68,7 +68,7 @@ static void
 scdm_xdmcp_chooser_display_class_init (ScdmXdmcpChooserDisplayClass *klass)
 {
         GObjectClass    *object_class = G_OBJECT_CLASS (klass);
-        ScdmDisplayClass *display_class = GDM_DISPLAY_CLASS (klass);
+        ScdmDisplayClass *display_class = SCDM_DISPLAY_CLASS (klass);
 
         display_class->prepare = scdm_xdmcp_chooser_display_prepare;
 
@@ -93,7 +93,7 @@ scdm_xdmcp_chooser_display_init (ScdmXdmcpChooserDisplay *xdmcp_chooser_display)
 static gboolean
 scdm_xdmcp_chooser_display_prepare (ScdmDisplay *display)
 {
-        ScdmXdmcpDisplay *self = GDM_XDMCP_DISPLAY (display);
+        ScdmXdmcpDisplay *self = SCDM_XDMCP_DISPLAY (display);
         ScdmLaunchEnvironment *launch_environment;
         char          *display_name;
         char          *seat_id;
@@ -119,7 +119,7 @@ scdm_xdmcp_chooser_display_prepare (ScdmDisplay *display)
         g_signal_connect (launch_environment, "hostname-selected",
                           G_CALLBACK (on_hostname_selected), display);
 
-        return GDM_DISPLAY_CLASS (scdm_xdmcp_chooser_display_parent_class)->prepare (display);
+        return SCDM_DISPLAY_CLASS (scdm_xdmcp_chooser_display_parent_class)->prepare (display);
 }
 
 ScdmDisplay *
@@ -132,7 +132,7 @@ scdm_xdmcp_chooser_display_new (const char              *hostname,
         char    *x11_display;
 
         x11_display = g_strdup_printf ("%s:%d", hostname, number);
-        object = g_object_new (GDM_TYPE_XDMCP_CHOOSER_DISPLAY,
+        object = g_object_new (SCDM_TYPE_XDMCP_CHOOSER_DISPLAY,
                                "remote-hostname", hostname,
                                "x11-display-number", number,
                                "x11-display-name", x11_display,
@@ -142,5 +142,5 @@ scdm_xdmcp_chooser_display_new (const char              *hostname,
                                NULL);
         g_free (x11_display);
 
-        return GDM_DISPLAY (object);
+        return SCDM_DISPLAY (object);
 }

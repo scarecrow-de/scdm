@@ -167,7 +167,7 @@ main (int   argc,
                 exit (EXIT_FAILURE);
         }
 
-        manager = GDM_DBUS_MANAGER (scdm_dbus_manager_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
+        manager = SCDM_DBUS_MANAGER (scdm_dbus_manager_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
                                                                              G_DBUS_PROXY_FLAGS_NONE,
                                                                              "io.github.scarecrow_de.DisplayManager",
                                                                              "/io/github/scarecrow_de/DisplayManager/Manager",
@@ -199,7 +199,7 @@ main (int   argc,
                 exit (EXIT_FAILURE);
         }
 
-        user_verifier = GDM_DBUS_USER_VERIFIER (scdm_dbus_user_verifier_proxy_new_sync (connection,
+        user_verifier = SCDM_DBUS_USER_VERIFIER (scdm_dbus_user_verifier_proxy_new_sync (connection,
                                                                                        G_DBUS_PROXY_FLAGS_NONE,
                                                                                        NULL,
                                                                                        "/io/github/scarecrow_de/DisplayManager/Session",

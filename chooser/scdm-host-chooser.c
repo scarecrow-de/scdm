@@ -225,13 +225,13 @@ main (int argc, char *argv[])
 
         gtk_init (&argc, &argv);
 
-        chooser = scdm_host_chooser_dialog_new (GDM_CHOOSER_HOST_KIND_MASK_ALL);
+        chooser = scdm_host_chooser_dialog_new (SCDM_CHOOSER_HOST_KIND_MASK_ALL);
         gtk_widget_set_size_request (chooser, 480, 600);
 
         if (gtk_dialog_run (GTK_DIALOG (chooser)) == GTK_RESPONSE_OK) {
                 ScdmChooserHost *host;
 
-                host = scdm_host_chooser_dialog_get_host (GDM_HOST_CHOOSER_DIALOG (chooser));
+                host = scdm_host_chooser_dialog_get_host (SCDM_HOST_CHOOSER_DIALOG (chooser));
                 if (host != NULL) {
                         char *hostname;
                         /* FIXME: handle different host types here? */

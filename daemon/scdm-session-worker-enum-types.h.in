@@ -1,6 +1,6 @@
 /*** BEGIN file-header ***/
-#ifndef GDM_SESSION_WORKER_ENUM_TYPES_H
-#define GDM_SESSION_WORKER_ENUM_TYPES_H
+#ifndef SCDM_SESSION_WORKER_ENUM_TYPES_H
+#define SCDM_SESSION_WORKER_ENUM_TYPES_H
 
 #include <glib-object.h>
 
@@ -20,5 +20,5 @@ GType @enum_name@_get_type (void) G_GNUC_CONST;
 /*** BEGIN file-tail ***/
 G_END_DECLS
 
-#endif /* GDM_SESSION_WORKER_ENUM_TYPES_H */
+#endif /* SCDM_SESSION_WORKER_ENUM_TYPES_H */
 /*** END file-tail ***/

@@ -17,22 +17,22 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef __GDM_CHOOSER_HOST__
-#define __GDM_CHOOSER_HOST__
+#ifndef __SCDM_CHOOSER_HOST__
+#define __SCDM_CHOOSER_HOST__
 
 #include <glib-object.h>
 #include "scdm-address.h"
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_CHOOSER_HOST (scdm_chooser_host_get_type ())
+#define SCDM_TYPE_CHOOSER_HOST (scdm_chooser_host_get_type ())
 G_DECLARE_FINAL_TYPE (ScdmChooserHost, scdm_chooser_host, GDM, CHOOSER_HOST, GObject)
 
 typedef enum {
-        GDM_CHOOSER_HOST_KIND_XDMCP = 1 << 0,
+        SCDM_CHOOSER_HOST_KIND_XDMCP = 1 << 0,
 } ScdmChooserHostKind;
 
-#define GDM_CHOOSER_HOST_KIND_MASK_ALL (GDM_CHOOSER_HOST_KIND_XDMCP)
+#define SCDM_CHOOSER_HOST_KIND_MASK_ALL (SCDM_CHOOSER_HOST_KIND_XDMCP)
 
 G_CONST_RETURN char  *scdm_chooser_host_get_description     (ScdmChooserHost   *chooser_host);
 ScdmAddress *          scdm_chooser_host_get_address         (ScdmChooserHost   *chooser_host);

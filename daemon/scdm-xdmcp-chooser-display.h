@@ -19,8 +19,8 @@
  */
 
 
-#ifndef __GDM_XDMCP_CHOOSER_DISPLAY_H
-#define __GDM_XDMCP_CHOOSER_DISPLAY_H
+#ifndef __SCDM_XDMCP_CHOOSER_DISPLAY_H
+#define __SCDM_XDMCP_CHOOSER_DISPLAY_H
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -31,12 +31,12 @@
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_XDMCP_CHOOSER_DISPLAY         (scdm_xdmcp_chooser_display_get_type ())
-#define GDM_XDMCP_CHOOSER_DISPLAY(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GDM_TYPE_XDMCP_CHOOSER_DISPLAY, ScdmXdmcpChooserDisplay))
-#define GDM_XDMCP_CHOOSER_DISPLAY_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), GDM_TYPE_XDMCP_CHOOSER_DISPLAY, ScdmXdmcpChooserDisplayClass))
-#define GDM_IS_XDMCP_CHOOSER_DISPLAY(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDM_TYPE_XDMCP_CHOOSER_DISPLAY))
-#define GDM_IS_XDMCP_CHOOSER_DISPLAY_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), GDM_TYPE_XDMCP_CHOOSER_DISPLAY))
-#define GDM_XDMCP_CHOOSER_DISPLAY_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), GDM_TYPE_XDMCP_CHOOSER_DISPLAY, ScdmXdmcpChooserDisplayClass))
+#define SCDM_TYPE_XDMCP_CHOOSER_DISPLAY         (scdm_xdmcp_chooser_display_get_type ())
+#define SCDM_XDMCP_CHOOSER_DISPLAY(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), SCDM_TYPE_XDMCP_CHOOSER_DISPLAY, ScdmXdmcpChooserDisplay))
+#define SCDM_XDMCP_CHOOSER_DISPLAY_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), SCDM_TYPE_XDMCP_CHOOSER_DISPLAY, ScdmXdmcpChooserDisplayClass))
+#define SCDM_IS_XDMCP_CHOOSER_DISPLAY(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), SCDM_TYPE_XDMCP_CHOOSER_DISPLAY))
+#define SCDM_IS_XDMCP_CHOOSER_DISPLAY_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), SCDM_TYPE_XDMCP_CHOOSER_DISPLAY))
+#define SCDM_XDMCP_CHOOSER_DISPLAY_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), SCDM_TYPE_XDMCP_CHOOSER_DISPLAY, ScdmXdmcpChooserDisplayClass))
 
 typedef struct ScdmXdmcpChooserDisplayPrivate ScdmXdmcpChooserDisplayPrivate;
 
@@ -63,4 +63,4 @@ ScdmDisplay *              scdm_xdmcp_chooser_display_new                      (
 
 G_END_DECLS
 
-#endif /* __GDM_XDMCP_CHOOSER_DISPLAY_H */
+#endif /* __SCDM_XDMCP_CHOOSER_DISPLAY_H */

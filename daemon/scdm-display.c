@@ -143,7 +143,7 @@ scdm_display_get_creation_time (ScdmDisplay *self)
 {
         ScdmDisplayPrivate *priv;
 
-        g_return_val_if_fail (GDM_IS_DISPLAY (self), 0);
+        g_return_val_if_fail (SCDM_IS_DISPLAY (self), 0);
 
         priv = scdm_display_get_instance_private (self);
         return priv->creation_time;
@@ -154,7 +154,7 @@ scdm_display_get_status (ScdmDisplay *self)
 {
         ScdmDisplayPrivate *priv;
 
-        g_return_val_if_fail (GDM_IS_DISPLAY (self), 0);
+        g_return_val_if_fail (SCDM_IS_DISPLAY (self), 0);
 
         priv = scdm_display_get_instance_private (self);
         return priv->status;
@@ -196,13 +196,13 @@ scdm_display_create_authority (ScdmDisplay *self)
         GError               *error;
         gboolean              res;
 
-        g_return_val_if_fail (GDM_IS_DISPLAY (self), FALSE);
+        g_return_val_if_fail (SCDM_IS_DISPLAY (self), FALSE);
 
         priv = scdm_display_get_instance_private (self);
         g_return_val_if_fail (priv->access_file == NULL, FALSE);
 
         error = NULL;
-        access_file = _create_access_file_for_user (self, GDM_USERNAME, &error);
+        access_file = _create_access_file_for_user (self, SCDM_USERNAME, &error);
 
         if (access_file == NULL) {
                 g_critical ("could not create display access file: %s", error->message);
@@ -239,8 +239,8 @@ setup_xhost_auth (XHostAddress              *host_entries)
         host_entries[0].address   = "localuser\0root";
         host_entries[0].length    = sizeof ("localuser\0root");
         host_entries[1].family    = FamilyServerInterpreted;
-        host_entries[1].address   = "localuser\0" GDM_USERNAME;
-        host_entries[1].length    = sizeof ("localuser\0" GDM_USERNAME);
+        host_entries[1].address   = "localuser\0" SCDM_USERNAME;
+        host_entries[1].length    = sizeof ("localuser\0" SCDM_USERNAME);
         host_entries[2].family    = FamilyServerInterpreted;
         host_entries[2].address   = "localuser\0gnome-initial-setup";
         host_entries[2].length    = sizeof ("localuser\0gnome-initial-setup");
@@ -261,7 +261,7 @@ scdm_display_add_user_authorization (ScdmDisplay *self,
         XHostAddress              host_entries[3];
         xcb_void_cookie_t         cookies[3];
 
-        g_return_val_if_fail (GDM_IS_DISPLAY (self), FALSE);
+        g_return_val_if_fail (SCDM_IS_DISPLAY (self), FALSE);
 
         priv = scdm_display_get_instance_private (self);
 
@@ -340,7 +340,7 @@ scdm_display_remove_user_authorization (ScdmDisplay *self,
 {
         ScdmDisplayPrivate *priv;
 
-        g_return_val_if_fail (GDM_IS_DISPLAY (self), FALSE);
+        g_return_val_if_fail (SCDM_IS_DISPLAY (self), FALSE);
 
         priv = scdm_display_get_instance_private (self);
 
@@ -359,7 +359,7 @@ scdm_display_get_x11_cookie (ScdmDisplay  *self,
 {
         ScdmDisplayPrivate *priv;
 
-        g_return_val_if_fail (GDM_IS_DISPLAY (self), FALSE);
+        g_return_val_if_fail (SCDM_IS_DISPLAY (self), FALSE);
 
         priv = scdm_display_get_instance_private (self);
 
@@ -381,7 +381,7 @@ scdm_display_get_x11_authority_file (ScdmDisplay *self,
 {
         ScdmDisplayPrivate *priv;
 
-        g_return_val_if_fail (GDM_IS_DISPLAY (self), FALSE);
+        g_return_val_if_fail (SCDM_IS_DISPLAY (self), FALSE);
         g_return_val_if_fail (filename != NULL, FALSE);
 
         priv = scdm_display_get_instance_private (self);
@@ -401,7 +401,7 @@ scdm_display_get_remote_hostname (ScdmDisplay *self,
 {
         ScdmDisplayPrivate *priv;
 
-        g_return_val_if_fail (GDM_IS_DISPLAY (self), FALSE);
+        g_return_val_if_fail (SCDM_IS_DISPLAY (self), FALSE);
 
         priv = scdm_display_get_instance_private (self);
         if (hostname != NULL) {
@@ -418,7 +418,7 @@ scdm_display_get_x11_display_number (ScdmDisplay *self,
 {
         ScdmDisplayPrivate *priv;
 
-        g_return_val_if_fail (GDM_IS_DISPLAY (self), FALSE);
+        g_return_val_if_fail (SCDM_IS_DISPLAY (self), FALSE);
 
         priv = scdm_display_get_instance_private (self);
         if (number != NULL) {
@@ -435,7 +435,7 @@ scdm_display_get_seat_id (ScdmDisplay *self,
 {
         ScdmDisplayPrivate *priv;
 
-        g_return_val_if_fail (GDM_IS_DISPLAY (self), FALSE);
+        g_return_val_if_fail (SCDM_IS_DISPLAY (self), FALSE);
 
         priv = scdm_display_get_instance_private (self);
         if (seat_id != NULL) {
@@ -452,7 +452,7 @@ scdm_display_is_initial (ScdmDisplay  *self,
 {
         ScdmDisplayPrivate *priv;
 
-        g_return_val_if_fail (GDM_IS_DISPLAY (self), FALSE);
+        g_return_val_if_fail (SCDM_IS_DISPLAY (self), FALSE);
 
         priv = scdm_display_get_instance_private (self);
         if (is_initial != NULL) {
@@ -501,11 +501,11 @@ _scdm_display_set_status (ScdmDisplay *self,
 static gboolean
 scdm_display_real_prepare (ScdmDisplay *self)
 {
-        g_return_val_if_fail (GDM_IS_DISPLAY (self), FALSE);
+        g_return_val_if_fail (SCDM_IS_DISPLAY (self), FALSE);
 
         g_debug ("ScdmDisplay: prepare display");
 
-        _scdm_display_set_status (self, GDM_DISPLAY_PREPARED);
+        _scdm_display_set_status (self, SCDM_DISPLAY_PREPARED);
 
         return TRUE;
 }
@@ -560,7 +560,7 @@ scdm_display_prepare (ScdmDisplay *self)
         ScdmDisplayPrivate *priv;
         gboolean ret;
 
-        g_return_val_if_fail (GDM_IS_DISPLAY (self), FALSE);
+        g_return_val_if_fail (SCDM_IS_DISPLAY (self), FALSE);
 
         priv = scdm_display_get_instance_private (self);
 
@@ -576,7 +576,7 @@ scdm_display_prepare (ScdmDisplay *self)
         priv->doing_initial_setup = wants_initial_setup (self);
 
         g_object_ref (self);
-        ret = GDM_DISPLAY_GET_CLASS (self)->prepare (self);
+        ret = SCDM_DISPLAY_GET_CLASS (self)->prepare (self);
         g_object_unref (self);
 
         return ret;
@@ -588,14 +588,14 @@ scdm_display_manage (ScdmDisplay *self)
         ScdmDisplayPrivate *priv;
         gboolean res;
 
-        g_return_val_if_fail (GDM_IS_DISPLAY (self), FALSE);
+        g_return_val_if_fail (SCDM_IS_DISPLAY (self), FALSE);
 
         priv = scdm_display_get_instance_private (self);
 
         g_debug ("ScdmDisplay: Managing display: %s", priv->id);
 
         /* If not explicitly prepared, do it now */
-        if (priv->status == GDM_DISPLAY_UNMANAGED) {
+        if (priv->status == SCDM_DISPLAY_UNMANAGED) {
                 res = scdm_display_prepare (self);
                 if (! res) {
                         return FALSE;
@@ -603,8 +603,8 @@ scdm_display_manage (ScdmDisplay *self)
         }
 
         if (g_strcmp0 (priv->session_class, "greeter") == 0) {
-                if (GDM_DISPLAY_GET_CLASS (self)->manage != NULL) {
-                        GDM_DISPLAY_GET_CLASS (self)->manage (self);
+                if (SCDM_DISPLAY_GET_CLASS (self)->manage != NULL) {
+                        SCDM_DISPLAY_GET_CLASS (self)->manage (self);
                 }
         }
 
@@ -616,7 +616,7 @@ scdm_display_finish (ScdmDisplay *self)
 {
         ScdmDisplayPrivate *priv;
 
-        g_return_val_if_fail (GDM_IS_DISPLAY (self), FALSE);
+        g_return_val_if_fail (SCDM_IS_DISPLAY (self), FALSE);
 
         priv = scdm_display_get_instance_private (self);
         if (priv->finish_idle_id != 0) {
@@ -624,7 +624,7 @@ scdm_display_finish (ScdmDisplay *self)
                 priv->finish_idle_id = 0;
         }
 
-        _scdm_display_set_status (self, GDM_DISPLAY_FINISHED);
+        _scdm_display_set_status (self, SCDM_DISPLAY_FINISHED);
 
         g_debug ("ScdmDisplay: finish display");
 
@@ -674,7 +674,7 @@ scdm_display_unmanage (ScdmDisplay *self)
 {
         ScdmDisplayPrivate *priv;
 
-        g_return_val_if_fail (GDM_IS_DISPLAY (self), FALSE);
+        g_return_val_if_fail (SCDM_IS_DISPLAY (self), FALSE);
 
         priv = scdm_display_get_instance_private (self);
 
@@ -696,9 +696,9 @@ scdm_display_unmanage (ScdmDisplay *self)
 
         if (!priv->session_registered) {
                 g_warning ("ScdmDisplay: Session never registered, failing");
-                _scdm_display_set_status (self, GDM_DISPLAY_FAILED);
+                _scdm_display_set_status (self, SCDM_DISPLAY_FAILED);
         } else {
-                _scdm_display_set_status (self, GDM_DISPLAY_UNMANAGED);
+                _scdm_display_set_status (self, SCDM_DISPLAY_UNMANAGED);
         }
 
         return TRUE;
@@ -711,7 +711,7 @@ scdm_display_get_id (ScdmDisplay         *self,
 {
         ScdmDisplayPrivate *priv;
 
-        g_return_val_if_fail (GDM_IS_DISPLAY (self), FALSE);
+        g_return_val_if_fail (SCDM_IS_DISPLAY (self), FALSE);
 
         priv = scdm_display_get_instance_private (self);
         if (id != NULL) {
@@ -728,7 +728,7 @@ scdm_display_get_x11_display_name (ScdmDisplay   *self,
 {
         ScdmDisplayPrivate *priv;
 
-        g_return_val_if_fail (GDM_IS_DISPLAY (self), FALSE);
+        g_return_val_if_fail (SCDM_IS_DISPLAY (self), FALSE);
 
         priv = scdm_display_get_instance_private (self);
         if (x11_display != NULL) {
@@ -745,7 +745,7 @@ scdm_display_is_local (ScdmDisplay *self,
 {
         ScdmDisplayPrivate *priv;
 
-        g_return_val_if_fail (GDM_IS_DISPLAY (self), FALSE);
+        g_return_val_if_fail (SCDM_IS_DISPLAY (self), FALSE);
 
         priv = scdm_display_get_instance_private (self);
         if (local != NULL) {
@@ -923,7 +923,7 @@ scdm_display_set_property (GObject        *object,
 {
         ScdmDisplay *self;
 
-        self = GDM_DISPLAY (object);
+        self = SCDM_DISPLAY (object);
 
         switch (prop_id) {
         case PROP_ID:
@@ -986,7 +986,7 @@ scdm_display_get_property (GObject        *object,
         ScdmDisplay *self;
         ScdmDisplayPrivate *priv;
 
-        self = GDM_DISPLAY (object);
+        self = SCDM_DISPLAY (object);
         priv = scdm_display_get_instance_private (self);
 
         switch (prop_id) {
@@ -1166,7 +1166,7 @@ register_display (ScdmDisplay *self)
         }
 
         priv->object_skeleton = g_dbus_object_skeleton_new (priv->id);
-        priv->display_skeleton = GDM_DBUS_DISPLAY (scdm_dbus_display_skeleton_new ());
+        priv->display_skeleton = SCDM_DBUS_DISPLAY (scdm_dbus_display_skeleton_new ());
 
         g_signal_connect_object (priv->display_skeleton, "handle-get-id",
                                  G_CALLBACK (handle_get_id), self, 0);
@@ -1200,7 +1200,7 @@ scdm_display_constructor (GType                  type,
         ScdmDisplayPrivate *priv;
         gboolean           res;
 
-        self = GDM_DISPLAY (G_OBJECT_CLASS (scdm_display_parent_class)->constructor (type,
+        self = SCDM_DISPLAY (G_OBJECT_CLASS (scdm_display_parent_class)->constructor (type,
                                                                                     n_construct_properties,
                                                                                     construct_properties));
 
@@ -1224,7 +1224,7 @@ scdm_display_dispose (GObject *object)
         ScdmDisplay *self;
         ScdmDisplayPrivate *priv;
 
-        self = GDM_DISPLAY (object);
+        self = SCDM_DISPLAY (object);
         priv = scdm_display_get_instance_private (self);
 
         g_debug ("ScdmDisplay: Disposing display");
@@ -1235,7 +1235,7 @@ scdm_display_dispose (GObject *object)
         }
         g_clear_object (&priv->launch_environment);
 
-        g_warn_if_fail (priv->status != GDM_DISPLAY_MANAGED);
+        g_warn_if_fail (priv->status != SCDM_DISPLAY_MANAGED);
         g_warn_if_fail (priv->user_access_file == NULL);
         g_warn_if_fail (priv->access_file == NULL);
 
@@ -1383,7 +1383,7 @@ scdm_display_class_init (ScdmDisplayClass *klass)
                                          g_param_spec_object ("launch-environment",
                                                               NULL,
                                                               NULL,
-                                                              GDM_TYPE_LAUNCH_ENVIRONMENT,
+                                                              SCDM_TYPE_LAUNCH_ENVIRONMENT,
                                                               G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
         g_object_class_install_property (object_class,
                                          PROP_STATUS,
@@ -1392,7 +1392,7 @@ scdm_display_class_init (ScdmDisplayClass *klass)
                                                            "status",
                                                            -1,
                                                            G_MAXINT,
-                                                           GDM_DISPLAY_UNMANAGED,
+                                                           SCDM_DISPLAY_UNMANAGED,
                                                            G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS));
 }
 
@@ -1413,9 +1413,9 @@ scdm_display_finalize (GObject *object)
         ScdmDisplayPrivate *priv;
 
         g_return_if_fail (object != NULL);
-        g_return_if_fail (GDM_IS_DISPLAY (object));
+        g_return_if_fail (SCDM_IS_DISPLAY (object));
 
-        self = GDM_DISPLAY (object);
+        self = SCDM_DISPLAY (object);
         priv = scdm_display_get_instance_private (self);
 
         g_return_if_fail (priv != NULL);
@@ -1476,11 +1476,11 @@ static void
 self_destruct (ScdmDisplay *self)
 {
         g_object_ref (self);
-        if (scdm_display_get_status (self) == GDM_DISPLAY_MANAGED) {
+        if (scdm_display_get_status (self) == SCDM_DISPLAY_MANAGED) {
                 scdm_display_unmanage (self);
         }
 
-        if (scdm_display_get_status (self) != GDM_DISPLAY_FINISHED) {
+        if (scdm_display_get_status (self) != SCDM_DISPLAY_FINISHED) {
                 queue_finish (self);
         }
         g_object_unref (self);
@@ -1526,7 +1526,7 @@ can_create_environment (const char *session_id)
         return session_exists;
 }
 
-#define ALREADY_RAN_INITIAL_SETUP_ON_THIS_BOOT GDM_RUN_DIR "/scdm.ran-initial-setup"
+#define ALREADY_RAN_INITIAL_SETUP_ON_THIS_BOOT SCDM_RUN_DIR "/scdm.ran-initial-setup"
 
 static gboolean
 already_done_initial_setup_on_this_boot (void)
@@ -1657,7 +1657,7 @@ wants_initial_setup (ScdmDisplay *self)
                 return FALSE;
         }
 
-        if (!scdm_settings_direct_get_boolean (GDM_KEY_INITIAL_SETUP_ENABLE, &enabled)) {
+        if (!scdm_settings_direct_get_boolean (SCDM_KEY_INITIAL_SETUP_ENABLE, &enabled)) {
                 return FALSE;
         }
 

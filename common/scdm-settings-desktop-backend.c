@@ -55,7 +55,7 @@ static void     scdm_settings_desktop_backend_class_init (ScdmSettingsDesktopBac
 static void     scdm_settings_desktop_backend_init       (ScdmSettingsDesktopBackend      *settings_desktop_backend);
 static void     scdm_settings_desktop_backend_finalize   (GObject                        *object);
 
-G_DEFINE_TYPE (ScdmSettingsDesktopBackend, scdm_settings_desktop_backend, GDM_TYPE_SETTINGS_BACKEND)
+G_DEFINE_TYPE (ScdmSettingsDesktopBackend, scdm_settings_desktop_backend, SCDM_TYPE_SETTINGS_BACKEND)
 
 static void
 _scdm_settings_desktop_backend_set_file_name (ScdmSettingsDesktopBackend *backend,
@@ -96,7 +96,7 @@ scdm_settings_desktop_backend_set_property (GObject      *object,
 {
         ScdmSettingsDesktopBackend *self;
 
-        self = GDM_SETTINGS_DESKTOP_BACKEND (object);
+        self = SCDM_SETTINGS_DESKTOP_BACKEND (object);
 
         switch (prop_id) {
                 case PROP_FILENAME:
@@ -116,7 +116,7 @@ scdm_settings_desktop_backend_get_property (GObject      *object,
 {
         ScdmSettingsDesktopBackend *self;
 
-        self = GDM_SETTINGS_DESKTOP_BACKEND (object);
+        self = SCDM_SETTINGS_DESKTOP_BACKEND (object);
 
         switch (prop_id) {
                 case PROP_FILENAME:
@@ -229,7 +229,7 @@ scdm_settings_desktop_backend_get_value (ScdmSettingsBackend *backend,
         char    *l;
         gboolean ret;
 
-        g_return_val_if_fail (GDM_IS_SETTINGS_BACKEND (backend), FALSE);
+        g_return_val_if_fail (SCDM_IS_SETTINGS_BACKEND (backend), FALSE);
         g_return_val_if_fail (key != NULL, FALSE);
 
         ret = FALSE;
@@ -239,21 +239,21 @@ scdm_settings_desktop_backend_get_value (ScdmSettingsBackend *backend,
         }
 
         val = g = k = l = NULL;
-        /*GDM_SETTINGS_BACKEND_CLASS (scdm_settings_desktop_backend_parent_class)->get_value (display);*/
+        /*SCDM_SETTINGS_BACKEND_CLASS (scdm_settings_desktop_backend_parent_class)->get_value (display);*/
         if (! parse_key_string (key, &g, &k, &l, NULL)) {
-                g_set_error (error, GDM_SETTINGS_BACKEND_ERROR, GDM_SETTINGS_BACKEND_ERROR_KEY_NOT_FOUND, "Key not found");
+                g_set_error (error, SCDM_SETTINGS_BACKEND_ERROR, SCDM_SETTINGS_BACKEND_ERROR_KEY_NOT_FOUND, "Key not found");
                 goto out;
         }
 
         /*g_debug ("Getting key: %s %s %s", g, k, l);*/
         local_error = NULL;
-        val = g_key_file_get_value (GDM_SETTINGS_DESKTOP_BACKEND (backend)->key_file,
+        val = g_key_file_get_value (SCDM_SETTINGS_DESKTOP_BACKEND (backend)->key_file,
                                     g,
                                     k,
                                     &local_error);
         if (local_error != NULL) {
                 g_error_free (local_error);
-                g_set_error (error, GDM_SETTINGS_BACKEND_ERROR, GDM_SETTINGS_BACKEND_ERROR_KEY_NOT_FOUND, "Key not found");
+                g_set_error (error, SCDM_SETTINGS_BACKEND_ERROR, SCDM_SETTINGS_BACKEND_ERROR_KEY_NOT_FOUND, "Key not found");
                 goto out;
         }
 
@@ -343,17 +343,17 @@ scdm_settings_desktop_backend_set_value (ScdmSettingsBackend *backend,
         char   *k;
         char   *l;
 
-        g_return_val_if_fail (GDM_IS_SETTINGS_BACKEND (backend), FALSE);
+        g_return_val_if_fail (SCDM_IS_SETTINGS_BACKEND (backend), FALSE);
         g_return_val_if_fail (key != NULL, FALSE);
 
-        /*GDM_SETTINGS_BACKEND_CLASS (scdm_settings_desktop_backend_parent_class)->get_value (display);*/
+        /*SCDM_SETTINGS_BACKEND_CLASS (scdm_settings_desktop_backend_parent_class)->get_value (display);*/
         if (! parse_key_string (key, &g, &k, &l, NULL)) {
-                g_set_error (error, GDM_SETTINGS_BACKEND_ERROR, GDM_SETTINGS_BACKEND_ERROR_KEY_NOT_FOUND, "Key not found");
+                g_set_error (error, SCDM_SETTINGS_BACKEND_ERROR, SCDM_SETTINGS_BACKEND_ERROR_KEY_NOT_FOUND, "Key not found");
                 return FALSE;
         }
 
         local_error = NULL;
-        old_val = g_key_file_get_value (GDM_SETTINGS_DESKTOP_BACKEND (backend)->key_file,
+        old_val = g_key_file_get_value (SCDM_SETTINGS_DESKTOP_BACKEND (backend)->key_file,
                                         g,
                                         k,
                                         &local_error);
@@ -363,13 +363,13 @@ scdm_settings_desktop_backend_set_value (ScdmSettingsBackend *backend,
 
         /*g_debug ("Setting key: %s %s %s", g, k, l);*/
         local_error = NULL;
-        g_key_file_set_value (GDM_SETTINGS_DESKTOP_BACKEND (backend)->key_file,
+        g_key_file_set_value (SCDM_SETTINGS_DESKTOP_BACKEND (backend)->key_file,
                               g,
                               k,
                               value);
 
-        GDM_SETTINGS_DESKTOP_BACKEND (backend)->dirty = TRUE;
-        queue_save (GDM_SETTINGS_DESKTOP_BACKEND (backend));
+        SCDM_SETTINGS_DESKTOP_BACKEND (backend)->dirty = TRUE;
+        queue_save (SCDM_SETTINGS_DESKTOP_BACKEND (backend));
 
         scdm_settings_backend_value_changed (backend, key, old_val, value);
 
@@ -382,7 +382,7 @@ static void
 scdm_settings_desktop_backend_class_init (ScdmSettingsDesktopBackendClass *klass)
 {
         GObjectClass            *object_class = G_OBJECT_CLASS (klass);
-        ScdmSettingsBackendClass *backend_class = GDM_SETTINGS_BACKEND_CLASS (klass);
+        ScdmSettingsBackendClass *backend_class = SCDM_SETTINGS_BACKEND_CLASS (klass);
 
         object_class->get_property = scdm_settings_desktop_backend_get_property;
         object_class->set_property = scdm_settings_desktop_backend_set_property;
@@ -411,9 +411,9 @@ scdm_settings_desktop_backend_finalize (GObject *object)
         ScdmSettingsDesktopBackend *backend;
 
         g_return_if_fail (object != NULL);
-        g_return_if_fail (GDM_IS_SETTINGS_DESKTOP_BACKEND (object));
+        g_return_if_fail (SCDM_IS_SETTINGS_DESKTOP_BACKEND (object));
 
-        backend = GDM_SETTINGS_DESKTOP_BACKEND (object);
+        backend = SCDM_SETTINGS_DESKTOP_BACKEND (object);
 
         save_settings (backend);
         g_key_file_free (backend->key_file);
@@ -430,8 +430,8 @@ scdm_settings_desktop_backend_new (const char* filename)
         if (!g_file_test (filename, G_FILE_TEST_IS_REGULAR))
                 return NULL;
 
-        object = g_object_new (GDM_TYPE_SETTINGS_DESKTOP_BACKEND,
+        object = g_object_new (SCDM_TYPE_SETTINGS_DESKTOP_BACKEND,
                                "filename", filename,
                                NULL);
-        return GDM_SETTINGS_BACKEND (object);
+        return SCDM_SETTINGS_BACKEND (object);
 }

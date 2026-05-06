@@ -51,7 +51,7 @@
 #include "scdm-settings-keys.h"
 
 #define INITIAL_SETUP_USERNAME "gnome-initial-setup"
-#define GDM_SESSION_MODE "scdm"
+#define SCDM_SESSION_MODE "scdm"
 #define INITIAL_SETUP_SESSION_MODE "initial-setup"
 #define GNOME_SESSION_SESSIONS_PATH DATADIR "/gnome-session/sessions"
 
@@ -191,7 +191,7 @@ build_launch_environment (ScdmLaunchEnvironment *launch_environment,
         g_hash_table_insert (hash, g_strdup ("USER"), g_strdup (launch_environment->priv->user_name));
         g_hash_table_insert (hash, g_strdup ("USERNAME"), g_strdup (launch_environment->priv->user_name));
 
-        g_hash_table_insert (hash, g_strdup ("GDM_VERSION"), g_strdup (VERSION));
+        g_hash_table_insert (hash, g_strdup ("SCDM_VERSION"), g_strdup (VERSION));
         g_hash_table_remove (hash, "MAIL");
 
         g_hash_table_insert (hash, g_strdup ("HOME"), g_strdup ("/"));
@@ -213,7 +213,7 @@ build_launch_environment (ScdmLaunchEnvironment *launch_environment,
 
                 seat_id = launch_environment->priv->x11_display_seat_id;
 
-                g_hash_table_insert (hash, g_strdup ("GDM_SEAT_ID"), g_strdup (seat_id));
+                g_hash_table_insert (hash, g_strdup ("SCDM_SEAT_ID"), g_strdup (seat_id));
         }
 
         g_hash_table_insert (hash, g_strdup ("RUNNING_UNDER_GDM"), g_strdup ("true"));
@@ -597,7 +597,7 @@ scdm_launch_environment_set_property (GObject      *object,
 {
         ScdmLaunchEnvironment *self;
 
-        self = GDM_LAUNCH_ENVIRONMENT (object);
+        self = SCDM_LAUNCH_ENVIRONMENT (object);
 
         switch (prop_id) {
         case PROP_VERIFICATION_MODE:
@@ -650,7 +650,7 @@ scdm_launch_environment_get_property (GObject    *object,
 {
         ScdmLaunchEnvironment *self;
 
-        self = GDM_LAUNCH_ENVIRONMENT (object);
+        self = SCDM_LAUNCH_ENVIRONMENT (object);
 
         switch (prop_id) {
         case PROP_VERIFICATION_MODE:
@@ -709,8 +709,8 @@ scdm_launch_environment_class_init (ScdmLaunchEnvironmentClass *klass)
                                          g_param_spec_enum ("verification-mode",
                                                             "verification mode",
                                                             "verification mode",
-                                                            GDM_TYPE_SESSION_VERIFICATION_MODE,
-                                                            GDM_SESSION_VERIFICATION_MODE_LOGIN,
+                                                            SCDM_TYPE_SESSION_VERIFICATION_MODE,
+                                                            SCDM_SESSION_VERIFICATION_MODE_LOGIN,
                                                             G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS));
         g_object_class_install_property (object_class,
                                          PROP_SESSION_TYPE,
@@ -773,7 +773,7 @@ scdm_launch_environment_class_init (ScdmLaunchEnvironmentClass *klass)
                                          g_param_spec_string ("user-name",
                                                               "user name",
                                                               "user name",
-                                                              GDM_USERNAME,
+                                                              SCDM_USERNAME,
                                                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS));
         g_object_class_install_property (object_class,
                                          PROP_RUNTIME_DIR,
@@ -871,9 +871,9 @@ scdm_launch_environment_finalize (GObject *object)
         ScdmLaunchEnvironment *launch_environment;
 
         g_return_if_fail (object != NULL);
-        g_return_if_fail (GDM_IS_LAUNCH_ENVIRONMENT (object));
+        g_return_if_fail (SCDM_IS_LAUNCH_ENVIRONMENT (object));
 
-        launch_environment = GDM_LAUNCH_ENVIRONMENT (object);
+        launch_environment = SCDM_LAUNCH_ENVIRONMENT (object);
 
         g_return_if_fail (launch_environment->priv != NULL);
 
@@ -913,7 +913,7 @@ create_gnome_session_environment (const char *session_id,
         char **argv;
         GPtrArray *args;
 
-        scdm_settings_direct_get_boolean (GDM_KEY_DEBUG, &debug);
+        scdm_settings_direct_get_boolean (SCDM_KEY_DEBUG, &debug);
 
         args = g_ptr_array_new ();
         g_ptr_array_add (args, "gnome-session");
@@ -936,7 +936,7 @@ create_gnome_session_environment (const char *session_id,
         command = g_strjoinv (" ", argv);
         g_free (argv);
 
-        launch_environment = g_object_new (GDM_TYPE_LAUNCH_ENVIRONMENT,
+        launch_environment = g_object_new (SCDM_TYPE_LAUNCH_ENVIRONMENT,
                                            "command", command,
                                            "user-name", user_name,
                                            "session-type", session_type,
@@ -945,7 +945,7 @@ create_gnome_session_environment (const char *session_id,
                                            "x11-display-seat-id", seat_id,
                                            "x11-display-hostname", display_hostname,
                                            "x11-display-is-local", display_is_local,
-                                           "runtime-dir", GDM_SCREENSHOT_DIR,
+                                           "runtime-dir", SCDM_SCREENSHOT_DIR,
                                            NULL);
 
         g_free (command);
@@ -962,11 +962,11 @@ scdm_create_greeter_launch_environment (const char *display_name,
         const char *session_name = NULL;
 
         return create_gnome_session_environment (session_name,
-                                                 GDM_USERNAME,
+                                                 SCDM_USERNAME,
                                                  display_name,
                                                  seat_id,
                                                  session_type,
-                                                 GDM_SESSION_MODE,
+                                                 SCDM_SESSION_MODE,
                                                  display_hostname,
                                                  display_is_local);
 }
@@ -996,15 +996,15 @@ scdm_create_chooser_launch_environment (const char *display_name,
 {
         ScdmLaunchEnvironment *launch_environment;
 
-        launch_environment = g_object_new (GDM_TYPE_LAUNCH_ENVIRONMENT,
+        launch_environment = g_object_new (SCDM_TYPE_LAUNCH_ENVIRONMENT,
                                            "command", LIBEXECDIR "/scdm-simple-chooser",
-                                           "verification-mode", GDM_SESSION_VERIFICATION_MODE_CHOOSER,
-                                           "user-name", GDM_USERNAME,
+                                           "verification-mode", SCDM_SESSION_VERIFICATION_MODE_CHOOSER,
+                                           "user-name", SCDM_USERNAME,
                                            "x11-display-name", display_name,
                                            "x11-display-seat-id", seat_id,
                                            "x11-display-hostname", display_hostname,
                                            "x11-display-is-local", FALSE,
-                                           "runtime-dir", GDM_SCREENSHOT_DIR,
+                                           "runtime-dir", SCDM_SCREENSHOT_DIR,
                                            NULL);
 
         return launch_environment;

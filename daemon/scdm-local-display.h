@@ -19,15 +19,15 @@
  */
 
 
-#ifndef __GDM_LOCAL_DISPLAY_H
-#define __GDM_LOCAL_DISPLAY_H
+#ifndef __SCDM_LOCAL_DISPLAY_H
+#define __SCDM_LOCAL_DISPLAY_H
 
 #include <glib-object.h>
 #include "scdm-display.h"
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_LOCAL_DISPLAY         (scdm_local_display_get_type ())
+#define SCDM_TYPE_LOCAL_DISPLAY         (scdm_local_display_get_type ())
 G_DECLARE_FINAL_TYPE (ScdmLocalDisplay, scdm_local_display, GDM, LOCAL_DISPLAY, ScdmDisplay)
 
 ScdmDisplay *        scdm_local_display_new                     (void);
@@ -35,4 +35,4 @@ ScdmDisplay *        scdm_local_display_new                     (void);
 
 G_END_DECLS
 
-#endif /* __GDM_LOCAL_DISPLAY_H */
+#endif /* __SCDM_LOCAL_DISPLAY_H */
