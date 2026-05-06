@@ -34,16 +34,16 @@ typedef struct {
 
         unsigned char type;
         unsigned char data[];
-} GdmPamExtensionMessage;
+} ScdmPamExtensionMessage;
 
-#define GDM_PAM_EXTENSION_MESSAGE_FROM_PAM_MESSAGE(query) (GdmPamExtensionMessage *) (void *) query->msg
+#define GDM_PAM_EXTENSION_MESSAGE_FROM_PAM_MESSAGE(query) (ScdmPamExtensionMessage *) (void *) query->msg
 #define GDM_PAM_EXTENSION_MESSAGE_TO_PAM_REPLY(msg) (char *) (void *) msg
 #define GDM_PAM_EXTENSION_MESSAGE_TO_BINARY_PROMPT_MESSAGE(extended_message, binary_message) \
 { \
         (binary_message)->msg_style = PAM_BINARY_PROMPT; \
         (binary_message)->msg = (void *) extended_message; \
 }
-#define GDM_PAM_EXTENSION_MESSAGE_TRUNCATED(msg) be32toh(msg->length) < sizeof (GdmPamExtensionMessage)
+#define GDM_PAM_EXTENSION_MESSAGE_TRUNCATED(msg) be32toh(msg->length) < sizeof (ScdmPamExtensionMessage)
 #define GDM_PAM_EXTENSION_MESSAGE_INVALID_TYPE(msg) \
 ({ \
         bool _invalid = true; \
@@ -133,30 +133,30 @@ typedef struct {
 typedef struct {
         const char *key;
         const char *text;
-} GdmChoiceListItems;
+} ScdmChoiceListItems;
 
 typedef struct {
         size_t number_of_items;
-        GdmChoiceListItems items[];
-} GdmChoiceList;
+        ScdmChoiceListItems items[];
+} ScdmChoiceList;
 
 typedef struct {
-        GdmPamExtensionMessage header;
+        ScdmPamExtensionMessage header;
 
         char *prompt_message;
-        GdmChoiceList list;
-} GdmPamExtensionChoiceListRequest;
+        ScdmChoiceList list;
+} ScdmPamExtensionChoiceListRequest;
 
 typedef struct {
-        GdmPamExtensionMessage header;
+        ScdmPamExtensionMessage header;
 
         char *key;
-} GdmPamExtensionChoiceListResponse;
+} ScdmPamExtensionChoiceListResponse;
 
 #define GDM_PAM_EXTENSION_CHOICE_LIST "io.github.scarecrow_de.DisplayManager.UserVerifier.ChoiceList"
 
-#define GDM_CHOICE_LIST_SIZE(num_items) (offsetof(GdmChoiceList, items) + (num_items) * sizeof (GdmChoiceListItems))
-#define GDM_PAM_EXTENSION_CHOICE_LIST_REQUEST_SIZE(num_items) (offsetof(GdmPamExtensionChoiceListRequest, list) + GDM_CHOICE_LIST_SIZE((num_items)))
+#define GDM_CHOICE_LIST_SIZE(num_items) (offsetof(ScdmChoiceList, items) + (num_items) * sizeof (ScdmChoiceListItems))
+#define GDM_PAM_EXTENSION_CHOICE_LIST_REQUEST_SIZE(num_items) (offsetof(ScdmPamExtensionChoiceListRequest, list) + GDM_CHOICE_LIST_SIZE((num_items)))
 #define GDM_PAM_EXTENSION_CHOICE_LIST_REQUEST_INIT(request, title, num_items) \
 { \
         int _n = num_items; \
@@ -166,13 +166,13 @@ typedef struct {
         request->list.number_of_items = _n; \
 }
 
-#define GDM_PAM_EXTENSION_CHOICE_LIST_RESPONSE_SIZE sizeof (GdmPamExtensionChoiceListResponse)
+#define GDM_PAM_EXTENSION_CHOICE_LIST_RESPONSE_SIZE sizeof (ScdmPamExtensionChoiceListResponse)
 #define GDM_PAM_EXTENSION_CHOICE_LIST_RESPONSE_INIT(response) \
 { \
         GDM_PAM_EXTENSION_LOOK_UP_TYPE (GDM_PAM_EXTENSION_CHOICE_LIST, &response->header.type); \
         response->header.length = htobe32 (GDM_PAM_EXTENSION_CHOICE_LIST_RESPONSE_SIZE); \
         response->key = NULL; \
 }
-#define GDM_PAM_EXTENSION_REPLY_TO_CHOICE_LIST_RESPONSE(reply) ((GdmPamExtensionChoiceListResponse *) (void *) reply->resp)
+#define GDM_PAM_EXTENSION_REPLY_TO_CHOICE_LIST_RESPONSE(reply) ((ScdmPamExtensionChoiceListResponse *) (void *) reply->resp)
 
 #endif

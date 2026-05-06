@@ -27,24 +27,24 @@
 G_BEGIN_DECLS
 
 #define GDM_TYPE_SETTINGS_BACKEND (gdm_settings_backend_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GdmSettingsBackend, gdm_settings_backend, GDM, SETTINGS_BACKEND, GObject)
+G_DECLARE_DERIVABLE_TYPE (ScdmSettingsBackend, gdm_settings_backend, GDM, SETTINGS_BACKEND, GObject)
 
-struct _GdmSettingsBackendClass
+struct _ScdmSettingsBackendClass
 {
         GObjectClass   parent_class;
 
         /* methods */
-        gboolean (*get_value)              (GdmSettingsBackend *settings_backend,
+        gboolean (*get_value)              (ScdmSettingsBackend *settings_backend,
                                             const char         *key,
                                             char              **value,
                                             GError            **error);
-        gboolean (*set_value)              (GdmSettingsBackend *settings_backend,
+        gboolean (*set_value)              (ScdmSettingsBackend *settings_backend,
                                             const char         *key,
                                             const char         *value,
                                             GError            **error);
 
         /* signals */
-        void          (* value_changed)    (GdmSettingsBackend *settings_backend,
+        void          (* value_changed)    (ScdmSettingsBackend *settings_backend,
                                             const char  *key,
                                             const char  *old_value,
                                             const char **new_value);
@@ -54,22 +54,22 @@ typedef enum
 {
         GDM_SETTINGS_BACKEND_ERROR_GENERAL,
         GDM_SETTINGS_BACKEND_ERROR_KEY_NOT_FOUND
-} GdmSettingsBackendError;
+} ScdmSettingsBackendError;
 
 #define GDM_SETTINGS_BACKEND_ERROR gdm_settings_backend_error_quark ()
 
 GQuark              gdm_settings_backend_error_quark            (void);
 
-gboolean            gdm_settings_backend_get_value              (GdmSettingsBackend *settings_backend,
+gboolean            gdm_settings_backend_get_value              (ScdmSettingsBackend *settings_backend,
                                                                  const char  *key,
                                                                  char       **value,
                                                                  GError     **error);
-gboolean            gdm_settings_backend_set_value              (GdmSettingsBackend *settings_backend,
+gboolean            gdm_settings_backend_set_value              (ScdmSettingsBackend *settings_backend,
                                                                  const char  *key,
                                                                  const char  *value,
                                                                  GError     **error);
 
-void                gdm_settings_backend_value_changed          (GdmSettingsBackend *settings_backend,
+void                gdm_settings_backend_value_changed          (ScdmSettingsBackend *settings_backend,
                                                                  const char  *key,
                                                                  const char  *old_value,
                                                                  const char  *new_value);

@@ -133,7 +133,7 @@ gdm_wait_on_and_disown_pid (int pid,
                 } else if (errno == ECHILD) {
                         already_reaped = TRUE;
                 } else {
-                        g_debug ("GdmCommon: waitpid () should not fail");
+                        g_debug ("ScdmCommon: waitpid () should not fail");
                 }
         } else if (ret == 0) {
                 num_tries--;
@@ -146,11 +146,11 @@ gdm_wait_on_and_disown_pid (int pid,
 
                         path = g_strdup_printf ("/proc/%ld/cmdline", (long) pid);
                         if (g_file_get_contents (path, &command, NULL, NULL)) {;
-                                g_warning ("GdmCommon: process (pid:%d, command '%s') isn't dying after %d seconds, now ignoring it.",
+                                g_warning ("ScdmCommon: process (pid:%d, command '%s') isn't dying after %d seconds, now ignoring it.",
                                          (int) pid, command, timeout);
                                 g_free (command);
                         } else {
-                                g_warning ("GdmCommon: process (pid:%d) isn't dying after %d seconds, now ignoring it.",
+                                g_warning ("ScdmCommon: process (pid:%d) isn't dying after %d seconds, now ignoring it.",
                                          (int) pid, timeout);
                         }
                         g_free (path);
@@ -160,7 +160,7 @@ gdm_wait_on_and_disown_pid (int pid,
                 goto wait_again;
         }
 
-        g_debug ("GdmCommon: process (pid:%d) done (%s:%d)",
+        g_debug ("ScdmCommon: process (pid:%d) done (%s:%d)",
                  (int) pid,
                  already_reaped? "reaped earlier" :
                  WIFEXITED (status) ? "status"
@@ -187,7 +187,7 @@ gdm_signal_pid (int pid,
         int status = -1;
 
         /* perhaps block sigchld */
-        g_debug ("GdmCommon: sending signal %d to process %d", signal, pid);
+        g_debug ("ScdmCommon: sending signal %d to process %d", signal, pid);
         errno = 0;
         status = kill (pid, signal);
 
@@ -576,7 +576,7 @@ listify_hash (const char *key,
 {
         char *str;
         str = g_strdup_printf ("%s=%s", key, value);
-        g_debug ("Gdm: script environment: %s", str);
+        g_debug ("Scdm: script environment: %s", str);
         g_ptr_array_add (env, str);
 }
 
@@ -770,7 +770,7 @@ gdm_shell_var_is_valid_char (gchar c, gboolean first)
    non-escaped # at the begining of a word is taken as a comment and ignored */
 char *
 gdm_shell_expand (const char *str,
-                  GdmExpandVarFunc expand_var_func,
+                  ScdmExpandVarFunc expand_var_func,
                   gpointer user_data)
 {
         GString *s = g_string_new("");
@@ -918,7 +918,7 @@ gdm_find_display_session (GPid        pid,
          */
         res = sd_pid_get_session (pid, &local_session_id);
         if (res >= 0) {
-                g_debug ("GdmCommon: Found session %s for PID %d, using", local_session_id, pid);
+                g_debug ("ScdmCommon: Found session %s for PID %d, using", local_session_id, pid);
 
                 *out_session_id = g_strdup (local_session_id);
                 free (local_session_id);
@@ -926,7 +926,7 @@ gdm_find_display_session (GPid        pid,
                 return TRUE;
         } else {
                 if (res != -ENODATA)
-                        g_warning ("GdmCommon: Failed to retrieve session information for pid %d: %s",
+                        g_warning ("ScdmCommon: Failed to retrieve session information for pid %d: %s",
                                    pid, strerror (-res));
         }
 

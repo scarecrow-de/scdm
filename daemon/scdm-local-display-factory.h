@@ -30,20 +30,20 @@
 G_BEGIN_DECLS
 
 #define GDM_TYPE_LOCAL_DISPLAY_FACTORY (gdm_local_display_factory_get_type ())
-G_DECLARE_FINAL_TYPE (GdmLocalDisplayFactory, gdm_local_display_factory, GDM, LOCAL_DISPLAY_FACTORY, GdmDisplayFactory)
+G_DECLARE_FINAL_TYPE (ScdmLocalDisplayFactory, gdm_local_display_factory, GDM, LOCAL_DISPLAY_FACTORY, ScdmDisplayFactory)
 
 typedef enum
 {
          GDM_LOCAL_DISPLAY_FACTORY_ERROR_GENERAL
-} GdmLocalDisplayFactoryError;
+} ScdmLocalDisplayFactoryError;
 
 #define GDM_LOCAL_DISPLAY_FACTORY_ERROR gdm_local_display_factory_error_quark ()
 
 GQuark                     gdm_local_display_factory_error_quark              (void);
 
-GdmLocalDisplayFactory *   gdm_local_display_factory_new                      (GdmDisplayStore        *display_store);
+ScdmLocalDisplayFactory *   gdm_local_display_factory_new                      (ScdmDisplayStore        *display_store);
 
-gboolean                   gdm_local_display_factory_create_transient_display (GdmLocalDisplayFactory *factory,
+gboolean                   gdm_local_display_factory_create_transient_display (ScdmLocalDisplayFactory *factory,
                                                                                char                  **id,
                                                                                GError                **error);
 G_END_DECLS

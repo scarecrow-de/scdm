@@ -203,7 +203,7 @@ load_a11y (void)
 int
 main (int argc, char *argv[])
 {
-        GdmChooserSession *session;
+        ScdmChooserSession *session;
         gboolean           res;
         GError            *error;
 

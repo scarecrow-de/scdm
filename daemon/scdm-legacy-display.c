@@ -45,26 +45,26 @@
 #include "scdm-settings-direct.h"
 #include "scdm-settings-keys.h"
 
-struct _GdmLegacyDisplay
+struct _ScdmLegacyDisplay
 {
-        GdmDisplay           parent;
+        ScdmDisplay           parent;
 
-        GdmDBusLocalDisplay *skeleton;
+        ScdmDBusLocalDisplay *skeleton;
 
-        GdmServer           *server;
+        ScdmServer           *server;
 };
 
-static void     gdm_legacy_display_class_init   (GdmLegacyDisplayClass *klass);
-static void     gdm_legacy_display_init         (GdmLegacyDisplay      *legacy_display);
+static void     gdm_legacy_display_class_init   (ScdmLegacyDisplayClass *klass);
+static void     gdm_legacy_display_init         (ScdmLegacyDisplay      *legacy_display);
 
-G_DEFINE_TYPE (GdmLegacyDisplay, gdm_legacy_display, GDM_TYPE_DISPLAY)
+G_DEFINE_TYPE (ScdmLegacyDisplay, gdm_legacy_display, GDM_TYPE_DISPLAY)
 
 static GObject *
 gdm_legacy_display_constructor (GType                  type,
                                guint                  n_construct_properties,
                                GObjectConstructParam *construct_properties)
 {
-        GdmLegacyDisplay      *display;
+        ScdmLegacyDisplay      *display;
 
         display = GDM_LEGACY_DISPLAY (G_OBJECT_CLASS (gdm_legacy_display_parent_class)->constructor (type,
                                                                                                      n_construct_properties,
@@ -81,7 +81,7 @@ gdm_legacy_display_constructor (GType                  type,
 static void
 gdm_legacy_display_finalize (GObject *object)
 {
-        GdmLegacyDisplay *display = GDM_LEGACY_DISPLAY (object);
+        ScdmLegacyDisplay *display = GDM_LEGACY_DISPLAY (object);
 
         g_clear_object (&display->skeleton);
         g_clear_object (&display->server);
@@ -90,10 +90,10 @@ gdm_legacy_display_finalize (GObject *object)
 }
 
 static gboolean
-gdm_legacy_display_prepare (GdmDisplay *display)
+gdm_legacy_display_prepare (ScdmDisplay *display)
 {
-        GdmLegacyDisplay *self = GDM_LEGACY_DISPLAY (display);
-        GdmLaunchEnvironment *launch_environment;
+        ScdmLegacyDisplay *self = GDM_LEGACY_DISPLAY (display);
+        ScdmLaunchEnvironment *launch_environment;
         char          *display_name;
         char          *seat_id;
         gboolean       doing_initial_setup = FALSE;
@@ -134,18 +134,18 @@ gdm_legacy_display_prepare (GdmDisplay *display)
 }
 
 static void
-on_server_ready (GdmServer       *server,
-                 GdmLegacyDisplay *self)
+on_server_ready (ScdmServer       *server,
+                 ScdmLegacyDisplay *self)
 {
         gboolean ret;
 
         ret = gdm_display_connect (GDM_DISPLAY (self));
 
         if (!ret) {
-                g_debug ("GdmDisplay: could not connect to display");
+                g_debug ("ScdmDisplay: could not connect to display");
                 gdm_display_unmanage (GDM_DISPLAY (self));
         } else {
-                GdmLaunchEnvironment *launch_environment;
+                ScdmLaunchEnvironment *launch_environment;
                 char *display_device;
 
                 display_device = gdm_server_get_display_device (server);
@@ -160,27 +160,27 @@ on_server_ready (GdmServer       *server,
                 g_clear_pointer(&display_device, g_free);
                 g_clear_object (&launch_environment);
 
-                g_debug ("GdmDisplay: connected to display");
+                g_debug ("ScdmDisplay: connected to display");
                 g_object_set (G_OBJECT (self), "status", GDM_DISPLAY_MANAGED, NULL);
         }
 }
 
 static void
-on_server_exited (GdmServer  *server,
+on_server_exited (ScdmServer  *server,
                   int         exit_code,
-                  GdmDisplay *self)
+                  ScdmDisplay *self)
 {
-        g_debug ("GdmDisplay: server exited with code %d\n", exit_code);
+        g_debug ("ScdmDisplay: server exited with code %d\n", exit_code);
 
         gdm_display_unmanage (GDM_DISPLAY (self));
 }
 
 static void
-on_server_died (GdmServer  *server,
+on_server_died (ScdmServer  *server,
                 int         signal_number,
-                GdmDisplay *self)
+                ScdmDisplay *self)
 {
-        g_debug ("GdmDisplay: server died with signal %d, (%s)",
+        g_debug ("ScdmDisplay: server died with signal %d, (%s)",
                  signal_number,
                  g_strsignal (signal_number));
 
@@ -188,9 +188,9 @@ on_server_died (GdmServer  *server,
 }
 
 static void
-gdm_legacy_display_manage (GdmDisplay *display)
+gdm_legacy_display_manage (ScdmDisplay *display)
 {
-        GdmLegacyDisplay *self = GDM_LEGACY_DISPLAY (display);
+        ScdmLegacyDisplay *self = GDM_LEGACY_DISPLAY (display);
         char            *display_name;
         char            *auth_file;
         char            *seat_id;
@@ -244,15 +244,15 @@ gdm_legacy_display_manage (GdmDisplay *display)
                 gdm_display_unmanage (GDM_DISPLAY (self));
         }
 
-        g_debug ("GdmDisplay: Started X server");
+        g_debug ("ScdmDisplay: Started X server");
 
 }
 
 static void
-gdm_legacy_display_class_init (GdmLegacyDisplayClass *klass)
+gdm_legacy_display_class_init (ScdmLegacyDisplayClass *klass)
 {
         GObjectClass *object_class = G_OBJECT_CLASS (klass);
-        GdmDisplayClass *display_class = GDM_DISPLAY_CLASS (klass);
+        ScdmDisplayClass *display_class = GDM_DISPLAY_CLASS (klass);
 
         object_class->constructor = gdm_legacy_display_constructor;
         object_class->finalize = gdm_legacy_display_finalize;
@@ -262,7 +262,7 @@ gdm_legacy_display_class_init (GdmLegacyDisplayClass *klass)
 }
 
 static void
-on_display_status_changed (GdmLegacyDisplay *self)
+on_display_status_changed (ScdmLegacyDisplay *self)
 {
         int status;
 
@@ -279,14 +279,14 @@ on_display_status_changed (GdmLegacyDisplay *self)
 }
 
 static void
-gdm_legacy_display_init (GdmLegacyDisplay *legacy_display)
+gdm_legacy_display_init (ScdmLegacyDisplay *legacy_display)
 {
         g_signal_connect (legacy_display, "notify::status",
                           G_CALLBACK (on_display_status_changed),
                           NULL);
 }
 
-GdmDisplay *
+ScdmDisplay *
 gdm_legacy_display_new (int display_number)
 {
         GObject *object;

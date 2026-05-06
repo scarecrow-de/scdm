@@ -1079,7 +1079,7 @@ msgstr ""
 # Please translate "archive"
 #, fuzzy
 
-# GdmGreeterTheme.info should appear verbatim in translation
+# ScdmGreeterTheme.info should appear verbatim in translation
 #, fuzzy
 
 

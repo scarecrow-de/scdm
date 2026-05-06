@@ -30,20 +30,20 @@
 G_BEGIN_DECLS
 
 #define GDM_TYPE_XDMCP_DISPLAY_FACTORY (gdm_xdmcp_display_factory_get_type ())
-G_DECLARE_FINAL_TYPE (GdmXdmcpDisplayFactory, gdm_xdmcp_display_factory, GDM, XDMCP_DISPLAY_FACTORY, GdmDisplayFactory)
+G_DECLARE_FINAL_TYPE (ScdmXdmcpDisplayFactory, gdm_xdmcp_display_factory, GDM, XDMCP_DISPLAY_FACTORY, ScdmDisplayFactory)
 
 typedef enum
 {
          GDM_XDMCP_DISPLAY_FACTORY_ERROR_GENERAL
-} GdmXdmcpDisplayFactoryError;
+} ScdmXdmcpDisplayFactoryError;
 
 #define GDM_XDMCP_DISPLAY_FACTORY_ERROR gdm_xdmcp_display_factory_error_quark ()
 
 GQuark                     gdm_xdmcp_display_factory_error_quark      (void);
 
-GdmXdmcpDisplayFactory *   gdm_xdmcp_display_factory_new              (GdmDisplayStore        *display_store);
+ScdmXdmcpDisplayFactory *   gdm_xdmcp_display_factory_new              (ScdmDisplayStore        *display_store);
 
-void                       gdm_xdmcp_display_factory_set_port         (GdmXdmcpDisplayFactory *manager,
+void                       gdm_xdmcp_display_factory_set_port         (ScdmXdmcpDisplayFactory *manager,
                                                                        guint                   port);
 
 G_END_DECLS

@@ -55,7 +55,7 @@
 #include "scdm-xdmcp-display-factory.h"
 #include "scdm-xdmcp-chooser-display.h"
 
-#define GDM_MANAGER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), GDM_TYPE_MANAGER, GdmManagerPrivate))
+#define GDM_MANAGER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), GDM_TYPE_MANAGER, ScdmManagerPrivate))
 
 #define GDM_DBUS_PATH             "/io/github/scarecrow_de/DisplayManager"
 #define GDM_MANAGER_PATH          GDM_DBUS_PATH "/Manager"
@@ -66,20 +66,20 @@
 
 typedef struct
 {
-        GdmManager *manager;
-        GdmSession *session;
+        ScdmManager *manager;
+        ScdmSession *session;
         char *service_name;
         guint idle_id;
 } StartUserSessionOperation;
 
-struct GdmManagerPrivate
+struct ScdmManagerPrivate
 {
-        GdmDisplayStore        *display_store;
-        GdmLocalDisplayFactory *local_factory;
+        ScdmDisplayStore        *display_store;
+        ScdmLocalDisplayFactory *local_factory;
 #ifdef HAVE_LIBXDMCP
-        GdmXdmcpDisplayFactory *xdmcp_factory;
+        ScdmXdmcpDisplayFactory *xdmcp_factory;
 #endif
-        GdmDisplay             *automatic_login_display;
+        ScdmDisplay             *automatic_login_display;
         GList                  *user_sessions;
         GHashTable             *transient_sessions;
         GHashTable             *open_reauthentication_requests;
@@ -117,27 +117,27 @@ typedef enum {
 
 static guint signals [LAST_SIGNAL] = { 0, };
 
-static void     gdm_manager_class_init  (GdmManagerClass *klass);
-static void     gdm_manager_init        (GdmManager      *manager);
+static void     gdm_manager_class_init  (ScdmManagerClass *klass);
+static void     gdm_manager_init        (ScdmManager      *manager);
 static void     gdm_manager_dispose     (GObject         *object);
 
-static GdmSession *create_user_session_for_display (GdmManager *manager,
-                                                    GdmDisplay *display,
+static ScdmSession *create_user_session_for_display (ScdmManager *manager,
+                                                    ScdmDisplay *display,
                                                     uid_t       allowed_user);
-static void     start_user_session (GdmManager                *manager,
+static void     start_user_session (ScdmManager                *manager,
                                     StartUserSessionOperation *operation);
-static void     clean_user_session (GdmSession *session);
+static void     clean_user_session (ScdmSession *session);
 
 static gpointer manager_object = NULL;
 
-static void manager_interface_init (GdmDBusManagerIface *interface);
+static void manager_interface_init (ScdmDBusManagerIface *interface);
 
-G_DEFINE_TYPE_WITH_CODE (GdmManager,
+G_DEFINE_TYPE_WITH_CODE (ScdmManager,
                          gdm_manager,
                          GDM_DBUS_TYPE_MANAGER_SKELETON,
                          G_IMPLEMENT_INTERFACE (GDM_DBUS_TYPE_MANAGER,
                                                 manager_interface_init)
-                         G_ADD_PRIVATE (GdmManager));
+                         G_ADD_PRIVATE (ScdmManager));
 
 #ifdef WITH_PLYMOUTH
 static gboolean
@@ -256,7 +256,7 @@ get_uid_for_session_id (const char  *session_id,
 
 static gboolean
 lookup_by_session_id (const char *id,
-                      GdmDisplay *display,
+                      ScdmDisplay *display,
                       gpointer    user_data)
 {
         const char *looking_for = user_data;
@@ -267,7 +267,7 @@ lookup_by_session_id (const char *id,
 }
 
 static gboolean
-is_login_session (GdmManager  *self,
+is_login_session (ScdmManager  *self,
                   const char  *session_id,
                   GError     **error)
 {
@@ -296,7 +296,7 @@ is_login_session (GdmManager  *self,
 }
 
 static gboolean
-session_unlock (GdmManager *manager,
+session_unlock (ScdmManager *manager,
                 const char *ssid)
 {
         GError *error = NULL;
@@ -316,7 +316,7 @@ session_unlock (GdmManager *manager,
                                              NULL,
                                              &error);
         if (reply == NULL) {
-                g_debug ("GdmManager: logind 'UnlockSession' %s raised:\n %s\n\n",
+                g_debug ("ScdmManager: logind 'UnlockSession' %s raised:\n %s\n\n",
                          g_dbus_error_get_remote_error (error), error->message);
                 g_error_free (error);
                 return FALSE;
@@ -327,28 +327,28 @@ session_unlock (GdmManager *manager,
         return TRUE;
 }
 
-static GdmSession *
-find_session_for_user_on_seat (GdmManager *manager,
+static ScdmSession *
+find_session_for_user_on_seat (ScdmManager *manager,
                                const char *username,
                                const char *seat_id,
-                               GdmSession *dont_count_session)
+                               ScdmSession *dont_count_session)
 {
         GList *node;
 
         for (node = manager->priv->user_sessions; node != NULL; node = node->next) {
-                GdmSession *candidate_session = node->data;
+                ScdmSession *candidate_session = node->data;
                 const char *candidate_username, *candidate_seat_id, *candidate_session_id;
 
                 candidate_session_id = gdm_session_get_session_id (candidate_session);
 
                 if (candidate_session == dont_count_session) {
-                        g_debug ("GdmSession: Ignoring session %s as requested",
+                        g_debug ("ScdmSession: Ignoring session %s as requested",
                                  candidate_session_id);
                         continue;
                 }
 
                 if (!gdm_session_is_running (candidate_session)) {
-                        g_debug ("GdmSession: Ignoring session %s as it isn't running",
+                        g_debug ("ScdmSession: Ignoring session %s as it isn't running",
                                  candidate_session_id);
                         continue;
                 }
@@ -356,26 +356,26 @@ find_session_for_user_on_seat (GdmManager *manager,
                 candidate_username = gdm_session_get_username (candidate_session);
                 candidate_seat_id = gdm_session_get_display_seat_id (candidate_session);
 
-                g_debug ("GdmManager: Considering session %s on seat %s belonging to user %s",
+                g_debug ("ScdmManager: Considering session %s on seat %s belonging to user %s",
                          candidate_session_id,
                          candidate_seat_id,
                          candidate_username);
 
                 if (g_strcmp0 (candidate_username, username) == 0 &&
                     g_strcmp0 (candidate_seat_id, seat_id) == 0) {
-                        g_debug ("GdmManager: yes, found session %s", candidate_session_id);
+                        g_debug ("ScdmManager: yes, found session %s", candidate_session_id);
                         return candidate_session;
                 }
 
-                g_debug ("GdmManager: no, will not use session %s", candidate_session_id);
+                g_debug ("ScdmManager: no, will not use session %s", candidate_session_id);
         }
 
-        g_debug ("GdmManager: no matching sessions found");
+        g_debug ("ScdmManager: no matching sessions found");
         return NULL;
 }
 
 static gboolean
-is_remote_session (GdmManager  *self,
+is_remote_session (ScdmManager  *self,
                    const char  *session_id,
                    GError     **error)
 {
@@ -390,7 +390,7 @@ is_remote_session (GdmManager  *self,
         ret = sd_session_get_seat (session_id, &seat);
 
         if (ret < 0 && ret != -ENXIO) {
-                g_debug ("GdmManager: Error while retrieving seat for session %s: %s",
+                g_debug ("ScdmManager: Error while retrieving seat for session %s: %s",
                          session_id, strerror (-ret));
         }
 
@@ -460,10 +460,10 @@ get_tty_for_session_id (const char  *session_id,
 }
 
 static void
-get_display_and_details_for_bus_sender (GdmManager       *self,
+get_display_and_details_for_bus_sender (ScdmManager       *self,
                                         GDBusConnection  *connection,
                                         const char       *sender,
-                                        GdmDisplay      **out_display,
+                                        ScdmDisplay      **out_display,
                                         char            **out_seat_id,
                                         char            **out_session_id,
                                         char            **out_tty,
@@ -472,7 +472,7 @@ get_display_and_details_for_bus_sender (GdmManager       *self,
                                         gboolean         *out_is_login_screen,
                                         gboolean         *out_is_remote)
 {
-        GdmDisplay *display = NULL;
+        ScdmDisplay *display = NULL;
         char       *session_id = NULL;
         GError     *error = NULL;
         int         ret;
@@ -482,7 +482,7 @@ get_display_and_details_for_bus_sender (GdmManager       *self,
         ret = gdm_dbus_get_pid_for_name (sender, &pid, &error);
 
         if (!ret) {
-                g_debug ("GdmManager: Error while retrieving pid for sender: %s",
+                g_debug ("ScdmManager: Error while retrieving pid for sender: %s",
                          error->message);
                 g_error_free (error);
                 goto out;
@@ -495,7 +495,7 @@ get_display_and_details_for_bus_sender (GdmManager       *self,
         ret = gdm_dbus_get_uid_for_name (sender, &caller_uid, &error);
 
         if (!ret) {
-                g_debug ("GdmManager: Error while retrieving uid for sender: %s",
+                g_debug ("ScdmManager: Error while retrieving uid for sender: %s",
                          error->message);
                 g_error_free (error);
                 goto out;
@@ -504,7 +504,7 @@ get_display_and_details_for_bus_sender (GdmManager       *self,
         ret = gdm_find_display_session (pid, caller_uid, &session_id, &error);
 
         if (!ret) {
-                g_debug ("GdmManager: Unable to find display session for uid %d: %s",
+                g_debug ("ScdmManager: Unable to find display session for uid %d: %s",
                          (int) caller_uid,
                          error->message);
                 g_error_free (error);
@@ -519,7 +519,7 @@ get_display_and_details_for_bus_sender (GdmManager       *self,
                 *out_is_login_screen = is_login_session (self, session_id, &error);
 
                 if (error != NULL) {
-                        g_debug ("GdmManager: Error while checking if sender is login screen: %s",
+                        g_debug ("ScdmManager: Error while checking if sender is login screen: %s",
                                  error->message);
                         g_error_free (error);
                         goto out;
@@ -527,7 +527,7 @@ get_display_and_details_for_bus_sender (GdmManager       *self,
         }
 
         if (!get_uid_for_session_id (session_id, &session_uid, &error)) {
-                g_debug ("GdmManager: Error while retrieving uid for session: %s",
+                g_debug ("ScdmManager: Error while retrieving uid for session: %s",
                          error->message);
                 g_error_free (error);
                 goto out;
@@ -538,7 +538,7 @@ get_display_and_details_for_bus_sender (GdmManager       *self,
         }
 
         if (caller_uid != session_uid) {
-                g_debug ("GdmManager: uid for sender and uid for session don't match");
+                g_debug ("ScdmManager: uid for sender and uid for session don't match");
                 goto out;
         }
 
@@ -546,7 +546,7 @@ get_display_and_details_for_bus_sender (GdmManager       *self,
                 *out_seat_id = get_seat_id_for_session_id (session_id, &error);
 
                 if (error != NULL) {
-                        g_debug ("GdmManager: Error while retrieving seat id for session: %s",
+                        g_debug ("ScdmManager: Error while retrieving seat id for session: %s",
                                  error->message);
                         g_clear_error (&error);
                 }
@@ -556,7 +556,7 @@ get_display_and_details_for_bus_sender (GdmManager       *self,
                 *out_is_remote = is_remote_session (self, session_id, &error);
 
                 if (error != NULL) {
-                        g_debug ("GdmManager: Error while retrieving remoteness for session: %s",
+                        g_debug ("ScdmManager: Error while retrieving remoteness for session: %s",
                                  error->message);
                         g_clear_error (&error);
                 }
@@ -566,7 +566,7 @@ get_display_and_details_for_bus_sender (GdmManager       *self,
                 *out_tty = get_tty_for_session_id (session_id, &error);
 
                 if (error != NULL) {
-                        g_debug ("GdmManager: Error while retrieving tty for session: %s",
+                        g_debug ("ScdmManager: Error while retrieving tty for session: %s",
                                  error->message);
                         g_clear_error (&error);
                 }
@@ -585,8 +585,8 @@ out:
 }
 
 static gboolean
-switch_to_compatible_user_session (GdmManager *manager,
-                                   GdmSession *session,
+switch_to_compatible_user_session (ScdmManager *manager,
+                                   ScdmSession *session,
                                    gboolean    fail_if_already_switched)
 {
         gboolean    res;
@@ -594,7 +594,7 @@ switch_to_compatible_user_session (GdmManager *manager,
         const char *username;
         const char *seat_id;
         const char *ssid_to_activate;
-        GdmSession *existing_session;
+        ScdmSession *existing_session;
 
         ret = FALSE;
 
@@ -612,7 +612,7 @@ switch_to_compatible_user_session (GdmManager *manager,
                 if (seat_id != NULL) {
                         res = gdm_activate_session_by_id (manager->priv->connection, seat_id, ssid_to_activate);
                         if (! res) {
-                                g_debug ("GdmManager: unable to activate session: %s", ssid_to_activate);
+                                g_debug ("ScdmManager: unable to activate session: %s", ssid_to_activate);
                                 goto out;
                         }
                 }
@@ -620,7 +620,7 @@ switch_to_compatible_user_session (GdmManager *manager,
                 res = session_unlock (manager, ssid_to_activate);
                 if (!res) {
                         /* this isn't fatal */
-                        g_debug ("GdmManager: unable to unlock session: %s", ssid_to_activate);
+                        g_debug ("ScdmManager: unable to unlock session: %s", ssid_to_activate);
                 }
         } else {
                 goto out;
@@ -632,14 +632,14 @@ switch_to_compatible_user_session (GdmManager *manager,
         return ret;
 }
 
-static GdmDisplay *
-get_display_for_user_session (GdmSession *session)
+static ScdmDisplay *
+get_display_for_user_session (ScdmSession *session)
 {
         return g_object_get_data (G_OBJECT (session), "scdm-display");
 }
 
-static GdmSession *
-get_user_session_for_display (GdmDisplay *display)
+static ScdmSession *
+get_user_session_for_display (ScdmDisplay *display)
 {
         if (display == NULL) {
                 return NULL;
@@ -649,8 +649,8 @@ get_user_session_for_display (GdmDisplay *display)
 }
 
 static gboolean
-add_session_record (GdmManager    *manager,
-                    GdmSession    *session,
+add_session_record (ScdmManager    *manager,
+                    ScdmSession    *session,
                     GPid           pid,
                     SessionRecord  record)
 {
@@ -712,16 +712,16 @@ out:
         return recorded;
 }
 
-static GdmSession *
-find_user_session_for_display (GdmManager *self,
-                               GdmDisplay *display)
+static ScdmSession *
+find_user_session_for_display (ScdmManager *self,
+                               ScdmDisplay *display)
 {
 
         GList *node = self->priv->user_sessions;
 
         while (node != NULL) {
-                GdmSession *session = node->data;
-                GdmDisplay *candidate_display;
+                ScdmSession *session = node->data;
+                ScdmDisplay *candidate_display;
                 GList *next_node = node->next;
 
                 candidate_display = get_display_for_user_session (session);
@@ -736,22 +736,22 @@ find_user_session_for_display (GdmManager *self,
 }
 
 static gboolean
-gdm_manager_handle_register_display (GdmDBusManager        *manager,
+gdm_manager_handle_register_display (ScdmDBusManager        *manager,
                                      GDBusMethodInvocation *invocation,
                                      GVariant              *details)
 {
-        GdmManager      *self = GDM_MANAGER (manager);
+        ScdmManager      *self = GDM_MANAGER (manager);
         const char      *sender;
         GDBusConnection *connection;
-        GdmDisplay      *display = NULL;
-        GdmSession      *session;
+        ScdmDisplay      *display = NULL;
+        ScdmSession      *session;
         GVariantIter     iter;
         char            *key = NULL;
         char            *value = NULL;
         char            *x11_display_name = NULL;
         char            *tty = NULL;
 
-        g_debug ("GdmManager: trying to register new display");
+        g_debug ("ScdmManager: trying to register new display");
 
         sender = g_dbus_method_invocation_get_sender (invocation);
         connection = g_dbus_method_invocation_get_connection (invocation);
@@ -807,12 +807,12 @@ gdm_manager_handle_register_display (GdmDBusManager        *manager,
 }
 
 static gboolean
-gdm_manager_handle_register_session (GdmDBusManager        *manager,
+gdm_manager_handle_register_session (ScdmDBusManager        *manager,
                                      GDBusMethodInvocation *invocation,
                                      GVariant              *details)
 {
-        GdmManager      *self = GDM_MANAGER (manager);
-        GdmDisplay      *display = NULL;
+        ScdmManager      *self = GDM_MANAGER (manager);
+        ScdmDisplay      *display = NULL;
         const char      *sender;
         GDBusConnection *connection;
 
@@ -822,12 +822,12 @@ gdm_manager_handle_register_session (GdmDBusManager        *manager,
         get_display_and_details_for_bus_sender (self, connection, sender, &display,
                                                 NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
-        g_debug ("GdmManager: trying to register new session on display %p", display);
+        g_debug ("ScdmManager: trying to register new session on display %p", display);
 
         if (display != NULL)
                 g_object_set (G_OBJECT (display), "session-registered", TRUE, NULL);
         else
-                g_debug ("GdmManager: No display, not registering");
+                g_debug ("ScdmManager: No display, not registering");
 
         gdm_dbus_manager_complete_register_session (GDM_DBUS_MANAGER (manager),
                                                     invocation);
@@ -836,20 +836,20 @@ gdm_manager_handle_register_session (GdmDBusManager        *manager,
 }
 
 static gboolean
-gdm_manager_handle_open_session (GdmDBusManager        *manager,
+gdm_manager_handle_open_session (ScdmDBusManager        *manager,
                                  GDBusMethodInvocation *invocation)
 {
-        GdmManager       *self = GDM_MANAGER (manager);
+        ScdmManager       *self = GDM_MANAGER (manager);
         const char       *sender;
         GDBusConnection  *connection;
-        GdmDisplay       *display = NULL;
-        GdmSession       *session = NULL;
+        ScdmDisplay       *display = NULL;
+        ScdmSession       *session = NULL;
         const char       *address;
         GPid              pid = 0;
         uid_t             uid = (uid_t) -1;
         uid_t             allowed_user;
 
-        g_debug ("GdmManager: trying to open new session");
+        g_debug ("ScdmManager: trying to open new session");
 
         sender = g_dbus_method_invocation_get_sender (invocation);
         connection = g_dbus_method_invocation_get_connection (invocation);
@@ -866,7 +866,7 @@ gdm_manager_handle_open_session (GdmDBusManager        *manager,
 
 #ifdef HAVE_LIBXDMCP
         if (GDM_IS_XDMCP_CHOOSER_DISPLAY (display)) {
-                GdmLaunchEnvironment *launch_environment;
+                ScdmLaunchEnvironment *launch_environment;
 
                 g_object_get (display, "launch-environment", &launch_environment, NULL);
 
@@ -885,12 +885,12 @@ gdm_manager_handle_open_session (GdmDBusManager        *manager,
 #endif
         if (session == NULL) {
                 session = get_user_session_for_display (display);
-                g_debug ("GdmSession: Considering session %s for username %s",
+                g_debug ("ScdmSession: Considering session %s for username %s",
                          gdm_session_get_session_id (session),
                          gdm_session_get_username (session));
 
                 if (gdm_session_is_running (session)) {
-                        g_debug ("GdmSession: the session is running, and therefore can't be used");
+                        g_debug ("ScdmSession: the session is running, and therefore can't be used");
                         g_dbus_method_invocation_return_error_literal (invocation,
                                                                        G_DBUS_ERROR,
                                                                        G_DBUS_ERROR_ACCESS_DENIED,
@@ -926,8 +926,8 @@ gdm_manager_handle_open_session (GdmDBusManager        *manager,
 }
 
 static void
-close_transient_session (GdmManager *self,
-                         GdmSession *session)
+close_transient_session (ScdmManager *self,
+                         ScdmSession *session)
 {
         GPid pid;
         pid = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (session), "caller-pid"));
@@ -937,33 +937,33 @@ close_transient_session (GdmManager *self,
 }
 
 static void
-on_reauthentication_client_connected (GdmSession              *session,
+on_reauthentication_client_connected (ScdmSession              *session,
                                       GCredentials            *credentials,
                                       GPid                     pid_of_client,
-                                      GdmManager              *self)
+                                      ScdmManager              *self)
 {
-        g_debug ("GdmManager: client connected to reauthentication server");
+        g_debug ("ScdmManager: client connected to reauthentication server");
 }
 
 static void
-on_reauthentication_client_disconnected (GdmSession              *session,
+on_reauthentication_client_disconnected (ScdmSession              *session,
                                          GCredentials            *credentials,
                                          GPid                     pid_of_client,
-                                         GdmManager              *self)
+                                         ScdmManager              *self)
 {
-        g_debug ("GdmManger: client disconnected from reauthentication server");
+        g_debug ("ScdmManger: client disconnected from reauthentication server");
         close_transient_session (self, session);
 }
 
 static void
-on_reauthentication_client_rejected (GdmSession              *session,
+on_reauthentication_client_rejected (ScdmSession              *session,
                                      GCredentials            *credentials,
                                      GPid                     pid_of_client,
-                                     GdmManager              *self)
+                                     ScdmManager              *self)
 {
         GPid pid;
 
-        g_debug ("GdmManger: client with pid %ld rejected from reauthentication server", (long) pid_of_client);
+        g_debug ("ScdmManger: client with pid %ld rejected from reauthentication server", (long) pid_of_client);
 
         if (gdm_session_client_is_connected (session)) {
                 /* we already have a client connected, ignore this rejected one */
@@ -996,53 +996,53 @@ on_reauthentication_client_rejected (GdmSession              *session,
 }
 
 static void
-on_reauthentication_cancelled (GdmSession *session,
-                               GdmManager *self)
+on_reauthentication_cancelled (ScdmSession *session,
+                               ScdmManager *self)
 {
-        g_debug ("GdmManager: client cancelled reauthentication request");
+        g_debug ("ScdmManager: client cancelled reauthentication request");
         close_transient_session (self, session);
 }
 
 static void
-on_reauthentication_conversation_started (GdmSession *session,
+on_reauthentication_conversation_started (ScdmSession *session,
                                           const char *service_name,
-                                          GdmManager *self)
+                                          ScdmManager *self)
 {
-        g_debug ("GdmManager: reauthentication service '%s' started",
+        g_debug ("ScdmManager: reauthentication service '%s' started",
                  service_name);
 }
 
 static void
-on_reauthentication_conversation_stopped (GdmSession *session,
+on_reauthentication_conversation_stopped (ScdmSession *session,
                                           const char *service_name,
-                                          GdmManager *self)
+                                          ScdmManager *self)
 {
-        g_debug ("GdmManager: reauthentication service '%s' stopped",
+        g_debug ("ScdmManager: reauthentication service '%s' stopped",
                  service_name);
 }
 
 static void
-on_reauthentication_verification_complete (GdmSession *session,
+on_reauthentication_verification_complete (ScdmSession *session,
                                            const char *service_name,
-                                           GdmManager *self)
+                                           ScdmManager *self)
 {
         const char *session_id;
         session_id = g_object_get_data (G_OBJECT (session), "caller-session-id");
-        g_debug ("GdmManager: reauthenticated user in unmanaged session '%s' with service '%s'",
+        g_debug ("ScdmManager: reauthenticated user in unmanaged session '%s' with service '%s'",
                  session_id, service_name);
         session_unlock (self, session_id);
         close_transient_session (self, session);
 }
 
 static char *
-open_temporary_reauthentication_channel (GdmManager            *self,
+open_temporary_reauthentication_channel (ScdmManager            *self,
                                          char                  *seat_id,
                                          char                  *session_id,
                                          GPid                   pid,
                                          uid_t                  uid,
                                          gboolean               is_remote)
 {
-        GdmSession *session;
+        ScdmSession *session;
         char **environment;
         const char *display, *auth_file;
         const char *address;
@@ -1066,7 +1066,7 @@ open_temporary_reauthentication_channel (GdmManager            *self,
                                    environment);
         g_strfreev (environment);
 
-        g_debug ("GdmSession: Created session for temporary reauthentication channel for user %d (seat %s)",
+        g_debug ("ScdmSession: Created session for temporary reauthentication channel for user %d (seat %s)",
                  (int) uid,
                  seat_id);
 
@@ -1117,14 +1117,14 @@ open_temporary_reauthentication_channel (GdmManager            *self,
 }
 
 static gboolean
-gdm_manager_handle_open_reauthentication_channel (GdmDBusManager        *manager,
+gdm_manager_handle_open_reauthentication_channel (ScdmDBusManager        *manager,
                                                   GDBusMethodInvocation *invocation,
                                                   const char            *username)
 {
-        GdmManager       *self = GDM_MANAGER (manager);
+        ScdmManager       *self = GDM_MANAGER (manager);
         const char       *sender;
-        GdmDisplay       *display = NULL;
-        GdmSession       *session;
+        ScdmDisplay       *display = NULL;
+        ScdmSession       *session;
         GDBusConnection  *connection;
         char             *seat_id = NULL;
         char             *session_id = NULL;
@@ -1133,7 +1133,7 @@ gdm_manager_handle_open_reauthentication_channel (GdmDBusManager        *manager
         gboolean          is_login_screen = FALSE;
         gboolean          is_remote = FALSE;
 
-        g_debug ("GdmManager: trying to open reauthentication channel for user %s", username);
+        g_debug ("ScdmManager: trying to open reauthentication channel for user %s", username);
 
         sender = g_dbus_method_invocation_get_sender (invocation);
         connection = g_dbus_method_invocation_get_connection (invocation);
@@ -1149,13 +1149,13 @@ gdm_manager_handle_open_reauthentication_channel (GdmDBusManager        *manager
         }
 
         if (is_login_screen) {
-                g_debug ("GdmManager: looking for login screen session for user %s on seat %s", username, seat_id);
+                g_debug ("ScdmManager: looking for login screen session for user %s on seat %s", username, seat_id);
                 session = find_session_for_user_on_seat (self,
                                                          username,
                                                          seat_id,
                                                          NULL);
         } else {
-                g_debug ("GdmManager: looking for user session on display");
+                g_debug ("ScdmManager: looking for user session on display");
                 session = get_user_session_for_display (display);
         }
 
@@ -1188,7 +1188,7 @@ gdm_manager_handle_open_reauthentication_channel (GdmDBusManager        *manager
 }
 
 static void
-manager_interface_init (GdmDBusManagerIface *interface)
+manager_interface_init (ScdmDBusManagerIface *interface)
 {
         interface->handle_register_display = gdm_manager_handle_register_display;
         interface->handle_register_session = gdm_manager_handle_register_session;
@@ -1197,7 +1197,7 @@ manager_interface_init (GdmDBusManagerIface *interface)
 }
 
 static gboolean
-display_is_on_seat0 (GdmDisplay *display)
+display_is_on_seat0 (ScdmDisplay *display)
 {
         gboolean is_on_seat0 = TRUE;
         char *seat_id = NULL;
@@ -1214,7 +1214,7 @@ display_is_on_seat0 (GdmDisplay *display)
 }
 
 static gboolean
-get_timed_login_details (GdmManager *manager,
+get_timed_login_details (ScdmManager *manager,
                          char      **usernamep,
                          int        *delayp)
 {
@@ -1249,12 +1249,12 @@ get_timed_login_details (GdmManager *manager,
 
  out:
         if (enabled) {
-                g_debug ("GdmDisplay: Got timed login details for display: %d %s %d",
+                g_debug ("ScdmDisplay: Got timed login details for display: %d %s %d",
                          enabled,
                          username,
                          delay);
         } else {
-                g_debug ("GdmDisplay: Got timed login details for display: 0");
+                g_debug ("ScdmDisplay: Got timed login details for display: 0");
         }
 
         if (usernamep != NULL) {
@@ -1270,7 +1270,7 @@ get_timed_login_details (GdmManager *manager,
 }
 
 static gboolean
-get_automatic_login_details (GdmManager *manager,
+get_automatic_login_details (ScdmManager *manager,
                              char      **usernamep)
 {
         gboolean res;
@@ -1295,11 +1295,11 @@ get_automatic_login_details (GdmManager *manager,
 
  out:
         if (enabled) {
-                g_debug ("GdmDisplay: Got automatic login details for display: %d %s",
+                g_debug ("ScdmDisplay: Got automatic login details for display: %d %s",
                          enabled,
                          username);
         } else {
-                g_debug ("GdmDisplay: Got automatic login details for display: 0");
+                g_debug ("ScdmDisplay: Got automatic login details for display: 0");
         }
 
         if (usernamep != NULL) {
@@ -1312,8 +1312,8 @@ get_automatic_login_details (GdmManager *manager,
 }
 
 static const char *
-get_username_for_greeter_display (GdmManager *manager,
-                                  GdmDisplay *display)
+get_username_for_greeter_display (ScdmManager *manager,
+                                  ScdmDisplay *display)
 {
         gboolean doing_initial_setup = FALSE;
 
@@ -1329,10 +1329,10 @@ get_username_for_greeter_display (GdmManager *manager,
 }
 
 static void
-set_up_automatic_login_session (GdmManager *manager,
-                                GdmDisplay *display)
+set_up_automatic_login_session (ScdmManager *manager,
+                                ScdmDisplay *display)
 {
-        GdmSession *session;
+        ScdmSession *session;
         char       *display_session_type = NULL;
 
         /* 0 is root user; since the daemon talks to the session object
@@ -1348,13 +1348,13 @@ set_up_automatic_login_session (GdmManager *manager,
                       "display-is-initial", FALSE,
                       NULL);
 
-        g_debug ("GdmManager: Starting automatic login conversation");
+        g_debug ("ScdmManager: Starting automatic login conversation");
         gdm_session_start_conversation (session, "scdm-autologin");
 }
 
 static void
-set_up_chooser_session (GdmManager *manager,
-                        GdmDisplay *display)
+set_up_chooser_session (ScdmManager *manager,
+                        ScdmDisplay *display)
 {
         const char *allowed_user;
         struct passwd *passwd_entry;
@@ -1362,7 +1362,7 @@ set_up_chooser_session (GdmManager *manager,
         allowed_user = get_username_for_greeter_display (manager, display);
 
         if (!gdm_get_pwent_for_name (allowed_user, &passwd_entry)) {
-                g_warning ("GdmManager: couldn't look up username %s",
+                g_warning ("ScdmManager: couldn't look up username %s",
                            allowed_user);
                 gdm_display_unmanage (display);
                 gdm_display_finish (display);
@@ -1373,8 +1373,8 @@ set_up_chooser_session (GdmManager *manager,
 }
 
 static void
-set_up_greeter_session (GdmManager *manager,
-                        GdmDisplay *display)
+set_up_greeter_session (ScdmManager *manager,
+                        ScdmDisplay *display)
 {
         const char *allowed_user;
         struct passwd *passwd_entry;
@@ -1382,7 +1382,7 @@ set_up_greeter_session (GdmManager *manager,
         allowed_user = get_username_for_greeter_display (manager, display);
 
         if (!gdm_get_pwent_for_name (allowed_user, &passwd_entry)) {
-                g_warning ("GdmManager: couldn't look up username %s",
+                g_warning ("ScdmManager: couldn't look up username %s",
                            allowed_user);
                 gdm_display_unmanage (display);
                 gdm_display_finish (display);
@@ -1394,8 +1394,8 @@ set_up_greeter_session (GdmManager *manager,
 }
 
 static void
-set_up_automatic_login_session_if_user_exists (GdmManager *manager,
-                                               GdmDisplay *display,
+set_up_automatic_login_session_if_user_exists (ScdmManager *manager,
+                                               ScdmDisplay *display,
                                                ActUser    *user)
 {
         if (act_user_is_nonexistent (user))
@@ -1405,8 +1405,8 @@ set_up_automatic_login_session_if_user_exists (GdmManager *manager,
 }
 
 typedef struct {
-        GdmManager *manager;
-        GdmDisplay *display;
+        ScdmManager *manager;
+        ScdmDisplay *display;
         char *username;
 } UsernameLookupOperation;
 
@@ -1434,8 +1434,8 @@ on_user_is_loaded_changed (ActUser                 *user,
 }
 
 static void
-set_up_session (GdmManager *manager,
-                GdmDisplay *display)
+set_up_session (ScdmManager *manager,
+                ScdmDisplay *display)
 {
         ActUserManager *user_manager;
         ActUser *user;
@@ -1493,9 +1493,9 @@ set_up_session (GdmManager *manager,
 }
 
 static void
-on_display_status_changed (GdmDisplay *display,
+on_display_status_changed (ScdmDisplay *display,
                            GParamSpec *arg1,
-                           GdmManager *manager)
+                           ScdmManager *manager)
 {
         int         status;
         int         display_number = -1;
@@ -1565,9 +1565,9 @@ on_display_status_changed (GdmDisplay *display,
 }
 
 static void
-on_display_removed (GdmDisplayStore *display_store,
-                    GdmDisplay      *display,
-                    GdmManager      *manager)
+on_display_removed (ScdmDisplayStore *display_store,
+                    ScdmDisplay      *display,
+                    ScdmManager      *manager)
 {
         char    *id;
 
@@ -1592,10 +1592,10 @@ destroy_start_user_session_operation (StartUserSessionOperation *operation)
 }
 
 static void
-start_user_session (GdmManager *manager,
+start_user_session (ScdmManager *manager,
                     StartUserSessionOperation *operation)
 {
-        GdmDisplay *display;
+        ScdmDisplay *display;
 
         display = get_display_for_user_session (operation->session);
 
@@ -1631,12 +1631,12 @@ start_user_session (GdmManager *manager,
 }
 
 static void
-create_display_for_user_session (GdmManager *self,
-                                 GdmSession *session,
+create_display_for_user_session (ScdmManager *self,
+                                 ScdmSession *session,
                                  const char *session_id)
 {
-        GdmDisplay *display;
-        /* at the moment we only create GdmLocalDisplay objects on seat0 */
+        ScdmDisplay *display;
+        /* at the moment we only create ScdmLocalDisplay objects on seat0 */
         const char *seat_id = "seat0";
 
         display = gdm_local_display_new ();
@@ -1776,14 +1776,14 @@ out:
 static gboolean
 on_start_user_session (StartUserSessionOperation *operation)
 {
-        GdmManager *self = operation->manager;
+        ScdmManager *self = operation->manager;
         gboolean migrated;
         gboolean fail_if_already_switched = TRUE;
         gboolean doing_initial_setup = FALSE;
-        GdmDisplay *display;
+        ScdmDisplay *display;
         const char *session_id;
 
-        g_debug ("GdmManager: start or jump to session");
+        g_debug ("ScdmManager: start or jump to session");
 
         /* If there's already a session running, jump to it.
          * If the only session running is the one we just opened,
@@ -1791,7 +1791,7 @@ on_start_user_session (StartUserSessionOperation *operation)
          */
         migrated = switch_to_compatible_user_session (operation->manager, operation->session, fail_if_already_switched);
 
-        g_debug ("GdmManager: migrated: %d", migrated);
+        g_debug ("ScdmManager: migrated: %d", migrated);
         if (migrated) {
                 /* We don't stop the manager here because
                    when Xorg exits it switches to the VT it was
@@ -1830,20 +1830,20 @@ on_start_user_session (StartUserSessionOperation *operation)
                 if (doing_initial_setup) {
                         g_autoptr(GError) error = NULL;
 
-                        g_debug ("GdmManager: closing down initial setup display in background");
+                        g_debug ("ScdmManager: closing down initial setup display in background");
                         g_object_set (G_OBJECT (display), "status", GDM_DISPLAY_WAITING_TO_FINISH, NULL);
 
                         if (!g_file_set_contents (ALREADY_RAN_INITIAL_SETUP_ON_THIS_BOOT,
                                                   "1",
                                                   1,
                                                   &error)) {
-                                g_warning ("GdmDisplay: Could not write initial-setup-done marker to %s: %s",
+                                g_warning ("ScdmDisplay: Could not write initial-setup-done marker to %s: %s",
                                            ALREADY_RAN_INITIAL_SETUP_ON_THIS_BOOT,
                                            error->message);
                                 g_clear_error (&error);
                         }
                 } else {
-                        g_debug ("GdmManager: session has its display server, reusing our server for another login screen");
+                        g_debug ("ScdmManager: session has its display server, reusing our server for another login screen");
                 }
 
                 /* The user session is going to follow the session worker
@@ -1879,8 +1879,8 @@ on_start_user_session (StartUserSessionOperation *operation)
 }
 
 static void
-queue_start_user_session (GdmManager *manager,
-                          GdmSession *session,
+queue_start_user_session (ScdmManager *manager,
+                          ScdmSession *session,
                           const char *service_name)
 {
         StartUserSessionOperation *operation;
@@ -1895,8 +1895,8 @@ queue_start_user_session (GdmManager *manager,
 }
 
 static void
-start_user_session_if_ready (GdmManager *manager,
-                             GdmSession *session,
+start_user_session_if_ready (ScdmManager *manager,
+                             ScdmSession *session,
                              const char *service_name)
 {
         gboolean start_when_ready;
@@ -1911,19 +1911,19 @@ start_user_session_if_ready (GdmManager *manager,
 }
 
 static void
-on_session_authentication_failed (GdmSession *session,
+on_session_authentication_failed (ScdmSession *session,
                                   const char *service_name,
                                   GPid        conversation_pid,
-                                  GdmManager *manager)
+                                  ScdmManager *manager)
 {
         add_session_record (manager, session, conversation_pid, SESSION_RECORD_FAILED);
 }
 
 static void
-on_user_session_opened (GdmSession       *session,
+on_user_session_opened (ScdmSession       *session,
                         const char       *service_name,
                         const char       *session_id,
-                        GdmManager       *manager)
+                        ScdmManager       *manager)
 {
         manager->priv->user_sessions = g_list_append (manager->priv->user_sessions,
                                                       g_object_ref (session));
@@ -1938,12 +1938,12 @@ on_user_session_opened (GdmSession       *session,
 }
 
 static void
-on_user_session_started (GdmSession      *session,
+on_user_session_started (ScdmSession      *session,
                          const char      *service_name,
                          GPid             pid,
-                         GdmManager      *manager)
+                         ScdmManager      *manager)
 {
-        g_debug ("GdmManager: session started %d", pid);
+        g_debug ("ScdmManager: session started %d", pid);
         add_session_record (manager, session, pid, SESSION_RECORD_LOGIN);
 
 #ifdef WITH_PLYMOUTH
@@ -1957,11 +1957,11 @@ on_user_session_started (GdmSession      *session,
 }
 
 static void
-remove_user_session (GdmManager *manager,
-                     GdmSession *session)
+remove_user_session (ScdmManager *manager,
+                     ScdmSession *session)
 {
         GList *node;
-        GdmDisplay *display;
+        ScdmDisplay *display;
 
         display = get_display_for_user_session (session);
 
@@ -1980,23 +1980,23 @@ remove_user_session (GdmManager *manager,
 }
 
 static void
-on_session_start_failed (GdmSession *session,
+on_session_start_failed (ScdmSession *session,
                          const char *service_name,
                          const char *message,
-                         GdmManager *manager)
+                         ScdmManager *manager)
 {
-        g_debug ("GdmManager: session failed to start: %s", message);
+        g_debug ("ScdmManager: session failed to start: %s", message);
         remove_user_session (manager, session);
 }
 
 static void
-on_user_session_exited (GdmSession *session,
+on_user_session_exited (ScdmSession *session,
                         int         code,
-                        GdmManager *manager)
+                        ScdmManager *manager)
 {
         GPid pid;
 
-        g_debug ("GdmManager: session exited with status %d", code);
+        g_debug ("ScdmManager: session exited with status %d", code);
         pid = gdm_session_get_pid (session);
 
         if (pid > 0) {
@@ -2007,26 +2007,26 @@ on_user_session_exited (GdmSession *session,
 }
 
 static void
-on_user_session_died (GdmSession *session,
+on_user_session_died (ScdmSession *session,
                       int         signal_number,
-                      GdmManager *manager)
+                      ScdmManager *manager)
 {
-        g_debug ("GdmManager: session died with signal %s", strsignal (signal_number));
+        g_debug ("ScdmManager: session died with signal %s", strsignal (signal_number));
         remove_user_session (manager, session);
 }
 
 static char *
-get_display_device (GdmManager *manager,
-                    GdmDisplay *display)
+get_display_device (ScdmManager *manager,
+                    ScdmDisplay *display)
 {
         /* systemd finds the display device out on its own based on the display */
         return NULL;
 }
 
 static void
-on_session_reauthenticated (GdmSession *session,
+on_session_reauthenticated (ScdmSession *session,
                             const char *service_name,
-                            GdmManager *manager)
+                            ScdmManager *manager)
 {
         gboolean fail_if_already_switched = FALSE;
 
@@ -2036,7 +2036,7 @@ on_session_reauthenticated (GdmSession *session,
 
                 seat_id = gdm_session_get_display_seat_id (session);
                 if (gdm_get_login_window_session_id (seat_id, &session_id)) {
-                        GdmDisplay *display = gdm_display_store_find (manager->priv->display_store,
+                        ScdmDisplay *display = gdm_display_store_find (manager->priv->display_store,
                                                                       lookup_by_session_id,
                                                                       (gpointer) session_id);
 
@@ -2058,17 +2058,17 @@ on_session_reauthenticated (GdmSession *session,
 }
 
 static void
-on_session_client_ready_for_session_to_start (GdmSession      *session,
+on_session_client_ready_for_session_to_start (ScdmSession      *session,
                                               const char      *service_name,
                                               gboolean         client_is_ready,
-                                              GdmManager      *manager)
+                                              ScdmManager      *manager)
 {
         gboolean waiting_to_start_user_session;
 
         if (client_is_ready) {
-                g_debug ("GdmManager: Will start session when ready");
+                g_debug ("ScdmManager: Will start session when ready");
         } else {
-                g_debug ("GdmManager: Will start session when ready and told");
+                g_debug ("ScdmManager: Will start session when ready and told");
         }
 
         waiting_to_start_user_session = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (session),
@@ -2084,23 +2084,23 @@ on_session_client_ready_for_session_to_start (GdmSession      *session,
 }
 
 static void
-on_session_client_connected (GdmSession      *session,
+on_session_client_connected (ScdmSession      *session,
                              GCredentials    *credentials,
                              GPid             pid_of_client,
-                             GdmManager      *manager)
+                             ScdmManager      *manager)
 {
-        GdmDisplay *display;
+        ScdmDisplay *display;
         char    *username;
         int      delay;
         gboolean enabled;
         gboolean allow_timed_login = FALSE;
 
-        g_debug ("GdmManager: client with pid %d connected", (int) pid_of_client);
+        g_debug ("ScdmManager: client with pid %d connected", (int) pid_of_client);
 
         if (gdm_session_is_running (session)) {
                 const char *session_username;
                 session_username = gdm_session_get_username (session);
-                g_debug ("GdmManager: ignoring connection, since session already running (for user %s)",
+                g_debug ("ScdmManager: ignoring connection, since session already running (for user %s)",
                          session_username);
                 return;
         }
@@ -2136,7 +2136,7 @@ on_session_client_connected (GdmSession      *session,
 
         gdm_session_set_timed_login_details (session, username, delay);
 
-        g_debug ("GdmManager: Starting automatic login conversation (for timed login)");
+        g_debug ("ScdmManager: Starting automatic login conversation (for timed login)");
         gdm_session_start_conversation (session, "scdm-autologin");
 
         g_free (username);
@@ -2144,18 +2144,18 @@ on_session_client_connected (GdmSession      *session,
 }
 
 static void
-on_session_client_disconnected (GdmSession   *session,
+on_session_client_disconnected (ScdmSession   *session,
                                 GCredentials *credentials,
                                 GPid          pid_of_client,
-                                GdmManager   *manager)
+                                ScdmManager   *manager)
 {
-        g_debug ("GdmManager: client with pid %d disconnected", (int) pid_of_client);
+        g_debug ("ScdmManager: client with pid %d disconnected", (int) pid_of_client);
 }
 
 typedef struct
 {
-        GdmManager *manager;
-        GdmSession *session;
+        ScdmManager *manager;
+        ScdmSession *session;
         guint idle_id;
 } ResetSessionOperation;
 
@@ -2180,8 +2180,8 @@ on_reset_session (ResetSessionOperation *operation)
 }
 
 static void
-queue_session_reset (GdmManager *manager,
-                     GdmSession *session)
+queue_session_reset (ScdmManager *manager,
+                     ScdmSession *session)
 {
         ResetSessionOperation *operation;
 
@@ -2200,33 +2200,33 @@ queue_session_reset (GdmManager *manager,
 }
 
 static void
-on_session_cancelled (GdmSession  *session,
-                      GdmManager  *manager)
+on_session_cancelled (ScdmSession  *session,
+                      ScdmManager  *manager)
 {
-        g_debug ("GdmManager: Session was cancelled");
+        g_debug ("ScdmManager: Session was cancelled");
         queue_session_reset (manager, session);
 }
 
 static void
-on_session_conversation_started (GdmSession *session,
+on_session_conversation_started (ScdmSession *session,
                                  const char *service_name,
-                                 GdmManager *manager)
+                                 ScdmManager *manager)
 {
-        GdmDisplay *display;
+        ScdmDisplay *display;
         gboolean    enabled;
         char       *username;
 
-        g_debug ("GdmManager: session conversation started for service %s on session", service_name);
+        g_debug ("ScdmManager: session conversation started for service %s on session", service_name);
 
         if (g_strcmp0 (service_name, "scdm-autologin") != 0) {
-                g_debug ("GdmManager: ignoring session conversation since its not automatic login conversation");
+                g_debug ("ScdmManager: ignoring session conversation since its not automatic login conversation");
                 return;
         }
 
         display = get_display_for_user_session (session);
 
         if (display == NULL) {
-                g_debug ("GdmManager: conversation has no associated display");
+                g_debug ("ScdmManager: conversation has no associated display");
                 return;
         }
 
@@ -2240,7 +2240,7 @@ on_session_conversation_started (GdmSession *session,
                 return;
         }
 
-        g_debug ("GdmManager: begin auto login for user '%s'", username);
+        g_debug ("ScdmManager: begin auto login for user '%s'", username);
 
         /* service_name will be "scdm-autologin"
          */
@@ -2250,23 +2250,23 @@ on_session_conversation_started (GdmSession *session,
 }
 
 static void
-on_session_conversation_stopped (GdmSession *session,
+on_session_conversation_stopped (ScdmSession *session,
                                  const char *service_name,
-                                 GdmManager *manager)
+                                 ScdmManager *manager)
 {
-        g_debug ("GdmManager: session conversation '%s' stopped", service_name);
+        g_debug ("ScdmManager: session conversation '%s' stopped", service_name);
 }
 
 static void
-on_session_reauthentication_started (GdmSession *session,
+on_session_reauthentication_started (ScdmSession *session,
                                      int         pid_of_caller,
                                      const char *address,
-                                     GdmManager *manager)
+                                     ScdmManager *manager)
 {
         GDBusMethodInvocation *invocation;
         gpointer               source_tag;
 
-        g_debug ("GdmManager: reauthentication started");
+        g_debug ("ScdmManager: reauthentication started");
 
         source_tag = GINT_TO_POINTER (pid_of_caller);
 
@@ -2283,18 +2283,18 @@ on_session_reauthentication_started (GdmSession *session,
 }
 
 static void
-clean_user_session (GdmSession *session)
+clean_user_session (ScdmSession *session)
 {
         g_object_set_data (G_OBJECT (session), "scdm-display", NULL);
         g_object_unref (session);
 }
 
-static GdmSession *
-create_user_session_for_display (GdmManager *manager,
-                                 GdmDisplay *display,
+static ScdmSession *
+create_user_session_for_display (ScdmManager *manager,
+                                 ScdmDisplay *display,
                                  uid_t       allowed_user)
 {
-        GdmSession *session;
+        ScdmSession *session;
         gboolean    display_is_local = FALSE;
         char       *display_name = NULL;
         char       *display_device = NULL;
@@ -2330,7 +2330,7 @@ create_user_session_for_display (GdmManager *manager,
                                    display_is_local,
                                    NULL);
 
-        g_debug ("GdmSession: Created user session for user %d on display %s (seat %s)",
+        g_debug ("ScdmSession: Created user session for user %d on display %s (seat %s)",
                  (int) allowed_user,
                  display_id,
                  display_seat_id);
@@ -2412,11 +2412,11 @@ create_user_session_for_display (GdmManager *manager,
 }
 
 static void
-on_display_added (GdmDisplayStore *display_store,
+on_display_added (ScdmDisplayStore *display_store,
                   const char      *id,
-                  GdmManager      *manager)
+                  ScdmManager      *manager)
 {
-        GdmDisplay *display;
+        ScdmDisplay *display;
 
         display = gdm_display_store_lookup (display_store, id);
 
@@ -2444,7 +2444,7 @@ gdm_manager_error_quark (void)
 
 static void
 listify_display_ids (const char *id,
-                     GdmDisplay *display,
+                     ScdmDisplay *display,
                      GPtrArray **array)
 {
         g_ptr_array_add (*array, g_strdup (id));
@@ -2458,7 +2458,7 @@ listify_display_ids (const char *id,
   org.freedesktop.ObjectManager.GetAll
 */
 gboolean
-gdm_manager_get_displays (GdmManager *manager,
+gdm_manager_get_displays (ScdmManager *manager,
                           GPtrArray **displays,
                           GError    **error)
 {
@@ -2470,16 +2470,16 @@ gdm_manager_get_displays (GdmManager *manager,
 
         *displays = g_ptr_array_new ();
         gdm_display_store_foreach (manager->priv->display_store,
-                                   (GdmDisplayStoreFunc)listify_display_ids,
+                                   (ScdmDisplayStoreFunc)listify_display_ids,
                                    displays);
 
         return TRUE;
 }
 
 void
-gdm_manager_stop (GdmManager *manager)
+gdm_manager_stop (ScdmManager *manager)
 {
-        g_debug ("GdmManager: GDM stopping");
+        g_debug ("ScdmManager: GDM stopping");
 
         if (manager->priv->local_factory != NULL) {
                 gdm_display_factory_stop (GDM_DISPLAY_FACTORY (manager->priv->local_factory));
@@ -2495,9 +2495,9 @@ gdm_manager_stop (GdmManager *manager)
 }
 
 void
-gdm_manager_start (GdmManager *manager)
+gdm_manager_start (ScdmManager *manager)
 {
-        g_debug ("GdmManager: GDM starting to manage displays");
+        g_debug ("ScdmManager: GDM starting to manage displays");
 
 #ifdef WITH_PLYMOUTH
         manager->priv->plymouth_is_running = plymouth_is_running ();
@@ -2521,7 +2521,7 @@ gdm_manager_start (GdmManager *manager)
                 }
 #endif
                 if (manager->priv->xdmcp_factory != NULL) {
-                        g_debug ("GdmManager: Accepting XDMCP connections...");
+                        g_debug ("ScdmManager: Accepting XDMCP connections...");
                         gdm_display_factory_start (GDM_DISPLAY_FACTORY (manager->priv->xdmcp_factory));
                 }
         }
@@ -2531,7 +2531,7 @@ gdm_manager_start (GdmManager *manager)
 }
 
 static gboolean
-register_manager (GdmManager *manager)
+register_manager (ScdmManager *manager)
 {
         GError *error = NULL;
         GDBusObjectManagerServer *object_server;
@@ -2565,7 +2565,7 @@ register_manager (GdmManager *manager)
 }
 
 void
-gdm_manager_set_xdmcp_enabled (GdmManager *manager,
+gdm_manager_set_xdmcp_enabled (ScdmManager *manager,
                                gboolean    enabled)
 {
         g_return_if_fail (GDM_IS_MANAGER (manager));
@@ -2592,7 +2592,7 @@ gdm_manager_set_xdmcp_enabled (GdmManager *manager,
 }
 
 void
-gdm_manager_set_show_local_greeter (GdmManager *manager,
+gdm_manager_set_show_local_greeter (ScdmManager *manager,
                                     gboolean    show_local_greeter)
 {
         g_return_if_fail (GDM_IS_MANAGER (manager));
@@ -2606,7 +2606,7 @@ gdm_manager_set_property (GObject      *object,
                           const GValue  *value,
                           GParamSpec    *pspec)
 {
-        GdmManager *self;
+        ScdmManager *self;
 
         self = GDM_MANAGER (object);
 
@@ -2629,7 +2629,7 @@ gdm_manager_get_property (GObject    *object,
                           GValue     *value,
                           GParamSpec *pspec)
 {
-        GdmManager *self;
+        ScdmManager *self;
 
         self = GDM_MANAGER (object);
 
@@ -2651,7 +2651,7 @@ gdm_manager_constructor (GType                  type,
                          guint                  n_construct_properties,
                          GObjectConstructParam *construct_properties)
 {
-        GdmManager      *manager;
+        ScdmManager      *manager;
 
         manager = GDM_MANAGER (G_OBJECT_CLASS (gdm_manager_parent_class)->constructor (type,
                                                                                        n_construct_properties,
@@ -2671,7 +2671,7 @@ gdm_manager_constructor (GType                  type,
 }
 
 static void
-gdm_manager_class_init (GdmManagerClass *klass)
+gdm_manager_class_init (ScdmManagerClass *klass)
 {
         GObjectClass   *object_class = G_OBJECT_CLASS (klass);
 
@@ -2684,7 +2684,7 @@ gdm_manager_class_init (GdmManagerClass *klass)
                 g_signal_new ("display-added",
                               G_TYPE_FROM_CLASS (object_class),
                               G_SIGNAL_RUN_LAST,
-                              G_STRUCT_OFFSET (GdmManagerClass, display_added),
+                              G_STRUCT_OFFSET (ScdmManagerClass, display_added),
                               NULL,
                               NULL,
                               g_cclosure_marshal_VOID__STRING,
@@ -2694,7 +2694,7 @@ gdm_manager_class_init (GdmManagerClass *klass)
                 g_signal_new ("display-removed",
                               G_TYPE_FROM_CLASS (object_class),
                               G_SIGNAL_RUN_LAST,
-                              G_STRUCT_OFFSET (GdmManagerClass, display_removed),
+                              G_STRUCT_OFFSET (ScdmManagerClass, display_removed),
                               NULL,
                               NULL,
                               g_cclosure_marshal_VOID__OBJECT,
@@ -2711,7 +2711,7 @@ gdm_manager_class_init (GdmManagerClass *klass)
 }
 
 static void
-gdm_manager_init (GdmManager *manager)
+gdm_manager_init (ScdmManager *manager)
 {
 
         manager->priv = GDM_MANAGER_GET_PRIVATE (manager);
@@ -2743,8 +2743,8 @@ gdm_manager_init (GdmManager *manager)
 
 static void
 unexport_display (const char *id,
-                  GdmDisplay *display,
-                  GdmManager *manager)
+                  ScdmDisplay *display,
+                  ScdmManager *manager)
 {
         if (!g_dbus_connection_is_closed (manager->priv->connection))
                 g_dbus_object_manager_server_unexport (manager->priv->object_manager, id);
@@ -2752,8 +2752,8 @@ unexport_display (const char *id,
 
 static void
 finish_display (const char *id,
-                GdmDisplay *display,
-                GdmManager *manager)
+                ScdmDisplay *display,
+                ScdmManager *manager)
 {
         gdm_display_stop_greeter_session (display);
         if (gdm_display_get_status (display) == GDM_DISPLAY_MANAGED)
@@ -2764,7 +2764,7 @@ finish_display (const char *id,
 static void
 gdm_manager_dispose (GObject *object)
 {
-        GdmManager *manager;
+        ScdmManager *manager;
 
         g_return_if_fail (object != NULL);
         g_return_if_fail (GDM_IS_MANAGER (object));
@@ -2799,13 +2799,13 @@ gdm_manager_dispose (GObject *object)
 
         if (!g_dbus_connection_is_closed (manager->priv->connection)) {
                 gdm_display_store_foreach (manager->priv->display_store,
-                                           (GdmDisplayStoreFunc)unexport_display,
+                                           (ScdmDisplayStoreFunc)unexport_display,
                                            manager);
                 g_dbus_interface_skeleton_unexport (G_DBUS_INTERFACE_SKELETON (manager));
         }
 
         gdm_display_store_foreach (manager->priv->display_store,
-                                   (GdmDisplayStoreFunc) finish_display,
+                                   (ScdmDisplayStoreFunc) finish_display,
                                    manager);
 
         gdm_display_store_clear (manager->priv->display_store);
@@ -2819,7 +2819,7 @@ gdm_manager_dispose (GObject *object)
         G_OBJECT_CLASS (gdm_manager_parent_class)->dispose (object);
 }
 
-GdmManager *
+ScdmManager *
 gdm_manager_new (void)
 {
         if (manager_object != NULL) {

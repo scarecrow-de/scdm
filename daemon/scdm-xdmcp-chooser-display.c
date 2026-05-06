@@ -49,26 +49,26 @@ enum {
 
 static guint signals [LAST_SIGNAL] = { 0, };
 
-static void     gdm_xdmcp_chooser_display_class_init    (GdmXdmcpChooserDisplayClass *klass);
-static void     gdm_xdmcp_chooser_display_init          (GdmXdmcpChooserDisplay      *xdmcp_chooser_display);
-static gboolean gdm_xdmcp_chooser_display_prepare       (GdmDisplay *display);
+static void     gdm_xdmcp_chooser_display_class_init    (ScdmXdmcpChooserDisplayClass *klass);
+static void     gdm_xdmcp_chooser_display_init          (ScdmXdmcpChooserDisplay      *xdmcp_chooser_display);
+static gboolean gdm_xdmcp_chooser_display_prepare       (ScdmDisplay *display);
 
-G_DEFINE_TYPE (GdmXdmcpChooserDisplay, gdm_xdmcp_chooser_display, GDM_TYPE_XDMCP_DISPLAY)
+G_DEFINE_TYPE (ScdmXdmcpChooserDisplay, gdm_xdmcp_chooser_display, GDM_TYPE_XDMCP_DISPLAY)
 
 static void
-on_hostname_selected (GdmLaunchEnvironment     *launch_environment,
+on_hostname_selected (ScdmLaunchEnvironment     *launch_environment,
                       const char               *hostname,
-                      GdmXdmcpChooserDisplay   *display)
+                      ScdmXdmcpChooserDisplay   *display)
 {
-        g_debug ("GdmXdmcpChooserDisplay: hostname selected: %s", hostname);
+        g_debug ("ScdmXdmcpChooserDisplay: hostname selected: %s", hostname);
         g_signal_emit (display, signals [HOSTNAME_SELECTED], 0, hostname);
 }
 
 static void
-gdm_xdmcp_chooser_display_class_init (GdmXdmcpChooserDisplayClass *klass)
+gdm_xdmcp_chooser_display_class_init (ScdmXdmcpChooserDisplayClass *klass)
 {
         GObjectClass    *object_class = G_OBJECT_CLASS (klass);
-        GdmDisplayClass *display_class = GDM_DISPLAY_CLASS (klass);
+        ScdmDisplayClass *display_class = GDM_DISPLAY_CLASS (klass);
 
         display_class->prepare = gdm_xdmcp_chooser_display_prepare;
 
@@ -76,7 +76,7 @@ gdm_xdmcp_chooser_display_class_init (GdmXdmcpChooserDisplayClass *klass)
                 g_signal_new ("hostname-selected",
                               G_OBJECT_CLASS_TYPE (object_class),
                               G_SIGNAL_RUN_FIRST,
-                              G_STRUCT_OFFSET (GdmXdmcpChooserDisplayClass, hostname_selected),
+                              G_STRUCT_OFFSET (ScdmXdmcpChooserDisplayClass, hostname_selected),
                               NULL,
                               NULL,
                               g_cclosure_marshal_VOID__STRING,
@@ -86,15 +86,15 @@ gdm_xdmcp_chooser_display_class_init (GdmXdmcpChooserDisplayClass *klass)
 }
 
 static void
-gdm_xdmcp_chooser_display_init (GdmXdmcpChooserDisplay *xdmcp_chooser_display)
+gdm_xdmcp_chooser_display_init (ScdmXdmcpChooserDisplay *xdmcp_chooser_display)
 {
 }
 
 static gboolean
-gdm_xdmcp_chooser_display_prepare (GdmDisplay *display)
+gdm_xdmcp_chooser_display_prepare (ScdmDisplay *display)
 {
-        GdmXdmcpDisplay *self = GDM_XDMCP_DISPLAY (display);
-        GdmLaunchEnvironment *launch_environment;
+        ScdmXdmcpDisplay *self = GDM_XDMCP_DISPLAY (display);
+        ScdmLaunchEnvironment *launch_environment;
         char          *display_name;
         char          *seat_id;
         char          *hostname;
@@ -122,10 +122,10 @@ gdm_xdmcp_chooser_display_prepare (GdmDisplay *display)
         return GDM_DISPLAY_CLASS (gdm_xdmcp_chooser_display_parent_class)->prepare (display);
 }
 
-GdmDisplay *
+ScdmDisplay *
 gdm_xdmcp_chooser_display_new (const char              *hostname,
                                int                      number,
-                               GdmAddress              *address,
+                               ScdmAddress              *address,
                                gint32                   session_number)
 {
         GObject *object;

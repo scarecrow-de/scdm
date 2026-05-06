@@ -38,9 +38,9 @@
 #include <glib-object.h>
 #include <glib/gi18n.h>
 
-struct GdmSessionSolarisAuditor
+struct ScdmSessionSolarisAuditor
 {
-        GdmSessionAuditor parent;
+        ScdmSessionAuditor parent;
 
         adt_session_data_t *audit_session_handle;
 
@@ -58,12 +58,12 @@ struct GdmSessionSolarisAuditor
 
 static void gdm_session_solaris_auditor_finalize (GObject *object);
 
-G_DEFINE_TYPE (GdmSessionSolarisAuditor, gdm_session_solaris_auditor, GDM_TYPE_SESSION_AUDITOR)
+G_DEFINE_TYPE (ScdmSessionSolarisAuditor, gdm_session_solaris_auditor, GDM_TYPE_SESSION_AUDITOR)
 
 static void
-gdm_session_solaris_auditor_report_password_changed (GdmSessionAuditor *auditor)
+gdm_session_solaris_auditor_report_password_changed (ScdmSessionAuditor *auditor)
 {
-        GdmSessionSolarisAuditor *solaris_auditor;
+        ScdmSessionSolarisAuditor *solaris_auditor;
 
         solaris_auditor = GDM_SESSION_SOLARIS_AUDITOR (auditor);
         solaris_auditor->password_change_initiated = TRUE;
@@ -71,9 +71,9 @@ gdm_session_solaris_auditor_report_password_changed (GdmSessionAuditor *auditor)
 }
 
 static void
-gdm_session_solaris_auditor_report_password_change_failure (GdmSessionAuditor *auditor)
+gdm_session_solaris_auditor_report_password_change_failure (ScdmSessionAuditor *auditor)
 {
-        GdmSessionSolarisAuditor *solaris_auditor;
+        ScdmSessionSolarisAuditor *solaris_auditor;
 
         solaris_auditor = GDM_SESSION_SOLARIS_AUDITOR (auditor);
         solaris_auditor->password_change_initiated = TRUE;
@@ -81,18 +81,18 @@ gdm_session_solaris_auditor_report_password_change_failure (GdmSessionAuditor *a
 }
 
 static void
-gdm_session_solaris_auditor_report_user_accredited (GdmSessionAuditor *auditor)
+gdm_session_solaris_auditor_report_user_accredited (ScdmSessionAuditor *auditor)
 {
-        GdmSessionSolarisAuditor *solaris_auditor;
+        ScdmSessionSolarisAuditor *solaris_auditor;
 
         solaris_auditor = GDM_SESSION_SOLARIS_AUDITOR (auditor);
         solaris_auditor->user_accredited = TRUE;
 }
 
 static void
-gdm_session_solaris_auditor_report_login (GdmSessionAuditor *auditor)
+gdm_session_solaris_auditor_report_login (ScdmSessionAuditor *auditor)
 {
-       GdmSessionSolarisAuditor *solaris_auditor;
+       ScdmSessionSolarisAuditor *solaris_auditor;
        adt_session_data_t       *adt_ah;  /* Audit session handle */
        adt_event_data_t         *event;   /* Event to generate */
 
@@ -148,11 +148,11 @@ cleanup:
 }
 
 static void
-gdm_session_solaris_auditor_report_login_failure (GdmSessionAuditor *auditor,
+gdm_session_solaris_auditor_report_login_failure (ScdmSessionAuditor *auditor,
                                                   int                pam_error_code,
                                                   const char        *pam_error_string)
 {
-        GdmSessionSolarisAuditor *solaris_auditor;
+        ScdmSessionSolarisAuditor *solaris_auditor;
         char                     *hostname;
         char                     *display_device;
         adt_session_data_t       *ah;     /* Audit session handle     */
@@ -266,9 +266,9 @@ cleanup:
 }
 
 static void
-gdm_session_solaris_auditor_report_logout (GdmSessionAuditor *auditor)
+gdm_session_solaris_auditor_report_logout (ScdmSessionAuditor *auditor)
 {
-        GdmSessionSolarisAuditor *solaris_auditor;
+        ScdmSessionSolarisAuditor *solaris_auditor;
         adt_session_data_t       *adt_ah;  /* Audit session handle */
         adt_event_data_t         *event;   /* Event to generate    */
 
@@ -300,10 +300,10 @@ gdm_session_solaris_auditor_report_logout (GdmSessionAuditor *auditor)
 }
 
 static void
-gdm_session_solaris_auditor_class_init (GdmSessionSolarisAuditorClass *klass)
+gdm_session_solaris_auditor_class_init (ScdmSessionSolarisAuditorClass *klass)
 {
         GObjectClass           *object_class;
-        GdmSessionAuditorClass *auditor_class;
+        ScdmSessionAuditorClass *auditor_class;
 
         object_class = G_OBJECT_CLASS (klass);
         auditor_class = GDM_SESSION_AUDITOR_CLASS (klass);
@@ -319,7 +319,7 @@ gdm_session_solaris_auditor_class_init (GdmSessionSolarisAuditorClass *klass)
 }
 
 static void
-on_username_set (GdmSessionSolarisAuditor *auditor)
+on_username_set (ScdmSessionSolarisAuditor *auditor)
 {
         char          *username;
         struct passwd *passwd_entry;
@@ -343,7 +343,7 @@ on_username_set (GdmSessionSolarisAuditor *auditor)
 }
 
 static void
-gdm_session_solaris_auditor_init (GdmSessionSolarisAuditor *auditor)
+gdm_session_solaris_auditor_init (ScdmSessionSolarisAuditor *auditor)
 {
         g_signal_connect (G_OBJECT (auditor), "notify::username",
                           G_CALLBACK (on_username_set), NULL);
@@ -355,7 +355,7 @@ gdm_session_solaris_auditor_init (GdmSessionSolarisAuditor *auditor)
 static void
 gdm_session_solaris_auditor_finalize (GObject *object)
 {
-        GdmSessionSolarisAuditor *solaris_auditor;
+        ScdmSessionSolarisAuditor *solaris_auditor;
         GObjectClass *parent_class;
 
         solaris_auditor = GDM_SESSION_SOLARIS_AUDITOR (object);
@@ -370,7 +370,7 @@ gdm_session_solaris_auditor_finalize (GObject *object)
         }
 }
 
-GdmSessionAuditor *
+ScdmSessionAuditor *
 gdm_session_solaris_auditor_new (const char *hostname,
                                  const char *display_device)
 {

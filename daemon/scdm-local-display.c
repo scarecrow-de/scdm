@@ -44,23 +44,23 @@
 #include "scdm-settings-direct.h"
 #include "scdm-settings-keys.h"
 
-struct _GdmLocalDisplay
+struct _ScdmLocalDisplay
 {
-        GdmDisplay           parent;
-        GdmDBusLocalDisplay *skeleton;
+        ScdmDisplay           parent;
+        ScdmDBusLocalDisplay *skeleton;
 };
 
-static void     gdm_local_display_class_init   (GdmLocalDisplayClass *klass);
-static void     gdm_local_display_init         (GdmLocalDisplay      *local_display);
+static void     gdm_local_display_class_init   (ScdmLocalDisplayClass *klass);
+static void     gdm_local_display_init         (ScdmLocalDisplay      *local_display);
 
-G_DEFINE_TYPE (GdmLocalDisplay, gdm_local_display, GDM_TYPE_DISPLAY)
+G_DEFINE_TYPE (ScdmLocalDisplay, gdm_local_display, GDM_TYPE_DISPLAY)
 
 static GObject *
 gdm_local_display_constructor (GType                  type,
                                guint                  n_construct_properties,
                                GObjectConstructParam *construct_properties)
 {
-        GdmLocalDisplay      *display;
+        ScdmLocalDisplay      *display;
 
         display = GDM_LOCAL_DISPLAY (G_OBJECT_CLASS (gdm_local_display_parent_class)->constructor (type,
                                                                                                    n_construct_properties,
@@ -77,7 +77,7 @@ gdm_local_display_constructor (GType                  type,
 static void
 gdm_local_display_finalize (GObject *object)
 {
-        GdmLocalDisplay *display = GDM_LOCAL_DISPLAY (object);
+        ScdmLocalDisplay *display = GDM_LOCAL_DISPLAY (object);
 
         g_clear_object (&display->skeleton);
 
@@ -85,10 +85,10 @@ gdm_local_display_finalize (GObject *object)
 }
 
 static gboolean
-gdm_local_display_prepare (GdmDisplay *display)
+gdm_local_display_prepare (ScdmDisplay *display)
 {
-        GdmLocalDisplay *self = GDM_LOCAL_DISPLAY (display);
-        GdmLaunchEnvironment *launch_environment;
+        ScdmLocalDisplay *self = GDM_LOCAL_DISPLAY (display);
+        ScdmLaunchEnvironment *launch_environment;
         char          *seat_id;
         char          *session_class;
         char          *session_type;
@@ -139,10 +139,10 @@ out:
 }
 
 static void
-gdm_local_display_class_init (GdmLocalDisplayClass *klass)
+gdm_local_display_class_init (ScdmLocalDisplayClass *klass)
 {
         GObjectClass *object_class = G_OBJECT_CLASS (klass);
-        GdmDisplayClass *display_class = GDM_DISPLAY_CLASS (klass);
+        ScdmDisplayClass *display_class = GDM_DISPLAY_CLASS (klass);
 
         object_class->constructor = gdm_local_display_constructor;
         object_class->finalize = gdm_local_display_finalize;
@@ -151,11 +151,11 @@ gdm_local_display_class_init (GdmLocalDisplayClass *klass)
 }
 
 static void
-gdm_local_display_init (GdmLocalDisplay *local_display)
+gdm_local_display_init (ScdmLocalDisplay *local_display)
 {
 }
 
-GdmDisplay *
+ScdmDisplay *
 gdm_local_display_new (void)
 {
         GObject *object;

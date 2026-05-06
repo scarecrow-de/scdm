@@ -1011,8 +1011,8 @@ msgstr "Zajemanje zaslonske slike"
 #~ msgid "%s: Got KEEPALIVE from banned host %s"
 #~ msgstr "%s: prejet je ukaz KEEPALIVE od zavrnjenega gostitelja %s"
 
-#~ msgid "GdmXdmcpDisplayFactory: Could not read XDMCP header!"
-#~ msgstr "GdmXdmcpDisplayFactory: ni mogoče prebrati glave XDMCP!"
+#~ msgid "ScdmXdmcpDisplayFactory: Could not read XDMCP header!"
+#~ msgstr "ScdmXdmcpDisplayFactory: ni mogoče prebrati glave XDMCP!"
 
 #~ msgid "Could not get server hostname: %s!"
 #~ msgstr "Ni mogoče pridobiti imena strežnika: %s!"

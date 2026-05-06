@@ -33,15 +33,15 @@
 #include "scdm-display-store.h"
 #include "scdm-display.h"
 
-struct GdmDisplayStorePrivate
+struct ScdmDisplayStorePrivate
 {
         GHashTable *displays;
 };
 
 typedef struct
 {
-        GdmDisplayStore *store;
-        GdmDisplay      *display;
+        ScdmDisplayStore *store;
+        ScdmDisplay      *display;
 } StoredDisplay;
 
 enum {
@@ -52,15 +52,15 @@ enum {
 
 static guint signals [LAST_SIGNAL] = { 0, };
 
-static void     gdm_display_store_class_init    (GdmDisplayStoreClass *klass);
-static void     gdm_display_store_init          (GdmDisplayStore      *display_store);
+static void     gdm_display_store_class_init    (ScdmDisplayStoreClass *klass);
+static void     gdm_display_store_init          (ScdmDisplayStore      *display_store);
 static void     gdm_display_store_finalize      (GObject              *object);
 
-G_DEFINE_TYPE_WITH_PRIVATE (GdmDisplayStore, gdm_display_store, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (ScdmDisplayStore, gdm_display_store, G_TYPE_OBJECT)
 
 static StoredDisplay *
-stored_display_new (GdmDisplayStore *store,
-                    GdmDisplay      *display)
+stored_display_new (ScdmDisplayStore *store,
+                    ScdmDisplay      *display)
 {
         StoredDisplay *stored_display;
 
@@ -79,7 +79,7 @@ stored_display_free (StoredDisplay *stored_display)
                        0,
                        stored_display->display);
 
-        g_debug ("GdmDisplayStore: Unreffing display: %p",
+        g_debug ("ScdmDisplayStore: Unreffing display: %p",
                  stored_display->display);
         g_object_unref (stored_display->display);
 
@@ -98,17 +98,17 @@ gdm_display_store_error_quark (void)
 }
 
 void
-gdm_display_store_clear (GdmDisplayStore    *store)
+gdm_display_store_clear (ScdmDisplayStore    *store)
 {
         g_return_if_fail (store != NULL);
-        g_debug ("GdmDisplayStore: Clearing display store");
+        g_debug ("ScdmDisplayStore: Clearing display store");
         g_hash_table_remove_all (store->priv->displays);
 }
 
 static gboolean
 remove_display (char              *id,
-                GdmDisplay        *display,
-                GdmDisplay        *display_to_remove)
+                ScdmDisplay        *display,
+                ScdmDisplay        *display_to_remove)
 {
         if (display == display_to_remove) {
                 return TRUE;
@@ -117,20 +117,20 @@ remove_display (char              *id,
 }
 
 gboolean
-gdm_display_store_remove (GdmDisplayStore    *store,
-                          GdmDisplay         *display)
+gdm_display_store_remove (ScdmDisplayStore    *store,
+                          ScdmDisplay         *display)
 {
         g_return_val_if_fail (store != NULL, FALSE);
 
         gdm_display_store_foreach_remove (store,
-                                          (GdmDisplayStoreFunc)remove_display,
+                                          (ScdmDisplayStoreFunc)remove_display,
                                           display);
         return FALSE;
 }
 
 typedef struct
 {
-        GdmDisplayStoreFunc predicate;
+        ScdmDisplayStoreFunc predicate;
         gpointer            user_data;
 } FindClosure;
 
@@ -155,8 +155,8 @@ foreach_func (const char    *id,
 }
 
 void
-gdm_display_store_foreach (GdmDisplayStore    *store,
-                           GdmDisplayStoreFunc func,
+gdm_display_store_foreach (ScdmDisplayStore    *store,
+                           ScdmDisplayStoreFunc func,
                            gpointer            user_data)
 {
         FindClosure  closure;
@@ -172,8 +172,8 @@ gdm_display_store_foreach (GdmDisplayStore    *store,
                               &closure);
 }
 
-GdmDisplay *
-gdm_display_store_lookup (GdmDisplayStore *store,
+ScdmDisplay *
+gdm_display_store_lookup (ScdmDisplayStore *store,
                           const char      *id)
 {
         StoredDisplay *stored_display;
@@ -190,9 +190,9 @@ gdm_display_store_lookup (GdmDisplayStore *store,
         return stored_display->display;
 }
 
-GdmDisplay *
-gdm_display_store_find (GdmDisplayStore    *store,
-                        GdmDisplayStoreFunc predicate,
+ScdmDisplay *
+gdm_display_store_find (ScdmDisplayStore    *store,
+                        ScdmDisplayStoreFunc predicate,
                         gpointer            user_data)
 {
         StoredDisplay *stored_display;
@@ -216,8 +216,8 @@ gdm_display_store_find (GdmDisplayStore    *store,
 }
 
 guint
-gdm_display_store_foreach_remove (GdmDisplayStore    *store,
-                                  GdmDisplayStoreFunc func,
+gdm_display_store_foreach_remove (ScdmDisplayStore    *store,
+                                  ScdmDisplayStoreFunc func,
                                   gpointer            user_data)
 {
         FindClosure closure;
@@ -236,8 +236,8 @@ gdm_display_store_foreach_remove (GdmDisplayStore    *store,
 }
 
 void
-gdm_display_store_add (GdmDisplayStore *store,
-                       GdmDisplay      *display)
+gdm_display_store_add (ScdmDisplayStore *store,
+                       ScdmDisplay      *display)
 {
         char          *id;
         StoredDisplay *stored_display;
@@ -247,7 +247,7 @@ gdm_display_store_add (GdmDisplayStore *store,
 
         gdm_display_get_id (display, &id, NULL);
 
-        g_debug ("GdmDisplayStore: Adding display %s to store", id);
+        g_debug ("ScdmDisplayStore: Adding display %s to store", id);
 
         stored_display = stored_display_new (store, display);
         g_hash_table_insert (store->priv->displays,
@@ -261,7 +261,7 @@ gdm_display_store_add (GdmDisplayStore *store,
 }
 
 static void
-gdm_display_store_class_init (GdmDisplayStoreClass *klass)
+gdm_display_store_class_init (ScdmDisplayStoreClass *klass)
 {
         GObjectClass   *object_class = G_OBJECT_CLASS (klass);
 
@@ -271,7 +271,7 @@ gdm_display_store_class_init (GdmDisplayStoreClass *klass)
                 g_signal_new ("display-added",
                               G_TYPE_FROM_CLASS (object_class),
                               G_SIGNAL_RUN_LAST,
-                              G_STRUCT_OFFSET (GdmDisplayStoreClass, display_added),
+                              G_STRUCT_OFFSET (ScdmDisplayStoreClass, display_added),
                               NULL,
                               NULL,
                               g_cclosure_marshal_VOID__STRING,
@@ -281,7 +281,7 @@ gdm_display_store_class_init (GdmDisplayStoreClass *klass)
                 g_signal_new ("display-removed",
                               G_TYPE_FROM_CLASS (object_class),
                               G_SIGNAL_RUN_LAST,
-                              G_STRUCT_OFFSET (GdmDisplayStoreClass, display_removed),
+                              G_STRUCT_OFFSET (ScdmDisplayStoreClass, display_removed),
                               NULL,
                               NULL,
                               g_cclosure_marshal_VOID__OBJECT,
@@ -290,7 +290,7 @@ gdm_display_store_class_init (GdmDisplayStoreClass *klass)
 }
 
 static void
-gdm_display_store_init (GdmDisplayStore *store)
+gdm_display_store_init (ScdmDisplayStore *store)
 {
 
         store->priv = gdm_display_store_get_instance_private (store);
@@ -305,7 +305,7 @@ gdm_display_store_init (GdmDisplayStore *store)
 static void
 gdm_display_store_finalize (GObject *object)
 {
-        GdmDisplayStore *store;
+        ScdmDisplayStore *store;
 
         g_return_if_fail (object != NULL);
         g_return_if_fail (GDM_IS_DISPLAY_STORE (object));
@@ -319,7 +319,7 @@ gdm_display_store_finalize (GObject *object)
         G_OBJECT_CLASS (gdm_display_store_parent_class)->finalize (object);
 }
 
-GdmDisplayStore *
+ScdmDisplayStore *
 gdm_display_store_new (void)
 {
         GObject *object;

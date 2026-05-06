@@ -37,19 +37,19 @@
 
 #include "scdm-sessions.h"
 
-typedef struct _GdmSessionFile {
+typedef struct _ScdmSessionFile {
         char    *id;
         char    *path;
         char    *translated_name;
         char    *translated_comment;
-} GdmSessionFile;
+} ScdmSessionFile;
 
 static GHashTable *gdm_available_sessions_map;
 
 static gboolean gdm_sessions_map_is_initialized = FALSE;
 
 static void
-gdm_session_file_free (GdmSessionFile *session)
+gdm_session_file_free (ScdmSessionFile *session)
 {
   g_free (session->id);
   g_free (session->path);
@@ -118,7 +118,7 @@ load_session_file (const char              *id,
         GKeyFile          *key_file;
         GError            *error;
         gboolean           res;
-        GdmSessionFile    *session;
+        ScdmSessionFile    *session;
 
         key_file = g_key_file_new ();
 
@@ -146,7 +146,7 @@ load_session_file (const char              *id,
                 goto out;
         }
 
-        session = g_new0 (GdmSessionFile, 1);
+        session = g_new0 (ScdmSessionFile, 1);
 
         session->id = g_strdup (id);
         session->path = g_strdup (path);
@@ -168,14 +168,14 @@ remove_duplicate_sessions (gpointer key,
 {
         gboolean already_known;
         GHashTable *names_seen_before;
-        GdmSessionFile *session;
+        ScdmSessionFile *session;
 
         names_seen_before = (GHashTable *) user_data;
-        session = (GdmSessionFile *) value;
+        session = (ScdmSessionFile *) value;
         already_known = !g_hash_table_add (names_seen_before, session->translated_name);
 
         if (already_known)
-                g_debug ("GdmSession: Removing %s (%s) as we already have a session by this name",
+                g_debug ("ScdmSession: Removing %s (%s) as we already have a session by this name",
                          session->id,
                          session->path);
 
@@ -330,9 +330,9 @@ gdm_get_session_ids (void)
         array = g_ptr_array_new ();
         g_hash_table_iter_init (&iter, gdm_available_sessions_map);
         while (g_hash_table_iter_next (&iter, &key, &value)) {
-                GdmSessionFile *session;
+                ScdmSessionFile *session;
 
-                session = (GdmSessionFile *) value;
+                session = (ScdmSessionFile *) value;
 
                 g_ptr_array_add (array, g_strdup (session->id));
         }
@@ -354,7 +354,7 @@ char *
 gdm_get_session_name_and_description (const char  *id,
                                       char       **description)
 {
-        GdmSessionFile *session;
+        ScdmSessionFile *session;
         char *name;
 
         if (!gdm_sessions_map_is_initialized) {
@@ -363,7 +363,7 @@ gdm_get_session_name_and_description (const char  *id,
                 gdm_sessions_map_is_initialized = TRUE;
         }
 
-        session = (GdmSessionFile *) g_hash_table_lookup (gdm_available_sessions_map,
+        session = (ScdmSessionFile *) g_hash_table_lookup (gdm_available_sessions_map,
                                                           id);
 
         if (session == NULL) {

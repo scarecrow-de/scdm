@@ -28,7 +28,7 @@
 G_BEGIN_DECLS
 
 #define GDM_TYPE_DISPLAY (gdm_display_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GdmDisplay, gdm_display, GDM, DISPLAY, GObject)
+G_DECLARE_DERIVABLE_TYPE (ScdmDisplay, gdm_display, GDM, DISPLAY, GObject)
 
 typedef enum {
         GDM_DISPLAY_UNMANAGED = 0,
@@ -37,15 +37,15 @@ typedef enum {
         GDM_DISPLAY_WAITING_TO_FINISH,
         GDM_DISPLAY_FINISHED,
         GDM_DISPLAY_FAILED,
-} GdmDisplayStatus;
+} ScdmDisplayStatus;
 
-struct _GdmDisplayClass
+struct _ScdmDisplayClass
 {
         GObjectClass   parent_class;
 
         /* methods */
-        gboolean (*prepare) (GdmDisplay *display);
-        void     (*manage)  (GdmDisplay *self);
+        gboolean (*prepare) (ScdmDisplay *display);
+        void     (*manage)  (ScdmDisplay *self);
 };
 
 typedef enum
@@ -53,76 +53,76 @@ typedef enum
          GDM_DISPLAY_ERROR_GENERAL,
          GDM_DISPLAY_ERROR_GETTING_USER_INFO,
          GDM_DISPLAY_ERROR_GETTING_SESSION_INFO,
-} GdmDisplayError;
+} ScdmDisplayError;
 
 #define GDM_DISPLAY_ERROR gdm_display_error_quark ()
 
 GQuark              gdm_display_error_quark                    (void);
 
-int                 gdm_display_get_status                     (GdmDisplay *display);
-time_t              gdm_display_get_creation_time              (GdmDisplay *display);
-char *              gdm_display_open_session_sync              (GdmDisplay    *display,
+int                 gdm_display_get_status                     (ScdmDisplay *display);
+time_t              gdm_display_get_creation_time              (ScdmDisplay *display);
+char *              gdm_display_open_session_sync              (ScdmDisplay    *display,
                                                                 GPid           pid_of_caller,
                                                                 uid_t          uid_of_caller,
                                                                 GCancellable  *cancellable,
                                                                 GError       **error);
 
-char *              gdm_display_open_reauthentication_channel_sync        (GdmDisplay    *display,
+char *              gdm_display_open_reauthentication_channel_sync        (ScdmDisplay    *display,
                                                                            const char    *username,
                                                                            GPid           pid_of_caller,
                                                                            uid_t          uid_of_caller,
                                                                            GCancellable  *cancellable,
                                                                            GError       **error);
-const char *        gdm_display_get_session_id                 (GdmDisplay *display);
-gboolean            gdm_display_create_authority               (GdmDisplay *display);
-gboolean            gdm_display_prepare                        (GdmDisplay *display);
-gboolean            gdm_display_manage                         (GdmDisplay *display);
-gboolean            gdm_display_finish                         (GdmDisplay *display);
-gboolean            gdm_display_unmanage                       (GdmDisplay *display);
+const char *        gdm_display_get_session_id                 (ScdmDisplay *display);
+gboolean            gdm_display_create_authority               (ScdmDisplay *display);
+gboolean            gdm_display_prepare                        (ScdmDisplay *display);
+gboolean            gdm_display_manage                         (ScdmDisplay *display);
+gboolean            gdm_display_finish                         (ScdmDisplay *display);
+gboolean            gdm_display_unmanage                       (ScdmDisplay *display);
 
-GDBusObjectSkeleton *gdm_display_get_object_skeleton           (GdmDisplay *display);
+GDBusObjectSkeleton *gdm_display_get_object_skeleton           (ScdmDisplay *display);
 
 /* exported to bus */
-gboolean            gdm_display_get_id                         (GdmDisplay *display,
+gboolean            gdm_display_get_id                         (ScdmDisplay *display,
                                                                 char      **id,
                                                                 GError    **error);
-gboolean            gdm_display_get_remote_hostname            (GdmDisplay *display,
+gboolean            gdm_display_get_remote_hostname            (ScdmDisplay *display,
                                                                 char      **hostname,
                                                                 GError    **error);
-gboolean            gdm_display_get_x11_display_number         (GdmDisplay *display,
+gboolean            gdm_display_get_x11_display_number         (ScdmDisplay *display,
                                                                 int        *number,
                                                                 GError    **error);
-gboolean            gdm_display_get_x11_display_name           (GdmDisplay *display,
+gboolean            gdm_display_get_x11_display_name           (ScdmDisplay *display,
                                                                 char      **x11_display,
                                                                 GError    **error);
-gboolean            gdm_display_get_seat_id                    (GdmDisplay *display,
+gboolean            gdm_display_get_seat_id                    (ScdmDisplay *display,
                                                                 char      **seat_id,
                                                                 GError    **error);
-gboolean            gdm_display_is_local                       (GdmDisplay *display,
+gboolean            gdm_display_is_local                       (ScdmDisplay *display,
                                                                 gboolean   *local,
                                                                 GError    **error);
-gboolean            gdm_display_is_initial                     (GdmDisplay  *display,
+gboolean            gdm_display_is_initial                     (ScdmDisplay  *display,
                                                                 gboolean    *initial,
                                                                 GError     **error);
 
-gboolean            gdm_display_get_x11_cookie                 (GdmDisplay  *display,
+gboolean            gdm_display_get_x11_cookie                 (ScdmDisplay  *display,
                                                                 const char **x11_cookie,
                                                                 gsize       *x11_cookie_size,
                                                                 GError     **error);
-gboolean            gdm_display_get_x11_authority_file         (GdmDisplay *display,
+gboolean            gdm_display_get_x11_authority_file         (ScdmDisplay *display,
                                                                 char      **filename,
                                                                 GError    **error);
-gboolean            gdm_display_add_user_authorization         (GdmDisplay *display,
+gboolean            gdm_display_add_user_authorization         (ScdmDisplay *display,
                                                                 const char *username,
                                                                 char      **filename,
                                                                 GError    **error);
-gboolean            gdm_display_remove_user_authorization      (GdmDisplay *display,
+gboolean            gdm_display_remove_user_authorization      (ScdmDisplay *display,
                                                                 const char *username,
                                                                 GError    **error);
-void                gdm_display_start_greeter_session          (GdmDisplay  *display);
-void                gdm_display_stop_greeter_session           (GdmDisplay  *display);
+void                gdm_display_start_greeter_session          (ScdmDisplay  *display);
+void                gdm_display_stop_greeter_session           (ScdmDisplay  *display);
 
-gboolean            gdm_display_connect                        (GdmDisplay *self);
+gboolean            gdm_display_connect                        (ScdmDisplay *self);
 
 G_END_DECLS
 

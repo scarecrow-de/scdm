@@ -44,7 +44,7 @@
 #include "scdm-settings-direct.h"
 #include "scdm-settings-keys.h"
 
-static GdmSettings *settings = NULL;
+static ScdmSettings *settings = NULL;
 
 static gboolean
 on_sigusr1_cb (gpointer user_data)
@@ -75,11 +75,11 @@ on_shutdown_signal_cb (gpointer user_data)
 }
 
 static void
-on_state_changed (GdmSessionWorker *worker,
+on_state_changed (ScdmSessionWorker *worker,
                   GParamSpec       *pspec,
                   GMainLoop        *main_loop)
 {
-        GdmSessionWorkerState state;
+        ScdmSessionWorkerState state;
 
         g_object_get (G_OBJECT (worker), "state", &state, NULL);
 
@@ -101,7 +101,7 @@ main (int    argc,
 {
         GMainLoop        *main_loop;
         GOptionContext   *context;
-        GdmSessionWorker *worker;
+        ScdmSessionWorker *worker;
         const char       *address;
         gboolean          is_for_reauth;
         static GOptionEntry entries []   = {

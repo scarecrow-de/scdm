@@ -33,13 +33,13 @@
 #include "scdm-address.h"
 #include "scdm-chooser-host.h"
 
-struct _GdmChooserHost
+struct _ScdmChooserHost
 {
         GObject            parent;
 
-        GdmAddress        *address;
+        ScdmAddress        *address;
         char              *description;
-        GdmChooserHostKind kind;
+        ScdmChooserHostKind kind;
         gboolean           willing;
 };
 
@@ -51,14 +51,14 @@ enum {
         PROP_WILLING,
 };
 
-static void     gdm_chooser_host_class_init  (GdmChooserHostClass *klass);
-static void     gdm_chooser_host_init        (GdmChooserHost      *chooser_host);
+static void     gdm_chooser_host_class_init  (ScdmChooserHostClass *klass);
+static void     gdm_chooser_host_init        (ScdmChooserHost      *chooser_host);
 static void     gdm_chooser_host_finalize    (GObject             *object);
 
-G_DEFINE_TYPE (GdmChooserHost, gdm_chooser_host, G_TYPE_OBJECT)
+G_DEFINE_TYPE (ScdmChooserHost, gdm_chooser_host, G_TYPE_OBJECT)
 
-GdmAddress *
-gdm_chooser_host_get_address (GdmChooserHost *host)
+ScdmAddress *
+gdm_chooser_host_get_address (ScdmChooserHost *host)
 {
         g_return_val_if_fail (GDM_IS_CHOOSER_HOST (host), NULL);
 
@@ -66,15 +66,15 @@ gdm_chooser_host_get_address (GdmChooserHost *host)
 }
 
 G_CONST_RETURN char *
-gdm_chooser_host_get_description (GdmChooserHost *host)
+gdm_chooser_host_get_description (ScdmChooserHost *host)
 {
         g_return_val_if_fail (GDM_IS_CHOOSER_HOST (host), NULL);
 
         return host->description;
 }
 
-GdmChooserHostKind
-gdm_chooser_host_get_kind (GdmChooserHost *host)
+ScdmChooserHostKind
+gdm_chooser_host_get_kind (ScdmChooserHost *host)
 {
         g_return_val_if_fail (GDM_IS_CHOOSER_HOST (host), 0);
 
@@ -82,7 +82,7 @@ gdm_chooser_host_get_kind (GdmChooserHost *host)
 }
 
 gboolean
-gdm_chooser_host_get_willing (GdmChooserHost *host)
+gdm_chooser_host_get_willing (ScdmChooserHost *host)
 {
         g_return_val_if_fail (GDM_IS_CHOOSER_HOST (host), FALSE);
 
@@ -90,8 +90,8 @@ gdm_chooser_host_get_willing (GdmChooserHost *host)
 }
 
 static void
-_gdm_chooser_host_set_address (GdmChooserHost *host,
-                               GdmAddress     *address)
+_gdm_chooser_host_set_address (ScdmChooserHost *host,
+                               ScdmAddress     *address)
 {
         if (host->address != NULL) {
                 gdm_address_free (host->address);
@@ -104,7 +104,7 @@ _gdm_chooser_host_set_address (GdmChooserHost *host,
 }
 
 static void
-_gdm_chooser_host_set_description (GdmChooserHost *host,
+_gdm_chooser_host_set_description (ScdmChooserHost *host,
                                    const char     *description)
 {
         g_free (host->description);
@@ -112,7 +112,7 @@ _gdm_chooser_host_set_description (GdmChooserHost *host,
 }
 
 static void
-_gdm_chooser_host_set_kind (GdmChooserHost *host,
+_gdm_chooser_host_set_kind (ScdmChooserHost *host,
                             int             kind)
 {
         if (host->kind != kind) {
@@ -121,7 +121,7 @@ _gdm_chooser_host_set_kind (GdmChooserHost *host,
 }
 
 static void
-_gdm_chooser_host_set_willing (GdmChooserHost *host,
+_gdm_chooser_host_set_willing (ScdmChooserHost *host,
                                gboolean        willing)
 {
         if (host->willing != willing) {
@@ -135,7 +135,7 @@ gdm_chooser_host_set_property (GObject      *object,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-        GdmChooserHost *host;
+        ScdmChooserHost *host;
 
         host = GDM_CHOOSER_HOST (object);
 
@@ -164,7 +164,7 @@ gdm_chooser_host_get_property (GObject    *object,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-        GdmChooserHost *host;
+        ScdmChooserHost *host;
 
         host = GDM_CHOOSER_HOST (object);
 
@@ -188,7 +188,7 @@ gdm_chooser_host_get_property (GObject    *object,
 }
 
 static void
-gdm_chooser_host_class_init (GdmChooserHostClass *klass)
+gdm_chooser_host_class_init (ScdmChooserHostClass *klass)
 {
         GObjectClass   *object_class = G_OBJECT_CLASS (klass);
 
@@ -231,14 +231,14 @@ gdm_chooser_host_class_init (GdmChooserHostClass *klass)
 }
 
 static void
-gdm_chooser_host_init (GdmChooserHost *widget)
+gdm_chooser_host_init (ScdmChooserHost *widget)
 {
 }
 
 static void
 gdm_chooser_host_finalize (GObject *object)
 {
-        GdmChooserHost *host;
+        ScdmChooserHost *host;
 
         g_return_if_fail (object != NULL);
         g_return_if_fail (GDM_IS_CHOOSER_HOST (object));

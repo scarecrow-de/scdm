@@ -29,13 +29,13 @@
 #include "scdm-address.h"
 #include "s-common-address.h"
 
-static GdmAddress             *ga;
-static GdmAddress             *ga192;
+static ScdmAddress             *ga;
+static ScdmAddress             *ga192;
 static struct sockaddr         sa;
 static struct sockaddr_in     *s_in;
 
 #ifdef ENABLE_IPV6
-static GdmAddress             *ga6;
+static ScdmAddress             *ga6;
 static struct sockaddr_storage sa6;
 static struct sockaddr_in6    *s_in6;
 #endif
@@ -91,9 +91,9 @@ END_TEST
 START_TEST (test_gdm_address_new_from_sockaddr)
 {
 
-        GdmAddress *_ga;
+        ScdmAddress *_ga;
 #ifdef ENABLE_IPV6
-        GdmAddress *_ga6;
+        ScdmAddress *_ga6;
 #endif
 
         _ga = gdm_address_new_from_sockaddr ((struct sockaddr *) &sa, sizeof (sa));
@@ -152,7 +152,7 @@ END_TEST
 
 START_TEST (test_gdm_address_equal)
 {
-        GdmAddress         *scdm1;
+        ScdmAddress         *scdm1;
         struct sockaddr     sa1;
         struct sockaddr_in *sin1;
 

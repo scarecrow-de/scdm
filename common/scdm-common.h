@@ -40,7 +40,7 @@
 GQuark gdm_common_error_quark (void);
 #define GDM_COMMON_ERROR gdm_common_error_quark()
 
-typedef char * (*GdmExpandVarFunc) (const char *var,
+typedef char * (*ScdmExpandVarFunc) (const char *var,
                                     gpointer user_data);
 
 G_BEGIN_DECLS
@@ -80,7 +80,7 @@ gboolean       gdm_run_script             (const char *dir,
 gboolean      gdm_shell_var_is_valid_char (char c,
                                            gboolean first);
 char *        gdm_shell_expand            (const char *str,
-                                           GdmExpandVarFunc expand_func,
+                                           ScdmExpandVarFunc expand_func,
                                            gpointer user_data);
 
 gboolean      gdm_activate_session_by_id (GDBusConnection *connection,

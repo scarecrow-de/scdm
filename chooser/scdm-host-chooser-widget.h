@@ -28,16 +28,16 @@
 G_BEGIN_DECLS
 
 #define GDM_TYPE_HOST_CHOOSER_WIDGET (gdm_host_chooser_widget_get_type ())
-G_DECLARE_FINAL_TYPE (GdmHostChooserWidget, gdm_host_chooser_widget, GDM, HOST_CHOOSER_WIDGET, GtkBox)
+G_DECLARE_FINAL_TYPE (ScdmHostChooserWidget, gdm_host_chooser_widget, GDM, HOST_CHOOSER_WIDGET, GtkBox)
 
 GtkWidget *            gdm_host_chooser_widget_new                (int                   kind_mask);
 
-void                   gdm_host_chooser_widget_set_kind_mask      (GdmHostChooserWidget *widget,
+void                   gdm_host_chooser_widget_set_kind_mask      (ScdmHostChooserWidget *widget,
                                                                    int                   kind_mask);
 
-void                   gdm_host_chooser_widget_refresh            (GdmHostChooserWidget *widget);
+void                   gdm_host_chooser_widget_refresh            (ScdmHostChooserWidget *widget);
 
-GdmChooserHost *       gdm_host_chooser_widget_get_host           (GdmHostChooserWidget *widget);
+ScdmChooserHost *       gdm_host_chooser_widget_get_host           (ScdmHostChooserWidget *widget);
 
 G_END_DECLS
 

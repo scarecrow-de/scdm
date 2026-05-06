@@ -156,7 +156,7 @@ Version 3.29.91
 Version 3.29.90
 ===============
 - display wayland on certain server machines
-- lifecycle fixes to libscdm/GdmClient
+- lifecycle fixes to libscdm/ScdmClient
 - drop intltool
 - build goo clean ups
 - kill login screen when not in use
@@ -167,7 +167,7 @@ Version 3.29.90
 ==============
 Version 3.29.1
 ==============
-- Reference counting fixes for GdmClient- ensure plymouth is quit properly even when local greeter is disabled
+- Reference counting fixes for ScdmClient- ensure plymouth is quit properly even when local greeter is disabled
 - make sure GDM doesn't hang when called with unknown command line arguments 
 - Translation updates
 

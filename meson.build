@@ -189,7 +189,7 @@ endif
 
 # Configuration
 conf = configuration_data()
-conf.set_quoted('G_LOG_DOMAIN', 'Gdm')
+conf.set_quoted('G_LOG_DOMAIN', 'Scdm')
 conf.set_quoted('VERSION', meson.project_version())
 conf.set_quoted('PACKAGE_VERSION', meson.project_version())
 conf.set_quoted('GETTEXT_PACKAGE', meson.project_name())

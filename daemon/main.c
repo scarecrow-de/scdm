@@ -55,9 +55,9 @@ static gboolean         bus_reconnect (void);
 
 extern char **environ;
 
-static GdmManager      *manager       = NULL;
+static ScdmManager      *manager       = NULL;
 static int              name_id       = -1;
-static GdmSettings     *settings      = NULL;
+static ScdmSettings     *settings      = NULL;
 static uid_t            gdm_uid       = -1;
 static gid_t            gdm_gid       = -1;
 

@@ -1,37 +1,37 @@
 # D-Bus interfaces
 display_dbus_gen = gnome.gdbus_codegen('scdm-display-glue',
   'scdm-display.xml',
-  namespace: 'GdmDBus',
+  namespace: 'ScdmDBus',
   interface_prefix: 'io.github.scarecrow_de.DisplayManager',
   autocleanup: 'all',
 )
 local_display_dbus_gen = gnome.gdbus_codegen('scdm-local-display-glue',
   'scdm-local-display.xml',
-  namespace: 'GdmDBus',
+  namespace: 'ScdmDBus',
   interface_prefix: 'io.github.scarecrow_de.DisplayManager',
   autocleanup: 'all',
 )
 local_display_factory_dbus_gen = gnome.gdbus_codegen('scdm-local-display-factory-glue',
   'scdm-local-display-factory.xml',
-  namespace: 'GdmDBus',
+  namespace: 'ScdmDBus',
   interface_prefix: 'io.github.scarecrow_de.DisplayManager',
   autocleanup: 'all',
 )
 manager_dbus_gen = gnome.gdbus_codegen('scdm-manager-glue',
   'scdm-manager.xml',
-  namespace: 'GdmDBus',
+  namespace: 'ScdmDBus',
   interface_prefix: 'io.github.scarecrow_de.DisplayManager',
   autocleanup: 'all',
 )
 session_dbus_gen = gnome.gdbus_codegen('scdm-session-glue',
   'scdm-session.xml',
-  namespace: 'GdmDBus',
+  namespace: 'ScdmDBus',
   interface_prefix: 'io.github.scarecrow_de.DisplayManager',
   autocleanup: 'all',
 )
 session_worker_dbus_gen = gnome.gdbus_codegen('scdm-session-worker-glue',
   'scdm-session-worker.xml',
-  namespace: 'GdmDBus',
+  namespace: 'ScdmDBus',
   interface_prefix: 'io.github.scarecrow_de.DisplayManager',
   autocleanup: 'all',
 )

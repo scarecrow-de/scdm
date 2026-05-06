@@ -26,18 +26,18 @@
 G_BEGIN_DECLS
 
 #define GDM_TYPE_CHOOSER_HOST (gdm_chooser_host_get_type ())
-G_DECLARE_FINAL_TYPE (GdmChooserHost, gdm_chooser_host, GDM, CHOOSER_HOST, GObject)
+G_DECLARE_FINAL_TYPE (ScdmChooserHost, gdm_chooser_host, GDM, CHOOSER_HOST, GObject)
 
 typedef enum {
         GDM_CHOOSER_HOST_KIND_XDMCP = 1 << 0,
-} GdmChooserHostKind;
+} ScdmChooserHostKind;
 
 #define GDM_CHOOSER_HOST_KIND_MASK_ALL (GDM_CHOOSER_HOST_KIND_XDMCP)
 
-G_CONST_RETURN char  *gdm_chooser_host_get_description     (GdmChooserHost   *chooser_host);
-GdmAddress *          gdm_chooser_host_get_address         (GdmChooserHost   *chooser_host);
-gboolean              gdm_chooser_host_get_willing         (GdmChooserHost   *chooser_host);
-GdmChooserHostKind    gdm_chooser_host_get_kind            (GdmChooserHost   *chooser_host);
+G_CONST_RETURN char  *gdm_chooser_host_get_description     (ScdmChooserHost   *chooser_host);
+ScdmAddress *          gdm_chooser_host_get_address         (ScdmChooserHost   *chooser_host);
+gboolean              gdm_chooser_host_get_willing         (ScdmChooserHost   *chooser_host);
+ScdmChooserHostKind    gdm_chooser_host_get_kind            (ScdmChooserHost   *chooser_host);
 
 G_END_DECLS
 

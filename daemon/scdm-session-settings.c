@@ -34,7 +34,7 @@
 
 #include <act/act-user-manager.h>
 
-struct _GdmSessionSettingsPrivate
+struct _ScdmSessionSettingsPrivate
 {
         ActUserManager *user_manager;
         ActUser *user;
@@ -43,7 +43,7 @@ struct _GdmSessionSettingsPrivate
 };
 
 static void gdm_session_settings_finalize (GObject *object);
-static void gdm_session_settings_class_install_properties (GdmSessionSettingsClass *
+static void gdm_session_settings_class_install_properties (ScdmSessionSettingsClass *
                                               settings_class);
 
 static void gdm_session_settings_set_property (GObject      *object,
@@ -62,12 +62,12 @@ enum {
         PROP_IS_LOADED
 };
 
-G_DEFINE_TYPE_WITH_PRIVATE (GdmSessionSettings,
+G_DEFINE_TYPE_WITH_PRIVATE (ScdmSessionSettings,
                             gdm_session_settings,
                             G_TYPE_OBJECT)
 
 static void
-gdm_session_settings_class_init (GdmSessionSettingsClass *settings_class)
+gdm_session_settings_class_init (ScdmSessionSettingsClass *settings_class)
 {
         GObjectClass *object_class;
 
@@ -79,7 +79,7 @@ gdm_session_settings_class_init (GdmSessionSettingsClass *settings_class)
 }
 
 static void
-gdm_session_settings_class_install_properties (GdmSessionSettingsClass *settings_class)
+gdm_session_settings_class_install_properties (ScdmSessionSettingsClass *settings_class)
 {
         GObjectClass *object_class;
         GParamSpec   *param_spec;
@@ -105,11 +105,11 @@ gdm_session_settings_class_install_properties (GdmSessionSettingsClass *settings
 }
 
 static void
-gdm_session_settings_init (GdmSessionSettings *settings)
+gdm_session_settings_init (ScdmSessionSettings *settings)
 {
         settings->priv = G_TYPE_INSTANCE_GET_PRIVATE (settings,
                                                      GDM_TYPE_SESSION_SETTINGS,
-                                                     GdmSessionSettingsPrivate);
+                                                     ScdmSessionSettingsPrivate);
 
         settings->priv->user_manager = act_user_manager_get_default ();
 
@@ -118,7 +118,7 @@ gdm_session_settings_init (GdmSessionSettings *settings)
 static void
 gdm_session_settings_finalize (GObject *object)
 {
-        GdmSessionSettings *settings;
+        ScdmSessionSettings *settings;
         GObjectClass *parent_class;
 
         settings = GDM_SESSION_SETTINGS (object);
@@ -138,7 +138,7 @@ gdm_session_settings_finalize (GObject *object)
 }
 
 void
-gdm_session_settings_set_language_name (GdmSessionSettings *settings,
+gdm_session_settings_set_language_name (ScdmSessionSettings *settings,
                                         const char         *language_name)
 {
         g_return_if_fail (GDM_IS_SESSION_SETTINGS (settings));
@@ -151,7 +151,7 @@ gdm_session_settings_set_language_name (GdmSessionSettings *settings,
 }
 
 void
-gdm_session_settings_set_session_name (GdmSessionSettings *settings,
+gdm_session_settings_set_session_name (ScdmSessionSettings *settings,
                                        const char         *session_name)
 {
         g_return_if_fail (GDM_IS_SESSION_SETTINGS (settings));
@@ -164,14 +164,14 @@ gdm_session_settings_set_session_name (GdmSessionSettings *settings,
 }
 
 char *
-gdm_session_settings_get_language_name (GdmSessionSettings *settings)
+gdm_session_settings_get_language_name (ScdmSessionSettings *settings)
 {
         g_return_val_if_fail (GDM_IS_SESSION_SETTINGS (settings), NULL);
         return g_strdup (settings->priv->language_name);
 }
 
 char *
-gdm_session_settings_get_session_name (GdmSessionSettings *settings)
+gdm_session_settings_get_session_name (ScdmSessionSettings *settings)
 {
         g_return_val_if_fail (GDM_IS_SESSION_SETTINGS (settings), NULL);
         return g_strdup (settings->priv->session_name);
@@ -183,7 +183,7 @@ gdm_session_settings_set_property (GObject      *object,
                                   const GValue *value,
                                   GParamSpec   *pspec)
 {
-        GdmSessionSettings *settings;
+        ScdmSessionSettings *settings;
 
         settings = GDM_SESSION_SETTINGS (object);
 
@@ -207,7 +207,7 @@ gdm_session_settings_get_property (GObject    *object,
                                   GValue     *value,
                                   GParamSpec *pspec)
 {
-        GdmSessionSettings *settings;
+        ScdmSessionSettings *settings;
 
         settings = GDM_SESSION_SETTINGS (object);
 
@@ -229,10 +229,10 @@ gdm_session_settings_get_property (GObject    *object,
     }
 }
 
-GdmSessionSettings *
+ScdmSessionSettings *
 gdm_session_settings_new (void)
 {
-        GdmSessionSettings *settings;
+        ScdmSessionSettings *settings;
 
         settings = g_object_new (GDM_TYPE_SESSION_SETTINGS,
                                  NULL);
@@ -241,7 +241,7 @@ gdm_session_settings_new (void)
 }
 
 gboolean
-gdm_session_settings_is_loaded (GdmSessionSettings  *settings)
+gdm_session_settings_is_loaded (ScdmSessionSettings  *settings)
 {
         if (settings->priv->user == NULL) {
                 return FALSE;
@@ -251,18 +251,18 @@ gdm_session_settings_is_loaded (GdmSessionSettings  *settings)
 }
 
 static void
-load_settings_from_user (GdmSessionSettings *settings)
+load_settings_from_user (ScdmSessionSettings *settings)
 {
         const char *session_name;
         const char *language_name;
 
         if (!act_user_is_loaded (settings->priv->user)) {
-                g_warning ("GdmSessionSettings: trying to load user settings from unloaded user");
+                g_warning ("ScdmSessionSettings: trying to load user settings from unloaded user");
                 return;
         }
 
         session_name = act_user_get_x_session (settings->priv->user);
-        g_debug ("GdmSessionSettings: saved session is %s", session_name);
+        g_debug ("ScdmSessionSettings: saved session is %s", session_name);
 
         if (session_name != NULL) {
                 gdm_session_settings_set_session_name (settings, session_name);
@@ -270,7 +270,7 @@ load_settings_from_user (GdmSessionSettings *settings)
 
         language_name = act_user_get_language (settings->priv->user);
 
-        g_debug ("GdmSessionSettings: saved language is %s", language_name);
+        g_debug ("ScdmSessionSettings: saved language is %s", language_name);
         if (language_name != NULL) {
                 gdm_session_settings_set_language_name (settings, language_name);
         }
@@ -281,7 +281,7 @@ load_settings_from_user (GdmSessionSettings *settings)
 static void
 on_user_is_loaded_changed (ActUser            *user,
                            GParamSpec         *pspec,
-                           GdmSessionSettings *settings)
+                           ScdmSessionSettings *settings)
 {
         if (act_user_is_loaded (settings->priv->user)) {
                 load_settings_from_user (settings);
@@ -292,7 +292,7 @@ on_user_is_loaded_changed (ActUser            *user,
 }
 
 gboolean
-gdm_session_settings_load (GdmSessionSettings  *settings,
+gdm_session_settings_load (ScdmSessionSettings  *settings,
                            const char          *username)
 {
         ActUser *old_user;
@@ -330,7 +330,7 @@ gdm_session_settings_load (GdmSessionSettings  *settings,
 }
 
 gboolean
-gdm_session_settings_save (GdmSessionSettings  *settings,
+gdm_session_settings_save (ScdmSessionSettings  *settings,
                            const char          *username)
 {
         ActUser  *user;

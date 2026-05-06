@@ -65,7 +65,7 @@ extern char **environ;
 
 #define MAX_LOGS 5
 
-struct _GdmServer
+struct _ScdmServer
 {
         GObject  parent;
 
@@ -108,23 +108,23 @@ enum {
 
 static guint signals [LAST_SIGNAL] = { 0, };
 
-static void     gdm_server_class_init   (GdmServerClass *klass);
-static void     gdm_server_init         (GdmServer      *server);
+static void     gdm_server_class_init   (ScdmServerClass *klass);
+static void     gdm_server_init         (ScdmServer      *server);
 static void     gdm_server_finalize     (GObject        *object);
 
-G_DEFINE_TYPE (GdmServer, gdm_server, G_TYPE_OBJECT)
+G_DEFINE_TYPE (ScdmServer, gdm_server, G_TYPE_OBJECT)
 
 char *
-gdm_server_get_display_device (GdmServer *server)
+gdm_server_get_display_device (ScdmServer *server)
 {
         /* systemd finds the display device out on its own based on the display */
         return NULL;
 }
 
 static void
-gdm_server_ready (GdmServer *server)
+gdm_server_ready (ScdmServer *server)
 {
-        g_debug ("GdmServer: Got USR1 from X server - emitting READY");
+        g_debug ("ScdmServer: Got USR1 from X server - emitting READY");
 
         gdm_run_script (GDMCONFDIR "/Init", GDM_USERNAME,
                         server->display_name,
@@ -145,10 +145,10 @@ got_sigusr1 (gpointer user_data)
         GPid pid = GPOINTER_TO_UINT (user_data);
         GSList *l;
 
-        g_debug ("GdmServer: got SIGUSR1 from PID %d", pid);
+        g_debug ("ScdmServer: got SIGUSR1 from PID %d", pid);
 
         for (l = active_servers; l; l = l->next) {
-                GdmServer *server = l->data;
+                ScdmServer *server = l->data;
 
                 if (server->pid == pid)
                         gdm_server_ready (server);
@@ -201,7 +201,7 @@ gdm_server_launch_sigusr1_thread_if_needed (void)
 }
 
 static void
-gdm_server_init_command (GdmServer *server)
+gdm_server_init_command (ScdmServer *server)
 {
         gboolean debug = FALSE;
         const char *debug_options;
@@ -261,7 +261,7 @@ fallback:
 }
 
 static gboolean
-gdm_server_resolve_command_line (GdmServer  *server,
+gdm_server_resolve_command_line (ScdmServer  *server,
                                  const char *vtarg,
                                  int        *argcp,
                                  char     ***argvp)
@@ -370,7 +370,7 @@ rotate_logs (const char *path,
 }
 
 static void
-change_user (GdmServer *server)
+change_user (ScdmServer *server)
 {
         struct passwd *pwent;
 
@@ -385,7 +385,7 @@ change_user (GdmServer *server)
                 _exit (EXIT_FAILURE);
         }
 
-        g_debug ("GdmServer: Changing (uid:gid) for child process to (%d:%d)",
+        g_debug ("ScdmServer: Changing (uid:gid) for child process to (%d:%d)",
                  pwent->pw_uid,
                  pwent->pw_gid);
 
@@ -422,7 +422,7 @@ change_user (GdmServer *server)
 }
 
 static gboolean
-gdm_server_setup_journal_fds (GdmServer *server)
+gdm_server_setup_journal_fds (ScdmServer *server)
 {
 #ifdef ENABLE_SYSTEMD_JOURNAL
     if (sd_booted () > 0) {
@@ -456,7 +456,7 @@ gdm_server_setup_journal_fds (GdmServer *server)
 }
 
 static void
-gdm_server_setup_logfile (GdmServer *server)
+gdm_server_setup_logfile (ScdmServer *server)
 {
         int              logfd;
         char            *log_file;
@@ -469,7 +469,7 @@ gdm_server_setup_logfile (GdmServer *server)
         /* Rotate the X server logs */
         rotate_logs (log_path, MAX_LOGS);
 
-        g_debug ("GdmServer: Opening logfile for server %s", log_path);
+        g_debug ("ScdmServer: Opening logfile for server %s", log_path);
 
         VE_IGNORE_EINTR (g_unlink (log_path));
         VE_IGNORE_EINTR (logfd = open (log_path, O_CREAT|O_APPEND|O_TRUNC|O_WRONLY|O_EXCL, 0644));
@@ -488,7 +488,7 @@ gdm_server_setup_logfile (GdmServer *server)
 }
 
 static void
-server_child_setup (GdmServer *server)
+server_child_setup (ScdmServer *server)
 {
         struct sigaction ign_signal;
         sigset_t         mask;
@@ -557,7 +557,7 @@ listify_hash (const char *key,
 }
 
 static GPtrArray *
-get_server_environment (GdmServer *server)
+get_server_environment (ScdmServer *server)
 {
         GPtrArray  *env;
         char      **l;
@@ -602,7 +602,7 @@ get_server_environment (GdmServer *server)
 }
 
 static void
-server_add_xserver_args (GdmServer *server,
+server_add_xserver_args (ScdmServer *server,
                          int       *argc,
                          char    ***argv)
 {
@@ -628,9 +628,9 @@ server_add_xserver_args (GdmServer *server,
 static void
 server_child_watch (GPid       pid,
                     int        status,
-                    GdmServer *server)
+                    ScdmServer *server)
 {
-        g_debug ("GdmServer: child (pid:%d) done (%s:%d)",
+        g_debug ("ScdmServer: child (pid:%d) done (%s:%d)",
                  (int) pid,
                  WIFEXITED (status) ? "status"
                  : WIFSIGNALED (status) ? "signal"
@@ -656,13 +656,13 @@ server_child_watch (GPid       pid,
 }
 
 static void
-prune_active_servers_list (GdmServer *server)
+prune_active_servers_list (ScdmServer *server)
 {
         active_servers = g_slist_remove (active_servers, server);
 }
 
 static gboolean
-gdm_server_spawn (GdmServer    *server,
+gdm_server_spawn (ScdmServer    *server,
                   const char   *vtarg,
                   GError      **error)
 {
@@ -695,7 +695,7 @@ gdm_server_spawn (GdmServer    *server,
         env = get_server_environment (server);
 
         freeme = g_strjoinv (" ", argv);
-        g_debug ("GdmServer: Starting X server process: %s", freeme);
+        g_debug ("ScdmServer: Starting X server process: %s", freeme);
         g_free (freeme);
 
         active_servers = g_slist_append (active_servers, server);
@@ -720,7 +720,7 @@ gdm_server_spawn (GdmServer    *server,
                                        error))
                 goto out;
 
-        g_debug ("GdmServer: Started X server process %d - waiting for READY", (int)server->pid);
+        g_debug ("ScdmServer: Started X server process %d - waiting for READY", (int)server->pid);
 
         server->child_watch_id = g_child_watch_add (server->pid,
                                                           (GChildWatchFunc)server_child_watch,
@@ -738,13 +738,13 @@ gdm_server_spawn (GdmServer    *server,
 
 /**
  * gdm_server_start:
- * @disp: Pointer to a GdmDisplay structure
+ * @disp: Pointer to a ScdmDisplay structure
  *
  * Starts a local X server. Handles retries and fatal errors properly.
  */
 
 gboolean
-gdm_server_start (GdmServer *server)
+gdm_server_start (ScdmServer *server)
 {
         gboolean res = FALSE;
         const char *vtarg = NULL;
@@ -771,15 +771,15 @@ gdm_server_start (GdmServer *server)
 }
 
 static void
-server_died (GdmServer *server)
+server_died (ScdmServer *server)
 {
         int exit_status;
 
-        g_debug ("GdmServer: Waiting on process %d", server->pid);
+        g_debug ("ScdmServer: Waiting on process %d", server->pid);
         exit_status = gdm_wait_on_pid (server->pid);
 
         if (WIFEXITED (exit_status) && (WEXITSTATUS (exit_status) != 0)) {
-                g_debug ("GdmServer: Wait on child process failed");
+                g_debug ("ScdmServer: Wait on child process failed");
         } else {
                 /* exited normally */
         }
@@ -793,11 +793,11 @@ server_died (GdmServer *server)
                 g_object_notify (G_OBJECT (server), "display-device");
         }
 
-        g_debug ("GdmServer: Server died");
+        g_debug ("ScdmServer: Server died");
 }
 
 gboolean
-gdm_server_stop (GdmServer *server)
+gdm_server_stop (ScdmServer *server)
 {
         int res;
 
@@ -811,7 +811,7 @@ gdm_server_stop (GdmServer *server)
                 server->child_watch_id = 0;
         }
 
-        g_debug ("GdmServer: Stopping server");
+        g_debug ("ScdmServer: Stopping server");
 
         res = gdm_signal_pid (server->pid, SIGTERM);
         if (res < 0) {
@@ -824,7 +824,7 @@ gdm_server_stop (GdmServer *server)
 
 
 static void
-_gdm_server_set_display_name (GdmServer  *server,
+_gdm_server_set_display_name (ScdmServer  *server,
                               const char *name)
 {
         g_free (server->display_name);
@@ -832,7 +832,7 @@ _gdm_server_set_display_name (GdmServer  *server,
 }
 
 static void
-_gdm_server_set_display_seat_id (GdmServer  *server,
+_gdm_server_set_display_seat_id (ScdmServer  *server,
                                  const char *name)
 {
         g_free (server->display_seat_id);
@@ -840,7 +840,7 @@ _gdm_server_set_display_seat_id (GdmServer  *server,
 }
 
 static void
-_gdm_server_set_auth_file (GdmServer  *server,
+_gdm_server_set_auth_file (ScdmServer  *server,
                            const char *auth_file)
 {
         g_free (server->auth_file);
@@ -848,7 +848,7 @@ _gdm_server_set_auth_file (GdmServer  *server,
 }
 
 static void
-_gdm_server_set_user_name (GdmServer  *server,
+_gdm_server_set_user_name (ScdmServer  *server,
                            const char *name)
 {
         g_free (server->user_name);
@@ -856,14 +856,14 @@ _gdm_server_set_user_name (GdmServer  *server,
 }
 
 static void
-_gdm_server_set_disable_tcp (GdmServer  *server,
+_gdm_server_set_disable_tcp (ScdmServer  *server,
                              gboolean    disabled)
 {
         server->disable_tcp = disabled;
 }
 
 static void
-_gdm_server_set_is_initial (GdmServer  *server,
+_gdm_server_set_is_initial (ScdmServer  *server,
                             gboolean    initial)
 {
         server->is_initial = initial;
@@ -875,7 +875,7 @@ gdm_server_set_property (GObject      *object,
                          const GValue *value,
                          GParamSpec   *pspec)
 {
-        GdmServer *self;
+        ScdmServer *self;
 
         self = GDM_SERVER (object);
 
@@ -910,7 +910,7 @@ gdm_server_get_property (GObject    *object,
                          GValue     *value,
                          GParamSpec *pspec)
 {
-        GdmServer *self;
+        ScdmServer *self;
 
         self = GDM_SERVER (object);
 
@@ -944,7 +944,7 @@ gdm_server_get_property (GObject    *object,
 }
 
 static void
-gdm_server_class_init (GdmServerClass *klass)
+gdm_server_class_init (ScdmServerClass *klass)
 {
         GObjectClass    *object_class = G_OBJECT_CLASS (klass);
 
@@ -1038,7 +1038,7 @@ gdm_server_class_init (GdmServerClass *klass)
 }
 
 static void
-gdm_server_init (GdmServer *server)
+gdm_server_init (ScdmServer *server)
 {
         server->pid = -1;
 
@@ -1048,7 +1048,7 @@ gdm_server_init (GdmServer *server)
 static void
 gdm_server_finalize (GObject *object)
 {
-        GdmServer *server;
+        ScdmServer *server;
 
         g_return_if_fail (object != NULL);
         g_return_if_fail (GDM_IS_SERVER (object));
@@ -1069,7 +1069,7 @@ gdm_server_finalize (GObject *object)
         G_OBJECT_CLASS (gdm_server_parent_class)->finalize (object);
 }
 
-GdmServer *
+ScdmServer *
 gdm_server_new (const char *display_name,
                 const char *seat_id,
                 const char *auth_file,

@@ -37,22 +37,22 @@
 
 #include "scdm-common.h"
 
-struct _GdmSessionLinuxAuditor
+struct _ScdmSessionLinuxAuditor
 {
-        GdmSessionAuditor parent;
+        ScdmSessionAuditor parent;
         int audit_fd;
 };
 
 static void gdm_session_linux_auditor_finalize (GObject *object);
 
-G_DEFINE_TYPE (GdmSessionLinuxAuditor, gdm_session_linux_auditor, GDM_TYPE_SESSION_AUDITOR)
+G_DEFINE_TYPE (ScdmSessionLinuxAuditor, gdm_session_linux_auditor, GDM_TYPE_SESSION_AUDITOR)
 
 static void
-log_user_message (GdmSessionAuditor *auditor,
+log_user_message (ScdmSessionAuditor *auditor,
                   gint               type,
                   gint               result)
 {
-        GdmSessionLinuxAuditor   *linux_auditor;
+        ScdmSessionLinuxAuditor   *linux_auditor;
         char                      buf[512];
         char                     *username;
         char                     *hostname;
@@ -90,13 +90,13 @@ log_user_message (GdmSessionAuditor *auditor,
 }
 
 static void
-gdm_session_linux_auditor_report_login (GdmSessionAuditor *auditor)
+gdm_session_linux_auditor_report_login (ScdmSessionAuditor *auditor)
 {
         log_user_message (auditor, AUDIT_USER_LOGIN, 1);
 }
 
 static void
-gdm_session_linux_auditor_report_login_failure (GdmSessionAuditor *auditor,
+gdm_session_linux_auditor_report_login_failure (ScdmSessionAuditor *auditor,
                                                   int                pam_error_code,
                                                   const char        *pam_error_string)
 {
@@ -104,16 +104,16 @@ gdm_session_linux_auditor_report_login_failure (GdmSessionAuditor *auditor,
 }
 
 static void
-gdm_session_linux_auditor_report_logout (GdmSessionAuditor *auditor)
+gdm_session_linux_auditor_report_logout (ScdmSessionAuditor *auditor)
 {
         log_user_message (auditor, AUDIT_USER_LOGOUT, 1);
 }
 
 static void
-gdm_session_linux_auditor_class_init (GdmSessionLinuxAuditorClass *klass)
+gdm_session_linux_auditor_class_init (ScdmSessionLinuxAuditorClass *klass)
 {
         GObjectClass           *object_class;
-        GdmSessionAuditorClass *auditor_class;
+        ScdmSessionAuditorClass *auditor_class;
 
         object_class = G_OBJECT_CLASS (klass);
         auditor_class = GDM_SESSION_AUDITOR_CLASS (klass);
@@ -126,7 +126,7 @@ gdm_session_linux_auditor_class_init (GdmSessionLinuxAuditorClass *klass)
 }
 
 static void
-gdm_session_linux_auditor_init (GdmSessionLinuxAuditor *auditor)
+gdm_session_linux_auditor_init (ScdmSessionLinuxAuditor *auditor)
 {
         auditor->audit_fd = audit_open ();
 }
@@ -134,7 +134,7 @@ gdm_session_linux_auditor_init (GdmSessionLinuxAuditor *auditor)
 static void
 gdm_session_linux_auditor_finalize (GObject *object)
 {
-        GdmSessionLinuxAuditor *linux_auditor;
+        ScdmSessionLinuxAuditor *linux_auditor;
         GObjectClass *parent_class;
 
         linux_auditor = GDM_SESSION_LINUX_AUDITOR (object);
@@ -148,7 +148,7 @@ gdm_session_linux_auditor_finalize (GObject *object)
 }
 
 
-GdmSessionAuditor *
+ScdmSessionAuditor *
 gdm_session_linux_auditor_new (const char *hostname,
                                const char *display_device)
 {

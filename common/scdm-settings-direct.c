@@ -39,12 +39,12 @@
 #include "scdm-settings-direct.h"
 
 static GHashTable      *schemas;
-static GdmSettings     *settings_object;
+static ScdmSettings     *settings_object;
 
-static GdmSettingsEntry *
+static ScdmSettingsEntry *
 get_entry_for_key (const char *key)
 {
-        GdmSettingsEntry *entry;
+        ScdmSettingsEntry *entry;
 
         entry = g_hash_table_lookup (schemas, key);
 
@@ -52,7 +52,7 @@ get_entry_for_key (const char *key)
 }
 
 static void
-assert_signature (GdmSettingsEntry *entry,
+assert_signature (ScdmSettingsEntry *entry,
                   const char       *signature)
 {
         const char *sig;
@@ -96,7 +96,7 @@ gboolean
 gdm_settings_direct_get_int (const char        *key,
                              int               *value)
 {
-        GdmSettingsEntry *entry;
+        ScdmSettingsEntry *entry;
         gboolean          ret;
         gboolean          res;
         char             *str;
@@ -146,7 +146,7 @@ gboolean
 gdm_settings_direct_get_boolean (const char        *key,
                                  gboolean          *value)
 {
-        GdmSettingsEntry *entry;
+        ScdmSettingsEntry *entry;
         gboolean          ret;
         gboolean          res;
         char             *str;
@@ -178,7 +178,7 @@ gboolean
 gdm_settings_direct_get_string (const char        *key,
                                 char             **value)
 {
-        GdmSettingsEntry *entry;
+        ScdmSettingsEntry *entry;
         gboolean          ret;
         gboolean          res;
         char             *str;
@@ -216,14 +216,14 @@ gdm_settings_direct_set (const char        *key,
 }
 
 static void
-hashify_list (GdmSettingsEntry *entry,
+hashify_list (ScdmSettingsEntry *entry,
               gpointer          data)
 {
         g_hash_table_insert (schemas, g_strdup (gdm_settings_entry_get_key (entry)), entry);
 }
 
 gboolean
-gdm_settings_direct_init (GdmSettings *settings,
+gdm_settings_direct_init (ScdmSettings *settings,
                           const char  *file,
                           const char  *root)
 {

@@ -3407,7 +3407,7 @@ msgstr "GET_CONFIG"
 
 #: ../C/scdm.xml:4833(screen) 
 #, no-wrap
-msgid "\nGET_CONFIG:  Get configuration value for key.  Useful so\n             that other applications can request configuration\n             information from GDM.  Any key defined as GDM_KEY_*\n             in scdm-daemon-config-keys.h is supported.  Starting with version 2.13.0.2\n             translated keys (such as \"greeter/GdmWelcome[cs]\" are\n             supported via GET_CONFIG.  Also starting with version\n             2.13.0.2 it is no longer necessary to include the\n             default value (i.e. you can use key \"greeter/IncludeAll\"\n             instead of having to use \"greeter/IncludeAll=false\".  \nSupported since: 2.6.0.9\nArguments: &lt;key&gt;\nAnswers:\n  OK &lt;value&gt;\n  ERROR &lt;err number&gt; &lt;english error description&gt;\n     0 = Not implemented\n     50 = Unsupported key\n     200 = Too many messages\n     999 = Unknown error\n"
+msgid "\nGET_CONFIG:  Get configuration value for key.  Useful so\n             that other applications can request configuration\n             information from GDM.  Any key defined as GDM_KEY_*\n             in scdm-daemon-config-keys.h is supported.  Starting with version 2.13.0.2\n             translated keys (such as \"greeter/ScdmWelcome[cs]\" are\n             supported via GET_CONFIG.  Also starting with version\n             2.13.0.2 it is no longer necessary to include the\n             default value (i.e. you can use key \"greeter/IncludeAll\"\n             instead of having to use \"greeter/IncludeAll=false\".  \nSupported since: 2.6.0.9\nArguments: &lt;key&gt;\nAnswers:\n  OK &lt;value&gt;\n  ERROR &lt;err number&gt; &lt;english error description&gt;\n     0 = Not implemented\n     50 = Unsupported key\n     200 = Too many messages\n     999 = Unknown error\n"
 msgstr ""
 
 #: ../C/scdm.xml:4856(title) 
@@ -3986,12 +3986,12 @@ msgid "Theme Overview"
 msgstr ""
 
 #: ../C/scdm.xml:5906(para) 
-msgid "GDM Themes can be created by creating an XML file that follows the specification in gui/greeter/greeter.dtd. Theme files are stored in the directory <filename>&lt;share&gt;/scdm/themes/&lt;theme_name&gt;</filename>. Usually this would be under <filename>/usr/share</filename>. The theme directory should contain a file called <filename>GdmGreeterTheme.desktop</filename> which has similar format to other .desktop files and looks like:"
+msgid "GDM Themes can be created by creating an XML file that follows the specification in gui/greeter/greeter.dtd. Theme files are stored in the directory <filename>&lt;share&gt;/scdm/themes/&lt;theme_name&gt;</filename>. Usually this would be under <filename>/usr/share</filename>. The theme directory should contain a file called <filename>ScdmGreeterTheme.desktop</filename> which has similar format to other .desktop files and looks like:"
 msgstr ""
 
 #: ../C/scdm.xml:5917(screen) 
 #, no-wrap
-msgid "\n[GdmGreeterTheme]\nEncoding=UTF-8\nGreeter=circles.xml\nName=Circles\nDescription=Theme with blue circles\nAuthor=Bond, James Bond\nCopyright=(c) 2002 Bond, James Bond\nScreenshot=screenshot.png\n"
+msgid "\n[ScdmGreeterTheme]\nEncoding=UTF-8\nGreeter=circles.xml\nName=Circles\nDescription=Theme with blue circles\nAuthor=Bond, James Bond\nCopyright=(c) 2002 Bond, James Bond\nScreenshot=screenshot.png\n"
 msgstr ""
 
 #: ../C/scdm.xml:5928(para) 

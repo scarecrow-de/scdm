@@ -49,11 +49,11 @@
 #define MAX_DISPLAY_FAILURES 5
 #define WAIT_TO_FINISH_TIMEOUT 10 /* seconds */
 
-struct _GdmLocalDisplayFactory
+struct _ScdmLocalDisplayFactory
 {
-        GdmDisplayFactory              parent;
+        ScdmDisplayFactory              parent;
 
-        GdmDBusLocalDisplayFactory *skeleton;
+        ScdmDBusLocalDisplayFactory *skeleton;
         GDBusConnection *connection;
         GHashTable      *used_display_numbers;
 
@@ -74,26 +74,26 @@ enum {
         PROP_0,
 };
 
-static void     gdm_local_display_factory_class_init    (GdmLocalDisplayFactoryClass *klass);
-static void     gdm_local_display_factory_init          (GdmLocalDisplayFactory      *factory);
+static void     gdm_local_display_factory_class_init    (ScdmLocalDisplayFactoryClass *klass);
+static void     gdm_local_display_factory_init          (ScdmLocalDisplayFactory      *factory);
 static void     gdm_local_display_factory_finalize      (GObject                     *object);
 
-static GdmDisplay *create_display                       (GdmLocalDisplayFactory      *factory,
+static ScdmDisplay *create_display                       (ScdmLocalDisplayFactory      *factory,
                                                          const char                  *seat_id,
                                                          const char                  *session_type,
                                                          gboolean                    initial_display);
 
-static void     on_display_status_changed               (GdmDisplay                  *display,
+static void     on_display_status_changed               (ScdmDisplay                  *display,
                                                          GParamSpec                  *arg1,
-                                                         GdmLocalDisplayFactory      *factory);
+                                                         ScdmLocalDisplayFactory      *factory);
 
-static gboolean gdm_local_display_factory_sync_seats    (GdmLocalDisplayFactory *factory);
+static gboolean gdm_local_display_factory_sync_seats    (ScdmLocalDisplayFactory *factory);
 static gpointer local_display_factory_object = NULL;
 static gboolean lookup_by_session_id (const char *id,
-                                      GdmDisplay *display,
+                                      ScdmDisplay *display,
                                       gpointer    user_data);
 
-G_DEFINE_TYPE (GdmLocalDisplayFactory, gdm_local_display_factory, GDM_TYPE_DISPLAY_FACTORY)
+G_DEFINE_TYPE (ScdmLocalDisplayFactory, gdm_local_display_factory, GDM_TYPE_DISPLAY_FACTORY)
 
 GQuark
 gdm_local_display_factory_error_quark (void)
@@ -108,7 +108,7 @@ gdm_local_display_factory_error_quark (void)
 
 static void
 listify_hash (gpointer    key,
-              GdmDisplay *display,
+              ScdmDisplay *display,
               GList     **list)
 {
         *list = g_list_prepend (*list, key);
@@ -134,7 +134,7 @@ sort_nums (gpointer a,
 }
 
 static guint32
-take_next_display_number (GdmLocalDisplayFactory *factory)
+take_next_display_number (ScdmLocalDisplayFactory *factory)
 {
         GList  *list;
         GList  *l;
@@ -151,9 +151,9 @@ take_next_display_number (GdmLocalDisplayFactory *factory)
         /* sort low to high */
         list = g_list_sort (list, (GCompareFunc)sort_nums);
 
-        g_debug ("GdmLocalDisplayFactory: Found the following X displays:");
+        g_debug ("ScdmLocalDisplayFactory: Found the following X displays:");
         for (l = list; l != NULL; l = l->next) {
-                g_debug ("GdmLocalDisplayFactory: %u", GPOINTER_TO_UINT (l->data));
+                g_debug ("ScdmLocalDisplayFactory: %u", GPOINTER_TO_UINT (l->data));
         }
 
         for (l = list; l != NULL; l = l->next) {
@@ -174,24 +174,24 @@ take_next_display_number (GdmLocalDisplayFactory *factory)
  out:
 
         /* now reserve this number */
-        g_debug ("GdmLocalDisplayFactory: Reserving X display: %u", ret);
+        g_debug ("ScdmLocalDisplayFactory: Reserving X display: %u", ret);
         g_hash_table_insert (factory->used_display_numbers, GUINT_TO_POINTER (ret), NULL);
 
         return ret;
 }
 
 static void
-on_display_disposed (GdmLocalDisplayFactory *factory,
-                     GdmDisplay             *display)
+on_display_disposed (ScdmLocalDisplayFactory *factory,
+                     ScdmDisplay             *display)
 {
-        g_debug ("GdmLocalDisplayFactory: Display %p disposed", display);
+        g_debug ("ScdmLocalDisplayFactory: Display %p disposed", display);
 }
 
 static void
-store_display (GdmLocalDisplayFactory *factory,
-               GdmDisplay             *display)
+store_display (ScdmLocalDisplayFactory *factory,
+               ScdmDisplay             *display)
 {
-        GdmDisplayStore *store;
+        ScdmDisplayStore *store;
 
         store = gdm_display_factory_get_display_store (GDM_DISPLAY_FACTORY (factory));
         gdm_display_store_add (store, display);
@@ -218,19 +218,19 @@ gdm_local_display_factory_use_wayland (void)
   io.github.scarecrow_de.DisplayManager.Manager.GetDisplays
 */
 gboolean
-gdm_local_display_factory_create_transient_display (GdmLocalDisplayFactory *factory,
+gdm_local_display_factory_create_transient_display (ScdmLocalDisplayFactory *factory,
                                                     char                  **id,
                                                     GError                **error)
 {
         gboolean         ret;
-        GdmDisplay      *display = NULL;
+        ScdmDisplay      *display = NULL;
         gboolean         is_initial = FALSE;
 
         g_return_val_if_fail (GDM_IS_LOCAL_DISPLAY_FACTORY (factory), FALSE);
 
         ret = FALSE;
 
-        g_debug ("GdmLocalDisplayFactory: Creating transient display");
+        g_debug ("ScdmLocalDisplayFactory: Creating transient display");
 
 #ifdef ENABLE_USER_DISPLAY_SERVER
         display = gdm_local_display_new ();
@@ -274,37 +274,37 @@ gdm_local_display_factory_create_transient_display (GdmLocalDisplayFactory *fact
 }
 
 static void
-finish_display_on_seat_if_waiting (GdmDisplayStore *display_store,
-                                   GdmDisplay      *display,
+finish_display_on_seat_if_waiting (ScdmDisplayStore *display_store,
+                                   ScdmDisplay      *display,
                                    const char      *seat_id)
 {
         if (gdm_display_get_status (display) != GDM_DISPLAY_WAITING_TO_FINISH)
                 return;
 
-        g_debug ("GdmLocalDisplayFactory: finish background display\n");
+        g_debug ("ScdmLocalDisplayFactory: finish background display\n");
         gdm_display_stop_greeter_session (display);
         gdm_display_unmanage (display);
         gdm_display_finish (display);
 }
 
 static void
-finish_waiting_displays_on_seat (GdmLocalDisplayFactory *factory,
+finish_waiting_displays_on_seat (ScdmLocalDisplayFactory *factory,
                                  const char             *seat_id)
 {
-        GdmDisplayStore *store;
+        ScdmDisplayStore *store;
 
         store = gdm_display_factory_get_display_store (GDM_DISPLAY_FACTORY (factory));
 
         gdm_display_store_foreach (store,
-                                   (GdmDisplayStoreFunc) finish_display_on_seat_if_waiting,
+                                   (ScdmDisplayStoreFunc) finish_display_on_seat_if_waiting,
                                    (gpointer)
                                    seat_id);
 }
 
 static gboolean
-on_finish_waiting_for_seat0_displays_timeout (GdmLocalDisplayFactory *factory)
+on_finish_waiting_for_seat0_displays_timeout (ScdmLocalDisplayFactory *factory)
 {
-        g_debug ("GdmLocalDisplayFactory: timeout following VT switch to registered session complete, looking for any background displays to kill");
+        g_debug ("ScdmLocalDisplayFactory: timeout following VT switch to registered session complete, looking for any background displays to kill");
         finish_waiting_displays_on_seat (factory, "seat0");
         return G_SOURCE_REMOVE;
 }
@@ -314,8 +314,8 @@ on_session_registered_cb (GObject *gobject,
                           GParamSpec *pspec,
                           gpointer user_data)
 {
-        GdmDisplay *display = GDM_DISPLAY (gobject);
-        GdmLocalDisplayFactory *factory = GDM_LOCAL_DISPLAY_FACTORY (user_data);
+        ScdmDisplay *display = GDM_DISPLAY (gobject);
+        ScdmLocalDisplayFactory *factory = GDM_LOCAL_DISPLAY_FACTORY (user_data);
         gboolean registered;
 
         g_object_get (display, "session-registered", &registered, NULL);
@@ -323,15 +323,15 @@ on_session_registered_cb (GObject *gobject,
         if (!registered)
                 return;
 
-        g_debug ("GdmLocalDisplayFactory: session registered on display, looking for any background displays to kill");
+        g_debug ("ScdmLocalDisplayFactory: session registered on display, looking for any background displays to kill");
 
         finish_waiting_displays_on_seat (factory, "seat0");
 }
 
 static void
-on_display_status_changed (GdmDisplay             *display,
+on_display_status_changed (ScdmDisplay             *display,
                            GParamSpec             *arg1,
-                           GdmLocalDisplayFactory *factory)
+                           ScdmLocalDisplayFactory *factory)
 {
         int              status;
         int              num;
@@ -354,7 +354,7 @@ on_display_status_changed (GdmDisplay             *display,
 
         status = gdm_display_get_status (display);
 
-        g_debug ("GdmLocalDisplayFactory: display status changed: %d", status);
+        g_debug ("ScdmLocalDisplayFactory: display status changed: %d", status);
         switch (status) {
         case GDM_DISPLAY_FINISHED:
                 /* remove the display number from factory->used_display_numbers
@@ -388,7 +388,7 @@ on_display_status_changed (GdmDisplay             *display,
 
                         if (factory->num_failures > MAX_DISPLAY_FAILURES) {
                                 /* oh shit */
-                                g_warning ("GdmLocalDisplayFactory: maximum number of X display failures reached: check X server log for errors");
+                                g_warning ("ScdmLocalDisplayFactory: maximum number of X display failures reached: check X server log for errors");
                         } else {
 #ifdef ENABLE_WAYLAND_SUPPORT
                                 if (g_strcmp0 (session_type, "wayland") == 0) {
@@ -428,7 +428,7 @@ on_display_status_changed (GdmDisplay             *display,
 
 static gboolean
 lookup_by_seat_id (const char *id,
-                   GdmDisplay *display,
+                   ScdmDisplay *display,
                    gpointer    user_data)
 {
         const char *looking_for = user_data;
@@ -446,7 +446,7 @@ lookup_by_seat_id (const char *id,
 
 static gboolean
 lookup_prepared_display_by_seat_id (const char *id,
-                                    GdmDisplay *display,
+                                    ScdmDisplay *display,
                                     gpointer    user_data)
 {
         int status;
@@ -459,17 +459,17 @@ lookup_prepared_display_by_seat_id (const char *id,
         return lookup_by_seat_id (id, display, user_data);
 }
 
-static GdmDisplay *
-create_display (GdmLocalDisplayFactory *factory,
+static ScdmDisplay *
+create_display (ScdmLocalDisplayFactory *factory,
                 const char             *seat_id,
                 const char             *session_type,
                 gboolean                initial)
 {
-        GdmDisplayStore *store;
-        GdmDisplay      *display = NULL;
+        ScdmDisplayStore *store;
+        ScdmDisplay      *display = NULL;
         g_autofree char *login_session_id = NULL;
 
-        g_debug ("GdmLocalDisplayFactory: %s login display for seat %s requested",
+        g_debug ("ScdmLocalDisplayFactory: %s login display for seat %s requested",
                  session_type? : "X11", seat_id);
         store = gdm_display_factory_get_display_store (GDM_DISPLAY_FACTORY (factory));
 
@@ -480,13 +480,13 @@ create_display (GdmLocalDisplayFactory *factory,
 
         /* Ensure we don't create the same display more than once */
         if (display != NULL) {
-                g_debug ("GdmLocalDisplayFactory: display already created");
+                g_debug ("ScdmLocalDisplayFactory: display already created");
                 return NULL;
         }
 
         /* If we already have a login window, switch to it */
         if (gdm_get_login_window_session_id (seat_id, &login_session_id)) {
-                GdmDisplay *display;
+                ScdmDisplay *display;
 
                 display = gdm_display_store_find (store,
                                                   lookup_by_session_id,
@@ -495,14 +495,14 @@ create_display (GdmLocalDisplayFactory *factory,
                     (gdm_display_get_status (display) == GDM_DISPLAY_MANAGED ||
                      gdm_display_get_status (display) == GDM_DISPLAY_WAITING_TO_FINISH)) {
                         g_object_set (G_OBJECT (display), "status", GDM_DISPLAY_MANAGED, NULL);
-                        g_debug ("GdmLocalDisplayFactory: session %s found, activating.",
+                        g_debug ("ScdmLocalDisplayFactory: session %s found, activating.",
                                  login_session_id);
                         gdm_activate_session_by_id (factory->connection, seat_id, login_session_id);
                         return NULL;
                 }
         }
 
-        g_debug ("GdmLocalDisplayFactory: Adding display on seat %s", seat_id);
+        g_debug ("ScdmLocalDisplayFactory: Adding display on seat %s", seat_id);
 
 #ifdef ENABLE_USER_DISPLAY_SERVER
         if (g_strcmp0 (seat_id, "seat0") == 0) {
@@ -537,19 +537,19 @@ create_display (GdmLocalDisplayFactory *factory,
 }
 
 static void
-delete_display (GdmLocalDisplayFactory *factory,
+delete_display (ScdmLocalDisplayFactory *factory,
                 const char             *seat_id) {
 
-        GdmDisplayStore *store;
+        ScdmDisplayStore *store;
 
-        g_debug ("GdmLocalDisplayFactory: Removing used_display_numbers on seat %s", seat_id);
+        g_debug ("ScdmLocalDisplayFactory: Removing used_display_numbers on seat %s", seat_id);
 
         store = gdm_display_factory_get_display_store (GDM_DISPLAY_FACTORY (factory));
         gdm_display_store_foreach_remove (store, lookup_by_seat_id, (gpointer) seat_id);
 }
 
 static gboolean
-gdm_local_display_factory_sync_seats (GdmLocalDisplayFactory *factory)
+gdm_local_display_factory_sync_seats (ScdmLocalDisplayFactory *factory)
 {
         GError *error = NULL;
         GVariant *result;
@@ -557,7 +557,7 @@ gdm_local_display_factory_sync_seats (GdmLocalDisplayFactory *factory)
         GVariantIter iter;
         const char *seat;
 
-        g_debug ("GdmLocalDisplayFactory: enumerating seats from logind");
+        g_debug ("ScdmLocalDisplayFactory: enumerating seats from logind");
         result = g_dbus_connection_call_sync (factory->connection,
                                               "org.freedesktop.login1",
                                               "/org/freedesktop/login1",
@@ -570,7 +570,7 @@ gdm_local_display_factory_sync_seats (GdmLocalDisplayFactory *factory)
                                               NULL, &error);
 
         if (!result) {
-                g_warning ("GdmLocalDisplayFactory: Failed to issue method call: %s", error->message);
+                g_warning ("ScdmLocalDisplayFactory: Failed to issue method call: %s", error->message);
                 g_clear_error (&error);
                 return FALSE;
         }
@@ -630,7 +630,7 @@ on_seat_removed (GDBusConnection *connection,
 
 static gboolean
 lookup_by_session_id (const char *id,
-                      GdmDisplay *display,
+                      ScdmDisplay *display,
                       gpointer    user_data)
 {
         const char *looking_for = user_data;
@@ -642,7 +642,7 @@ lookup_by_session_id (const char *id,
 
 static gboolean
 lookup_by_tty (const char *id,
-              GdmDisplay *display,
+              ScdmDisplay *display,
               gpointer    user_data)
 {
         const char *tty_to_find = user_data;
@@ -665,13 +665,13 @@ lookup_by_tty (const char *id,
 
 #if defined(ENABLE_USER_DISPLAY_SERVER)
 static void
-maybe_stop_greeter_in_background (GdmLocalDisplayFactory *factory,
-                                  GdmDisplay             *display)
+maybe_stop_greeter_in_background (ScdmLocalDisplayFactory *factory,
+                                  ScdmDisplay             *display)
 {
         gboolean doing_initial_setup = FALSE;
 
         if (gdm_display_get_status (display) != GDM_DISPLAY_MANAGED) {
-                g_debug ("GdmLocalDisplayFactory: login window not in managed state, so ignoring");
+                g_debug ("ScdmLocalDisplayFactory: login window not in managed state, so ignoring");
                 return;
         }
 
@@ -681,11 +681,11 @@ maybe_stop_greeter_in_background (GdmLocalDisplayFactory *factory,
 
         /* we don't ever stop initial-setup implicitly */
         if (doing_initial_setup) {
-                g_debug ("GdmLocalDisplayFactory: login window is performing initial-setup, so ignoring");
+                g_debug ("ScdmLocalDisplayFactory: login window is performing initial-setup, so ignoring");
                 return;
         }
 
-        g_debug ("GdmLocalDisplayFactory: killing login window once its unused");
+        g_debug ("ScdmLocalDisplayFactory: killing login window once its unused");
 
         g_object_set (G_OBJECT (display), "status", GDM_DISPLAY_WAITING_TO_FINISH, NULL);
 }
@@ -693,9 +693,9 @@ maybe_stop_greeter_in_background (GdmLocalDisplayFactory *factory,
 static gboolean
 on_vt_changed (GIOChannel    *source,
                GIOCondition   condition,
-               GdmLocalDisplayFactory *factory)
+               ScdmLocalDisplayFactory *factory)
 {
-        GdmDisplayStore *store;
+        ScdmDisplayStore *store;
         GIOStatus status;
         g_autofree char *tty_of_active_vt = NULL;
         g_autofree char *login_session_id = NULL;
@@ -704,7 +704,7 @@ on_vt_changed (GIOChannel    *source,
         const char *session_type = NULL;
         int ret, n_returned;
 
-        g_debug ("GdmLocalDisplayFactory: received VT change event");
+        g_debug ("ScdmLocalDisplayFactory: received VT change event");
         g_io_channel_seek_position (source, 0, G_SEEK_SET, NULL);
 
         if (condition & G_IO_PRI) {
@@ -727,12 +727,12 @@ on_vt_changed (GIOChannel    *source,
         }
 
         if ((condition & G_IO_ERR) || (condition & G_IO_HUP)) {
-                g_debug ("GdmLocalDisplayFactory: kernel hung up active vt watch");
+                g_debug ("ScdmLocalDisplayFactory: kernel hung up active vt watch");
                 return G_SOURCE_REMOVE;
         }
 
         if (tty_of_active_vt == NULL) {
-                g_debug ("GdmLocalDisplayFactory: unable to read active VT from kernel");
+                g_debug ("ScdmLocalDisplayFactory: unable to read active VT from kernel");
                 return G_SOURCE_CONTINUE;
         }
 
@@ -742,14 +742,14 @@ on_vt_changed (GIOChannel    *source,
         n_returned = sscanf (tty_of_active_vt, "tty%u", &new_vt);
 
         if (n_returned != 1 || errno != 0) {
-                g_critical ("GdmLocalDisplayFactory: Couldn't read active VT (got '%s')",
+                g_critical ("ScdmLocalDisplayFactory: Couldn't read active VT (got '%s')",
                             tty_of_active_vt);
                 return G_SOURCE_CONTINUE;
         }
 
         /* don't do anything if we're on the same VT we were before */
         if (new_vt == factory->active_vt) {
-                g_debug ("GdmLocalDisplayFactory: VT changed to the same VT, ignoring");
+                g_debug ("ScdmLocalDisplayFactory: VT changed to the same VT, ignoring");
                 return G_SOURCE_CONTINUE;
         }
 
@@ -758,12 +758,12 @@ on_vt_changed (GIOChannel    *source,
 
         /* don't do anything at start up */
         if (previous_vt == 0) {
-                g_debug ("GdmLocalDisplayFactory: VT is %u at startup",
+                g_debug ("ScdmLocalDisplayFactory: VT is %u at startup",
                          factory->active_vt);
                 return G_SOURCE_CONTINUE;
         }
 
-        g_debug ("GdmLocalDisplayFactory: VT changed from %u to %u",
+        g_debug ("ScdmLocalDisplayFactory: VT changed from %u to %u",
                  previous_vt, factory->active_vt);
 
         store = gdm_display_factory_get_display_store (GDM_DISPLAY_FACTORY (factory));
@@ -773,11 +773,11 @@ on_vt_changed (GIOChannel    *source,
         if (gdm_get_login_window_session_id ("seat0", &login_session_id)) {
                 ret = sd_session_get_vt (login_session_id, &login_window_vt);
                 if (ret == 0 && login_window_vt != 0) {
-                        g_debug ("GdmLocalDisplayFactory: VT of login window is %u", login_window_vt);
+                        g_debug ("ScdmLocalDisplayFactory: VT of login window is %u", login_window_vt);
                         if (login_window_vt == previous_vt) {
-                                GdmDisplay *display;
+                                ScdmDisplay *display;
 
-                                g_debug ("GdmLocalDisplayFactory: VT switched from login window");
+                                g_debug ("ScdmLocalDisplayFactory: VT switched from login window");
 
                                 display = gdm_display_store_find (store,
                                                                   lookup_by_session_id,
@@ -785,7 +785,7 @@ on_vt_changed (GIOChannel    *source,
                                 if (display != NULL)
                                         maybe_stop_greeter_in_background (factory, display);
                         } else {
-                                g_debug ("GdmLocalDisplayFactory: VT not switched from login window");
+                                g_debug ("ScdmLocalDisplayFactory: VT not switched from login window");
                         }
                 }
         }
@@ -794,7 +794,7 @@ on_vt_changed (GIOChannel    *source,
          * the login screen (after a suitable timeout to avoid flicker)
          */
         if (factory->active_vt != login_window_vt) {
-                GdmDisplay *display;
+                ScdmDisplay *display;
 
                 display = gdm_display_store_find (store,
                                                   lookup_by_tty,
@@ -806,10 +806,10 @@ on_vt_changed (GIOChannel    *source,
                         g_object_get (display, "session-registered", &registered, NULL);
 
                         if (registered) {
-                                g_debug ("GdmLocalDisplayFactory: switched to registered user session, so reaping login screen in %d seconds",
+                                g_debug ("ScdmLocalDisplayFactory: switched to registered user session, so reaping login screen in %d seconds",
                                          WAIT_TO_FINISH_TIMEOUT);
                                 if (factory->wait_to_finish_timeout_id != 0) {
-                                         g_debug ("GdmLocalDisplayFactory: deferring previous login screen clean up operation");
+                                         g_debug ("ScdmLocalDisplayFactory: deferring previous login screen clean up operation");
                                          g_source_remove (factory->wait_to_finish_timeout_id);
                                 }
 
@@ -826,14 +826,14 @@ on_vt_changed (GIOChannel    *source,
          * jump to that login screen)
          */
         if (factory->active_vt != GDM_INITIAL_VT) {
-                g_debug ("GdmLocalDisplayFactory: active VT is not initial VT, so ignoring");
+                g_debug ("ScdmLocalDisplayFactory: active VT is not initial VT, so ignoring");
                 return G_SOURCE_CONTINUE;
         }
 
         if (gdm_local_display_factory_use_wayland ())
                 session_type = "wayland";
 
-        g_debug ("GdmLocalDisplayFactory: creating new display on seat0 because of VT change");
+        g_debug ("ScdmLocalDisplayFactory: creating new display on seat0 because of VT change");
 
         create_display (factory, "seat0", session_type, TRUE);
 
@@ -842,7 +842,7 @@ on_vt_changed (GIOChannel    *source,
 #endif
 
 static void
-gdm_local_display_factory_start_monitor (GdmLocalDisplayFactory *factory)
+gdm_local_display_factory_start_monitor (ScdmLocalDisplayFactory *factory)
 {
         g_autoptr (GIOChannel) io_channel = NULL;
 
@@ -882,7 +882,7 @@ gdm_local_display_factory_start_monitor (GdmLocalDisplayFactory *factory)
 }
 
 static void
-gdm_local_display_factory_stop_monitor (GdmLocalDisplayFactory *factory)
+gdm_local_display_factory_stop_monitor (ScdmLocalDisplayFactory *factory)
 {
         if (factory->seat_new_id) {
                 g_dbus_connection_signal_unsubscribe (factory->connection,
@@ -907,11 +907,11 @@ gdm_local_display_factory_stop_monitor (GdmLocalDisplayFactory *factory)
 }
 
 static void
-on_display_added (GdmDisplayStore        *display_store,
+on_display_added (ScdmDisplayStore        *display_store,
                   const char             *id,
-                  GdmLocalDisplayFactory *factory)
+                  ScdmLocalDisplayFactory *factory)
 {
-        GdmDisplay *display;
+        ScdmDisplay *display;
 
         display = gdm_display_store_lookup (display_store, id);
 
@@ -926,19 +926,19 @@ on_display_added (GdmDisplayStore        *display_store,
 }
 
 static void
-on_display_removed (GdmDisplayStore        *display_store,
-                    GdmDisplay             *display,
-                    GdmLocalDisplayFactory *factory)
+on_display_removed (ScdmDisplayStore        *display_store,
+                    ScdmDisplay             *display,
+                    ScdmLocalDisplayFactory *factory)
 {
         g_signal_handlers_disconnect_by_func (display, G_CALLBACK (on_display_status_changed), factory);
         g_object_weak_unref (G_OBJECT (display), (GWeakNotify)on_display_disposed, factory);
 }
 
 static gboolean
-gdm_local_display_factory_start (GdmDisplayFactory *base_factory)
+gdm_local_display_factory_start (ScdmDisplayFactory *base_factory)
 {
-        GdmLocalDisplayFactory *factory = GDM_LOCAL_DISPLAY_FACTORY (base_factory);
-        GdmDisplayStore *store;
+        ScdmLocalDisplayFactory *factory = GDM_LOCAL_DISPLAY_FACTORY (base_factory);
+        ScdmDisplayStore *store;
 
         g_return_val_if_fail (GDM_IS_LOCAL_DISPLAY_FACTORY (factory), FALSE);
 
@@ -961,10 +961,10 @@ gdm_local_display_factory_start (GdmDisplayFactory *base_factory)
 }
 
 static gboolean
-gdm_local_display_factory_stop (GdmDisplayFactory *base_factory)
+gdm_local_display_factory_stop (ScdmDisplayFactory *base_factory)
 {
-        GdmLocalDisplayFactory *factory = GDM_LOCAL_DISPLAY_FACTORY (base_factory);
-        GdmDisplayStore *store;
+        ScdmLocalDisplayFactory *factory = GDM_LOCAL_DISPLAY_FACTORY (base_factory);
+        ScdmDisplayStore *store;
 
         g_return_val_if_fail (GDM_IS_LOCAL_DISPLAY_FACTORY (factory), FALSE);
 
@@ -1009,9 +1009,9 @@ gdm_local_display_factory_get_property (GObject    *object,
 }
 
 static gboolean
-handle_create_transient_display (GdmDBusLocalDisplayFactory *skeleton,
+handle_create_transient_display (ScdmDBusLocalDisplayFactory *skeleton,
                                  GDBusMethodInvocation      *invocation,
-                                 GdmLocalDisplayFactory     *factory)
+                                 ScdmLocalDisplayFactory     *factory)
 {
         GError *error = NULL;
         gboolean created;
@@ -1031,7 +1031,7 @@ handle_create_transient_display (GdmDBusLocalDisplayFactory *skeleton,
 }
 
 static gboolean
-register_factory (GdmLocalDisplayFactory *factory)
+register_factory (ScdmLocalDisplayFactory *factory)
 {
         GError *error = NULL;
 
@@ -1067,7 +1067,7 @@ gdm_local_display_factory_constructor (GType                  type,
                                        guint                  n_construct_properties,
                                        GObjectConstructParam *construct_properties)
 {
-        GdmLocalDisplayFactory      *factory;
+        ScdmLocalDisplayFactory      *factory;
         gboolean                     res;
 
         factory = GDM_LOCAL_DISPLAY_FACTORY (G_OBJECT_CLASS (gdm_local_display_factory_parent_class)->constructor (type,
@@ -1083,10 +1083,10 @@ gdm_local_display_factory_constructor (GType                  type,
 }
 
 static void
-gdm_local_display_factory_class_init (GdmLocalDisplayFactoryClass *klass)
+gdm_local_display_factory_class_init (ScdmLocalDisplayFactoryClass *klass)
 {
         GObjectClass           *object_class = G_OBJECT_CLASS (klass);
-        GdmDisplayFactoryClass *factory_class = GDM_DISPLAY_FACTORY_CLASS (klass);
+        ScdmDisplayFactoryClass *factory_class = GDM_DISPLAY_FACTORY_CLASS (klass);
 
         object_class->get_property = gdm_local_display_factory_get_property;
         object_class->set_property = gdm_local_display_factory_set_property;
@@ -1098,7 +1098,7 @@ gdm_local_display_factory_class_init (GdmLocalDisplayFactoryClass *klass)
 }
 
 static void
-gdm_local_display_factory_init (GdmLocalDisplayFactory *factory)
+gdm_local_display_factory_init (ScdmLocalDisplayFactory *factory)
 {
         factory->used_display_numbers = g_hash_table_new (NULL, NULL);
 }
@@ -1106,7 +1106,7 @@ gdm_local_display_factory_init (GdmLocalDisplayFactory *factory)
 static void
 gdm_local_display_factory_finalize (GObject *object)
 {
-        GdmLocalDisplayFactory *factory;
+        ScdmLocalDisplayFactory *factory;
 
         g_return_if_fail (object != NULL);
         g_return_if_fail (GDM_IS_LOCAL_DISPLAY_FACTORY (object));
@@ -1125,8 +1125,8 @@ gdm_local_display_factory_finalize (GObject *object)
         G_OBJECT_CLASS (gdm_local_display_factory_parent_class)->finalize (object);
 }
 
-GdmLocalDisplayFactory *
-gdm_local_display_factory_new (GdmDisplayStore *store)
+ScdmLocalDisplayFactory *
+gdm_local_display_factory_new (ScdmDisplayStore *store)
 {
         if (local_display_factory_object != NULL) {
                 g_object_ref (local_display_factory_object);

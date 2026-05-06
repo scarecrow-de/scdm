@@ -57,13 +57,13 @@
 
 extern char **environ;
 
-struct GdmLaunchEnvironmentPrivate
+struct ScdmLaunchEnvironmentPrivate
 {
-        GdmSession     *session;
+        ScdmSession     *session;
         char           *command;
         GPid            pid;
 
-        GdmSessionVerificationMode verification_mode;
+        ScdmSessionVerificationMode verification_mode;
 
         char           *user_name;
         char           *runtime_dir;
@@ -107,14 +107,14 @@ enum {
 
 static guint signals [LAST_SIGNAL] = { 0, };
 
-static void     gdm_launch_environment_class_init    (GdmLaunchEnvironmentClass *klass);
-static void     gdm_launch_environment_init          (GdmLaunchEnvironment      *launch_environment);
+static void     gdm_launch_environment_class_init    (ScdmLaunchEnvironmentClass *klass);
+static void     gdm_launch_environment_init          (ScdmLaunchEnvironment      *launch_environment);
 static void     gdm_launch_environment_finalize      (GObject                   *object);
 
-G_DEFINE_TYPE_WITH_PRIVATE (GdmLaunchEnvironment, gdm_launch_environment, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (ScdmLaunchEnvironment, gdm_launch_environment, G_TYPE_OBJECT)
 
 static GHashTable *
-build_launch_environment (GdmLaunchEnvironment *launch_environment,
+build_launch_environment (ScdmLaunchEnvironment *launch_environment,
                           gboolean              start_session)
 {
         GHashTable    *hash;
@@ -222,9 +222,9 @@ build_launch_environment (GdmLaunchEnvironment *launch_environment,
 }
 
 static void
-on_session_setup_complete (GdmSession        *session,
+on_session_setup_complete (ScdmSession        *session,
                            const char        *service_name,
-                           GdmLaunchEnvironment *launch_environment)
+                           ScdmLaunchEnvironment *launch_environment)
 {
         GHashTable       *hash;
         GHashTableIter    iter;
@@ -240,10 +240,10 @@ on_session_setup_complete (GdmSession        *session,
 }
 
 static void
-on_session_opened (GdmSession           *session,
+on_session_opened (ScdmSession           *session,
                    const char           *service_name,
                    const char           *session_id,
-                   GdmLaunchEnvironment *launch_environment)
+                   ScdmLaunchEnvironment *launch_environment)
 {
         launch_environment->priv->session_id = g_strdup (session_id);
 
@@ -252,19 +252,19 @@ on_session_opened (GdmSession           *session,
 }
 
 static void
-on_session_started (GdmSession           *session,
+on_session_started (ScdmSession           *session,
                     const char           *service_name,
                     int                   pid,
-                    GdmLaunchEnvironment *launch_environment)
+                    ScdmLaunchEnvironment *launch_environment)
 {
         launch_environment->priv->pid = pid;
         g_signal_emit (G_OBJECT (launch_environment), signals [STARTED], 0);
 }
 
 static void
-on_session_exited (GdmSession           *session,
+on_session_exited (ScdmSession           *session,
                    int                   exit_code,
-                   GdmLaunchEnvironment *launch_environment)
+                   ScdmLaunchEnvironment *launch_environment)
 {
         gdm_session_stop_conversation (launch_environment->priv->session, "scdm-launch-environment");
 
@@ -272,9 +272,9 @@ on_session_exited (GdmSession           *session,
 }
 
 static void
-on_session_died (GdmSession           *session,
+on_session_died (ScdmSession           *session,
                  int                   signal_number,
-                 GdmLaunchEnvironment *launch_environment)
+                 ScdmLaunchEnvironment *launch_environment)
 {
         gdm_session_stop_conversation (launch_environment->priv->session, "scdm-launch-environment");
 
@@ -282,18 +282,18 @@ on_session_died (GdmSession           *session,
 }
 
 static void
-on_hostname_selected (GdmSession               *session,
+on_hostname_selected (ScdmSession               *session,
                       const char               *hostname,
-		      GdmLaunchEnvironment     *launch_environment)
+		      ScdmLaunchEnvironment     *launch_environment)
 {
-        g_debug ("GdmSession: hostname selected: %s", hostname);
+        g_debug ("ScdmSession: hostname selected: %s", hostname);
         g_signal_emit (launch_environment, signals [HOSTNAME_SELECTED], 0, hostname);
 }
 
 static void
-on_conversation_started (GdmSession           *session,
+on_conversation_started (ScdmSession           *session,
                          const char           *service_name,
-                         GdmLaunchEnvironment *launch_environment)
+                         ScdmLaunchEnvironment *launch_environment)
 {
         char             *log_path;
         char             *log_file;
@@ -314,16 +314,16 @@ on_conversation_started (GdmSession           *session,
 }
 
 static void
-on_conversation_stopped (GdmSession           *session,
+on_conversation_stopped (ScdmSession           *session,
                          const char           *service_name,
-                         GdmLaunchEnvironment *launch_environment)
+                         ScdmLaunchEnvironment *launch_environment)
 {
-        GdmSession *conversation_session;
+        ScdmSession *conversation_session;
 
         conversation_session = launch_environment->priv->session;
         launch_environment->priv->session = NULL;
 
-        g_debug ("GdmLaunchEnvironment: conversation stopped");
+        g_debug ("ScdmLaunchEnvironment: conversation stopped");
 
         if (launch_environment->priv->pid > 1) {
                 gdm_signal_pid (-launch_environment->priv->pid, SIGTERM);
@@ -359,12 +359,12 @@ ensure_directory_with_uid_gid (const char  *path,
 
 /**
  * gdm_launch_environment_start:
- * @disp: Pointer to a GdmDisplay structure
+ * @disp: Pointer to a ScdmDisplay structure
  *
  * Starts a local X launch_environment. Handles retries and fatal errors properly.
  */
 gboolean
-gdm_launch_environment_start (GdmLaunchEnvironment *launch_environment)
+gdm_launch_environment_start (ScdmLaunchEnvironment *launch_environment)
 {
         gboolean          res = FALSE;
         GError           *local_error = NULL;
@@ -373,7 +373,7 @@ gdm_launch_environment_start (GdmLaunchEnvironment *launch_environment)
         uid_t             uid;
         gid_t             gid;
 
-        g_debug ("GdmLaunchEnvironment: Starting...");
+        g_debug ("ScdmLaunchEnvironment: Starting...");
 
         if (!gdm_get_pwent_for_name (launch_environment->priv->user_name, &passwd_entry)) {
                 g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
@@ -385,7 +385,7 @@ gdm_launch_environment_start (GdmLaunchEnvironment *launch_environment)
         uid = passwd_entry->pw_uid;
         gid = passwd_entry->pw_gid;
 
-        g_debug ("GdmLaunchEnvironment: Setting up run time dir %s",
+        g_debug ("ScdmLaunchEnvironment: Setting up run time dir %s",
                  launch_environment->priv->runtime_dir);
         if (!ensure_directory_with_uid_gid (launch_environment->priv->runtime_dir, uid, gid, error)) {
                 goto out;
@@ -459,14 +459,14 @@ gdm_launch_environment_start (GdmLaunchEnvironment *launch_environment)
         res = TRUE;
  out:
         if (local_error) {
-                g_critical ("GdmLaunchEnvironment: %s", local_error->message);
+                g_critical ("ScdmLaunchEnvironment: %s", local_error->message);
                 g_clear_error (&local_error);
         }
         return res;
 }
 
 gboolean
-gdm_launch_environment_stop (GdmLaunchEnvironment *launch_environment)
+gdm_launch_environment_stop (ScdmLaunchEnvironment *launch_environment)
 {
         if (launch_environment->priv->pid > 1) {
                 gdm_signal_pid (-launch_environment->priv->pid, SIGTERM);
@@ -483,27 +483,27 @@ gdm_launch_environment_stop (GdmLaunchEnvironment *launch_environment)
         return TRUE;
 }
 
-GdmSession *
-gdm_launch_environment_get_session (GdmLaunchEnvironment *launch_environment)
+ScdmSession *
+gdm_launch_environment_get_session (ScdmLaunchEnvironment *launch_environment)
 {
         return launch_environment->priv->session;
 }
 
 char *
-gdm_launch_environment_get_session_id (GdmLaunchEnvironment *launch_environment)
+gdm_launch_environment_get_session_id (ScdmLaunchEnvironment *launch_environment)
 {
         return g_strdup (launch_environment->priv->session_id);
 }
 
 static void
-_gdm_launch_environment_set_verification_mode (GdmLaunchEnvironment           *launch_environment,
-                                               GdmSessionVerificationMode      verification_mode)
+_gdm_launch_environment_set_verification_mode (ScdmLaunchEnvironment           *launch_environment,
+                                               ScdmSessionVerificationMode      verification_mode)
 {
         launch_environment->priv->verification_mode = verification_mode;
 }
 
 static void
-_gdm_launch_environment_set_session_type (GdmLaunchEnvironment *launch_environment,
+_gdm_launch_environment_set_session_type (ScdmLaunchEnvironment *launch_environment,
                                           const char           *session_type)
 {
         g_free (launch_environment->priv->session_type);
@@ -511,7 +511,7 @@ _gdm_launch_environment_set_session_type (GdmLaunchEnvironment *launch_environme
 }
 
 static void
-_gdm_launch_environment_set_session_mode (GdmLaunchEnvironment *launch_environment,
+_gdm_launch_environment_set_session_mode (ScdmLaunchEnvironment *launch_environment,
                                           const char           *session_mode)
 {
         g_free (launch_environment->priv->session_mode);
@@ -519,7 +519,7 @@ _gdm_launch_environment_set_session_mode (GdmLaunchEnvironment *launch_environme
 }
 
 static void
-_gdm_launch_environment_set_x11_display_name (GdmLaunchEnvironment *launch_environment,
+_gdm_launch_environment_set_x11_display_name (ScdmLaunchEnvironment *launch_environment,
                                               const char           *name)
 {
         g_free (launch_environment->priv->x11_display_name);
@@ -527,7 +527,7 @@ _gdm_launch_environment_set_x11_display_name (GdmLaunchEnvironment *launch_envir
 }
 
 static void
-_gdm_launch_environment_set_x11_display_seat_id (GdmLaunchEnvironment *launch_environment,
+_gdm_launch_environment_set_x11_display_seat_id (ScdmLaunchEnvironment *launch_environment,
                                                  const char           *sid)
 {
         g_free (launch_environment->priv->x11_display_seat_id);
@@ -535,7 +535,7 @@ _gdm_launch_environment_set_x11_display_seat_id (GdmLaunchEnvironment *launch_en
 }
 
 static void
-_gdm_launch_environment_set_x11_display_hostname (GdmLaunchEnvironment *launch_environment,
+_gdm_launch_environment_set_x11_display_hostname (ScdmLaunchEnvironment *launch_environment,
                                                   const char           *name)
 {
         g_free (launch_environment->priv->x11_display_hostname);
@@ -543,7 +543,7 @@ _gdm_launch_environment_set_x11_display_hostname (GdmLaunchEnvironment *launch_e
 }
 
 static void
-_gdm_launch_environment_set_x11_display_device (GdmLaunchEnvironment *launch_environment,
+_gdm_launch_environment_set_x11_display_device (ScdmLaunchEnvironment *launch_environment,
                                                 const char           *name)
 {
         g_free (launch_environment->priv->x11_display_device);
@@ -551,14 +551,14 @@ _gdm_launch_environment_set_x11_display_device (GdmLaunchEnvironment *launch_env
 }
 
 static void
-_gdm_launch_environment_set_x11_display_is_local (GdmLaunchEnvironment *launch_environment,
+_gdm_launch_environment_set_x11_display_is_local (ScdmLaunchEnvironment *launch_environment,
                                                   gboolean              is_local)
 {
         launch_environment->priv->x11_display_is_local = is_local;
 }
 
 static void
-_gdm_launch_environment_set_x11_authority_file (GdmLaunchEnvironment *launch_environment,
+_gdm_launch_environment_set_x11_authority_file (ScdmLaunchEnvironment *launch_environment,
                                                 const char           *file)
 {
         g_free (launch_environment->priv->x11_authority_file);
@@ -566,7 +566,7 @@ _gdm_launch_environment_set_x11_authority_file (GdmLaunchEnvironment *launch_env
 }
 
 static void
-_gdm_launch_environment_set_user_name (GdmLaunchEnvironment *launch_environment,
+_gdm_launch_environment_set_user_name (ScdmLaunchEnvironment *launch_environment,
                                        const char           *name)
 {
         g_free (launch_environment->priv->user_name);
@@ -574,7 +574,7 @@ _gdm_launch_environment_set_user_name (GdmLaunchEnvironment *launch_environment,
 }
 
 static void
-_gdm_launch_environment_set_runtime_dir (GdmLaunchEnvironment *launch_environment,
+_gdm_launch_environment_set_runtime_dir (ScdmLaunchEnvironment *launch_environment,
                                          const char           *dir)
 {
         g_free (launch_environment->priv->runtime_dir);
@@ -582,7 +582,7 @@ _gdm_launch_environment_set_runtime_dir (GdmLaunchEnvironment *launch_environmen
 }
 
 static void
-_gdm_launch_environment_set_command (GdmLaunchEnvironment *launch_environment,
+_gdm_launch_environment_set_command (ScdmLaunchEnvironment *launch_environment,
                                      const char           *name)
 {
         g_free (launch_environment->priv->command);
@@ -595,7 +595,7 @@ gdm_launch_environment_set_property (GObject      *object,
                                      const GValue *value,
                                      GParamSpec   *pspec)
 {
-        GdmLaunchEnvironment *self;
+        ScdmLaunchEnvironment *self;
 
         self = GDM_LAUNCH_ENVIRONMENT (object);
 
@@ -648,7 +648,7 @@ gdm_launch_environment_get_property (GObject    *object,
                                      GValue     *value,
                                      GParamSpec *pspec)
 {
-        GdmLaunchEnvironment *self;
+        ScdmLaunchEnvironment *self;
 
         self = GDM_LAUNCH_ENVIRONMENT (object);
 
@@ -696,7 +696,7 @@ gdm_launch_environment_get_property (GObject    *object,
 }
 
 static void
-gdm_launch_environment_class_init (GdmLaunchEnvironmentClass *klass)
+gdm_launch_environment_class_init (ScdmLaunchEnvironmentClass *klass)
 {
         GObjectClass    *object_class = G_OBJECT_CLASS (klass);
 
@@ -793,7 +793,7 @@ gdm_launch_environment_class_init (GdmLaunchEnvironmentClass *klass)
                 g_signal_new ("opened",
                               G_OBJECT_CLASS_TYPE (object_class),
                               G_SIGNAL_RUN_FIRST,
-                              G_STRUCT_OFFSET (GdmLaunchEnvironmentClass, opened),
+                              G_STRUCT_OFFSET (ScdmLaunchEnvironmentClass, opened),
                               NULL,
                               NULL,
                               g_cclosure_marshal_VOID__VOID,
@@ -803,7 +803,7 @@ gdm_launch_environment_class_init (GdmLaunchEnvironmentClass *klass)
                 g_signal_new ("started",
                               G_OBJECT_CLASS_TYPE (object_class),
                               G_SIGNAL_RUN_FIRST,
-                              G_STRUCT_OFFSET (GdmLaunchEnvironmentClass, started),
+                              G_STRUCT_OFFSET (ScdmLaunchEnvironmentClass, started),
                               NULL,
                               NULL,
                               g_cclosure_marshal_VOID__VOID,
@@ -813,7 +813,7 @@ gdm_launch_environment_class_init (GdmLaunchEnvironmentClass *klass)
                 g_signal_new ("stopped",
                               G_OBJECT_CLASS_TYPE (object_class),
                               G_SIGNAL_RUN_FIRST,
-                              G_STRUCT_OFFSET (GdmLaunchEnvironmentClass, stopped),
+                              G_STRUCT_OFFSET (ScdmLaunchEnvironmentClass, stopped),
                               NULL,
                               NULL,
                               g_cclosure_marshal_VOID__VOID,
@@ -823,7 +823,7 @@ gdm_launch_environment_class_init (GdmLaunchEnvironmentClass *klass)
                 g_signal_new ("exited",
                               G_OBJECT_CLASS_TYPE (object_class),
                               G_SIGNAL_RUN_FIRST,
-                              G_STRUCT_OFFSET (GdmLaunchEnvironmentClass, exited),
+                              G_STRUCT_OFFSET (ScdmLaunchEnvironmentClass, exited),
                               NULL,
                               NULL,
                               g_cclosure_marshal_VOID__INT,
@@ -834,7 +834,7 @@ gdm_launch_environment_class_init (GdmLaunchEnvironmentClass *klass)
                 g_signal_new ("died",
                               G_OBJECT_CLASS_TYPE (object_class),
                               G_SIGNAL_RUN_FIRST,
-                              G_STRUCT_OFFSET (GdmLaunchEnvironmentClass, died),
+                              G_STRUCT_OFFSET (ScdmLaunchEnvironmentClass, died),
                               NULL,
                               NULL,
                               g_cclosure_marshal_VOID__INT,
@@ -846,7 +846,7 @@ gdm_launch_environment_class_init (GdmLaunchEnvironmentClass *klass)
                 g_signal_new ("hostname-selected",
                               G_OBJECT_CLASS_TYPE (object_class),
                               G_SIGNAL_RUN_FIRST,
-                              G_STRUCT_OFFSET (GdmLaunchEnvironmentClass, hostname_selected),
+                              G_STRUCT_OFFSET (ScdmLaunchEnvironmentClass, hostname_selected),
                               NULL,
                               NULL,
                               g_cclosure_marshal_VOID__STRING,
@@ -856,7 +856,7 @@ gdm_launch_environment_class_init (GdmLaunchEnvironmentClass *klass)
 }
 
 static void
-gdm_launch_environment_init (GdmLaunchEnvironment *launch_environment)
+gdm_launch_environment_init (ScdmLaunchEnvironment *launch_environment)
 {
 
         launch_environment->priv = gdm_launch_environment_get_instance_private (launch_environment);
@@ -868,7 +868,7 @@ gdm_launch_environment_init (GdmLaunchEnvironment *launch_environment)
 static void
 gdm_launch_environment_finalize (GObject *object)
 {
-        GdmLaunchEnvironment *launch_environment;
+        ScdmLaunchEnvironment *launch_environment;
 
         g_return_if_fail (object != NULL);
         g_return_if_fail (GDM_IS_LAUNCH_ENVIRONMENT (object));
@@ -897,7 +897,7 @@ gdm_launch_environment_finalize (GObject *object)
         G_OBJECT_CLASS (gdm_launch_environment_parent_class)->finalize (object);
 }
 
-static GdmLaunchEnvironment *
+static ScdmLaunchEnvironment *
 create_gnome_session_environment (const char *session_id,
                                   const char *user_name,
                                   const char *display_name,
@@ -909,7 +909,7 @@ create_gnome_session_environment (const char *session_id,
 {
         gboolean debug = FALSE;
         char *command;
-        GdmLaunchEnvironment *launch_environment;
+        ScdmLaunchEnvironment *launch_environment;
         char **argv;
         GPtrArray *args;
 
@@ -952,7 +952,7 @@ create_gnome_session_environment (const char *session_id,
         return launch_environment;
 }
 
-GdmLaunchEnvironment *
+ScdmLaunchEnvironment *
 gdm_create_greeter_launch_environment (const char *display_name,
                                        const char *seat_id,
                                        const char *session_type,
@@ -971,7 +971,7 @@ gdm_create_greeter_launch_environment (const char *display_name,
                                                  display_is_local);
 }
 
-GdmLaunchEnvironment *
+ScdmLaunchEnvironment *
 gdm_create_initial_setup_launch_environment (const char *display_name,
                                              const char *seat_id,
                                              const char *session_type,
@@ -988,13 +988,13 @@ gdm_create_initial_setup_launch_environment (const char *display_name,
                                                  display_is_local);
 }
 
-GdmLaunchEnvironment *
+ScdmLaunchEnvironment *
 gdm_create_chooser_launch_environment (const char *display_name,
                                        const char *seat_id,
                                        const char *display_hostname)
 
 {
-        GdmLaunchEnvironment *launch_environment;
+        ScdmLaunchEnvironment *launch_environment;
 
         launch_environment = g_object_new (GDM_TYPE_LAUNCH_ENVIRONMENT,
                                            "command", LIBEXECDIR "/scdm-simple-chooser",

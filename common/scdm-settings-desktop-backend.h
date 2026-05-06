@@ -28,9 +28,9 @@
 G_BEGIN_DECLS
 
 #define GDM_TYPE_SETTINGS_DESKTOP_BACKEND (gdm_settings_desktop_backend_get_type ())
-G_DECLARE_FINAL_TYPE (GdmSettingsDesktopBackend, gdm_settings_desktop_backend, GDM, SETTINGS_DESKTOP_BACKEND, GdmSettingsBackend)
+G_DECLARE_FINAL_TYPE (ScdmSettingsDesktopBackend, gdm_settings_desktop_backend, GDM, SETTINGS_DESKTOP_BACKEND, ScdmSettingsBackend)
 
-GdmSettingsBackend        *gdm_settings_desktop_backend_new             (const char* filename);
+ScdmSettingsBackend        *gdm_settings_desktop_backend_new             (const char* filename);
 
 G_END_DECLS
 

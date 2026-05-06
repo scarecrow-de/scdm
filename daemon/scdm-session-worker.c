@@ -80,7 +80,7 @@
 
 #include "scdm-session-settings.h"
 
-#define GDM_SESSION_WORKER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), GDM_TYPE_SESSION_WORKER, GdmSessionWorkerPrivate))
+#define GDM_SESSION_WORKER_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), GDM_TYPE_SESSION_WORKER, ScdmSessionWorkerPrivate))
 
 #define GDM_SESSION_DBUS_PATH         "/io/github/scarecrow_de/DisplayManager/Session"
 #define GDM_SESSION_DBUS_NAME         "io.github.scarecrow_de.DisplayManager.Session"
@@ -112,16 +112,16 @@
 
 typedef struct
 {
-        GdmSessionWorker *worker;
-        GdmSession       *session;
+        ScdmSessionWorker *worker;
+        ScdmSession       *session;
         GPid              pid_of_caller;
         uid_t             uid_of_caller;
 
 } ReauthenticationRequest;
 
-struct GdmSessionWorkerPrivate
+struct ScdmSessionWorkerPrivate
 {
-        GdmSessionWorkerState state;
+        ScdmSessionWorkerState state;
 
         int               exit_code;
 
@@ -157,16 +157,16 @@ struct GdmSessionWorkerPrivate
         guint32           display_is_local : 1;
         guint32           display_is_initial : 1;
         guint             state_change_idle_id;
-        GdmSessionDisplayMode display_mode;
+        ScdmSessionDisplayMode display_mode;
 
         char                 *server_address;
         GDBusConnection      *connection;
-        GdmDBusWorkerManager *manager;
+        ScdmDBusWorkerManager *manager;
 
         GHashTable         *reauthentication_requests;
 
-        GdmSessionAuditor  *auditor;
-        GdmSessionSettings *user_settings;
+        ScdmSessionAuditor  *auditor;
+        ScdmSessionSettings *user_settings;
 
         GDBusMethodInvocation *pending_invocation;
 };
@@ -188,30 +188,30 @@ enum {
         PROP_STATE,
 };
 
-static void     gdm_session_worker_class_init   (GdmSessionWorkerClass *klass);
-static void     gdm_session_worker_init         (GdmSessionWorker      *session_worker);
+static void     gdm_session_worker_class_init   (ScdmSessionWorkerClass *klass);
+static void     gdm_session_worker_init         (ScdmSessionWorker      *session_worker);
 static void     gdm_session_worker_finalize     (GObject               *object);
 
-static void     gdm_session_worker_set_environment_variable (GdmSessionWorker *worker,
+static void     gdm_session_worker_set_environment_variable (ScdmSessionWorker *worker,
                                                              const char       *key,
                                                              const char       *value);
 
-static void     queue_state_change              (GdmSessionWorker      *worker);
+static void     queue_state_change              (ScdmSessionWorker      *worker);
 
-static void     worker_interface_init           (GdmDBusWorkerIface *iface);
+static void     worker_interface_init           (ScdmDBusWorkerIface *iface);
 
 
-typedef int (* GdmSessionWorkerPamNewMessagesFunc) (int,
+typedef int (* ScdmSessionWorkerPamNewMessagesFunc) (int,
                                                     const struct pam_message **,
                                                     struct pam_response **,
                                                     gpointer);
 
-G_DEFINE_TYPE_WITH_CODE (GdmSessionWorker,
+G_DEFINE_TYPE_WITH_CODE (ScdmSessionWorker,
                          gdm_session_worker,
                          GDM_DBUS_TYPE_WORKER_SKELETON,
                          G_IMPLEMENT_INTERFACE (GDM_DBUS_TYPE_WORKER,
                                                 worker_interface_init)
-                         G_ADD_PRIVATE (GdmSessionWorker))
+                         G_ADD_PRIVATE (ScdmSessionWorker))
 
 /* adapted from glib script_execute */
 static void
@@ -398,7 +398,7 @@ gdm_session_execute (const char *file,
  * auditor username value.
  */
 static gboolean
-gdm_session_worker_get_username (GdmSessionWorker  *worker,
+gdm_session_worker_get_username (ScdmSessionWorker  *worker,
                                  char             **username)
 {
         gconstpointer item;
@@ -408,7 +408,7 @@ gdm_session_worker_get_username (GdmSessionWorker  *worker,
         if (pam_get_item (worker->priv->pam_handle, PAM_USER, &item) == PAM_SUCCESS) {
                 if (username != NULL) {
                         *username = g_strdup ((char *) item);
-                        g_debug ("GdmSessionWorker: username is '%s'",
+                        g_debug ("ScdmSessionWorker: username is '%s'",
                                  *username != NULL ? *username : "<unset>");
                 }
 
@@ -423,16 +423,16 @@ gdm_session_worker_get_username (GdmSessionWorker  *worker,
 }
 
 static void
-attempt_to_load_user_settings (GdmSessionWorker *worker,
+attempt_to_load_user_settings (ScdmSessionWorker *worker,
                                const char       *username)
 {
-        g_debug ("GdmSessionWorker: attempting to load user settings");
+        g_debug ("ScdmSessionWorker: attempting to load user settings");
         gdm_session_settings_load (worker->priv->user_settings,
                                    username);
 }
 
 static void
-gdm_session_worker_update_username (GdmSessionWorker *worker)
+gdm_session_worker_update_username (ScdmSessionWorker *worker)
 {
         char    *username;
         gboolean res;
@@ -440,7 +440,7 @@ gdm_session_worker_update_username (GdmSessionWorker *worker)
         username = NULL;
         res = gdm_session_worker_get_username (worker, &username);
         if (res) {
-                g_debug ("GdmSessionWorker: old-username='%s' new-username='%s'",
+                g_debug ("ScdmSessionWorker: old-username='%s' new-username='%s'",
                          worker->priv->username != NULL ? worker->priv->username : "<unset>",
                          username != NULL ? username : "<unset>");
 
@@ -452,7 +452,7 @@ gdm_session_worker_update_username (GdmSessionWorker *worker)
                      (strcmp (worker->priv->username, username) == 0)))
                         goto out;
 
-                g_debug ("GdmSessionWorker: setting username to '%s'", username);
+                g_debug ("ScdmSessionWorker: setting username to '%s'", username);
 
                 g_free (worker->priv->username);
                 worker->priv->username = username;
@@ -478,7 +478,7 @@ gdm_session_worker_update_username (GdmSessionWorker *worker)
 }
 
 static gboolean
-gdm_session_worker_ask_question (GdmSessionWorker *worker,
+gdm_session_worker_ask_question (ScdmSessionWorker *worker,
                                  const char       *question,
                                  char            **answerp)
 {
@@ -491,7 +491,7 @@ gdm_session_worker_ask_question (GdmSessionWorker *worker,
 }
 
 static gboolean
-gdm_session_worker_ask_for_secret (GdmSessionWorker *worker,
+gdm_session_worker_ask_for_secret (ScdmSessionWorker *worker,
                                    const char       *question,
                                    char            **answerp)
 {
@@ -504,7 +504,7 @@ gdm_session_worker_ask_for_secret (GdmSessionWorker *worker,
 }
 
 static gboolean
-gdm_session_worker_report_info (GdmSessionWorker *worker,
+gdm_session_worker_report_info (ScdmSessionWorker *worker,
                                 const char       *info)
 {
         return gdm_dbus_worker_manager_call_info_sync (worker->priv->manager,
@@ -515,7 +515,7 @@ gdm_session_worker_report_info (GdmSessionWorker *worker,
 }
 
 static gboolean
-gdm_session_worker_report_problem (GdmSessionWorker *worker,
+gdm_session_worker_report_problem (ScdmSessionWorker *worker,
                                    const char       *problem)
 {
         return gdm_dbus_worker_manager_call_problem_sync (worker->priv->manager,
@@ -527,9 +527,9 @@ gdm_session_worker_report_problem (GdmSessionWorker *worker,
 
 #ifdef SUPPORTS_PAM_EXTENSIONS
 static gboolean
-gdm_session_worker_ask_list_of_choices (GdmSessionWorker *worker,
+gdm_session_worker_ask_list_of_choices (ScdmSessionWorker *worker,
                                         const char       *prompt_message,
-                                        GdmChoiceList    *list,
+                                        ScdmChoiceList    *list,
                                         char            **answerp)
 {
         GVariantBuilder builder;
@@ -538,7 +538,7 @@ gdm_session_worker_ask_list_of_choices (GdmSessionWorker *worker,
         gboolean res;
         size_t i;
 
-        g_debug ("GdmSessionWorker: presenting user with list of choices:");
+        g_debug ("ScdmSessionWorker: presenting user with list of choices:");
 
         g_variant_builder_init (&builder, G_VARIANT_TYPE ("a{ss}"));
 
@@ -548,10 +548,10 @@ gdm_session_worker_ask_list_of_choices (GdmSessionWorker *worker,
                         g_variant_builder_clear (&builder);
                         return FALSE;
                 }
-                g_debug ("GdmSessionWorker:        choices['%s'] = \"%s\"", list->items[i].key, list->items[i].text);
+                g_debug ("ScdmSessionWorker:        choices['%s'] = \"%s\"", list->items[i].key, list->items[i].text);
                 g_variant_builder_add (&builder, "{ss}", list->items[i].key, list->items[i].text);
         }
-        g_debug ("GdmSessionWorker: (and waiting for reply)");
+        g_debug ("ScdmSessionWorker: (and waiting for reply)");
 
         choices_as_variant = g_variant_builder_end (&builder);
 
@@ -564,29 +564,29 @@ gdm_session_worker_ask_list_of_choices (GdmSessionWorker *worker,
                                                                     &error);
 
         if (! res) {
-                g_debug ("GdmSessionWorker: list request failed: %s", error->message);
+                g_debug ("ScdmSessionWorker: list request failed: %s", error->message);
                 g_clear_error (&error);
         } else {
-                g_debug ("GdmSessionWorker: user selected '%s'", *answerp);
+                g_debug ("ScdmSessionWorker: user selected '%s'", *answerp);
         }
 
         return res;
 }
 
 static gboolean
-gdm_session_worker_process_choice_list_request (GdmSessionWorker                   *worker,
-                                                GdmPamExtensionChoiceListRequest  *request,
-                                                GdmPamExtensionChoiceListResponse *response)
+gdm_session_worker_process_choice_list_request (ScdmSessionWorker                   *worker,
+                                                ScdmPamExtensionChoiceListRequest  *request,
+                                                ScdmPamExtensionChoiceListResponse *response)
 {
         return gdm_session_worker_ask_list_of_choices (worker, request->prompt_message, &request->list, &response->key);
 }
 
 static gboolean
-gdm_session_worker_process_extended_pam_message (GdmSessionWorker          *worker,
+gdm_session_worker_process_extended_pam_message (ScdmSessionWorker          *worker,
                                                  const struct pam_message  *query,
                                                  char                     **response)
 {
-        GdmPamExtensionMessage *extended_message;
+        ScdmPamExtensionMessage *extended_message;
         gboolean res;
 
         extended_message = GDM_PAM_EXTENSION_MESSAGE_FROM_PAM_MESSAGE (query);
@@ -602,10 +602,10 @@ gdm_session_worker_process_extended_pam_message (GdmSessionWorker          *work
         }
 
         if (GDM_PAM_EXTENSION_MESSAGE_MATCH (extended_message, worker->priv->extensions, GDM_PAM_EXTENSION_CHOICE_LIST)) {
-                GdmPamExtensionChoiceListRequest *list_request = (GdmPamExtensionChoiceListRequest *) extended_message;
-                GdmPamExtensionChoiceListResponse *list_response = malloc (GDM_PAM_EXTENSION_CHOICE_LIST_RESPONSE_SIZE);
+                ScdmPamExtensionChoiceListRequest *list_request = (ScdmPamExtensionChoiceListRequest *) extended_message;
+                ScdmPamExtensionChoiceListResponse *list_response = malloc (GDM_PAM_EXTENSION_CHOICE_LIST_RESPONSE_SIZE);
 
-                g_debug ("GdmSessionWorker: received extended pam message '%s'", GDM_PAM_EXTENSION_CHOICE_LIST);
+                g_debug ("ScdmSessionWorker: received extended pam message '%s'", GDM_PAM_EXTENSION_CHOICE_LIST);
 
                 GDM_PAM_EXTENSION_CHOICE_LIST_RESPONSE_INIT (list_response);
 
@@ -619,7 +619,7 @@ gdm_session_worker_process_extended_pam_message (GdmSessionWorker          *work
                 *response = GDM_PAM_EXTENSION_MESSAGE_TO_PAM_REPLY (list_response);
                 return TRUE;
         } else {
-                g_debug ("GdmSessionWorker: received extended pam message of unknown type %u", (unsigned int) extended_message->type);
+                g_debug ("ScdmSessionWorker: received extended pam message of unknown type %u", (unsigned int) extended_message->type);
                 return FALSE;
 
         }
@@ -657,7 +657,7 @@ convert_to_utf8 (const char *str)
 }
 
 static gboolean
-gdm_session_worker_process_pam_message (GdmSessionWorker          *worker,
+gdm_session_worker_process_pam_message (ScdmSessionWorker          *worker,
                                         const struct pam_message  *query,
                                         char                     **response)
 {
@@ -677,7 +677,7 @@ gdm_session_worker_process_pam_message (GdmSessionWorker          *worker,
                 return gdm_session_worker_process_extended_pam_message (worker, query, response);
 #endif
 
-        g_debug ("GdmSessionWorker: received pam message of type %u with payload '%s'",
+        g_debug ("ScdmSessionWorker: received pam message of type %u with payload '%s'",
                  query->msg_style, query->msg);
 
         utf8_msg = convert_to_utf8 (query->msg);
@@ -732,7 +732,7 @@ gdm_session_worker_process_pam_message (GdmSessionWorker          *worker,
                 memset (user_answer, '\0', strlen (user_answer));
                 g_free (user_answer);
 
-                g_debug ("GdmSessionWorker: trying to get updated username");
+                g_debug ("ScdmSessionWorker: trying to get updated username");
 
                 res = TRUE;
         }
@@ -767,13 +767,13 @@ static int
 gdm_session_worker_pam_new_messages_handler (int                        number_of_messages,
                                              const struct pam_message **messages,
                                              struct pam_response      **responses,
-                                             GdmSessionWorker          *worker)
+                                             ScdmSessionWorker          *worker)
 {
         struct pam_response *replies;
         int                  return_value;
         int                  i;
 
-        g_debug ("GdmSessionWorker: %d new messages received from PAM\n", number_of_messages);
+        g_debug ("ScdmSessionWorker: %d new messages received from PAM\n", number_of_messages);
 
         return_value = PAM_CONV_ERR;
 
@@ -828,7 +828,7 @@ gdm_session_worker_pam_new_messages_handler (int                        number_o
                 *responses = replies;
         }
 
-        g_debug ("GdmSessionWorker: PAM conversation returning %d: %s",
+        g_debug ("ScdmSessionWorker: PAM conversation returning %d: %s",
                  return_value,
                  pam_strerror (worker->priv->pam_handle, return_value));
 
@@ -836,7 +836,7 @@ gdm_session_worker_pam_new_messages_handler (int                        number_o
 }
 
 static void
-gdm_session_worker_start_auditor (GdmSessionWorker *worker)
+gdm_session_worker_start_auditor (ScdmSessionWorker *worker)
 {
     /* Use dummy auditor so program session doesn't pollute user audit logs
      */
@@ -862,7 +862,7 @@ gdm_session_worker_start_auditor (GdmSessionWorker *worker)
 }
 
 static void
-gdm_session_worker_stop_auditor (GdmSessionWorker *worker)
+gdm_session_worker_stop_auditor (ScdmSessionWorker *worker)
 {
         g_object_unref (worker->priv->auditor);
         worker->priv->auditor = NULL;
@@ -889,7 +889,7 @@ on_acquire_display (int signal)
 }
 
 static gboolean
-handle_terminal_vt_switches (GdmSessionWorker *worker,
+handle_terminal_vt_switches (ScdmSessionWorker *worker,
                              int               tty_fd)
 {
         struct vt_mode setmode_request = { 0 };
@@ -900,7 +900,7 @@ handle_terminal_vt_switches (GdmSessionWorker *worker,
         setmode_request.acqsig = ACQUIRE_DISPLAY_SIGNAL;
 
         if (ioctl (tty_fd, VT_SETMODE, &setmode_request) < 0) {
-                g_debug ("GdmSessionWorker: couldn't manage VTs manually: %m");
+                g_debug ("ScdmSessionWorker: couldn't manage VTs manually: %m");
                 succeeded = FALSE;
         }
 
@@ -911,7 +911,7 @@ handle_terminal_vt_switches (GdmSessionWorker *worker,
 }
 
 static void
-fix_terminal_vt_mode (GdmSessionWorker  *worker,
+fix_terminal_vt_mode (ScdmSessionWorker  *worker,
                       int                tty_fd)
 {
         struct vt_mode getmode_reply = { 0 };
@@ -920,7 +920,7 @@ fix_terminal_vt_mode (GdmSessionWorker  *worker,
         gboolean succeeded = TRUE;
 
         if (ioctl (tty_fd, VT_GETMODE, &getmode_reply) < 0) {
-                g_debug ("GdmSessionWorker: couldn't query VT mode: %m");
+                g_debug ("ScdmSessionWorker: couldn't query VT mode: %m");
                 succeeded = FALSE;
         }
 
@@ -929,7 +929,7 @@ fix_terminal_vt_mode (GdmSessionWorker  *worker,
         }
 
         if (ioctl (tty_fd, KDGETMODE, &kernel_display_mode) < 0) {
-                g_debug ("GdmSessionWorker: couldn't query kernel display mode: %m");
+                g_debug ("ScdmSessionWorker: couldn't query kernel display mode: %m");
                 succeeded = FALSE;
         }
 
@@ -944,16 +944,16 @@ fix_terminal_vt_mode (GdmSessionWorker  *worker,
         mode_fixed = TRUE;
 out:
         if (!succeeded) {
-                g_error ("GdmSessionWorker: couldn't set up terminal, aborting...");
+                g_error ("ScdmSessionWorker: couldn't set up terminal, aborting...");
                 return;
         }
 
-        g_debug ("GdmSessionWorker: VT mode did %sneed to be fixed",
+        g_debug ("ScdmSessionWorker: VT mode did %sneed to be fixed",
                  mode_fixed? "" : "not ");
 }
 
 static void
-jump_to_vt (GdmSessionWorker  *worker,
+jump_to_vt (ScdmSessionWorker  *worker,
             int                vt_number)
 {
         int fd;
@@ -961,7 +961,7 @@ jump_to_vt (GdmSessionWorker  *worker,
         int active_vt = -1;
         struct vt_stat vt_state = { 0 };
 
-        g_debug ("GdmSessionWorker: jumping to VT %d", vt_number);
+        g_debug ("ScdmSessionWorker: jumping to VT %d", vt_number);
         active_vt_tty_fd = open ("/dev/tty0", O_RDWR | O_NOCTTY);
 
         if (worker->priv->session_tty_fd != -1) {
@@ -974,9 +974,9 @@ jump_to_vt (GdmSessionWorker  *worker,
 
                 fd = worker->priv->session_tty_fd;
 
-                g_debug ("GdmSessionWorker: first setting graphics mode to prevent flicker");
+                g_debug ("ScdmSessionWorker: first setting graphics mode to prevent flicker");
                 if (ioctl (fd, KDSETMODE, KD_GRAPHICS) < 0) {
-                        g_debug ("GdmSessionWorker: couldn't set graphics mode: %m");
+                        g_debug ("ScdmSessionWorker: couldn't set graphics mode: %m");
                 }
 
                 /* It's possible that the current VT was left in a broken
@@ -993,17 +993,17 @@ jump_to_vt (GdmSessionWorker  *worker,
         handle_terminal_vt_switches (worker, fd);
 
         if (ioctl (fd, VT_GETSTATE, &vt_state) < 0) {
-                g_debug ("GdmSessionWorker: couldn't get current VT: %m");
+                g_debug ("ScdmSessionWorker: couldn't get current VT: %m");
         } else {
                 active_vt = vt_state.v_active;
         }
 
         if (active_vt != vt_number) {
                 if (ioctl (fd, VT_ACTIVATE, vt_number) < 0) {
-                        g_debug ("GdmSessionWorker: couldn't initiate jump to VT %d: %m",
+                        g_debug ("ScdmSessionWorker: couldn't initiate jump to VT %d: %m",
                                  vt_number);
                 } else if (ioctl (fd, VT_WAITACTIVE, vt_number) < 0) {
-                        g_debug ("GdmSessionWorker: couldn't finalize jump to VT %d: %m",
+                        g_debug ("ScdmSessionWorker: couldn't finalize jump to VT %d: %m",
                                  vt_number);
                 }
         }
@@ -1012,8 +1012,8 @@ jump_to_vt (GdmSessionWorker  *worker,
 }
 
 static void
-gdm_session_worker_set_state (GdmSessionWorker      *worker,
-                              GdmSessionWorkerState  state)
+gdm_session_worker_set_state (ScdmSessionWorker      *worker,
+                              ScdmSessionWorkerState  state)
 {
         if (worker->priv->state == state)
                 return;
@@ -1023,10 +1023,10 @@ gdm_session_worker_set_state (GdmSessionWorker      *worker,
 }
 
 static void
-gdm_session_worker_uninitialize_pam (GdmSessionWorker *worker,
+gdm_session_worker_uninitialize_pam (ScdmSessionWorker *worker,
                                      int               status)
 {
-        g_debug ("GdmSessionWorker: uninitializing PAM");
+        g_debug ("ScdmSessionWorker: uninitializing PAM");
 
         if (worker->priv->pam_handle == NULL)
                 return;
@@ -1065,7 +1065,7 @@ gdm_session_worker_uninitialize_pam (GdmSessionWorker *worker,
 
         worker->priv->session_vt = 0;
 
-        g_debug ("GdmSessionWorker: state NONE");
+        g_debug ("ScdmSessionWorker: state NONE");
         gdm_session_worker_set_state (worker, GDM_SESSION_WORKER_STATE_NONE);
 }
 
@@ -1112,7 +1112,7 @@ _get_xauth_for_pam (const char *x11_authority_file)
 #endif
 
 static gboolean
-gdm_session_worker_initialize_pam (GdmSessionWorker   *worker,
+gdm_session_worker_initialize_pam (ScdmSessionWorker   *worker,
                                    const char         *service,
                                    const char * const *extensions,
                                    const char         *username,
@@ -1130,7 +1130,7 @@ gdm_session_worker_initialize_pam (GdmSessionWorker   *worker,
 
         g_assert (worker->priv->pam_handle == NULL);
 
-        g_debug ("GdmSessionWorker: initializing PAM; service=%s username=%s seat=%s",
+        g_debug ("ScdmSessionWorker: initializing PAM; service=%s username=%s seat=%s",
                  service ? service : "(null)",
                  username ? username : "(null)",
                  seat_id ? seat_id : "(null)");
@@ -1141,7 +1141,7 @@ gdm_session_worker_initialize_pam (GdmSessionWorker   *worker,
         }
 #endif
 
-        pam_conversation.conv = (GdmSessionWorkerPamNewMessagesFunc) gdm_session_worker_pam_new_messages_handler;
+        pam_conversation.conv = (ScdmSessionWorkerPamNewMessagesFunc) gdm_session_worker_pam_new_messages_handler;
         pam_conversation.appdata_ptr = worker;
 
         gdm_session_worker_start_auditor (worker);
@@ -1150,7 +1150,7 @@ gdm_session_worker_initialize_pam (GdmSessionWorker   *worker,
                                 &pam_conversation,
                                 &worker->priv->pam_handle);
         if (error_code != PAM_SUCCESS) {
-                g_debug ("GdmSessionWorker: could not initialize PAM: (error code %d)", error_code);
+                g_debug ("ScdmSessionWorker: could not initialize PAM: (error code %d)", error_code);
                 /* we don't use pam_strerror here because it requires a valid
                  * pam handle, and if pam_start fails pam_handle is undefined
                  */
@@ -1167,7 +1167,7 @@ gdm_session_worker_initialize_pam (GdmSessionWorker   *worker,
                 error_code = pam_set_item (worker->priv->pam_handle, PAM_USER_PROMPT, _("Username:"));
 
                 if (error_code != PAM_SUCCESS) {
-                        g_debug ("GdmSessionWorker: error informing authentication system of preferred username prompt: %s",
+                        g_debug ("ScdmSessionWorker: error informing authentication system of preferred username prompt: %s",
                                 pam_strerror (worker->priv->pam_handle, error_code));
                         g_set_error (error,
                                      GDM_SESSION_WORKER_ERROR,
@@ -1202,7 +1202,7 @@ gdm_session_worker_initialize_pam (GdmSessionWorker   *worker,
                 gdm_session_worker_set_environment_variable (worker, "XDG_SESSION_CLASS", "greeter");
         }
 
-        g_debug ("GdmSessionWorker: state SETUP_COMPLETE");
+        g_debug ("ScdmSessionWorker: state SETUP_COMPLETE");
         gdm_session_worker_set_state (worker, GDM_SESSION_WORKER_STATE_SETUP_COMPLETE);
 
         /* Temporarily set PAM_TTY with the login VT,
@@ -1222,14 +1222,14 @@ gdm_session_worker_initialize_pam (GdmSessionWorker   *worker,
 }
 
 static gboolean
-gdm_session_worker_authenticate_user (GdmSessionWorker *worker,
+gdm_session_worker_authenticate_user (ScdmSessionWorker *worker,
                                       gboolean          password_is_required,
                                       GError          **error)
 {
         int error_code;
         int authentication_flags;
 
-        g_debug ("GdmSessionWorker: authenticating user %s", worker->priv->username);
+        g_debug ("ScdmSessionWorker: authenticating user %s", worker->priv->username);
 
         authentication_flags = 0;
 
@@ -1241,7 +1241,7 @@ gdm_session_worker_authenticate_user (GdmSessionWorker *worker,
         error_code = pam_authenticate (worker->priv->pam_handle, authentication_flags);
 
         if (error_code == PAM_AUTHINFO_UNAVAIL) {
-                g_debug ("GdmSessionWorker: authentication service unavailable");
+                g_debug ("ScdmSessionWorker: authentication service unavailable");
 
                 g_set_error (error,
                              GDM_SESSION_WORKER_ERROR,
@@ -1249,7 +1249,7 @@ gdm_session_worker_authenticate_user (GdmSessionWorker *worker,
                              "%s", "");
                 goto out;
         } else if (error_code != PAM_SUCCESS) {
-                g_debug ("GdmSessionWorker: authentication returned %d: %s", error_code, pam_strerror (worker->priv->pam_handle, error_code));
+                g_debug ("ScdmSessionWorker: authentication returned %d: %s", error_code, pam_strerror (worker->priv->pam_handle, error_code));
 
                 /*
                  * Do not display a different message for user unknown versus
@@ -1266,7 +1266,7 @@ gdm_session_worker_authenticate_user (GdmSessionWorker *worker,
                 goto out;
         }
 
-        g_debug ("GdmSessionWorker: state AUTHENTICATED");
+        g_debug ("ScdmSessionWorker: state AUTHENTICATED");
         gdm_session_worker_set_state (worker, GDM_SESSION_WORKER_STATE_AUTHENTICATED);
 
  out:
@@ -1279,14 +1279,14 @@ gdm_session_worker_authenticate_user (GdmSessionWorker *worker,
 }
 
 static gboolean
-gdm_session_worker_authorize_user (GdmSessionWorker *worker,
+gdm_session_worker_authorize_user (ScdmSessionWorker *worker,
                                    gboolean          password_is_required,
                                    GError          **error)
 {
         int error_code;
         int authentication_flags;
 
-        g_debug ("GdmSessionWorker: determining if authenticated user (password required:%d) is authorized to session",
+        g_debug ("ScdmSessionWorker: determining if authenticated user (password required:%d) is authorized to session",
                  password_is_required);
 
         authentication_flags = 0;
@@ -1302,7 +1302,7 @@ gdm_session_worker_authorize_user (GdmSessionWorker *worker,
         /* it's possible that the user needs to change their password or pin code
          */
         if (error_code == PAM_NEW_AUTHTOK_REQD && !worker->priv->is_program_session) {
-                g_debug ("GdmSessionWorker: authenticated user requires new auth token");
+                g_debug ("ScdmSessionWorker: authenticated user requires new auth token");
                 error_code = pam_chauthtok (worker->priv->pam_handle, PAM_CHANGE_EXPIRED_AUTHTOK);
 
                 gdm_session_worker_get_username (worker, NULL);
@@ -1322,7 +1322,7 @@ gdm_session_worker_authorize_user (GdmSessionWorker *worker,
         }
 
         if (error_code != PAM_SUCCESS) {
-                g_debug ("GdmSessionWorker: user is not authorized to log in: %s",
+                g_debug ("ScdmSessionWorker: user is not authorized to log in: %s",
                          pam_strerror (worker->priv->pam_handle, error_code));
                 g_set_error (error,
                              GDM_SESSION_WORKER_ERROR,
@@ -1331,7 +1331,7 @@ gdm_session_worker_authorize_user (GdmSessionWorker *worker,
                 goto out;
         }
 
-        g_debug ("GdmSessionWorker: state AUTHORIZED");
+        g_debug ("ScdmSessionWorker: state AUTHORIZED");
         gdm_session_worker_set_state (worker, GDM_SESSION_WORKER_STATE_AUTHORIZED);
 
  out:
@@ -1344,7 +1344,7 @@ gdm_session_worker_authorize_user (GdmSessionWorker *worker,
 }
 
 static void
-gdm_session_worker_set_environment_variable (GdmSessionWorker *worker,
+gdm_session_worker_set_environment_variable (ScdmSessionWorker *worker,
                                              const char       *key,
                                              const char       *value)
 {
@@ -1366,19 +1366,19 @@ gdm_session_worker_set_environment_variable (GdmSessionWorker *worker,
                            environment_entry,
                            pam_strerror (worker->priv->pam_handle, error_code));
         }
-        g_debug ("GdmSessionWorker: Set PAM environment variable: '%s'", environment_entry);
+        g_debug ("ScdmSessionWorker: Set PAM environment variable: '%s'", environment_entry);
         g_free (environment_entry);
 }
 
 static char *
-gdm_session_worker_get_environment_variable (GdmSessionWorker *worker,
+gdm_session_worker_get_environment_variable (ScdmSessionWorker *worker,
                                              const char       *key)
 {
         return g_strdup (pam_getenv (worker->priv->pam_handle, key));
 }
 
 static void
-gdm_session_worker_update_environment_from_passwd_info (GdmSessionWorker *worker,
+gdm_session_worker_update_environment_from_passwd_info (ScdmSessionWorker *worker,
                                                         uid_t             uid,
                                                         gid_t             gid,
                                                         const char       *home,
@@ -1393,14 +1393,14 @@ gdm_session_worker_update_environment_from_passwd_info (GdmSessionWorker *worker
 }
 
 static gboolean
-gdm_session_worker_environment_variable_is_set (GdmSessionWorker *worker,
+gdm_session_worker_environment_variable_is_set (ScdmSessionWorker *worker,
                                                 const char       *key)
 {
         return pam_getenv (worker->priv->pam_handle, key) != NULL;
 }
 
 static gboolean
-_change_user (GdmSessionWorker  *worker,
+_change_user (ScdmSessionWorker  *worker,
               uid_t              uid,
               gid_t              gid)
 {
@@ -1527,7 +1527,7 @@ get_var_cb (const char *key,
 }
 
 static void
-load_env_file (GdmSessionWorker *worker,
+load_env_file (ScdmSessionWorker *worker,
                GFile   *file)
 {
         gchar *contents;
@@ -1584,7 +1584,7 @@ compare_str (gconstpointer  a,
 }
 
 static void
-gdm_session_worker_load_env_dir (GdmSessionWorker *worker,
+gdm_session_worker_load_env_dir (ScdmSessionWorker *worker,
                                  GFile *dir)
 {
         GFileInfo *info = NULL;
@@ -1630,7 +1630,7 @@ gdm_session_worker_load_env_dir (GdmSessionWorker *worker,
 }
 
 static void
-gdm_session_worker_load_env_d (GdmSessionWorker *worker)
+gdm_session_worker_load_env_d (ScdmSessionWorker *worker)
 {
         GFile *dir;
 
@@ -1644,7 +1644,7 @@ gdm_session_worker_load_env_d (GdmSessionWorker *worker)
 }
 
 static gboolean
-gdm_session_worker_accredit_user (GdmSessionWorker  *worker,
+gdm_session_worker_accredit_user (ScdmSessionWorker  *worker,
                                   GError           **error)
 {
         gboolean ret;
@@ -1661,7 +1661,7 @@ gdm_session_worker_accredit_user (GdmSessionWorker  *worker,
         shell = NULL;
 
         if (worker->priv->username == NULL) {
-                g_debug ("GdmSessionWorker: Username not set");
+                g_debug ("ScdmSessionWorker: Username not set");
                 error_code = PAM_USER_UNKNOWN;
                 g_set_error (error,
                              GDM_SESSION_WORKER_ERROR,
@@ -1678,7 +1678,7 @@ gdm_session_worker_accredit_user (GdmSessionWorker  *worker,
                                    &home,
                                    &shell);
         if (! res) {
-                g_debug ("GdmSessionWorker: Unable to lookup account info");
+                g_debug ("ScdmSessionWorker: Unable to lookup account info");
                 error_code = PAM_AUTHINFO_UNAVAIL;
                 g_set_error (error,
                              GDM_SESSION_WORKER_ERROR,
@@ -1706,7 +1706,7 @@ gdm_session_worker_accredit_user (GdmSessionWorker  *worker,
         }
 
         if (! _change_user (worker, uid, gid)) {
-                g_debug ("GdmSessionWorker: Unable to change to user");
+                g_debug ("ScdmSessionWorker: Unable to change to user");
                 error_code = PAM_SYSTEM_ERR;
                 g_set_error (error, GDM_SESSION_WORKER_ERROR,
                              GDM_SESSION_WORKER_ERROR_GIVING_CREDENTIALS,
@@ -1740,7 +1740,7 @@ gdm_session_worker_accredit_user (GdmSessionWorker  *worker,
         g_free (home);
         g_free (shell);
         if (ret) {
-                g_debug ("GdmSessionWorker: state ACCREDITED");
+                g_debug ("ScdmSessionWorker: state ACCREDITED");
                 ret = TRUE;
 
                 gdm_session_worker_get_username (worker, NULL);
@@ -1754,13 +1754,13 @@ gdm_session_worker_accredit_user (GdmSessionWorker  *worker,
 }
 
 static const char * const *
-gdm_session_worker_get_environment (GdmSessionWorker *worker)
+gdm_session_worker_get_environment (ScdmSessionWorker *worker)
 {
         return (const char * const *) pam_getenvlist (worker->priv->pam_handle);
 }
 
 static gboolean
-run_script (GdmSessionWorker *worker,
+run_script (ScdmSessionWorker *worker,
             const char       *dir)
 {
         /* scripts are for non-program sessions only */
@@ -1778,9 +1778,9 @@ run_script (GdmSessionWorker *worker,
 static void
 session_worker_child_watch (GPid              pid,
                             int               status,
-                            GdmSessionWorker *worker)
+                            ScdmSessionWorker *worker)
 {
-        g_debug ("GdmSessionWorker: child (pid:%d) done (%s:%d)",
+        g_debug ("ScdmSessionWorker: child (pid:%d) done (%s:%d)",
                  (int) pid,
                  WIFEXITED (status) ? "status"
                  : WIFSIGNALED (status) ? "signal"
@@ -1804,9 +1804,9 @@ session_worker_child_watch (GPid              pid,
 }
 
 static void
-gdm_session_worker_watch_child (GdmSessionWorker *worker)
+gdm_session_worker_watch_child (ScdmSessionWorker *worker)
 {
-        g_debug ("GdmSession worker: watching pid %d", worker->priv->child_pid);
+        g_debug ("ScdmSession worker: watching pid %d", worker->priv->child_pid);
         worker->priv->child_watch_id = g_child_watch_add (worker->priv->child_pid,
                                                           (GChildWatchFunc)session_worker_child_watch,
                                                           worker);
@@ -1961,7 +1961,7 @@ out:
 }
 
 static gboolean
-gdm_session_worker_start_session (GdmSessionWorker  *worker,
+gdm_session_worker_start_session (ScdmSessionWorker  *worker,
                                   GError           **error)
 {
         struct passwd *passwd_entry;
@@ -1970,10 +1970,10 @@ gdm_session_worker_start_session (GdmSessionWorker  *worker,
 
         gdm_get_pwent_for_name (worker->priv->username, &passwd_entry);
         if (worker->priv->is_program_session) {
-                g_debug ("GdmSessionWorker: opening session for program '%s'",
+                g_debug ("ScdmSessionWorker: opening session for program '%s'",
                          worker->priv->arguments[0]);
         } else {
-                g_debug ("GdmSessionWorker: opening user session with program '%s'",
+                g_debug ("ScdmSessionWorker: opening user session with program '%s'",
                          worker->priv->arguments[0]);
         }
 
@@ -2044,7 +2044,7 @@ gdm_session_worker_start_session (GdmSessionWorker  *worker,
                 }
 
                 if (setsid () < 0) {
-                        g_debug ("GdmSessionWorker: could not set pid '%u' as leader of new session and process group: %s",
+                        g_debug ("ScdmSessionWorker: could not set pid '%u' as leader of new session and process group: %s",
                                  (guint) getpid (), g_strerror (errno));
                         _exit (EXIT_FAILURE);
                 }
@@ -2053,19 +2053,19 @@ gdm_session_worker_start_session (GdmSessionWorker  *worker,
                  */
                 if (needs_controlling_terminal) {
                         if (ioctl (STDIN_FILENO, TIOCSCTTY, 0) < 0) {
-                                g_debug ("GdmSessionWorker: could not take control of tty: %m");
+                                g_debug ("ScdmSessionWorker: could not take control of tty: %m");
                         }
                 }
 
 #ifdef HAVE_LOGINCAP
                 if (setusercontext (NULL, passwd_entry, passwd_entry->pw_uid, LOGIN_SETALL) < 0) {
-                        g_debug ("GdmSessionWorker: setusercontext() failed for user %s: %s",
+                        g_debug ("ScdmSessionWorker: setusercontext() failed for user %s: %s",
                                  passwd_entry->pw_name, g_strerror (errno));
                         _exit (EXIT_FAILURE);
                 }
 #else
                 if (setuid (worker->priv->uid) < 0) {
-                        g_debug ("GdmSessionWorker: could not reset uid: %s", g_strerror (errno));
+                        g_debug ("ScdmSessionWorker: could not reset uid: %s", g_strerror (errno));
                         _exit (EXIT_FAILURE);
                 }
 #endif
@@ -2149,7 +2149,7 @@ gdm_session_worker_start_session (GdmSessionWorker  *worker,
                                      TRUE);
 
                 gdm_log_init ();
-                g_debug ("GdmSessionWorker: child '%s' could not be started: %s",
+                g_debug ("ScdmSessionWorker: child '%s' could not be started: %s",
                          worker->priv->arguments[0],
                          g_strerror (errno));
 
@@ -2170,10 +2170,10 @@ gdm_session_worker_start_session (GdmSessionWorker  *worker,
 
         worker->priv->child_pid = session_pid;
 
-        g_debug ("GdmSessionWorker: session opened creating reply...");
+        g_debug ("ScdmSessionWorker: session opened creating reply...");
         g_assert (sizeof (GPid) <= sizeof (int));
 
-        g_debug ("GdmSessionWorker: state SESSION_STARTED");
+        g_debug ("ScdmSessionWorker: state SESSION_STARTED");
         gdm_session_worker_set_state (worker, GDM_SESSION_WORKER_STATE_SESSION_STARTED);
 
         gdm_session_worker_watch_child (worker);
@@ -2188,7 +2188,7 @@ gdm_session_worker_start_session (GdmSessionWorker  *worker,
 }
 
 static gboolean
-set_up_for_new_vt (GdmSessionWorker *worker)
+set_up_for_new_vt (ScdmSessionWorker *worker)
 {
         int initial_vt_fd;
         char vt_string[256], tty_string[256];
@@ -2205,7 +2205,7 @@ set_up_for_new_vt (GdmSessionWorker *worker)
         initial_vt_fd = open (tty_string, O_RDWR | O_NOCTTY);
 
         if (initial_vt_fd < 0) {
-                g_debug ("GdmSessionWorker: couldn't open console of initial fd: %m");
+                g_debug ("ScdmSessionWorker: couldn't open console of initial fd: %m");
                 return FALSE;
         }
 
@@ -2217,7 +2217,7 @@ set_up_for_new_vt (GdmSessionWorker *worker)
                  * have /dev/tty1 open above, so might as well use it.
                  */
                 if (ioctl (initial_vt_fd, VT_OPENQRY, &session_vt) < 0) {
-                        g_debug ("GdmSessionWorker: couldn't open new VT: %m");
+                        g_debug ("ScdmSessionWorker: couldn't open new VT: %m");
                         goto fail;
                 }
         }
@@ -2254,7 +2254,7 @@ fail:
 }
 
 static gboolean
-set_xdg_vtnr_to_current_vt (GdmSessionWorker *worker)
+set_xdg_vtnr_to_current_vt (ScdmSessionWorker *worker)
 {
         int fd;
         char vt_string[256];
@@ -2263,12 +2263,12 @@ set_xdg_vtnr_to_current_vt (GdmSessionWorker *worker)
         fd = open ("/dev/tty0", O_RDWR | O_NOCTTY);
 
         if (fd < 0) {
-                g_debug ("GdmSessionWorker: couldn't open VT master: %m");
+                g_debug ("ScdmSessionWorker: couldn't open VT master: %m");
                 return FALSE;
         }
 
         if (ioctl (fd, VT_GETSTATE, &vt_state) < 0) {
-                g_debug ("GdmSessionWorker: couldn't get current VT: %m");
+                g_debug ("ScdmSessionWorker: couldn't get current VT: %m");
                 goto fail;
         }
 
@@ -2289,7 +2289,7 @@ fail:
 }
 
 static gboolean
-set_up_for_current_vt (GdmSessionWorker  *worker,
+set_up_for_current_vt (ScdmSessionWorker  *worker,
                        GError           **error)
 {
 #ifdef PAM_XAUTHDATA
@@ -2355,10 +2355,10 @@ set_up_for_current_vt (GdmSessionWorker  *worker,
 #endif
 
         if (g_strcmp0 (worker->priv->display_seat_id, "seat0") == 0) {
-                g_debug ("GdmSessionWorker: setting XDG_VTNR to current vt");
+                g_debug ("ScdmSessionWorker: setting XDG_VTNR to current vt");
                 set_xdg_vtnr_to_current_vt (worker);
         } else {
-                g_debug ("GdmSessionWorker: not setting XDG_VTNR since not seat0");
+                g_debug ("ScdmSessionWorker: not setting XDG_VTNR since not seat0");
         }
 
         return TRUE;
@@ -2367,7 +2367,7 @@ out:
 }
 
 static gboolean
-gdm_session_worker_open_session (GdmSessionWorker  *worker,
+gdm_session_worker_open_session (ScdmSessionWorker  *worker,
                                  GError           **error)
 {
         int error_code;
@@ -2411,7 +2411,7 @@ gdm_session_worker_open_session (GdmSessionWorker  *worker,
                 goto out;
         }
 
-        g_debug ("GdmSessionWorker: state SESSION_OPENED");
+        g_debug ("ScdmSessionWorker: state SESSION_OPENED");
         gdm_session_worker_set_state (worker, GDM_SESSION_WORKER_STATE_SESSION_OPENED);
 
         session_id = gdm_session_worker_get_environment_variable (worker, "XDG_SESSION_ID");
@@ -2434,7 +2434,7 @@ gdm_session_worker_open_session (GdmSessionWorker  *worker,
 }
 
 static void
-gdm_session_worker_set_server_address (GdmSessionWorker *worker,
+gdm_session_worker_set_server_address (ScdmSessionWorker *worker,
                                        const char       *address)
 {
         g_free (worker->priv->server_address);
@@ -2442,7 +2442,7 @@ gdm_session_worker_set_server_address (GdmSessionWorker *worker,
 }
 
 static void
-gdm_session_worker_set_is_reauth_session (GdmSessionWorker *worker,
+gdm_session_worker_set_is_reauth_session (ScdmSessionWorker *worker,
                                           gboolean          is_reauth_session)
 {
         worker->priv->is_reauth_session = is_reauth_session;
@@ -2454,7 +2454,7 @@ gdm_session_worker_set_property (GObject      *object,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-        GdmSessionWorker *self;
+        ScdmSessionWorker *self;
 
         self = GDM_SESSION_WORKER (object);
 
@@ -2477,7 +2477,7 @@ gdm_session_worker_get_property (GObject    *object,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-        GdmSessionWorker *self;
+        ScdmSessionWorker *self;
 
         self = GDM_SESSION_WORKER (object);
 
@@ -2498,24 +2498,24 @@ gdm_session_worker_get_property (GObject    *object,
 }
 
 static gboolean
-gdm_session_worker_handle_set_environment_variable (GdmDBusWorker         *object,
+gdm_session_worker_handle_set_environment_variable (ScdmDBusWorker         *object,
                                                     GDBusMethodInvocation *invocation,
                                                     const char            *key,
                                                     const char            *value)
 {
-        GdmSessionWorker *worker = GDM_SESSION_WORKER (object);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
         gdm_session_worker_set_environment_variable (worker, key, value);
         gdm_dbus_worker_complete_set_environment_variable (object, invocation);
         return TRUE;
 }
 
 static gboolean
-gdm_session_worker_handle_set_session_name (GdmDBusWorker         *object,
+gdm_session_worker_handle_set_session_name (ScdmDBusWorker         *object,
                                             GDBusMethodInvocation *invocation,
                                             const char            *session_name)
 {
-        GdmSessionWorker *worker = GDM_SESSION_WORKER (object);
-        g_debug ("GdmSessionWorker: session name set to %s", session_name);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
+        g_debug ("ScdmSessionWorker: session name set to %s", session_name);
         gdm_session_settings_set_session_name (worker->priv->user_settings,
                                                session_name);
         gdm_dbus_worker_complete_set_session_name (object, invocation);
@@ -2523,24 +2523,24 @@ gdm_session_worker_handle_set_session_name (GdmDBusWorker         *object,
 }
 
 static gboolean
-gdm_session_worker_handle_set_session_display_mode (GdmDBusWorker         *object,
+gdm_session_worker_handle_set_session_display_mode (ScdmDBusWorker         *object,
                                                     GDBusMethodInvocation *invocation,
                                                     const char            *str)
 {
-        GdmSessionWorker *worker = GDM_SESSION_WORKER (object);
-        g_debug ("GdmSessionWorker: session display mode set to %s", str);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
+        g_debug ("ScdmSessionWorker: session display mode set to %s", str);
         worker->priv->display_mode = gdm_session_display_mode_from_string (str);
         gdm_dbus_worker_complete_set_session_display_mode (object, invocation);
         return TRUE;
 }
 
 static gboolean
-gdm_session_worker_handle_set_language_name (GdmDBusWorker         *object,
+gdm_session_worker_handle_set_language_name (ScdmDBusWorker         *object,
                                              GDBusMethodInvocation *invocation,
                                              const char            *language_name)
 {
-        GdmSessionWorker *worker = GDM_SESSION_WORKER (object);
-        g_debug ("GdmSessionWorker: language name set to %s", language_name);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
+        g_debug ("ScdmSessionWorker: language name set to %s", language_name);
         gdm_session_settings_set_language_name (worker->priv->user_settings,
                                                 language_name);
         gdm_dbus_worker_complete_set_language_name (object, invocation);
@@ -2548,33 +2548,33 @@ gdm_session_worker_handle_set_language_name (GdmDBusWorker         *object,
 }
 
 static void
-on_saved_language_name_read (GdmSessionWorker *worker)
+on_saved_language_name_read (ScdmSessionWorker *worker)
 {
         char *language_name;
 
         language_name = gdm_session_settings_get_language_name (worker->priv->user_settings);
 
-        g_debug ("GdmSessionWorker: Saved language is %s", language_name);
+        g_debug ("ScdmSessionWorker: Saved language is %s", language_name);
         gdm_dbus_worker_emit_saved_language_name_read (GDM_DBUS_WORKER (worker),
                                                        language_name);
         g_free (language_name);
 }
 
 static void
-on_saved_session_name_read (GdmSessionWorker *worker)
+on_saved_session_name_read (ScdmSessionWorker *worker)
 {
         char *session_name;
 
         session_name = gdm_session_settings_get_session_name (worker->priv->user_settings);
 
-        g_debug ("GdmSessionWorker: Saved session is %s", session_name);
+        g_debug ("ScdmSessionWorker: Saved session is %s", session_name);
         gdm_dbus_worker_emit_saved_session_name_read (GDM_DBUS_WORKER (worker),
                                                       session_name);
         g_free (session_name);
 }
 
 static void
-do_setup (GdmSessionWorker *worker)
+do_setup (ScdmSessionWorker *worker)
 {
         GError  *error;
         gboolean res;
@@ -2601,7 +2601,7 @@ do_setup (GdmSessionWorker *worker)
 }
 
 static void
-do_authenticate (GdmSessionWorker *worker)
+do_authenticate (ScdmSessionWorker *worker)
 {
         GError  *error;
         gboolean res;
@@ -2617,20 +2617,20 @@ do_authenticate (GdmSessionWorker *worker)
                  * a valid username for the system
                  */
                 if (!worker->priv->is_program_session) {
-                        g_debug ("GdmSessionWorker: trying to get updated username");
+                        g_debug ("ScdmSessionWorker: trying to get updated username");
                         gdm_session_worker_update_username (worker);
                 }
 
                 gdm_dbus_worker_complete_authenticate (GDM_DBUS_WORKER (worker), worker->priv->pending_invocation);
         } else {
-                g_debug ("GdmSessionWorker: Unable to verify user");
+                g_debug ("ScdmSessionWorker: Unable to verify user");
                 g_dbus_method_invocation_take_error (worker->priv->pending_invocation, error);
         }
         worker->priv->pending_invocation = NULL;
 }
 
 static void
-do_authorize (GdmSessionWorker *worker)
+do_authorize (ScdmSessionWorker *worker)
 {
         GError  *error;
         gboolean res;
@@ -2650,7 +2650,7 @@ do_authorize (GdmSessionWorker *worker)
 }
 
 static void
-do_accredit (GdmSessionWorker *worker)
+do_accredit (ScdmSessionWorker *worker)
 {
         GError  *error;
         gboolean res;
@@ -2669,11 +2669,11 @@ do_accredit (GdmSessionWorker *worker)
 }
 
 static void
-save_account_details_now (GdmSessionWorker *worker)
+save_account_details_now (ScdmSessionWorker *worker)
 {
         g_assert (worker->priv->state == GDM_SESSION_WORKER_STATE_ACCREDITED);
 
-        g_debug ("GdmSessionWorker: saving account details for user %s", worker->priv->username);
+        g_debug ("ScdmSessionWorker: saving account details for user %s", worker->priv->username);
         gdm_session_worker_set_state (worker, GDM_SESSION_WORKER_STATE_ACCOUNT_DETAILS_SAVED);
         if (!gdm_session_settings_save (worker->priv->user_settings,
                                         worker->priv->username)) {
@@ -2683,9 +2683,9 @@ save_account_details_now (GdmSessionWorker *worker)
 }
 
 static void
-on_settings_is_loaded_changed (GdmSessionSettings *user_settings,
+on_settings_is_loaded_changed (ScdmSessionSettings *user_settings,
                                GParamSpec         *pspec,
-                               GdmSessionWorker   *worker)
+                               ScdmSessionWorker   *worker)
 {
         if (!gdm_session_settings_is_loaded (worker->priv->user_settings)) {
                 return;
@@ -2704,7 +2704,7 @@ on_settings_is_loaded_changed (GdmSessionSettings *user_settings,
                                               worker);
 
         if (worker->priv->state == GDM_SESSION_WORKER_STATE_NONE) {
-                g_debug ("GdmSessionWorker: queuing setup for user: %s %s",
+                g_debug ("ScdmSessionWorker: queuing setup for user: %s %s",
                          worker->priv->username, worker->priv->display_device);
                 queue_state_change (worker);
         } else if (worker->priv->state == GDM_SESSION_WORKER_STATE_ACCREDITED) {
@@ -2719,7 +2719,7 @@ on_settings_is_loaded_changed (GdmSessionSettings *user_settings,
 }
 
 static void
-do_save_account_details_when_ready (GdmSessionWorker *worker)
+do_save_account_details_when_ready (ScdmSessionWorker *worker)
 {
         g_assert (worker->priv->state == GDM_SESSION_WORKER_STATE_ACCREDITED);
 
@@ -2728,7 +2728,7 @@ do_save_account_details_when_ready (GdmSessionWorker *worker)
                                   "notify::is-loaded",
                                   G_CALLBACK (on_settings_is_loaded_changed),
                                   worker);
-                g_debug ("GdmSessionWorker: user %s, not fully loaded yet, will save account details later",
+                g_debug ("ScdmSessionWorker: user %s, not fully loaded yet, will save account details later",
                          worker->priv->username);
                 gdm_session_settings_load (worker->priv->user_settings,
                                            worker->priv->username);
@@ -2739,7 +2739,7 @@ do_save_account_details_when_ready (GdmSessionWorker *worker)
 }
 
 static void
-do_open_session (GdmSessionWorker *worker)
+do_open_session (ScdmSessionWorker *worker)
 {
         GError  *error;
         gboolean res;
@@ -2761,7 +2761,7 @@ do_open_session (GdmSessionWorker *worker)
 }
 
 static void
-do_start_session (GdmSessionWorker *worker)
+do_start_session (ScdmSessionWorker *worker)
 {
         GError  *error;
         gboolean res;
@@ -2819,12 +2819,12 @@ get_state_name (int state)
 }
 
 static gboolean
-state_change_idle (GdmSessionWorker *worker)
+state_change_idle (ScdmSessionWorker *worker)
 {
         int new_state;
 
         new_state = worker->priv->state + 1;
-        g_debug ("GdmSessionWorker: attempting to change state to %s",
+        g_debug ("ScdmSessionWorker: attempting to change state to %s",
                  get_state_name (new_state));
 
         worker->priv->state_change_idle_id = 0;
@@ -2859,7 +2859,7 @@ state_change_idle (GdmSessionWorker *worker)
 }
 
 static void
-queue_state_change (GdmSessionWorker *worker)
+queue_state_change (ScdmSessionWorker *worker)
 {
         if (worker->priv->state_change_idle_id > 0) {
                 return;
@@ -2869,7 +2869,7 @@ queue_state_change (GdmSessionWorker *worker)
 }
 
 static gboolean
-validate_state_change (GdmSessionWorker      *worker,
+validate_state_change (ScdmSessionWorker      *worker,
                        GDBusMethodInvocation *invocation,
                        int                    new_state)
 {
@@ -2896,7 +2896,7 @@ validate_state_change (GdmSessionWorker      *worker,
 }
 
 static void
-validate_and_queue_state_change (GdmSessionWorker      *worker,
+validate_and_queue_state_change (ScdmSessionWorker      *worker,
                                  GDBusMethodInvocation *invocation,
                                  int                    new_state)
 {
@@ -2907,28 +2907,28 @@ validate_and_queue_state_change (GdmSessionWorker      *worker,
 }
 
 static gboolean
-gdm_session_worker_handle_authenticate (GdmDBusWorker         *object,
+gdm_session_worker_handle_authenticate (ScdmDBusWorker         *object,
                                         GDBusMethodInvocation *invocation)
 {
-        GdmSessionWorker *worker = GDM_SESSION_WORKER (object);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
         validate_and_queue_state_change (worker, invocation, GDM_SESSION_WORKER_STATE_AUTHENTICATED);
         return TRUE;
 }
 
 static gboolean
-gdm_session_worker_handle_authorize (GdmDBusWorker         *object,
+gdm_session_worker_handle_authorize (ScdmDBusWorker         *object,
                                      GDBusMethodInvocation *invocation)
 {
-        GdmSessionWorker *worker = GDM_SESSION_WORKER (object);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
         validate_and_queue_state_change (worker, invocation, GDM_SESSION_WORKER_STATE_AUTHORIZED);
         return TRUE;
 }
 
 static gboolean
-gdm_session_worker_handle_establish_credentials (GdmDBusWorker         *object,
+gdm_session_worker_handle_establish_credentials (ScdmDBusWorker         *object,
                                                  GDBusMethodInvocation *invocation)
 {
-        GdmSessionWorker *worker = GDM_SESSION_WORKER (object);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
         validate_and_queue_state_change (worker, invocation, GDM_SESSION_WORKER_STATE_ACCREDITED);
 
         if (!worker->priv->is_reauth_session) {
@@ -2941,10 +2941,10 @@ gdm_session_worker_handle_establish_credentials (GdmDBusWorker         *object,
 }
 
 static gboolean
-gdm_session_worker_handle_open (GdmDBusWorker         *object,
+gdm_session_worker_handle_open (ScdmDBusWorker         *object,
                                 GDBusMethodInvocation *invocation)
 {
-        GdmSessionWorker *worker = GDM_SESSION_WORKER (object);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
         validate_and_queue_state_change (worker, invocation, GDM_SESSION_WORKER_STATE_ACCOUNT_DETAILS_SAVED);
         return TRUE;
 }
@@ -2976,11 +2976,11 @@ filter_extensions (const char * const *extensions)
 }
 
 static gboolean
-gdm_session_worker_handle_initialize (GdmDBusWorker         *object,
+gdm_session_worker_handle_initialize (ScdmDBusWorker         *object,
                                       GDBusMethodInvocation *invocation,
                                       GVariant              *details)
 {
-        GdmSessionWorker *worker = GDM_SESSION_WORKER (object);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
         GVariantIter      iter;
         char             *key;
         GVariant         *value;
@@ -3052,7 +3052,7 @@ gdm_session_worker_handle_initialize (GdmDBusWorker         *object,
 }
 
 static gboolean
-gdm_session_worker_handle_setup (GdmDBusWorker         *object,
+gdm_session_worker_handle_setup (ScdmDBusWorker         *object,
                                  GDBusMethodInvocation *invocation,
                                  const char            *service,
                                  const char            *x11_display_name,
@@ -3063,7 +3063,7 @@ gdm_session_worker_handle_setup (GdmDBusWorker         *object,
                                  gboolean               display_is_local,
                                  gboolean               display_is_initial)
 {
-        GdmSessionWorker *worker = GDM_SESSION_WORKER (object);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
         validate_and_queue_state_change (worker, invocation, GDM_SESSION_WORKER_STATE_SETUP_COMPLETE);
 
         worker->priv->service = g_strdup (service);
@@ -3089,7 +3089,7 @@ gdm_session_worker_handle_setup (GdmDBusWorker         *object,
 }
 
 static gboolean
-gdm_session_worker_handle_setup_for_user (GdmDBusWorker         *object,
+gdm_session_worker_handle_setup_for_user (ScdmDBusWorker         *object,
                                           GDBusMethodInvocation *invocation,
                                           const char            *service,
                                           const char            *username,
@@ -3101,7 +3101,7 @@ gdm_session_worker_handle_setup_for_user (GdmDBusWorker         *object,
                                           gboolean               display_is_local,
                                           gboolean               display_is_initial)
 {
-        GdmSessionWorker *worker = GDM_SESSION_WORKER (object);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
 
         if (!validate_state_change (worker, invocation, GDM_SESSION_WORKER_STATE_SETUP_COMPLETE))
                 return TRUE;
@@ -3142,7 +3142,7 @@ gdm_session_worker_handle_setup_for_user (GdmDBusWorker         *object,
 }
 
 static gboolean
-gdm_session_worker_handle_setup_for_program (GdmDBusWorker         *object,
+gdm_session_worker_handle_setup_for_program (ScdmDBusWorker         *object,
                                              GDBusMethodInvocation *invocation,
                                              const char            *service,
                                              const char            *username,
@@ -3155,7 +3155,7 @@ gdm_session_worker_handle_setup_for_program (GdmDBusWorker         *object,
                                              gboolean               display_is_initial,
                                              const char            *log_file)
 {
-        GdmSessionWorker *worker = GDM_SESSION_WORKER (object);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
         validate_and_queue_state_change (worker, invocation, GDM_SESSION_WORKER_STATE_SETUP_COMPLETE);
 
         worker->priv->service = g_strdup (service);
@@ -3174,11 +3174,11 @@ gdm_session_worker_handle_setup_for_program (GdmDBusWorker         *object,
 }
 
 static gboolean
-gdm_session_worker_handle_start_program (GdmDBusWorker         *object,
+gdm_session_worker_handle_start_program (ScdmDBusWorker         *object,
                                          GDBusMethodInvocation *invocation,
                                          const char            *text)
 {
-        GdmSessionWorker *worker = GDM_SESSION_WORKER (object);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
         GError *parse_error = NULL;
         validate_state_change (worker, invocation, GDM_SESSION_WORKER_STATE_SESSION_STARTED);
 
@@ -3190,7 +3190,7 @@ gdm_session_worker_handle_start_program (GdmDBusWorker         *object,
                 return TRUE;
         }
 
-        g_debug ("GdmSessionWorker: start program: %s", text);
+        g_debug ("ScdmSessionWorker: start program: %s", text);
 
         g_clear_pointer (&worker->priv->arguments, g_strfreev);
         if (! g_shell_parse_argv (text, NULL, &worker->priv->arguments, &parse_error)) {
@@ -3205,23 +3205,23 @@ gdm_session_worker_handle_start_program (GdmDBusWorker         *object,
 }
 
 static void
-on_reauthentication_client_connected (GdmSession              *session,
+on_reauthentication_client_connected (ScdmSession              *session,
                                       GCredentials            *credentials,
                                       GPid                     pid_of_client,
                                       ReauthenticationRequest *request)
 {
-        g_debug ("GdmSessionWorker: client connected to reauthentication server");
+        g_debug ("ScdmSessionWorker: client connected to reauthentication server");
 }
 
 static void
-on_reauthentication_client_disconnected (GdmSession              *session,
+on_reauthentication_client_disconnected (ScdmSession              *session,
                                          GCredentials            *credentials,
                                          GPid                     pid_of_client,
                                          ReauthenticationRequest *request)
 {
-        GdmSessionWorker *worker;
+        ScdmSessionWorker *worker;
 
-        g_debug ("GdmSessionWorker: client disconnected from reauthentication server");
+        g_debug ("ScdmSessionWorker: client disconnected from reauthentication server");
 
         worker = request->worker;
         g_hash_table_remove (worker->priv->reauthentication_requests,
@@ -3229,41 +3229,41 @@ on_reauthentication_client_disconnected (GdmSession              *session,
 }
 
 static void
-on_reauthentication_cancelled (GdmSession              *session,
+on_reauthentication_cancelled (ScdmSession              *session,
                                ReauthenticationRequest *request)
 {
-        g_debug ("GdmSessionWorker: client cancelled reauthentication request");
+        g_debug ("ScdmSessionWorker: client cancelled reauthentication request");
         gdm_session_reset (session);
 }
 
 static void
-on_reauthentication_conversation_started (GdmSession              *session,
+on_reauthentication_conversation_started (ScdmSession              *session,
                                           const char              *service_name,
                                           ReauthenticationRequest *request)
 {
-        g_debug ("GdmSessionWorker: reauthentication service '%s' started",
+        g_debug ("ScdmSessionWorker: reauthentication service '%s' started",
                  service_name);
 }
 
 static void
-on_reauthentication_conversation_stopped (GdmSession              *session,
+on_reauthentication_conversation_stopped (ScdmSession              *session,
                                           const char              *service_name,
                                           ReauthenticationRequest *request)
 {
-        g_debug ("GdmSessionWorker: reauthentication service '%s' stopped",
+        g_debug ("ScdmSessionWorker: reauthentication service '%s' stopped",
                  service_name);
 }
 
 static void
-on_reauthentication_verification_complete (GdmSession              *session,
+on_reauthentication_verification_complete (ScdmSession              *session,
                                            const char              *service_name,
                                            ReauthenticationRequest *request)
 {
-        GdmSessionWorker *worker;
+        ScdmSessionWorker *worker;
 
         worker = request->worker;
 
-        g_debug ("GdmSessionWorker: pid %d reauthenticated user %d with service '%s'",
+        g_debug ("ScdmSessionWorker: pid %d reauthenticated user %d with service '%s'",
                  (int) request->pid_of_caller,
                  (int) request->uid_of_caller,
                  service_name);
@@ -3273,7 +3273,7 @@ on_reauthentication_verification_complete (GdmSession              *session,
 }
 
 static ReauthenticationRequest *
-reauthentication_request_new (GdmSessionWorker      *worker,
+reauthentication_request_new (ScdmSessionWorker      *worker,
                               GPid                   pid_of_caller,
                               uid_t                  uid_of_caller,
                               GDBusMethodInvocation *invocation)
@@ -3334,12 +3334,12 @@ reauthentication_request_new (GdmSessionWorker      *worker,
 }
 
 static gboolean
-gdm_session_worker_handle_start_reauthentication (GdmDBusWorker         *object,
+gdm_session_worker_handle_start_reauthentication (ScdmDBusWorker         *object,
                                                   GDBusMethodInvocation *invocation,
                                                   int                    pid_of_caller,
                                                   int                    uid_of_caller)
 {
-        GdmSessionWorker *worker = GDM_SESSION_WORKER (object);
+        ScdmSessionWorker *worker = GDM_SESSION_WORKER (object);
         ReauthenticationRequest *request;
 
         if (worker->priv->state != GDM_SESSION_WORKER_STATE_SESSION_STARTED) {
@@ -3351,7 +3351,7 @@ gdm_session_worker_handle_start_reauthentication (GdmDBusWorker         *object,
                 return TRUE;
         }
 
-        g_debug ("GdmSessionWorker: start reauthentication");
+        g_debug ("ScdmSessionWorker: start reauthentication");
 
         request = reauthentication_request_new (worker, pid_of_caller, uid_of_caller, invocation);
         g_hash_table_replace (worker->priv->reauthentication_requests,
@@ -3365,14 +3365,14 @@ gdm_session_worker_constructor (GType                  type,
                                 guint                  n_construct_properties,
                                 GObjectConstructParam *construct_properties)
 {
-        GdmSessionWorker  *worker;
+        ScdmSessionWorker  *worker;
         GError            *error;
 
         worker = GDM_SESSION_WORKER (G_OBJECT_CLASS (gdm_session_worker_parent_class)->constructor (type,
                                                                                                     n_construct_properties,
                                                                                                     construct_properties));
 
-        g_debug ("GdmSessionWorker: connecting to address: %s", worker->priv->server_address);
+        g_debug ("ScdmSessionWorker: connecting to address: %s", worker->priv->server_address);
 
         error = NULL;
         worker->priv->connection = g_dbus_connection_new_for_address_sync (worker->priv->server_address,
@@ -3421,7 +3421,7 @@ gdm_session_worker_constructor (GType                  type,
 }
 
 static void
-worker_interface_init (GdmDBusWorkerIface *interface)
+worker_interface_init (ScdmDBusWorkerIface *interface)
 {
         interface->handle_initialize = gdm_session_worker_handle_initialize;
         /* The next three are for backward compat only */
@@ -3441,7 +3441,7 @@ worker_interface_init (GdmDBusWorkerIface *interface)
 }
 
 static void
-gdm_session_worker_class_init (GdmSessionWorkerClass *klass)
+gdm_session_worker_class_init (ScdmSessionWorkerClass *klass)
 {
         GObjectClass    *object_class = G_OBJECT_CLASS (klass);
 
@@ -3503,7 +3503,7 @@ reauthentication_request_free (ReauthenticationRequest *request)
 }
 
 static void
-gdm_session_worker_init (GdmSessionWorker *worker)
+gdm_session_worker_init (ScdmSessionWorker *worker)
 {
         worker->priv = GDM_SESSION_WORKER_GET_PRIVATE (worker);
 
@@ -3516,7 +3516,7 @@ gdm_session_worker_init (GdmSessionWorker *worker)
 }
 
 static void
-gdm_session_worker_unwatch_child (GdmSessionWorker *worker)
+gdm_session_worker_unwatch_child (ScdmSessionWorker *worker)
 {
         if (worker->priv->child_watch_id == 0)
                 return;
@@ -3529,7 +3529,7 @@ gdm_session_worker_unwatch_child (GdmSessionWorker *worker)
 static void
 gdm_session_worker_finalize (GObject *object)
 {
-        GdmSessionWorker *worker;
+        ScdmSessionWorker *worker;
 
         g_return_if_fail (object != NULL);
         g_return_if_fail (GDM_IS_SESSION_WORKER (object));
@@ -3566,7 +3566,7 @@ gdm_session_worker_finalize (GObject *object)
         G_OBJECT_CLASS (gdm_session_worker_parent_class)->finalize (object);
 }
 
-GdmSessionWorker *
+ScdmSessionWorker *
 gdm_session_worker_new (const char *address,
                         gboolean    is_reauth_session)
 {

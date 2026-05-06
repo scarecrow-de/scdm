@@ -30,49 +30,49 @@
 G_BEGIN_DECLS
 
 #define GDM_TYPE_MANAGER         (gdm_manager_get_type ())
-#define GDM_MANAGER(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GDM_TYPE_MANAGER, GdmManager))
-#define GDM_MANAGER_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), GDM_TYPE_MANAGER, GdmManagerClass))
+#define GDM_MANAGER(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GDM_TYPE_MANAGER, ScdmManager))
+#define GDM_MANAGER_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), GDM_TYPE_MANAGER, ScdmManagerClass))
 #define GDM_IS_MANAGER(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDM_TYPE_MANAGER))
 #define GDM_IS_MANAGER_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), GDM_TYPE_MANAGER))
-#define GDM_MANAGER_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), GDM_TYPE_MANAGER, GdmManagerClass))
+#define GDM_MANAGER_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), GDM_TYPE_MANAGER, ScdmManagerClass))
 
-typedef struct GdmManagerPrivate GdmManagerPrivate;
-
-typedef struct
-{
-        GdmDBusManagerSkeleton  parent;
-        GdmManagerPrivate      *priv;
-} GdmManager;
+typedef struct ScdmManagerPrivate ScdmManagerPrivate;
 
 typedef struct
 {
-        GdmDBusManagerSkeletonClass parent_class;
+        ScdmDBusManagerSkeleton  parent;
+        ScdmManagerPrivate      *priv;
+} ScdmManager;
 
-        void          (* display_added)    (GdmManager      *manager,
+typedef struct
+{
+        ScdmDBusManagerSkeletonClass parent_class;
+
+        void          (* display_added)    (ScdmManager      *manager,
                                             const char      *id);
-        void          (* display_removed)  (GdmManager      *manager,
-                                            GdmDisplay      *display);
-} GdmManagerClass;
+        void          (* display_removed)  (ScdmManager      *manager,
+                                            ScdmDisplay      *display);
+} ScdmManagerClass;
 
 typedef enum
 {
          GDM_MANAGER_ERROR_GENERAL
-} GdmManagerError;
+} ScdmManagerError;
 
 #define GDM_MANAGER_ERROR gdm_manager_error_quark ()
 
 GQuark              gdm_manager_error_quark                    (void);
 GType               gdm_manager_get_type                       (void);
 
-GdmManager *        gdm_manager_new                            (void);
-void                gdm_manager_start                          (GdmManager *manager);
-void                gdm_manager_stop                           (GdmManager *manager);
+ScdmManager *        gdm_manager_new                            (void);
+void                gdm_manager_start                          (ScdmManager *manager);
+void                gdm_manager_stop                           (ScdmManager *manager);
 
-void                gdm_manager_set_xdmcp_enabled              (GdmManager *manager,
+void                gdm_manager_set_xdmcp_enabled              (ScdmManager *manager,
                                                                 gboolean    enabled);
-void                gdm_manager_set_show_local_greeter         (GdmManager *manager,
+void                gdm_manager_set_show_local_greeter         (ScdmManager *manager,
                                                                 gboolean    show_local_greeter);
-gboolean            gdm_manager_get_displays                   (GdmManager *manager,
+gboolean            gdm_manager_get_displays                   (ScdmManager *manager,
                                                                 GPtrArray **displays,
                                                                 GError    **error);
 

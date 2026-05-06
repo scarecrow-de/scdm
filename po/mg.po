@@ -1,4 +1,4 @@
-# Malagasy translation of Gdm2	.
+# Malagasy translation of Scdm2	.
 # Copyright (C) 2006 THE GDM2'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the GDM2 package.
 # RAJ  FANO HARIN <rajfanhar@yahoo.fr>, 2006.

@@ -32,13 +32,13 @@
 G_BEGIN_DECLS
 
 #define GDM_TYPE_DISPLAY_ACCESS_FILE (gdm_display_access_file_get_type ())
-G_DECLARE_FINAL_TYPE (GdmDisplayAccessFile, gdm_display_access_file, GDM, DISPLAY_ACCESS_FILE, GObject)
+G_DECLARE_FINAL_TYPE (ScdmDisplayAccessFile, gdm_display_access_file, GDM, DISPLAY_ACCESS_FILE, GObject)
 
 #define GDM_DISPLAY_ACCESS_FILE_ERROR           (gdm_display_access_file_error_quark ())
 
-typedef enum _GdmDisplayAccessFileError GdmDisplayAccessFileError;
+typedef enum _ScdmDisplayAccessFileError ScdmDisplayAccessFileError;
 
-enum _GdmDisplayAccessFileError
+enum _ScdmDisplayAccessFileError
 {
         GDM_DISPLAY_ACCESS_FILE_ERROR_GENERAL = 0,
         GDM_DISPLAY_ACCESS_FILE_ERROR_FINDING_AUTH_ENTRY
@@ -46,22 +46,22 @@ enum _GdmDisplayAccessFileError
 
 GQuark                gdm_display_access_file_error_quark             (void);
 
-GdmDisplayAccessFile *gdm_display_access_file_new                     (const char            *username);
-gboolean              gdm_display_access_file_open                    (GdmDisplayAccessFile  *file,
+ScdmDisplayAccessFile *gdm_display_access_file_new                     (const char            *username);
+gboolean              gdm_display_access_file_open                    (ScdmDisplayAccessFile  *file,
                                                                        GError               **error);
-gboolean              gdm_display_access_file_add_display             (GdmDisplayAccessFile  *file,
-                                                                       GdmDisplay            *display,
+gboolean              gdm_display_access_file_add_display             (ScdmDisplayAccessFile  *file,
+                                                                       ScdmDisplay            *display,
                                                                        char                 **cookie,
                                                                        gsize                 *cookie_size,
                                                                        GError               **error);
-gboolean              gdm_display_access_file_add_display_with_cookie (GdmDisplayAccessFile  *file,
-                                                                       GdmDisplay            *display,
+gboolean              gdm_display_access_file_add_display_with_cookie (ScdmDisplayAccessFile  *file,
+                                                                       ScdmDisplay            *display,
                                                                        const char            *cookie,
                                                                        gsize                  cookie_size,
                                                                        GError               **error);
 
-void                  gdm_display_access_file_close                   (GdmDisplayAccessFile  *file);
-char                 *gdm_display_access_file_get_path                (GdmDisplayAccessFile  *file);
+void                  gdm_display_access_file_close                   (ScdmDisplayAccessFile  *file);
+char                 *gdm_display_access_file_get_path                (ScdmDisplayAccessFile  *file);
 
 G_END_DECLS
 #endif /* __GDM_DISPLAY_ACCESS_FILE_H__ */

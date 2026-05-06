@@ -34,13 +34,13 @@
 
 #include "scdm-host-chooser-dialog.h"
 
-struct _GdmChooserSession
+struct _ScdmChooserSession
 {
         GObject                parent;
 
-        GdmClient             *client;
-        GdmRemoteGreeter      *remote_greeter;
-        GdmChooser            *chooser;
+        ScdmClient             *client;
+        ScdmRemoteGreeter      *remote_greeter;
+        ScdmChooser            *chooser;
         GtkWidget             *chooser_dialog;
 };
 
@@ -48,21 +48,21 @@ enum {
         PROP_0,
 };
 
-static void     gdm_chooser_session_class_init  (GdmChooserSessionClass *klass);
-static void     gdm_chooser_session_init        (GdmChooserSession      *chooser_session);
+static void     gdm_chooser_session_class_init  (ScdmChooserSessionClass *klass);
+static void     gdm_chooser_session_init        (ScdmChooserSession      *chooser_session);
 static void     gdm_chooser_session_finalize    (GObject                *object);
 
-G_DEFINE_TYPE (GdmChooserSession, gdm_chooser_session, G_TYPE_OBJECT)
+G_DEFINE_TYPE (ScdmChooserSession, gdm_chooser_session, G_TYPE_OBJECT)
 
 static gpointer session_object = NULL;
 
 static gboolean
-launch_compiz (GdmChooserSession *session)
+launch_compiz (ScdmChooserSession *session)
 {
         GError  *error;
         gboolean ret;
 
-        g_debug ("GdmChooserSession: Launching compiz");
+        g_debug ("ScdmChooserSession: Launching compiz");
 
         ret = FALSE;
 
@@ -91,12 +91,12 @@ launch_compiz (GdmChooserSession *session)
 }
 
 static gboolean
-launch_metacity (GdmChooserSession *session)
+launch_metacity (ScdmChooserSession *session)
 {
         GError  *error;
         gboolean ret;
 
-        g_debug ("GdmChooserSession: Launching metacity");
+        g_debug ("ScdmChooserSession: Launching metacity");
 
         ret = FALSE;
 
@@ -115,7 +115,7 @@ launch_metacity (GdmChooserSession *session)
 }
 
 static void
-start_window_manager (GdmChooserSession *session)
+start_window_manager (ScdmChooserSession *session)
 {
         if (! launch_metacity (session)) {
                 launch_compiz (session);
@@ -123,12 +123,12 @@ start_window_manager (GdmChooserSession *session)
 }
 
 static gboolean
-start_settings_daemon (GdmChooserSession *session)
+start_settings_daemon (ScdmChooserSession *session)
 {
         GError  *error;
         gboolean ret;
 
-        g_debug ("GdmChooserSession: Launching settings daemon");
+        g_debug ("ScdmChooserSession: Launching settings daemon");
 
         ret = FALSE;
 
@@ -149,9 +149,9 @@ start_settings_daemon (GdmChooserSession *session)
 static void
 on_dialog_response (GtkDialog         *dialog,
                     int                response_id,
-                    GdmChooserSession *session)
+                    ScdmChooserSession *session)
 {
-        GdmChooserHost *host;
+        ScdmChooserHost *host;
         GError *error = NULL;
 
         host = NULL;
@@ -174,14 +174,14 @@ on_dialog_response (GtkDialog         *dialog,
                 gdm_address_get_hostname (gdm_chooser_host_get_address (host), &hostname);
                 /* FIXME: fall back to numerical address? */
                 if (hostname != NULL) {
-                        g_debug ("GdmChooserSession: Selected hostname '%s'", hostname);
+                        g_debug ("ScdmChooserSession: Selected hostname '%s'", hostname);
                         gdm_chooser_call_select_hostname_sync (session->chooser,
                                                                hostname,
                                                                NULL,
                                                                &error);
 
                         if (error != NULL) {
-                                g_debug ("GdmChooserSession: %s", error->message);
+                                g_debug ("ScdmChooserSession: %s", error->message);
                                 g_clear_error (&error);
                         }
                         g_free (hostname);
@@ -192,12 +192,12 @@ on_dialog_response (GtkDialog         *dialog,
                                                  NULL,
                                                  &error);
         if (error != NULL) {
-                g_debug ("GdmChooserSession: disconnect failed: %s", error->message);
+                g_debug ("ScdmChooserSession: disconnect failed: %s", error->message);
         }
 }
 
 gboolean
-gdm_chooser_session_start (GdmChooserSession *session,
+gdm_chooser_session_start (ScdmChooserSession *session,
                            GError           **error)
 {
         g_return_val_if_fail (GDM_IS_CHOOSER_SESSION (session), FALSE);
@@ -231,7 +231,7 @@ gdm_chooser_session_start (GdmChooserSession *session,
 }
 
 void
-gdm_chooser_session_stop (GdmChooserSession *session)
+gdm_chooser_session_stop (ScdmChooserSession *session)
 {
         g_return_if_fail (GDM_IS_CHOOSER_SESSION (session));
 
@@ -268,7 +268,7 @@ gdm_chooser_session_constructor (GType                  type,
                                  guint                  n_construct_properties,
                                  GObjectConstructParam *construct_properties)
 {
-        GdmChooserSession      *chooser_session;
+        ScdmChooserSession      *chooser_session;
 
         chooser_session = GDM_CHOOSER_SESSION (G_OBJECT_CLASS (gdm_chooser_session_parent_class)->constructor (type,
                                                                                                                n_construct_properties,
@@ -280,13 +280,13 @@ gdm_chooser_session_constructor (GType                  type,
 static void
 gdm_chooser_session_dispose (GObject *object)
 {
-        g_debug ("GdmChooserSession: Disposing chooser_session");
+        g_debug ("ScdmChooserSession: Disposing chooser_session");
 
         G_OBJECT_CLASS (gdm_chooser_session_parent_class)->dispose (object);
 }
 
 static void
-gdm_chooser_session_class_init (GdmChooserSessionClass *klass)
+gdm_chooser_session_class_init (ScdmChooserSessionClass *klass)
 {
         GObjectClass   *object_class = G_OBJECT_CLASS (klass);
 
@@ -298,7 +298,7 @@ gdm_chooser_session_class_init (GdmChooserSessionClass *klass)
 }
 
 static void
-gdm_chooser_session_init (GdmChooserSession *session)
+gdm_chooser_session_init (ScdmChooserSession *session)
 {
         session->client = gdm_client_new ();
 }
@@ -306,7 +306,7 @@ gdm_chooser_session_init (GdmChooserSession *session)
 static void
 gdm_chooser_session_finalize (GObject *object)
 {
-        GdmChooserSession *chooser_session;
+        ScdmChooserSession *chooser_session;
 
         g_return_if_fail (object != NULL);
         g_return_if_fail (GDM_IS_CHOOSER_SESSION (object));
@@ -322,7 +322,7 @@ gdm_chooser_session_finalize (GObject *object)
         G_OBJECT_CLASS (gdm_chooser_session_parent_class)->finalize (object);
 }
 
-GdmChooserSession *
+ScdmChooserSession *
 gdm_chooser_session_new (void)
 {
         if (session_object != NULL) {

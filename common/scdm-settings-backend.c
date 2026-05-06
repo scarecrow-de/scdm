@@ -42,11 +42,11 @@ enum {
 
 static guint signals [LAST_SIGNAL] = { 0, };
 
-static void     gdm_settings_backend_class_init (GdmSettingsBackendClass *klass);
-static void     gdm_settings_backend_init       (GdmSettingsBackend      *settings_backend);
+static void     gdm_settings_backend_class_init (ScdmSettingsBackendClass *klass);
+static void     gdm_settings_backend_init       (ScdmSettingsBackend      *settings_backend);
 static void     gdm_settings_backend_finalize   (GObject                 *object);
 
-G_DEFINE_ABSTRACT_TYPE (GdmSettingsBackend, gdm_settings_backend, G_TYPE_OBJECT)
+G_DEFINE_ABSTRACT_TYPE (ScdmSettingsBackend, gdm_settings_backend, G_TYPE_OBJECT)
 
 GQuark
 gdm_settings_backend_error_quark (void)
@@ -60,7 +60,7 @@ gdm_settings_backend_error_quark (void)
 }
 
 static gboolean
-gdm_settings_backend_real_get_value (GdmSettingsBackend *settings_backend,
+gdm_settings_backend_real_get_value (ScdmSettingsBackend *settings_backend,
                                      const char         *key,
                                      char              **value,
                                      GError            **error)
@@ -71,7 +71,7 @@ gdm_settings_backend_real_get_value (GdmSettingsBackend *settings_backend,
 }
 
 static gboolean
-gdm_settings_backend_real_set_value (GdmSettingsBackend *settings_backend,
+gdm_settings_backend_real_set_value (ScdmSettingsBackend *settings_backend,
                                      const char         *key,
                                      const char         *value,
                                      GError            **error)
@@ -82,7 +82,7 @@ gdm_settings_backend_real_set_value (GdmSettingsBackend *settings_backend,
 }
 
 gboolean
-gdm_settings_backend_get_value (GdmSettingsBackend *settings_backend,
+gdm_settings_backend_get_value (ScdmSettingsBackend *settings_backend,
                                 const char         *key,
                                 char              **value,
                                 GError            **error)
@@ -99,7 +99,7 @@ gdm_settings_backend_get_value (GdmSettingsBackend *settings_backend,
 }
 
 gboolean
-gdm_settings_backend_set_value (GdmSettingsBackend *settings_backend,
+gdm_settings_backend_set_value (ScdmSettingsBackend *settings_backend,
                                 const char         *key,
                                 const char         *value,
                                 GError            **error)
@@ -116,7 +116,7 @@ gdm_settings_backend_set_value (GdmSettingsBackend *settings_backend,
 }
 
 void
-gdm_settings_backend_value_changed (GdmSettingsBackend *settings_backend,
+gdm_settings_backend_value_changed (ScdmSettingsBackend *settings_backend,
                                     const char         *key,
                                     const char         *old_value,
                                     const char         *new_value)
@@ -127,7 +127,7 @@ gdm_settings_backend_value_changed (GdmSettingsBackend *settings_backend,
 }
 
 static void
-gdm_settings_backend_class_init (GdmSettingsBackendClass *klass)
+gdm_settings_backend_class_init (ScdmSettingsBackendClass *klass)
 {
         GObjectClass   *object_class = G_OBJECT_CLASS (klass);
 
@@ -140,7 +140,7 @@ gdm_settings_backend_class_init (GdmSettingsBackendClass *klass)
                 g_signal_new ("value-changed",
                               G_TYPE_FROM_CLASS (object_class),
                               G_SIGNAL_RUN_LAST,
-                              G_STRUCT_OFFSET (GdmSettingsBackendClass, value_changed),
+                              G_STRUCT_OFFSET (ScdmSettingsBackendClass, value_changed),
                               NULL,
                               NULL,
                               g_cclosure_marshal_generic,
@@ -152,7 +152,7 @@ gdm_settings_backend_class_init (GdmSettingsBackendClass *klass)
 }
 
 static void
-gdm_settings_backend_init (GdmSettingsBackend *settings_backend)
+gdm_settings_backend_init (ScdmSettingsBackend *settings_backend)
 {
 }
 

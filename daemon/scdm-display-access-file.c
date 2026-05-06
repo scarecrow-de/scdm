@@ -41,7 +41,7 @@
 #include "scdm-display-access-file.h"
 #include "scdm-common.h"
 
-struct _GdmDisplayAccessFile
+struct _ScdmDisplayAccessFile
 {
         GObject parent;
 
@@ -67,7 +67,7 @@ enum
         PROP_PATH
 };
 
-G_DEFINE_TYPE (GdmDisplayAccessFile, gdm_display_access_file, G_TYPE_OBJECT)
+G_DEFINE_TYPE (ScdmDisplayAccessFile, gdm_display_access_file, G_TYPE_OBJECT)
 
 static void
 gdm_display_access_file_get_property (GObject    *object,
@@ -75,7 +75,7 @@ gdm_display_access_file_get_property (GObject    *object,
                                       GValue     *value,
                                       GParamSpec *pspec)
 {
-        GdmDisplayAccessFile *access_file;
+        ScdmDisplayAccessFile *access_file;
 
         access_file = GDM_DISPLAY_ACCESS_FILE (object);
 
@@ -99,7 +99,7 @@ gdm_display_access_file_set_property (GObject      *object,
                                       const GValue *value,
                                       GParamSpec   *pspec)
 {
-        GdmDisplayAccessFile *access_file;
+        ScdmDisplayAccessFile *access_file;
 
         access_file = GDM_DISPLAY_ACCESS_FILE (object);
 
@@ -115,7 +115,7 @@ gdm_display_access_file_set_property (GObject      *object,
 }
 
 static void
-gdm_display_access_file_class_init (GdmDisplayAccessFileClass *access_file_class)
+gdm_display_access_file_class_init (ScdmDisplayAccessFileClass *access_file_class)
 {
         GObjectClass *object_class;
         GParamSpec   *param_spec;
@@ -141,14 +141,14 @@ gdm_display_access_file_class_init (GdmDisplayAccessFileClass *access_file_class
 }
 
 static void
-gdm_display_access_file_init (GdmDisplayAccessFile *access_file)
+gdm_display_access_file_init (ScdmDisplayAccessFile *access_file)
 {
 }
 
 static void
 gdm_display_access_file_finalize (GObject *object)
 {
-        GdmDisplayAccessFile *file;
+        ScdmDisplayAccessFile *file;
         GObjectClass *parent_class;
 
         file = GDM_DISPLAY_ACCESS_FILE (object);
@@ -182,10 +182,10 @@ gdm_display_access_file_error_quark (void)
         return error_quark;
 }
 
-GdmDisplayAccessFile *
+ScdmDisplayAccessFile *
 gdm_display_access_file_new (const char *username)
 {
-        GdmDisplayAccessFile *access_file;
+        ScdmDisplayAccessFile *access_file;
         g_return_val_if_fail (username != NULL, NULL);
 
         access_file = g_object_new (GDM_TYPE_DISPLAY_ACCESS_FILE,
@@ -305,7 +305,7 @@ _create_xauth_file_for_user (const char  *username,
                                     "/auth-for-%s-XXXXXX",
                                     username);
 
-        g_debug ("GdmDisplayAccessFile: creating xauth directory %s", template);
+        g_debug ("ScdmDisplayAccessFile: creating xauth directory %s", template);
         /* Initially create with mode 01700 then later chmod after we create database */
         errno = 0;
         dir_name = g_mkdtemp (template);
@@ -319,7 +319,7 @@ _create_xauth_file_for_user (const char  *username,
                 goto out;
         }
 
-        g_debug ("GdmDisplayAccessFile: chowning %s to %u:%u",
+        g_debug ("ScdmDisplayAccessFile: chowning %s to %u:%u",
                  dir_name, (guint)uid, (guint)gid);
         errno = 0;
         if (chown (dir_name, uid, gid) < 0) {
@@ -334,7 +334,7 @@ _create_xauth_file_for_user (const char  *username,
 
         auth_filename = g_build_filename (dir_name, "database", NULL);
 
-        g_debug ("GdmDisplayAccessFile: creating %s", auth_filename);
+        g_debug ("ScdmDisplayAccessFile: creating %s", auth_filename);
         /* mode 00600 */
         errno = 0;
         fd = g_open (auth_filename,
@@ -351,7 +351,7 @@ _create_xauth_file_for_user (const char  *username,
                 goto out;
         }
 
-        g_debug ("GdmDisplayAccessFile: chowning %s to %u:%u", auth_filename, (guint)uid, (guint)gid);
+        g_debug ("ScdmDisplayAccessFile: chowning %s to %u:%u", auth_filename, (guint)uid, (guint)gid);
         errno = 0;
         if (fchown (fd, uid, gid) < 0) {
                 g_set_error (error,
@@ -366,7 +366,7 @@ _create_xauth_file_for_user (const char  *username,
         }
 
         /* now open up permissions on per-session directory */
-        g_debug ("GdmDisplayAccessFile: chmoding %s to 0711", dir_name);
+        g_debug ("ScdmDisplayAccessFile: chmoding %s to 0711", dir_name);
         g_chmod (dir_name, 0711);
 
         errno = 0;
@@ -397,7 +397,7 @@ out:
 }
 
 gboolean
-gdm_display_access_file_open (GdmDisplayAccessFile  *file,
+gdm_display_access_file_open (ScdmDisplayAccessFile  *file,
                               GError               **error)
 {
         GError *create_error;
@@ -420,8 +420,8 @@ gdm_display_access_file_open (GdmDisplayAccessFile  *file,
 }
 
 static void
-_get_auth_info_for_display (GdmDisplayAccessFile *file,
-                            GdmDisplay           *display,
+_get_auth_info_for_display (ScdmDisplayAccessFile *file,
+                            ScdmDisplay           *display,
                             unsigned short       *family,
                             unsigned short       *address_length,
                             char                **address,
@@ -463,8 +463,8 @@ _get_auth_info_for_display (GdmDisplayAccessFile *file,
 }
 
 gboolean
-gdm_display_access_file_add_display (GdmDisplayAccessFile  *file,
-                                     GdmDisplay            *display,
+gdm_display_access_file_add_display (ScdmDisplayAccessFile  *file,
+                                     ScdmDisplay            *display,
                                      char                 **cookie,
                                      gsize                 *cookie_size,
                                      GError               **error)
@@ -502,8 +502,8 @@ gdm_display_access_file_add_display (GdmDisplayAccessFile  *file,
 }
 
 gboolean
-gdm_display_access_file_add_display_with_cookie (GdmDisplayAccessFile  *file,
-                                                 GdmDisplay            *display,
+gdm_display_access_file_add_display_with_cookie (ScdmDisplayAccessFile  *file,
+                                                 ScdmDisplay            *display,
                                                  const char            *cookie,
                                                  gsize                  cookie_size,
                                                  GError               **error)
@@ -562,7 +562,7 @@ gdm_display_access_file_add_display_with_cookie (GdmDisplayAccessFile  *file,
 }
 
 void
-gdm_display_access_file_close (GdmDisplayAccessFile  *file)
+gdm_display_access_file_close (ScdmDisplayAccessFile  *file)
 {
         char *auth_dir;
 
@@ -572,7 +572,7 @@ gdm_display_access_file_close (GdmDisplayAccessFile  *file)
 
         errno = 0;
         if (g_unlink (file->path) != 0) {
-                g_warning ("GdmDisplayAccessFile: Unable to remove X11 authority database '%s': %s",
+                g_warning ("ScdmDisplayAccessFile: Unable to remove X11 authority database '%s': %s",
                            file->path,
                            g_strerror (errno));
         }
@@ -584,7 +584,7 @@ gdm_display_access_file_close (GdmDisplayAccessFile  *file)
         if (auth_dir != NULL) {
                 errno = 0;
                 if (g_rmdir (auth_dir) != 0) {
-                        g_warning ("GdmDisplayAccessFile: Unable to remove X11 authority directory '%s': %s",
+                        g_warning ("ScdmDisplayAccessFile: Unable to remove X11 authority directory '%s': %s",
                                    auth_dir,
                                    g_strerror (errno));
                 }
@@ -600,7 +600,7 @@ gdm_display_access_file_close (GdmDisplayAccessFile  *file)
 }
 
 char *
-gdm_display_access_file_get_path (GdmDisplayAccessFile *access_file)
+gdm_display_access_file_get_path (ScdmDisplayAccessFile *access_file)
 {
         return g_strdup (access_file->path);
 }

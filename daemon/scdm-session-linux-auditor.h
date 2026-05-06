@@ -34,9 +34,9 @@
 G_BEGIN_DECLS
 
 #define GDM_TYPE_SESSION_LINUX_AUDITOR (gdm_session_linux_auditor_get_type ())
-G_DECLARE_FINAL_TYPE (GdmSessionLinuxAuditor, gdm_session_linux_auditor, GDM, SESSION_LINUX_AUDITOR, GdmSessionAuditor)
+G_DECLARE_FINAL_TYPE (ScdmSessionLinuxAuditor, gdm_session_linux_auditor, GDM, SESSION_LINUX_AUDITOR, ScdmSessionAuditor)
 
-GdmSessionAuditor *gdm_session_linux_auditor_new                            (const char *hostname,
+ScdmSessionAuditor *gdm_session_linux_auditor_new                            (const char *hostname,
                                                                              const char *display_device);
 
 G_END_DECLS

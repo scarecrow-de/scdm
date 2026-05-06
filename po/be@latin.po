@@ -1,4 +1,4 @@
-# Biełaruski pierakład Gdm.
+# Biełaruski pierakład Scdm.
 # This file is distributed under the same license as the scdm package.
 # Ihar Hrachyshka (c) 2009.
 #

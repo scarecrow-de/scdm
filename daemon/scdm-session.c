@@ -64,23 +64,23 @@
 
 typedef struct
 {
-        GdmSession            *session;
-        GdmSessionWorkerJob   *job;
+        ScdmSession            *session;
+        ScdmSessionWorkerJob   *job;
         GPid                   worker_pid;
         char                  *service_name;
         GDBusMethodInvocation *starting_invocation;
         char                  *starting_username;
         GDBusMethodInvocation *pending_invocation;
-        GdmDBusWorkerManager  *worker_manager_interface;
-        GdmDBusWorker         *worker_proxy;
+        ScdmDBusWorkerManager  *worker_manager_interface;
+        ScdmDBusWorker         *worker_proxy;
         GCancellable          *worker_cancellable;
         char                  *session_id;
         guint32                is_stopping : 1;
 
         GPid                   reauth_pid_of_caller;
-} GdmSessionConversation;
+} ScdmSessionConversation;
 
-struct _GdmSession
+struct _ScdmSession
 {
         GObject              parent;
 
@@ -98,15 +98,15 @@ struct _GdmSession
 
         GHashTable          *conversations;
 
-        GdmSessionConversation *session_conversation;
+        ScdmSessionConversation *session_conversation;
 
         char                 **conversation_environment;
 
-        GdmDBusUserVerifier   *user_verifier_interface;
+        ScdmDBusUserVerifier   *user_verifier_interface;
         GHashTable            *user_verifier_extensions;
-        GdmDBusGreeter        *greeter_interface;
-        GdmDBusRemoteGreeter  *remote_greeter_interface;
-        GdmDBusChooser        *chooser_interface;
+        ScdmDBusGreeter        *greeter_interface;
+        ScdmDBusRemoteGreeter  *remote_greeter_interface;
+        ScdmDBusChooser        *chooser_interface;
 
         GList               *pending_worker_connections;
         GList               *outside_connections;
@@ -122,7 +122,7 @@ struct _GdmSession
         char                *display_x11_authority_file;
         gboolean             display_is_local;
 
-        GdmSessionVerificationMode verification_mode;
+        ScdmSessionVerificationMode verification_mode;
 
         uid_t                allowed_user;
 
@@ -182,24 +182,24 @@ enum {
 };
 
 #ifdef ENABLE_WAYLAND_SUPPORT
-static gboolean gdm_session_is_wayland_session (GdmSession *self);
+static gboolean gdm_session_is_wayland_session (ScdmSession *self);
 #endif
-static void update_session_type (GdmSession *self);
-static void set_session_type (GdmSession *self,
+static void update_session_type (ScdmSession *self);
+static void set_session_type (ScdmSession *self,
                               const char *session_type);
-static void close_conversation (GdmSessionConversation *conversation);
+static void close_conversation (ScdmSessionConversation *conversation);
 
 static guint signals [LAST_SIGNAL] = { 0, };
 
-G_DEFINE_TYPE (GdmSession,
+G_DEFINE_TYPE (ScdmSession,
                gdm_session,
                G_TYPE_OBJECT);
 
-static GdmSessionConversation *
-find_conversation_by_name (GdmSession *self,
+static ScdmSessionConversation *
+find_conversation_by_name (ScdmSession *self,
                            const char *service_name)
 {
-        GdmSessionConversation *conversation;
+        ScdmSessionConversation *conversation;
 
         conversation = g_hash_table_lookup (self->conversations, service_name);
 
@@ -211,7 +211,7 @@ find_conversation_by_name (GdmSession *self,
 }
 
 static void
-report_and_stop_conversation (GdmSession *self,
+report_and_stop_conversation (ScdmSession *self,
                               const char *service_name,
                               GError     *error)
 {
@@ -237,12 +237,12 @@ report_and_stop_conversation (GdmSession *self,
 }
 
 static void
-on_authenticate_cb (GdmDBusWorker *proxy,
+on_authenticate_cb (ScdmDBusWorker *proxy,
                     GAsyncResult  *res,
                     gpointer       user_data)
 {
-        GdmSessionConversation *conversation = user_data;
-        GdmSession *self;
+        ScdmSessionConversation *conversation = user_data;
+        ScdmSession *self;
         char *service_name;
 
         GError *error = NULL;
@@ -270,12 +270,12 @@ on_authenticate_cb (GdmDBusWorker *proxy,
 }
 
 static void
-on_authorize_cb (GdmDBusWorker *proxy,
+on_authorize_cb (ScdmDBusWorker *proxy,
                  GAsyncResult  *res,
                  gpointer       user_data)
 {
-        GdmSessionConversation *conversation = user_data;
-        GdmSession *self;
+        ScdmSessionConversation *conversation = user_data;
+        ScdmSession *self;
         char *service_name;
 
         GError *error = NULL;
@@ -298,12 +298,12 @@ on_authorize_cb (GdmDBusWorker *proxy,
 }
 
 static void
-on_establish_credentials_cb (GdmDBusWorker *proxy,
+on_establish_credentials_cb (ScdmDBusWorker *proxy,
                              GAsyncResult  *res,
                              gpointer       user_data)
 {
-        GdmSessionConversation *conversation = user_data;
-        GdmSession *self;
+        ScdmSessionConversation *conversation = user_data;
+        ScdmSession *self;
         char *service_name;
 
         GError *error = NULL;
@@ -343,7 +343,7 @@ on_establish_credentials_cb (GdmDBusWorker *proxy,
 }
 
 static char **
-get_system_session_dirs (GdmSession *self)
+get_system_session_dirs (ScdmSession *self)
 {
         GArray *search_array = NULL;
         char **search_dirs;
@@ -408,7 +408,7 @@ is_prog_in_path (const char *prog)
 }
 
 static GKeyFile *
-load_key_file_for_file (GdmSession   *self,
+load_key_file_for_file (ScdmSession   *self,
                         const char   *file,
                         char        **full_path)
 {
@@ -428,7 +428,7 @@ load_key_file_for_file (GdmSession   *self,
                                          G_KEY_FILE_NONE,
                                          &error);
         if (! res) {
-                g_debug ("GdmSession: File '%s' not found: %s", file, error->message);
+                g_debug ("ScdmSession: File '%s' not found: %s", file, error->message);
                 g_error_free (error);
                 g_key_file_free (key_file);
                 key_file = NULL;
@@ -440,7 +440,7 @@ load_key_file_for_file (GdmSession   *self,
 }
 
 static gboolean
-get_session_command_for_file (GdmSession  *self,
+get_session_command_for_file (ScdmSession  *self,
                               const char  *file,
                               char       **command)
 {
@@ -456,7 +456,7 @@ get_session_command_for_file (GdmSession  *self,
                 *command = NULL;
         }
 
-        g_debug ("GdmSession: getting session command for file '%s'", file);
+        g_debug ("ScdmSession: getting session command for file '%s'", file);
         key_file = load_key_file_for_file (self, file, NULL);
         if (key_file == NULL) {
                 goto out;
@@ -468,7 +468,7 @@ get_session_command_for_file (GdmSession  *self,
                                       G_KEY_FILE_DESKTOP_KEY_HIDDEN,
                                       &error);
         if (error == NULL && res) {
-                g_debug ("GdmSession: Session %s is marked as hidden", file);
+                g_debug ("ScdmSession: Session %s is marked as hidden", file);
                 goto out;
         }
 
@@ -482,7 +482,7 @@ get_session_command_for_file (GdmSession  *self,
                 exec = NULL;
 
                 if (! res) {
-                        g_debug ("GdmSession: Command not found: %s",
+                        g_debug ("ScdmSession: Command not found: %s",
                                  G_KEY_FILE_DESKTOP_KEY_TRY_EXEC);
                         goto out;
                 }
@@ -494,7 +494,7 @@ get_session_command_for_file (GdmSession  *self,
                                       G_KEY_FILE_DESKTOP_KEY_EXEC,
                                       &error);
         if (error != NULL) {
-                g_debug ("GdmSession: %s key not found: %s",
+                g_debug ("ScdmSession: %s key not found: %s",
                          G_KEY_FILE_DESKTOP_KEY_EXEC,
                          error->message);
                 g_error_free (error);
@@ -513,7 +513,7 @@ out:
 }
 
 static gboolean
-get_session_command_for_name (GdmSession  *self,
+get_session_command_for_name (ScdmSession  *self,
                               const char  *name,
                               char       **command)
 {
@@ -528,7 +528,7 @@ get_session_command_for_name (GdmSession  *self,
 }
 
 static const char *
-get_default_language_name (GdmSession *self)
+get_default_language_name (ScdmSession *self)
 {
     const char *default_language;
 
@@ -547,7 +547,7 @@ get_default_language_name (GdmSession *self)
 }
 
 static const char *
-get_fallback_session_name (GdmSession *self)
+get_fallback_session_name (ScdmSession *self)
 {
         char          **search_dirs;
         int             i;
@@ -608,7 +608,7 @@ get_fallback_session_name (GdmSession *self)
         session = g_sequence_get_begin_iter (sessions);
 
         if (g_sequence_iter_is_end (session))
-                g_error ("GdmSession: no session desktop files installed, aborting...");
+                g_error ("ScdmSession: no session desktop files installed, aborting...");
 
         do {
                name = g_sequence_get (session);
@@ -628,7 +628,7 @@ get_fallback_session_name (GdmSession *self)
 }
 
 static const char *
-get_default_session_name (GdmSession *self)
+get_default_session_name (ScdmSession *self)
 {
         if (self->saved_session != NULL) {
                 return self->saved_session;
@@ -638,7 +638,7 @@ get_default_session_name (GdmSession *self)
 }
 
 static void
-gdm_session_defaults_changed (GdmSession *self)
+gdm_session_defaults_changed (ScdmSession *self)
 {
 
         update_session_type (self);
@@ -652,11 +652,11 @@ gdm_session_defaults_changed (GdmSession *self)
 }
 
 void
-gdm_session_select_user (GdmSession *self,
+gdm_session_select_user (ScdmSession *self,
                          const char *text)
 {
 
-        g_debug ("GdmSession: selecting user '%s' for session '%s' (%p)",
+        g_debug ("ScdmSession: selecting user '%s' for session '%s' (%p)",
                  text,
                  gdm_session_get_session_id (self),
                  self);
@@ -672,13 +672,13 @@ gdm_session_select_user (GdmSession *self,
 }
 
 static void
-cancel_pending_query (GdmSessionConversation *conversation)
+cancel_pending_query (ScdmSessionConversation *conversation)
 {
         if (conversation->pending_invocation == NULL) {
                 return;
         }
 
-        g_debug ("GdmSession: Cancelling pending query");
+        g_debug ("ScdmSession: Cancelling pending query");
 
         g_dbus_method_invocation_return_dbus_error (conversation->pending_invocation,
                                                     GDM_SESSION_DBUS_ERROR_CANCEL,
@@ -687,7 +687,7 @@ cancel_pending_query (GdmSessionConversation *conversation)
 }
 
 static void
-answer_pending_query (GdmSessionConversation *conversation,
+answer_pending_query (ScdmSessionConversation *conversation,
                       const char             *answer)
 {
         g_dbus_method_invocation_return_value (conversation->pending_invocation,
@@ -696,7 +696,7 @@ answer_pending_query (GdmSessionConversation *conversation,
 }
 
 static void
-set_pending_query (GdmSessionConversation *conversation,
+set_pending_query (ScdmSessionConversation *conversation,
                    GDBusMethodInvocation  *message)
 {
         g_assert (conversation->pending_invocation == NULL);
@@ -705,17 +705,17 @@ set_pending_query (GdmSessionConversation *conversation,
 }
 
 static gboolean
-gdm_session_handle_choice_list_query (GdmDBusWorkerManager  *worker_manager_interface,
+gdm_session_handle_choice_list_query (ScdmDBusWorkerManager  *worker_manager_interface,
                                       GDBusMethodInvocation *invocation,
                                       const char            *service_name,
                                       const char            *prompt_message,
                                       GVariant              *query,
-                                      GdmSession            *self)
+                                      ScdmSession            *self)
 {
-        GdmSessionConversation *conversation;
-        GdmDBusUserVerifierChoiceList *choice_list_interface = NULL;
+        ScdmSessionConversation *conversation;
+        ScdmDBusUserVerifierChoiceList *choice_list_interface = NULL;
 
-        g_debug ("GdmSession: choice query for service '%s'", service_name);
+        g_debug ("ScdmSession: choice query for service '%s'", service_name);
 
         if (self->user_verifier_extensions != NULL)
                 choice_list_interface = g_hash_table_lookup (self->user_verifier_extensions,
@@ -732,7 +732,7 @@ gdm_session_handle_choice_list_query (GdmDBusWorkerManager  *worker_manager_inte
         if (conversation != NULL) {
                 set_pending_query (conversation, invocation);
 
-                g_debug ("GdmSession: emitting choice query '%s'", prompt_message);
+                g_debug ("ScdmSession: emitting choice query '%s'", prompt_message);
                 gdm_dbus_user_verifier_choice_list_emit_choice_query (choice_list_interface,
                                                                       service_name,
                                                                       prompt_message,
@@ -743,13 +743,13 @@ gdm_session_handle_choice_list_query (GdmDBusWorkerManager  *worker_manager_inte
 }
 
 static gboolean
-gdm_session_handle_info_query (GdmDBusWorkerManager  *worker_manager_interface,
+gdm_session_handle_info_query (ScdmDBusWorkerManager  *worker_manager_interface,
                                GDBusMethodInvocation *invocation,
                                const char            *service_name,
                                const char            *query,
-                               GdmSession            *self)
+                               ScdmSession            *self)
 {
-        GdmSessionConversation *conversation;
+        ScdmSessionConversation *conversation;
 
         g_return_val_if_fail (self->user_verifier_interface != NULL, FALSE);
 
@@ -766,13 +766,13 @@ gdm_session_handle_info_query (GdmDBusWorkerManager  *worker_manager_interface,
 }
 
 static gboolean
-gdm_session_handle_secret_info_query (GdmDBusWorkerManager  *worker_manager_interface,
+gdm_session_handle_secret_info_query (ScdmDBusWorkerManager  *worker_manager_interface,
                                       GDBusMethodInvocation *invocation,
                                       const char            *service_name,
                                       const char            *query,
-                                      GdmSession            *self)
+                                      ScdmSession            *self)
 {
-        GdmSessionConversation *conversation;
+        ScdmSessionConversation *conversation;
 
         g_return_val_if_fail (self->user_verifier_interface != NULL, FALSE);
 
@@ -789,11 +789,11 @@ gdm_session_handle_secret_info_query (GdmDBusWorkerManager  *worker_manager_inte
 }
 
 static gboolean
-gdm_session_handle_info (GdmDBusWorkerManager  *worker_manager_interface,
+gdm_session_handle_info (ScdmDBusWorkerManager  *worker_manager_interface,
                          GDBusMethodInvocation *invocation,
                          const char            *service_name,
                          const char            *info,
-                         GdmSession            *self)
+                         ScdmSession            *self)
 {
         gdm_dbus_worker_manager_complete_info (worker_manager_interface,
                                                invocation);
@@ -808,18 +808,18 @@ gdm_session_handle_info (GdmDBusWorkerManager  *worker_manager_interface,
 }
 
 static void
-worker_on_cancel_pending_query (GdmDBusWorker          *worker,
-                                GdmSessionConversation *conversation)
+worker_on_cancel_pending_query (ScdmDBusWorker          *worker,
+                                ScdmSessionConversation *conversation)
 {
         cancel_pending_query (conversation);
 }
 
 static gboolean
-gdm_session_handle_problem (GdmDBusWorkerManager  *worker_manager_interface,
+gdm_session_handle_problem (ScdmDBusWorkerManager  *worker_manager_interface,
                             GDBusMethodInvocation *invocation,
                             const char            *service_name,
                             const char            *problem,
-                            GdmSession            *self)
+                            ScdmSession            *self)
 {
         gdm_dbus_worker_manager_complete_problem (worker_manager_interface,
                                                   invocation);
@@ -833,12 +833,12 @@ gdm_session_handle_problem (GdmDBusWorkerManager  *worker_manager_interface,
 }
 
 static void
-on_opened (GdmDBusWorker *worker,
+on_opened (ScdmDBusWorker *worker,
            GAsyncResult  *res,
            gpointer       user_data)
 {
-        GdmSessionConversation *conversation = user_data;
-        GdmSession *self;
+        ScdmSessionConversation *conversation = user_data;
+        ScdmSession *self;
         char *service_name;
 
         GError *error = NULL;
@@ -874,24 +874,24 @@ on_opened (GdmDBusWorker *worker,
                         g_signal_emit (self, signals[VERIFICATION_COMPLETE], 0, service_name);
                 }
 
-                g_debug ("GdmSession: Emitting 'session-opened' signal");
+                g_debug ("ScdmSession: Emitting 'session-opened' signal");
                 g_signal_emit (self, signals[SESSION_OPENED], 0, service_name, session_id);
         } else {
                 report_and_stop_conversation (self, service_name, error);
 
-                g_debug ("GdmSession: Emitting 'session-start-failed' signal");
+                g_debug ("ScdmSession: Emitting 'session-start-failed' signal");
                 g_signal_emit (self, signals[SESSION_START_FAILED], 0, service_name, error->message);
         }
 }
 
 static void
-worker_on_username_changed (GdmDBusWorker          *worker,
+worker_on_username_changed (ScdmDBusWorker          *worker,
                             const char             *username,
-                            GdmSessionConversation *conversation)
+                            ScdmSessionConversation *conversation)
 {
-        GdmSession *self = conversation->session;
+        ScdmSession *self = conversation->session;
 
-        g_debug ("GdmSession: changing username from '%s' to '%s'",
+        g_debug ("ScdmSession: changing username from '%s' to '%s'",
                  self->selected_user != NULL ? self->selected_user : "<unset>",
                  (strlen (username)) ? username : "<unset>");
 
@@ -900,33 +900,33 @@ worker_on_username_changed (GdmDBusWorker          *worker,
 }
 
 static void
-worker_on_session_exited (GdmDBusWorker          *worker,
+worker_on_session_exited (ScdmDBusWorker          *worker,
                           const char             *service_name,
                           int                     status,
-                          GdmSessionConversation *conversation)
+                          ScdmSessionConversation *conversation)
 {
-        GdmSession *self = conversation->session;
+        ScdmSession *self = conversation->session;
 
         self->session_conversation = NULL;
 
         if (WIFEXITED (status)) {
-                g_debug ("GdmSession: Emitting 'session-exited' signal with exit code '%d'",
+                g_debug ("ScdmSession: Emitting 'session-exited' signal with exit code '%d'",
                   WEXITSTATUS (status));
                 g_signal_emit (self, signals[SESSION_EXITED], 0, WEXITSTATUS (status));
         } else if (WIFSIGNALED (status)) {
-                g_debug ("GdmSession: Emitting 'session-died' signal with signal number '%d'",
+                g_debug ("ScdmSession: Emitting 'session-died' signal with signal number '%d'",
                   WTERMSIG (status));
                 g_signal_emit (self, signals[SESSION_DIED], 0, WTERMSIG (status));
         }
 }
 
 static void
-on_reauthentication_started_cb (GdmDBusWorker *worker,
+on_reauthentication_started_cb (ScdmDBusWorker *worker,
                                 GAsyncResult  *res,
                                 gpointer       user_data)
 {
-        GdmSessionConversation *conversation = user_data;
-        GdmSession *self;
+        ScdmSessionConversation *conversation = user_data;
+        ScdmSession *self;
 
         GError *error = NULL;
         gboolean worked;
@@ -945,7 +945,7 @@ on_reauthentication_started_cb (GdmDBusWorker *worker,
 
         if (worked) {
                 GPid pid_of_caller = conversation->reauth_pid_of_caller;
-                g_debug ("GdmSession: Emitting 'reauthentication-started' signal for caller pid '%d'", pid_of_caller);
+                g_debug ("ScdmSession: Emitting 'reauthentication-started' signal for caller pid '%d'", pid_of_caller);
                 g_signal_emit (self, signals[REAUTHENTICATION_STARTED], 0, pid_of_caller, address);
         }
 
@@ -953,21 +953,21 @@ on_reauthentication_started_cb (GdmDBusWorker *worker,
 }
 
 static void
-worker_on_reauthenticated (GdmDBusWorker          *worker,
+worker_on_reauthenticated (ScdmDBusWorker          *worker,
                            const char             *service_name,
-                           GdmSessionConversation *conversation)
+                           ScdmSessionConversation *conversation)
 {
-        GdmSession *self = conversation->session;
-        g_debug ("GdmSession: Emitting 'reauthenticated' signal ");
+        ScdmSession *self = conversation->session;
+        g_debug ("ScdmSession: Emitting 'reauthenticated' signal ");
         g_signal_emit (self, signals[REAUTHENTICATED], 0, service_name);
 }
 
 static void
-worker_on_saved_language_name_read (GdmDBusWorker          *worker,
+worker_on_saved_language_name_read (ScdmDBusWorker          *worker,
                                     const char             *language_name,
-                                    GdmSessionConversation *conversation)
+                                    ScdmSessionConversation *conversation)
 {
-        GdmSession *self = conversation->session;
+        ScdmSession *self = conversation->session;
 
         if (strlen (language_name) > 0) {
                 g_free (self->saved_language);
@@ -981,15 +981,15 @@ worker_on_saved_language_name_read (GdmDBusWorker          *worker,
 }
 
 static void
-worker_on_saved_session_name_read (GdmDBusWorker          *worker,
+worker_on_saved_session_name_read (ScdmDBusWorker          *worker,
                                    const char             *session_name,
-                                   GdmSessionConversation *conversation)
+                                   ScdmSessionConversation *conversation)
 {
-        GdmSession *self = conversation->session;
+        ScdmSession *self = conversation->session;
 
         if (! get_session_command_for_name (self, session_name, NULL)) {
                 /* ignore sessions that don't exist */
-                g_debug ("GdmSession: not using invalid .dmrc session: %s", session_name);
+                g_debug ("ScdmSession: not using invalid .dmrc session: %s", session_name);
                 g_free (self->saved_session);
                 self->saved_session = NULL;
         } else if (strcmp (session_name,
@@ -1007,8 +1007,8 @@ worker_on_saved_session_name_read (GdmDBusWorker          *worker,
 
 }
 
-static GdmSessionConversation *
-find_conversation_by_pid (GdmSession *self,
+static ScdmSessionConversation *
+find_conversation_by_pid (ScdmSession *self,
                           GPid        pid)
 {
         GHashTableIter iter;
@@ -1016,9 +1016,9 @@ find_conversation_by_pid (GdmSession *self,
 
         g_hash_table_iter_init (&iter, self->conversations);
         while (g_hash_table_iter_next (&iter, &key, &value)) {
-                GdmSessionConversation *conversation;
+                ScdmSessionConversation *conversation;
 
-                conversation = (GdmSessionConversation *) value;
+                conversation = (ScdmSessionConversation *) value;
 
                 if (conversation->worker_pid == pid) {
                         return conversation;
@@ -1032,7 +1032,7 @@ static gboolean
 allow_worker_function (GDBusAuthObserver *observer,
                        GIOStream         *stream,
                        GCredentials      *credentials,
-                       GdmSession        *self)
+                       ScdmSession        *self)
 {
         uid_t connecting_user;
 
@@ -1046,7 +1046,7 @@ allow_worker_function (GDBusAuthObserver *observer,
                 return TRUE;
         }
 
-        g_debug ("GdmSession: User not allowed");
+        g_debug ("ScdmSession: User not allowed");
 
         return FALSE;
 }
@@ -1055,7 +1055,7 @@ static void
 on_worker_connection_closed (GDBusConnection *connection,
                              gboolean         remote_peer_vanished,
                              GError          *error,
-                             GdmSession      *self)
+                             ScdmSession      *self)
 {
         self->pending_worker_connections =
             g_list_remove (self->pending_worker_connections,
@@ -1064,23 +1064,23 @@ on_worker_connection_closed (GDBusConnection *connection,
 }
 
 static gboolean
-register_worker (GdmDBusWorkerManager  *worker_manager_interface,
+register_worker (ScdmDBusWorkerManager  *worker_manager_interface,
                  GDBusMethodInvocation *invocation,
-                 GdmSession            *self)
+                 ScdmSession            *self)
 {
-        GdmSessionConversation *conversation;
+        ScdmSessionConversation *conversation;
         GDBusConnection *connection;
         GList *connection_node;
         GCredentials *credentials;
         GPid pid;
 
-        g_debug ("GdmSession: Authenticating new connection");
+        g_debug ("ScdmSession: Authenticating new connection");
 
         connection = g_dbus_method_invocation_get_connection (invocation);
         connection_node = g_list_find (self->pending_worker_connections, connection);
 
         if (connection_node == NULL) {
-                g_debug ("GdmSession: Ignoring connection that we aren't tracking");
+                g_debug ("ScdmSession: Ignoring connection that we aren't tracking");
                 return FALSE;
         }
 
@@ -1101,7 +1101,7 @@ register_worker (GdmDBusWorkerManager  *worker_manager_interface,
         conversation = find_conversation_by_pid (self, (GPid) pid);
 
         if (conversation == NULL) {
-                g_warning ("GdmSession: New worker connection is from unknown source");
+                g_warning ("ScdmSession: New worker connection is from unknown source");
 
                 g_dbus_method_invocation_return_error (invocation, G_DBUS_ERROR,
                                                        G_DBUS_ERROR_ACCESS_DENIED,
@@ -1145,9 +1145,9 @@ register_worker (GdmDBusWorkerManager  *worker_manager_interface,
                           G_CALLBACK (worker_on_cancel_pending_query), conversation);
 
         conversation->worker_manager_interface = g_object_ref (worker_manager_interface);
-        g_debug ("GdmSession: worker connection is %p", connection);
+        g_debug ("ScdmSession: worker connection is %p", connection);
 
-        g_debug ("GdmSession: Emitting conversation-started signal");
+        g_debug ("ScdmSession: Emitting conversation-started signal");
         g_signal_emit (self, signals[CONVERSATION_STARTED], 0, conversation->service_name);
 
         if (self->user_verifier_interface != NULL) {
@@ -1167,16 +1167,16 @@ register_worker (GdmDBusWorkerManager  *worker_manager_interface,
                 }
         }
 
-        g_debug ("GdmSession: Conversation started");
+        g_debug ("ScdmSession: Conversation started");
 
         return TRUE;
 }
 
 static void
-export_worker_manager_interface (GdmSession      *self,
+export_worker_manager_interface (ScdmSession      *self,
                                  GDBusConnection *connection)
 {
-        GdmDBusWorkerManager *worker_manager_interface;
+        ScdmDBusWorkerManager *worker_manager_interface;
 
         worker_manager_interface = GDM_DBUS_WORKER_MANAGER (gdm_dbus_worker_manager_skeleton_new ());
         g_signal_connect (worker_manager_interface,
@@ -1211,8 +1211,8 @@ export_worker_manager_interface (GdmSession      *self,
 }
 
 static void
-unexport_worker_manager_interface (GdmSession           *self,
-                                   GdmDBusWorkerManager *worker_manager_interface)
+unexport_worker_manager_interface (ScdmSession           *self,
+                                   ScdmDBusWorkerManager *worker_manager_interface)
 {
 
         g_dbus_interface_skeleton_unexport (G_DBUS_INTERFACE_SKELETON (worker_manager_interface));
@@ -1240,10 +1240,10 @@ unexport_worker_manager_interface (GdmSession           *self,
 static gboolean
 handle_connection_from_worker (GDBusServer      *server,
                                GDBusConnection  *connection,
-                               GdmSession       *self)
+                               ScdmSession       *self)
 {
 
-        g_debug ("GdmSession: Handling new connection from worker");
+        g_debug ("ScdmSession: Handling new connection from worker");
 
         /* add to the list of pending connections.  We won't be able to
          * associate it with a specific worker conversation until we have
@@ -1264,12 +1264,12 @@ handle_connection_from_worker (GDBusServer      *server,
         return TRUE;
 }
 
-static GdmSessionConversation *
-begin_verification_conversation (GdmSession            *self,
+static ScdmSessionConversation *
+begin_verification_conversation (ScdmSession            *self,
                                  GDBusMethodInvocation *invocation,
                                  const char            *service_name)
 {
-        GdmSessionConversation *conversation = NULL;
+        ScdmSessionConversation *conversation = NULL;
         gboolean conversation_started;
 
         conversation_started = gdm_session_start_conversation (self, service_name);
@@ -1289,23 +1289,23 @@ begin_verification_conversation (GdmSession            *self,
 }
 
 static gboolean
-gdm_session_handle_client_select_choice (GdmDBusUserVerifierChoiceList    *choice_list_interface,
+gdm_session_handle_client_select_choice (ScdmDBusUserVerifierChoiceList    *choice_list_interface,
                                          GDBusMethodInvocation            *invocation,
                                          const char                       *service_name,
                                          const char                       *answer,
-                                         GdmSession                       *self)
+                                         ScdmSession                       *self)
 {
-        g_debug ("GdmSession: user selected choice '%s'", answer);
+        g_debug ("ScdmSession: user selected choice '%s'", answer);
         gdm_dbus_user_verifier_choice_list_complete_select_choice (choice_list_interface, invocation);
         gdm_session_answer_query (self, service_name, answer);
         return TRUE;
 }
 
 static void
-export_user_verifier_choice_list_interface (GdmSession      *self,
+export_user_verifier_choice_list_interface (ScdmSession      *self,
                                             GDBusConnection *connection)
 {
-        GdmDBusUserVerifierChoiceList   *interface;
+        ScdmDBusUserVerifierChoiceList   *interface;
 
         interface = GDM_DBUS_USER_VERIFIER_CHOICE_LIST (gdm_dbus_user_verifier_choice_list_skeleton_new ());
 
@@ -1325,12 +1325,12 @@ export_user_verifier_choice_list_interface (GdmSession      *self,
 }
 
 static gboolean
-gdm_session_handle_client_enable_extensions (GdmDBusUserVerifier    *user_verifier_interface,
+gdm_session_handle_client_enable_extensions (ScdmDBusUserVerifier    *user_verifier_interface,
                                              GDBusMethodInvocation  *invocation,
                                              const char * const *    extensions,
                                              GDBusConnection        *connection)
 {
-        GdmSession *self = g_object_get_data (G_OBJECT (connection), "scdm-session");
+        ScdmSession *self = g_object_get_data (G_OBJECT (connection), "scdm-session");
         size_t i;
 
         g_hash_table_remove_all (self->user_verifier_extensions);
@@ -1350,12 +1350,12 @@ gdm_session_handle_client_enable_extensions (GdmDBusUserVerifier    *user_verifi
         return TRUE;
 }
 static gboolean
-gdm_session_handle_client_begin_verification (GdmDBusUserVerifier    *user_verifier_interface,
+gdm_session_handle_client_begin_verification (ScdmDBusUserVerifier    *user_verifier_interface,
                                               GDBusMethodInvocation  *invocation,
                                               const char             *service_name,
-                                              GdmSession             *self)
+                                              ScdmSession             *self)
 {
-        GdmSessionConversation *conversation;
+        ScdmSessionConversation *conversation;
 
         conversation = begin_verification_conversation (self, invocation, service_name);
 
@@ -1368,13 +1368,13 @@ gdm_session_handle_client_begin_verification (GdmDBusUserVerifier    *user_verif
 }
 
 static gboolean
-gdm_session_handle_client_begin_verification_for_user (GdmDBusUserVerifier    *user_verifier_interface,
+gdm_session_handle_client_begin_verification_for_user (ScdmDBusUserVerifier    *user_verifier_interface,
                                                        GDBusMethodInvocation  *invocation,
                                                        const char             *service_name,
                                                        const char             *username,
-                                                       GdmSession             *self)
+                                                       ScdmSession             *self)
 {
-        GdmSessionConversation *conversation;
+        ScdmSessionConversation *conversation;
 
         conversation = begin_verification_conversation (self, invocation, service_name);
 
@@ -1387,11 +1387,11 @@ gdm_session_handle_client_begin_verification_for_user (GdmDBusUserVerifier    *u
 }
 
 static gboolean
-gdm_session_handle_client_answer_query (GdmDBusUserVerifier    *user_verifier_interface,
+gdm_session_handle_client_answer_query (ScdmDBusUserVerifier    *user_verifier_interface,
                                         GDBusMethodInvocation  *invocation,
                                         const char             *service_name,
                                         const char             *answer,
-                                        GdmSession             *self)
+                                        ScdmSession             *self)
 {
         gdm_dbus_user_verifier_complete_answer_query (user_verifier_interface,
                                                       invocation);
@@ -1400,9 +1400,9 @@ gdm_session_handle_client_answer_query (GdmDBusUserVerifier    *user_verifier_in
 }
 
 static gboolean
-gdm_session_handle_client_cancel (GdmDBusUserVerifier    *user_verifier_interface,
+gdm_session_handle_client_cancel (ScdmDBusUserVerifier    *user_verifier_interface,
                                   GDBusMethodInvocation  *invocation,
-                                  GdmSession             *self)
+                                  ScdmSession             *self)
 {
         gdm_dbus_user_verifier_complete_cancel (user_verifier_interface,
                                                 invocation);
@@ -1411,16 +1411,16 @@ gdm_session_handle_client_cancel (GdmDBusUserVerifier    *user_verifier_interfac
 }
 
 static gboolean
-gdm_session_handle_client_select_session (GdmDBusGreeter         *greeter_interface,
+gdm_session_handle_client_select_session (ScdmDBusGreeter         *greeter_interface,
                                           GDBusMethodInvocation  *invocation,
                                           const char             *session,
-                                          GdmSession             *self)
+                                          ScdmSession             *self)
 {
         if (gdm_session_is_running (self)) {
                 const char *username;
 
                 username = gdm_session_get_username (self);
-                g_debug ("GdmSession: refusing to select session %s since it's already running (for user %s)",
+                g_debug ("ScdmSession: refusing to select session %s since it's already running (for user %s)",
                          session,
                          username);
                 g_dbus_method_invocation_return_error (invocation,
@@ -1440,16 +1440,16 @@ gdm_session_handle_client_select_session (GdmDBusGreeter         *greeter_interf
 }
 
 static gboolean
-gdm_session_handle_client_select_user (GdmDBusGreeter        *greeter_interface,
+gdm_session_handle_client_select_user (ScdmDBusGreeter        *greeter_interface,
                                        GDBusMethodInvocation *invocation,
                                        const char            *username,
-                                       GdmSession            *self)
+                                       ScdmSession            *self)
 {
         if (gdm_session_is_running (self)) {
                 const char *session_username;
 
                 session_username = gdm_session_get_username (self);
-                g_debug ("GdmSession: refusing to select user %s, since session (%p) already running (for user %s)",
+                g_debug ("ScdmSession: refusing to select user %s, since session (%p) already running (for user %s)",
                           username,
                           self,
                           session_username);
@@ -1465,23 +1465,23 @@ gdm_session_handle_client_select_user (GdmDBusGreeter        *greeter_interface,
                 gdm_dbus_greeter_complete_select_user (greeter_interface,
                                                        invocation);
         }
-        g_debug ("GdmSession: client selected user '%s' on session (%p)", username, self);
+        g_debug ("ScdmSession: client selected user '%s' on session (%p)", username, self);
         gdm_session_select_user (self, username);
         return TRUE;
 }
 
 static gboolean
-gdm_session_handle_client_start_session_when_ready (GdmDBusGreeter        *greeter_interface,
+gdm_session_handle_client_start_session_when_ready (ScdmDBusGreeter        *greeter_interface,
                                                     GDBusMethodInvocation *invocation,
                                                     const char            *service_name,
                                                     gboolean               client_is_ready,
-                                                    GdmSession            *self)
+                                                    ScdmSession            *self)
 {
         if (gdm_session_is_running (self)) {
                 const char *username;
 
                 username = gdm_session_get_username (self);
-                g_debug ("GdmSession: refusing to start session (%p), since it's already running (for user %s)",
+                g_debug ("ScdmSession: refusing to start session (%p), since it's already running (for user %s)",
                          self,
                          username);
                 g_dbus_method_invocation_return_error (invocation,
@@ -1505,15 +1505,15 @@ gdm_session_handle_client_start_session_when_ready (GdmDBusGreeter        *greet
 }
 
 static gboolean
-gdm_session_handle_get_timed_login_details (GdmDBusGreeter        *greeter_interface,
+gdm_session_handle_get_timed_login_details (ScdmDBusGreeter        *greeter_interface,
                                             GDBusMethodInvocation *invocation,
-                                            GdmSession            *self)
+                                            ScdmSession            *self)
 {
         if (gdm_session_is_running (self)) {
                 const char *username;
 
                 username = gdm_session_get_username (self);
-                g_debug ("GdmSession: refusing to give timed login details, session (%p) already running (for user %s)",
+                g_debug ("ScdmSession: refusing to give timed login details, session (%p) already running (for user %s)",
                          self,
                          username);
                 g_dbus_method_invocation_return_error (invocation,
@@ -1540,16 +1540,16 @@ gdm_session_handle_get_timed_login_details (GdmDBusGreeter        *greeter_inter
 }
 
 static gboolean
-gdm_session_handle_client_begin_auto_login (GdmDBusGreeter        *greeter_interface,
+gdm_session_handle_client_begin_auto_login (ScdmDBusGreeter        *greeter_interface,
                                             GDBusMethodInvocation *invocation,
                                             const char            *username,
-                                            GdmSession            *self)
+                                            ScdmSession            *self)
 {
         const char *session_username;
 
         if (gdm_session_is_running (self)) {
                 session_username = gdm_session_get_username (self);
-                g_debug ("GdmSession: refusing auto login operation, session (%p) already running for user %s (%s requested)",
+                g_debug ("ScdmSession: refusing auto login operation, session (%p) already running for user %s (%s requested)",
                          self,
                          session_username,
                          username);
@@ -1566,7 +1566,7 @@ gdm_session_handle_client_begin_auto_login (GdmDBusGreeter        *greeter_inter
                                                             invocation);
         }
 
-        g_debug ("GdmSession: client requesting automatic login for user '%s' on session '%s' (%p)",
+        g_debug ("ScdmSession: client requesting automatic login for user '%s' on session '%s' (%p)",
                  username,
                  gdm_session_get_session_id (self),
                  self);
@@ -1577,10 +1577,10 @@ gdm_session_handle_client_begin_auto_login (GdmDBusGreeter        *greeter_inter
 }
 
 static void
-export_user_verifier_interface (GdmSession      *self,
+export_user_verifier_interface (ScdmSession      *self,
                                 GDBusConnection *connection)
 {
-        GdmDBusUserVerifier   *user_verifier_interface;
+        ScdmDBusUserVerifier   *user_verifier_interface;
         user_verifier_interface = GDM_DBUS_USER_VERIFIER (gdm_dbus_user_verifier_skeleton_new ());
 
         g_object_set_data (G_OBJECT (connection), "scdm-session", self);
@@ -1615,10 +1615,10 @@ export_user_verifier_interface (GdmSession      *self,
 }
 
 static void
-export_greeter_interface (GdmSession      *self,
+export_greeter_interface (ScdmSession      *self,
                           GDBusConnection *connection)
 {
-        GdmDBusGreeter *greeter_interface;
+        ScdmDBusGreeter *greeter_interface;
 
         greeter_interface = GDM_DBUS_GREETER (gdm_dbus_greeter_skeleton_new ());
 
@@ -1653,9 +1653,9 @@ export_greeter_interface (GdmSession      *self,
 }
 
 static gboolean
-gdm_session_handle_client_disconnect (GdmDBusChooser        *chooser_interface,
+gdm_session_handle_client_disconnect (ScdmDBusChooser        *chooser_interface,
                                       GDBusMethodInvocation *invocation,
-                                      GdmSession            *self)
+                                      ScdmSession            *self)
 {
         gdm_dbus_chooser_complete_disconnect (chooser_interface,
                                               invocation);
@@ -1664,10 +1664,10 @@ gdm_session_handle_client_disconnect (GdmDBusChooser        *chooser_interface,
 }
 
 static void
-export_remote_greeter_interface (GdmSession      *self,
+export_remote_greeter_interface (ScdmSession      *self,
                                  GDBusConnection *connection)
 {
-        GdmDBusRemoteGreeter *remote_greeter_interface;
+        ScdmDBusRemoteGreeter *remote_greeter_interface;
 
         remote_greeter_interface = GDM_DBUS_REMOTE_GREETER (gdm_dbus_remote_greeter_skeleton_new ());
 
@@ -1686,10 +1686,10 @@ export_remote_greeter_interface (GdmSession      *self,
 }
 
 static gboolean
-gdm_session_handle_client_select_hostname (GdmDBusChooser        *chooser_interface,
+gdm_session_handle_client_select_hostname (ScdmDBusChooser        *chooser_interface,
                                            GDBusMethodInvocation *invocation,
                                            const char            *hostname,
-                                           GdmSession            *self)
+                                           ScdmSession            *self)
 {
 
         gdm_dbus_chooser_complete_select_hostname (chooser_interface,
@@ -1699,10 +1699,10 @@ gdm_session_handle_client_select_hostname (GdmDBusChooser        *chooser_interf
 }
 
 static void
-export_chooser_interface (GdmSession      *self,
+export_chooser_interface (ScdmSession      *self,
                           GDBusConnection *connection)
 {
-        GdmDBusChooser *chooser_interface;
+        ScdmDBusChooser *chooser_interface;
 
         chooser_interface = GDM_DBUS_CHOOSER (gdm_dbus_chooser_skeleton_new ());
 
@@ -1723,12 +1723,12 @@ static void
 on_outside_connection_closed (GDBusConnection *connection,
                               gboolean         remote_peer_vanished,
                               GError          *error,
-                              GdmSession      *self)
+                              ScdmSession      *self)
 {
         GCredentials *credentials;
         GPid          pid_of_client;
 
-        g_debug ("GdmSession: external connection closed");
+        g_debug ("ScdmSession: external connection closed");
 
         self->outside_connections = g_list_remove (self->outside_connections,
                                                    connection);
@@ -1749,12 +1749,12 @@ on_outside_connection_closed (GDBusConnection *connection,
 static gboolean
 handle_connection_from_outside (GDBusServer      *server,
                                 GDBusConnection  *connection,
-                                GdmSession       *self)
+                                ScdmSession       *self)
 {
         GCredentials *credentials;
         GPid          pid_of_client;
 
-        g_debug ("GdmSession: Handling new connection from outside");
+        g_debug ("ScdmSession: Handling new connection from outside");
 
         self->outside_connections = g_list_prepend (self->outside_connections,
                                                     g_object_ref (connection));
@@ -1798,13 +1798,13 @@ handle_connection_from_outside (GDBusServer      *server,
 }
 
 static void
-setup_worker_server (GdmSession *self)
+setup_worker_server (ScdmSession *self)
 {
         GDBusAuthObserver *observer;
         GDBusServer *server;
         GError *error = NULL;
 
-        g_debug ("GdmSession: Creating D-Bus server for worker for session");
+        g_debug ("ScdmSession: Creating D-Bus server for worker for session");
 
         observer = g_dbus_auth_observer_new ();
         g_signal_connect_object (observer,
@@ -1831,7 +1831,7 @@ setup_worker_server (GdmSession *self)
 
         g_dbus_server_start (server);
 
-        g_debug ("GdmSession: D-Bus server for workers listening on %s",
+        g_debug ("ScdmSession: D-Bus server for workers listening on %s",
         g_dbus_server_get_client_address (self->worker_server));
 }
 
@@ -1839,7 +1839,7 @@ static gboolean
 allow_user_function (GDBusAuthObserver *observer,
                      GIOStream         *stream,
                      GCredentials      *credentials,
-                     GdmSession        *self)
+                     ScdmSession        *self)
 {
         uid_t client_uid;
         GPid  pid_of_client;
@@ -1849,7 +1849,7 @@ allow_user_function (GDBusAuthObserver *observer,
                 return TRUE;
         }
 
-        g_debug ("GdmSession: User not allowed");
+        g_debug ("ScdmSession: User not allowed");
 
         pid_of_client = g_credentials_get_unix_pid (credentials, NULL);
         g_signal_emit (G_OBJECT (self),
@@ -1864,13 +1864,13 @@ allow_user_function (GDBusAuthObserver *observer,
 }
 
 static void
-setup_outside_server (GdmSession *self)
+setup_outside_server (ScdmSession *self)
 {
         GDBusAuthObserver *observer;
         GDBusServer *server;
         GError *error = NULL;
 
-         g_debug ("GdmSession: Creating D-Bus server for greeters and such for session %s (%p)",
+         g_debug ("ScdmSession: Creating D-Bus server for greeters and such for session %s (%p)",
                   gdm_session_get_session_id (self),
                   self);
 
@@ -1899,12 +1899,12 @@ setup_outside_server (GdmSession *self)
 
         g_dbus_server_start (server);
 
-        g_debug ("GdmSession: D-Bus server for greeters listening on %s",
+        g_debug ("ScdmSession: D-Bus server for greeters listening on %s",
         g_dbus_server_get_client_address (self->outside_server));
 }
 
 static void
-free_conversation (GdmSessionConversation *conversation)
+free_conversation (ScdmSessionConversation *conversation)
 {
         close_conversation (conversation);
 
@@ -1946,7 +1946,7 @@ free_conversation (GdmSessionConversation *conversation)
 }
 
 static void
-load_lang_config_file (GdmSession *self)
+load_lang_config_file (ScdmSession *self)
 {
         static const char *config_file = LANG_CONFIG_FILE;
         gchar         *contents = NULL;
@@ -2039,7 +2039,7 @@ unexport_and_free_user_verifier_extension (GDBusInterfaceSkeleton *interface)
 }
 
 static void
-gdm_session_init (GdmSession *self)
+gdm_session_init (ScdmSession *self)
 {
         self->conversations = g_hash_table_new_full (g_str_hash,
                                                            g_str_equal,
@@ -2062,21 +2062,21 @@ gdm_session_init (GdmSession *self)
 }
 
 static void
-worker_started (GdmSessionWorkerJob    *job,
-                GdmSessionConversation *conversation)
+worker_started (ScdmSessionWorkerJob    *job,
+                ScdmSessionConversation *conversation)
 {
-        g_debug ("GdmSession: Worker job started");
+        g_debug ("ScdmSession: Worker job started");
 
 }
 
 static void
-worker_exited (GdmSessionWorkerJob    *job,
+worker_exited (ScdmSessionWorkerJob    *job,
                int                     code,
-               GdmSessionConversation *conversation)
+               ScdmSessionConversation *conversation)
 {
-        GdmSession *self = conversation->session;
+        ScdmSession *self = conversation->session;
 
-        g_debug ("GdmSession: Worker job exited: %d", code);
+        g_debug ("ScdmSession: Worker job exited: %d", code);
 
         g_hash_table_steal (self->conversations, conversation->service_name);
 
@@ -2086,7 +2086,7 @@ worker_exited (GdmSessionWorkerJob    *job,
                 self->session_conversation = NULL;
         }
 
-        g_debug ("GdmSession: Emitting conversation-stopped signal");
+        g_debug ("ScdmSession: Emitting conversation-stopped signal");
         g_signal_emit (self, signals[CONVERSATION_STOPPED], 0, conversation->service_name);
         if (self->user_verifier_interface != NULL) {
                 gdm_dbus_user_verifier_emit_conversation_stopped (self->user_verifier_interface,
@@ -2103,13 +2103,13 @@ worker_exited (GdmSessionWorkerJob    *job,
 }
 
 static void
-worker_died (GdmSessionWorkerJob    *job,
+worker_died (ScdmSessionWorkerJob    *job,
              int                     signum,
-             GdmSessionConversation *conversation)
+             ScdmSessionConversation *conversation)
 {
-        GdmSession *self = conversation->session;
+        ScdmSession *self = conversation->session;
 
-        g_debug ("GdmSession: Worker job died: %d", signum);
+        g_debug ("ScdmSession: Worker job died: %d", signum);
 
         g_hash_table_steal (self->conversations, conversation->service_name);
 
@@ -2119,7 +2119,7 @@ worker_died (GdmSessionWorkerJob    *job,
                 self->session_conversation = NULL;
         }
 
-        g_debug ("GdmSession: Emitting conversation-stopped signal");
+        g_debug ("ScdmSession: Emitting conversation-stopped signal");
         g_signal_emit (self, signals[CONVERSATION_STOPPED], 0, conversation->service_name);
         if (self->user_verifier_interface != NULL) {
                 gdm_dbus_user_verifier_emit_conversation_stopped (self->user_verifier_interface,
@@ -2135,14 +2135,14 @@ worker_died (GdmSessionWorkerJob    *job,
         free_conversation (conversation);
 }
 
-static GdmSessionConversation *
-start_conversation (GdmSession *self,
+static ScdmSessionConversation *
+start_conversation (ScdmSession *self,
                     const char *service_name)
 {
-        GdmSessionConversation *conversation;
+        ScdmSessionConversation *conversation;
         char                   *job_name;
 
-        conversation = g_new0 (GdmSessionConversation, 1);
+        conversation = g_new0 (ScdmSessionConversation, 1);
         conversation->session = g_object_ref (self);
         conversation->service_name = g_strdup (service_name);
         conversation->worker_pid = -1;
@@ -2188,9 +2188,9 @@ start_conversation (GdmSession *self,
 }
 
 static void
-close_conversation (GdmSessionConversation *conversation)
+close_conversation (ScdmSessionConversation *conversation)
 {
-        GdmSession *self = conversation->session;
+        ScdmSession *self = conversation->session;
 
         if (conversation->worker_manager_interface != NULL) {
                 unexport_worker_manager_interface (self, conversation->worker_manager_interface);
@@ -2204,7 +2204,7 @@ close_conversation (GdmSessionConversation *conversation)
 }
 
 static void
-stop_conversation (GdmSessionConversation *conversation)
+stop_conversation (ScdmSessionConversation *conversation)
 {
         close_conversation (conversation);
 
@@ -2213,7 +2213,7 @@ stop_conversation (GdmSessionConversation *conversation)
 }
 
 static void
-stop_conversation_now (GdmSessionConversation *conversation)
+stop_conversation_now (ScdmSessionConversation *conversation)
 {
         close_conversation (conversation);
 
@@ -2223,7 +2223,7 @@ stop_conversation_now (GdmSessionConversation *conversation)
 
 #ifdef ENABLE_WAYLAND_SUPPORT
 void
-gdm_session_set_ignore_wayland (GdmSession *self,
+gdm_session_set_ignore_wayland (ScdmSession *self,
                                 gboolean    ignore_wayland)
 {
         self->ignore_wayland = ignore_wayland;
@@ -2231,10 +2231,10 @@ gdm_session_set_ignore_wayland (GdmSession *self,
 #endif
 
 gboolean
-gdm_session_start_conversation (GdmSession *self,
+gdm_session_start_conversation (ScdmSession *self,
                                 const char *service_name)
 {
-        GdmSessionConversation *conversation;
+        ScdmSessionConversation *conversation;
 
         g_return_val_if_fail (GDM_IS_SESSION (self), FALSE);
 
@@ -2243,16 +2243,16 @@ gdm_session_start_conversation (GdmSession *self,
 
         if (conversation != NULL) {
                 if (!conversation->is_stopping) {
-                        g_warning ("GdmSession: conversation %s started more than once", service_name);
+                        g_warning ("ScdmSession: conversation %s started more than once", service_name);
                         return FALSE;
                 }
-                g_debug ("GdmSession: stopping old conversation %s", service_name);
+                g_debug ("ScdmSession: stopping old conversation %s", service_name);
                 gdm_session_worker_job_stop_now (conversation->job);
                 g_object_unref (conversation->job);
                 conversation->job = NULL;
         }
 
-        g_debug ("GdmSession: starting conversation %s for session (%p)", service_name, self);
+        g_debug ("ScdmSession: starting conversation %s for session (%p)", service_name, self);
 
         conversation = start_conversation (self, service_name);
 
@@ -2262,14 +2262,14 @@ gdm_session_start_conversation (GdmSession *self,
 }
 
 void
-gdm_session_stop_conversation (GdmSession *self,
+gdm_session_stop_conversation (ScdmSession *self,
                                const char *service_name)
 {
-        GdmSessionConversation *conversation;
+        ScdmSessionConversation *conversation;
 
         g_return_if_fail (GDM_IS_SESSION (self));
 
-        g_debug ("GdmSession: stopping conversation %s", service_name);
+        g_debug ("ScdmSession: stopping conversation %s", service_name);
 
         conversation = find_conversation_by_name (self, service_name);
 
@@ -2279,12 +2279,12 @@ gdm_session_stop_conversation (GdmSession *self,
 }
 
 static void
-on_initialization_complete_cb (GdmDBusWorker *proxy,
+on_initialization_complete_cb (ScdmDBusWorker *proxy,
                                GAsyncResult  *res,
                                gpointer       user_data)
 {
-        GdmSessionConversation *conversation = user_data;
-        GdmSession *self;
+        ScdmSessionConversation *conversation = user_data;
+        ScdmSession *self;
         char *service_name;
 
         GError *error = NULL;
@@ -2323,14 +2323,14 @@ on_initialization_complete_cb (GdmDBusWorker *proxy,
 }
 
 static void
-initialize (GdmSession *self,
+initialize (ScdmSession *self,
             const char *service_name,
             const char *username,
             const char *log_file)
 {
         GVariantBuilder          details;
         const char             **extensions;
-        GdmSessionConversation  *conversation;
+        ScdmSessionConversation  *conversation;
 
         g_assert (service_name != NULL);
 
@@ -2371,7 +2371,7 @@ initialize (GdmSession *self,
         if (self->display_x11_authority_file != NULL)
                 g_variant_builder_add_parsed (&details, "{'x11-authority-file', <%s>}", self->display_x11_authority_file);
 
-        g_debug ("GdmSession: Beginning initialization");
+        g_debug ("ScdmSession: Beginning initialization");
 
         conversation = find_conversation_by_name (self, service_name);
         if (conversation != NULL) {
@@ -2387,7 +2387,7 @@ initialize (GdmSession *self,
 }
 
 void
-gdm_session_setup (GdmSession *self,
+gdm_session_setup (ScdmSession *self,
                    const char *service_name)
 {
 
@@ -2401,7 +2401,7 @@ gdm_session_setup (GdmSession *self,
 
 
 void
-gdm_session_setup_for_user (GdmSession *self,
+gdm_session_setup_for_user (ScdmSession *self,
                             const char *service_name,
                             const char *username)
 {
@@ -2411,7 +2411,7 @@ gdm_session_setup_for_user (GdmSession *self,
 
         update_session_type (self);
 
-        g_debug ("GdmSession: Set up service %s for username %s on session (%p)",
+        g_debug ("ScdmSession: Set up service %s for username %s on session (%p)",
                  service_name,
                  username,
                  self);
@@ -2423,7 +2423,7 @@ gdm_session_setup_for_user (GdmSession *self,
 }
 
 void
-gdm_session_setup_for_program (GdmSession *self,
+gdm_session_setup_for_program (ScdmSession *self,
                                const char *service_name,
                                const char *username,
                                const char *log_file)
@@ -2436,10 +2436,10 @@ gdm_session_setup_for_program (GdmSession *self,
 }
 
 void
-gdm_session_authenticate (GdmSession *self,
+gdm_session_authenticate (ScdmSession *self,
                           const char *service_name)
 {
-        GdmSessionConversation *conversation;
+        ScdmSessionConversation *conversation;
 
         g_return_if_fail (GDM_IS_SESSION (self));
 
@@ -2453,10 +2453,10 @@ gdm_session_authenticate (GdmSession *self,
 }
 
 void
-gdm_session_authorize (GdmSession *self,
+gdm_session_authorize (ScdmSession *self,
                        const char *service_name)
 {
-        GdmSessionConversation *conversation;
+        ScdmSessionConversation *conversation;
 
         g_return_if_fail (GDM_IS_SESSION (self));
 
@@ -2470,10 +2470,10 @@ gdm_session_authorize (GdmSession *self,
 }
 
 void
-gdm_session_accredit (GdmSession *self,
+gdm_session_accredit (ScdmSession *self,
                       const char *service_name)
 {
-        GdmSessionConversation *conversation;
+        ScdmSessionConversation *conversation;
 
         g_return_if_fail (GDM_IS_SESSION (self));
 
@@ -2490,7 +2490,7 @@ gdm_session_accredit (GdmSession *self,
 static void
 send_environment_variable (const char             *key,
                            const char             *value,
-                           GdmSessionConversation *conversation)
+                           ScdmSessionConversation *conversation)
 {
         gdm_dbus_worker_call_set_environment_variable (conversation->worker_proxy,
                                                        key, value,
@@ -2499,8 +2499,8 @@ send_environment_variable (const char             *key,
 }
 
 static void
-send_environment (GdmSession             *self,
-                  GdmSessionConversation *conversation)
+send_environment (ScdmSession             *self,
+                  ScdmSessionConversation *conversation)
 {
 
         g_hash_table_foreach (self->environment,
@@ -2509,10 +2509,10 @@ send_environment (GdmSession             *self,
 }
 
 void
-gdm_session_send_environment (GdmSession *self,
+gdm_session_send_environment (ScdmSession *self,
                               const char *service_name)
 {
-        GdmSessionConversation *conversation;
+        ScdmSessionConversation *conversation;
 
         g_return_if_fail (GDM_IS_SESSION (self));
 
@@ -2523,7 +2523,7 @@ gdm_session_send_environment (GdmSession *self,
 }
 
 static const char *
-get_session_name (GdmSession *self)
+get_session_name (ScdmSession *self)
 {
         /* FIXME: test the session names before we use them? */
 
@@ -2535,7 +2535,7 @@ get_session_name (GdmSession *self)
 }
 
 static char *
-get_session_command (GdmSession *self)
+get_session_command (ScdmSession *self)
 {
         gboolean    res;
         char       *command;
@@ -2554,7 +2554,7 @@ get_session_command (GdmSession *self)
 }
 
 static gchar *
-get_session_desktop_names (GdmSession *self)
+get_session_desktop_names (ScdmSession *self)
 {
         gchar *filename;
         GKeyFile *keyfile;
@@ -2565,7 +2565,7 @@ get_session_desktop_names (GdmSession *self)
         }
 
         filename = g_strdup_printf ("%s.desktop", get_session_name (self));
-        g_debug ("GdmSession: getting desktop names for file '%s'", filename);
+        g_debug ("ScdmSession: getting desktop names for file '%s'", filename);
         keyfile = load_key_file_for_file (self, filename, NULL);
         if (keyfile != NULL) {
               gchar **names;
@@ -2585,7 +2585,7 @@ get_session_desktop_names (GdmSession *self)
 }
 
 void
-gdm_session_set_environment_variable (GdmSession *self,
+gdm_session_set_environment_variable (ScdmSession *self,
                                       const char *key,
                                       const char *value)
 {
@@ -2598,7 +2598,7 @@ gdm_session_set_environment_variable (GdmSession *self,
 }
 
 static void
-set_up_session_language (GdmSession *self)
+set_up_session_language (ScdmSession *self)
 {
         char **environment;
         int i;
@@ -2622,9 +2622,9 @@ set_up_session_language (GdmSession *self)
 }
 
 static void
-set_up_session_environment (GdmSession *self)
+set_up_session_environment (ScdmSession *self)
 {
-        GdmSessionDisplayMode display_mode;
+        ScdmSessionDisplayMode display_mode;
         gchar *desktop_names;
         char *locale;
 
@@ -2683,10 +2683,10 @@ set_up_session_environment (GdmSession *self)
 }
 
 static void
-send_display_mode (GdmSession *self,
-                   GdmSessionConversation *conversation)
+send_display_mode (ScdmSession *self,
+                   ScdmSessionConversation *conversation)
 {
-        GdmSessionDisplayMode mode;
+        ScdmSessionDisplayMode mode;
 
         mode = gdm_session_get_display_mode (self);
         gdm_dbus_worker_call_set_session_display_mode (conversation->worker_proxy,
@@ -2696,8 +2696,8 @@ send_display_mode (GdmSession *self,
 }
 
 static void
-send_session_type (GdmSession *self,
-                   GdmSessionConversation *conversation)
+send_session_type (ScdmSession *self,
+                   ScdmSessionConversation *conversation)
 {
         const char *session_type = "x11";
 
@@ -2713,10 +2713,10 @@ send_session_type (GdmSession *self,
 }
 
 void
-gdm_session_open_session (GdmSession *self,
+gdm_session_open_session (ScdmSession *self,
                           const char *service_name)
 {
-        GdmSessionConversation *conversation;
+        ScdmSessionConversation *conversation;
 
         g_return_if_fail (GDM_IS_SESSION (self));
 
@@ -2733,8 +2733,8 @@ gdm_session_open_session (GdmSession *self,
 }
 
 static void
-stop_all_other_conversations (GdmSession             *self,
-                              GdmSessionConversation *conversation_to_keep,
+stop_all_other_conversations (ScdmSession             *self,
+                              ScdmSessionConversation *conversation_to_keep,
                               gboolean                now)
 {
         GHashTableIter iter;
@@ -2745,17 +2745,17 @@ stop_all_other_conversations (GdmSession             *self,
         }
 
         if (conversation_to_keep == NULL) {
-                g_debug ("GdmSession: Stopping all conversations");
+                g_debug ("ScdmSession: Stopping all conversations");
         } else {
-                g_debug ("GdmSession: Stopping all conversations except for %s",
+                g_debug ("ScdmSession: Stopping all conversations except for %s",
                          conversation_to_keep->service_name);
         }
 
         g_hash_table_iter_init (&iter, self->conversations);
         while (g_hash_table_iter_next (&iter, &key, &value)) {
-                GdmSessionConversation *conversation;
+                ScdmSessionConversation *conversation;
 
-                conversation = (GdmSessionConversation *) value;
+                conversation = (ScdmSessionConversation *) value;
 
                 if (conversation == conversation_to_keep) {
                         if (now) {
@@ -2788,12 +2788,12 @@ stop_all_other_conversations (GdmSession             *self,
 }
 
 static void
-on_start_program_cb (GdmDBusWorker *worker,
+on_start_program_cb (ScdmDBusWorker *worker,
                      GAsyncResult  *res,
                      gpointer       user_data)
 {
-        GdmSessionConversation *conversation = user_data;
-        GdmSession *self;
+        ScdmSessionConversation *conversation = user_data;
+        ScdmSession *self;
         char *service_name;
 
         GError *error = NULL;
@@ -2816,22 +2816,22 @@ on_start_program_cb (GdmDBusWorker *worker,
                 self->session_pid = pid;
                 self->session_conversation = conversation;
 
-                g_debug ("GdmSession: Emitting 'session-started' signal with pid '%d'", pid);
+                g_debug ("ScdmSession: Emitting 'session-started' signal with pid '%d'", pid);
                 g_signal_emit (self, signals[SESSION_STARTED], 0, service_name, pid);
         } else {
                 gdm_session_stop_conversation (self, service_name);
 
-                g_debug ("GdmSession: Emitting 'session-start-failed' signal");
+                g_debug ("ScdmSession: Emitting 'session-start-failed' signal");
                 g_signal_emit (self, signals[SESSION_START_FAILED], 0, service_name, error->message);
         }
 }
 
 void
-gdm_session_start_session (GdmSession *self,
+gdm_session_start_session (ScdmSession *self,
                            const char *service_name)
 {
-        GdmSessionConversation *conversation;
-        GdmSessionDisplayMode   display_mode;
+        ScdmSessionConversation *conversation;
+        ScdmSessionDisplayMode   display_mode;
         gboolean                is_x11 = TRUE;
         gboolean                run_launcher = FALSE;
         gboolean                allow_remote_connections = FALSE;
@@ -2845,7 +2845,7 @@ gdm_session_start_session (GdmSession *self,
         conversation = find_conversation_by_name (self, service_name);
 
         if (conversation == NULL) {
-                g_warning ("GdmSession: Tried to start session of "
+                g_warning ("ScdmSession: Tried to start session of "
                            "nonexistent conversation %s", service_name);
                 return;
         }
@@ -2942,13 +2942,13 @@ gdm_session_start_session (GdmSession *self,
 }
 
 static void
-stop_all_conversations (GdmSession *self)
+stop_all_conversations (ScdmSession *self)
 {
         stop_all_other_conversations (self, NULL, TRUE);
 }
 
 static void
-do_reset (GdmSession *self)
+do_reset (ScdmSession *self)
 {
         stop_all_conversations (self);
 
@@ -2977,12 +2977,12 @@ do_reset (GdmSession *self)
 }
 
 void
-gdm_session_close (GdmSession *self)
+gdm_session_close (ScdmSession *self)
 {
 
         g_return_if_fail (GDM_IS_SESSION (self));
 
-        g_debug ("GdmSession: Closing session");
+        g_debug ("ScdmSession: Closing session");
         do_reset (self);
 
         g_list_free_full (self->outside_connections, g_object_unref);
@@ -2990,11 +2990,11 @@ gdm_session_close (GdmSession *self)
 }
 
 void
-gdm_session_answer_query (GdmSession *self,
+gdm_session_answer_query (ScdmSession *self,
                           const char *service_name,
                           const char *text)
 {
-        GdmSessionConversation *conversation;
+        ScdmSessionConversation *conversation;
 
         g_return_if_fail (GDM_IS_SESSION (self));
 
@@ -3006,7 +3006,7 @@ gdm_session_answer_query (GdmSession *self,
 }
 
 void
-gdm_session_cancel  (GdmSession *self)
+gdm_session_cancel  (ScdmSession *self)
 {
         g_return_if_fail (GDM_IS_SESSION (self));
 
@@ -3014,7 +3014,7 @@ gdm_session_cancel  (GdmSession *self)
 }
 
 void
-gdm_session_reset (GdmSession *self)
+gdm_session_reset (ScdmSession *self)
 {
         if (self->user_verifier_interface != NULL) {
                 gdm_dbus_user_verifier_emit_reset (self->user_verifier_interface);
@@ -3024,23 +3024,23 @@ gdm_session_reset (GdmSession *self)
 }
 
 void
-gdm_session_set_timed_login_details (GdmSession *self,
+gdm_session_set_timed_login_details (ScdmSession *self,
                                      const char *username,
                                      int         delay)
 {
-        g_debug ("GdmSession: timed login details %s %d", username, delay);
+        g_debug ("ScdmSession: timed login details %s %d", username, delay);
         self->timed_login_username = g_strdup (username);
         self->timed_login_delay = delay;
 }
 
 gboolean
-gdm_session_is_running (GdmSession *self)
+gdm_session_is_running (ScdmSession *self)
 {
         return self->session_pid > 0;
 }
 
 gboolean
-gdm_session_client_is_connected (GdmSession *self)
+gdm_session_client_is_connected (ScdmSession *self)
 {
         g_return_val_if_fail (GDM_IS_SESSION (self), FALSE);
 
@@ -3048,21 +3048,21 @@ gdm_session_client_is_connected (GdmSession *self)
 }
 
 uid_t
-gdm_session_get_allowed_user (GdmSession *self)
+gdm_session_get_allowed_user (ScdmSession *self)
 {
         return self->allowed_user;
 }
 
 void
-gdm_session_start_reauthentication (GdmSession *session,
+gdm_session_start_reauthentication (ScdmSession *session,
                                     GPid        pid_of_caller,
                                     uid_t       uid_of_caller)
 {
-        GdmSessionConversation *conversation = session->session_conversation;
+        ScdmSessionConversation *conversation = session->session_conversation;
 
         g_return_if_fail (conversation != NULL);
 
-        g_debug ("GdmSession: starting reauthentication for session %s for client with pid %d",
+        g_debug ("ScdmSession: starting reauthentication for session %s for client with pid %d",
                  conversation->session_id,
                  (int) uid_of_caller);
 
@@ -3077,7 +3077,7 @@ gdm_session_start_reauthentication (GdmSession *session,
 }
 
 const char *
-gdm_session_get_server_address (GdmSession *self)
+gdm_session_get_server_address (ScdmSession *self)
 {
         g_return_val_if_fail (GDM_IS_SESSION (self), NULL);
 
@@ -3085,7 +3085,7 @@ gdm_session_get_server_address (GdmSession *self)
 }
 
 const char *
-gdm_session_get_username (GdmSession *self)
+gdm_session_get_username (ScdmSession *self)
 {
         g_return_val_if_fail (GDM_IS_SESSION (self), NULL);
 
@@ -3093,7 +3093,7 @@ gdm_session_get_username (GdmSession *self)
 }
 
 const char *
-gdm_session_get_display_device (GdmSession *self)
+gdm_session_get_display_device (ScdmSession *self)
 {
         g_return_val_if_fail (GDM_IS_SESSION (self), NULL);
 
@@ -3101,7 +3101,7 @@ gdm_session_get_display_device (GdmSession *self)
 }
 
 const char *
-gdm_session_get_display_seat_id (GdmSession *self)
+gdm_session_get_display_seat_id (ScdmSession *self)
 {
         g_return_val_if_fail (GDM_IS_SESSION (self), NULL);
 
@@ -3109,9 +3109,9 @@ gdm_session_get_display_seat_id (GdmSession *self)
 }
 
 const char *
-gdm_session_get_session_id (GdmSession *self)
+gdm_session_get_session_id (ScdmSession *self)
 {
-        GdmSessionConversation *conversation;
+        ScdmSessionConversation *conversation;
 
         g_return_val_if_fail (GDM_IS_SESSION (self), NULL);
 
@@ -3125,10 +3125,10 @@ gdm_session_get_session_id (GdmSession *self)
 }
 
 const char *
-gdm_session_get_conversation_session_id (GdmSession *self,
+gdm_session_get_conversation_session_id (ScdmSession *self,
                                          const char *service_name)
 {
-        GdmSessionConversation *conversation;
+        ScdmSessionConversation *conversation;
 
         g_return_val_if_fail (GDM_IS_SESSION (self), NULL);
 
@@ -3142,14 +3142,14 @@ gdm_session_get_conversation_session_id (GdmSession *self,
 }
 
 static char *
-get_session_filename (GdmSession *self)
+get_session_filename (ScdmSession *self)
 {
         return g_strdup_printf ("%s.desktop", get_session_name (self));
 }
 
 #ifdef ENABLE_WAYLAND_SUPPORT
 static gboolean
-gdm_session_is_wayland_session (GdmSession *self)
+gdm_session_is_wayland_session (ScdmSession *self)
 {
         GKeyFile   *key_file;
         gboolean    is_wayland_session = FALSE;
@@ -3170,7 +3170,7 @@ gdm_session_is_wayland_session (GdmSession *self)
         if (full_path != NULL && strstr (full_path, "/wayland-sessions/") != NULL) {
                 is_wayland_session = TRUE;
         }
-        g_debug ("GdmSession: checking if file '%s' is wayland session: %s", filename, is_wayland_session? "yes" : "no");
+        g_debug ("ScdmSession: checking if file '%s' is wayland session: %s", filename, is_wayland_session? "yes" : "no");
 
 out:
         g_clear_pointer (&key_file, g_key_file_free);
@@ -3180,7 +3180,7 @@ out:
 #endif
 
 static void
-update_session_type (GdmSession *self)
+update_session_type (ScdmSession *self)
 {
 #ifdef ENABLE_WAYLAND_SUPPORT
         gboolean is_wayland_session;
@@ -3195,7 +3195,7 @@ update_session_type (GdmSession *self)
 }
 
 gboolean
-gdm_session_session_registers (GdmSession *self)
+gdm_session_session_registers (ScdmSession *self)
 {
         g_autoptr(GError) error = NULL;
         g_autoptr(GKeyFile) key_file = NULL;
@@ -3216,18 +3216,18 @@ gdm_session_session_registers (GdmSession *self)
         if (!session_registers &&
             error != NULL &&
             !g_error_matches (error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_KEY_NOT_FOUND)) {
-                g_warning ("GdmSession: Couldn't read session file '%s'", filename);
+                g_warning ("ScdmSession: Couldn't read session file '%s'", filename);
                 return FALSE;
         }
 
-        g_debug ("GdmSession: '%s' %s self", filename,
+        g_debug ("ScdmSession: '%s' %s self", filename,
                  session_registers ? "registers" : "does not register");
 
         return session_registers;
 }
 
 gboolean
-gdm_session_bypasses_xsession (GdmSession *self)
+gdm_session_bypasses_xsession (ScdmSession *self)
 {
         GError     *error;
         GKeyFile   *key_file;
@@ -3264,16 +3264,16 @@ gdm_session_bypasses_xsession (GdmSession *self)
 
 out:
         if (bypasses_xsession) {
-                g_debug ("GdmSession: Session %s bypasses Xsession wrapper script", filename);
+                g_debug ("ScdmSession: Session %s bypasses Xsession wrapper script", filename);
         }
         g_free (filename);
         return bypasses_xsession;
 }
 
-GdmSessionDisplayMode
-gdm_session_get_display_mode (GdmSession *self)
+ScdmSessionDisplayMode
+gdm_session_get_display_mode (ScdmSession *self)
 {
-        g_debug ("GdmSession: type %s, program? %s, seat %s",
+        g_debug ("ScdmSession: type %s, program? %s, seat %s",
                  self->session_type,
                  self->is_program_session? "yes" : "no",
                  self->display_seat_id);
@@ -3323,7 +3323,7 @@ gdm_session_get_display_mode (GdmSession *self)
 }
 
 void
-gdm_session_select_program (GdmSession *self,
+gdm_session_select_program (ScdmSession *self,
                             const char *text)
 {
 
@@ -3333,13 +3333,13 @@ gdm_session_select_program (GdmSession *self,
 }
 
 void
-gdm_session_select_session (GdmSession *self,
+gdm_session_select_session (ScdmSession *self,
                             const char *text)
 {
         GHashTableIter iter;
         gpointer key, value;
 
-        g_debug ("GdmSession: selecting session '%s'", text);
+        g_debug ("ScdmSession: selecting session '%s'", text);
 
         g_free (self->selected_session);
         self->selected_session = g_strdup (text);
@@ -3348,9 +3348,9 @@ gdm_session_select_session (GdmSession *self,
 
         g_hash_table_iter_init (&iter, self->conversations);
         while (g_hash_table_iter_next (&iter, &key, &value)) {
-                GdmSessionConversation *conversation;
+                ScdmSessionConversation *conversation;
 
-                conversation = (GdmSessionConversation *) value;
+                conversation = (ScdmSessionConversation *) value;
 
                 gdm_dbus_worker_call_set_session_name (conversation->worker_proxy,
                                                        get_session_name (self),
@@ -3360,7 +3360,7 @@ gdm_session_select_session (GdmSession *self,
 }
 
 static void
-set_display_name (GdmSession *self,
+set_display_name (ScdmSession *self,
                   const char *name)
 {
         g_free (self->display_name);
@@ -3368,7 +3368,7 @@ set_display_name (GdmSession *self,
 }
 
 static void
-set_display_hostname (GdmSession *self,
+set_display_hostname (ScdmSession *self,
                       const char *name)
 {
         g_free (self->display_hostname);
@@ -3376,16 +3376,16 @@ set_display_hostname (GdmSession *self,
 }
 
 static void
-set_display_device (GdmSession *self,
+set_display_device (ScdmSession *self,
                     const char *name)
 {
-        g_debug ("GdmSession: Setting display device: %s", name);
+        g_debug ("ScdmSession: Setting display device: %s", name);
         g_free (self->display_device);
         self->display_device = g_strdup (name);
 }
 
 static void
-set_display_seat_id (GdmSession *self,
+set_display_seat_id (ScdmSession *self,
                      const char *name)
 {
         g_free (self->display_seat_id);
@@ -3393,7 +3393,7 @@ set_display_seat_id (GdmSession *self,
 }
 
 static void
-set_user_x11_authority_file (GdmSession *self,
+set_user_x11_authority_file (ScdmSession *self,
                              const char *name)
 {
         g_free (self->user_x11_authority_file);
@@ -3401,7 +3401,7 @@ set_user_x11_authority_file (GdmSession *self,
 }
 
 static void
-set_display_x11_authority_file (GdmSession *self,
+set_display_x11_authority_file (ScdmSession *self,
                                 const char *name)
 {
         g_free (self->display_x11_authority_file);
@@ -3409,35 +3409,35 @@ set_display_x11_authority_file (GdmSession *self,
 }
 
 static void
-set_display_is_local (GdmSession *self,
+set_display_is_local (ScdmSession *self,
                       gboolean    is_local)
 {
         self->display_is_local = is_local;
 }
 
 static void
-set_display_is_initial (GdmSession *self,
+set_display_is_initial (ScdmSession *self,
                         gboolean    is_initial)
 {
         self->display_is_initial = is_initial;
 }
 
 static void
-set_verification_mode (GdmSession                 *self,
-                       GdmSessionVerificationMode  verification_mode)
+set_verification_mode (ScdmSession                 *self,
+                       ScdmSessionVerificationMode  verification_mode)
 {
         self->verification_mode = verification_mode;
 }
 
 static void
-set_allowed_user (GdmSession *self,
+set_allowed_user (ScdmSession *self,
                   uid_t       allowed_user)
 {
         self->allowed_user = allowed_user;
 }
 
 static void
-set_conversation_environment (GdmSession  *self,
+set_conversation_environment (ScdmSession  *self,
                               char       **environment)
 {
         g_strfreev (self->conversation_environment);
@@ -3445,12 +3445,12 @@ set_conversation_environment (GdmSession  *self,
 }
 
 static void
-set_session_type (GdmSession *self,
+set_session_type (ScdmSession *self,
                   const char *session_type)
 {
 
         if (g_strcmp0 (self->session_type, session_type) != 0) {
-                g_debug ("GdmSession: setting session to type '%s'", session_type? session_type : "");
+                g_debug ("ScdmSession: setting session to type '%s'", session_type? session_type : "");
                 g_free (self->session_type);
                 self->session_type = g_strdup (session_type);
         }
@@ -3462,7 +3462,7 @@ gdm_session_set_property (GObject      *object,
                           const GValue *value,
                           GParamSpec   *pspec)
 {
-        GdmSession *self;
+        ScdmSession *self;
 
         self = GDM_SESSION (object);
 
@@ -3520,7 +3520,7 @@ gdm_session_get_property (GObject    *object,
                           GValue     *value,
                           GParamSpec *pspec)
 {
-        GdmSession *self;
+        ScdmSession *self;
 
         self = GDM_SESSION (object);
 
@@ -3575,11 +3575,11 @@ gdm_session_get_property (GObject    *object,
 static void
 gdm_session_dispose (GObject *object)
 {
-        GdmSession *self;
+        ScdmSession *self;
 
         self = GDM_SESSION (object);
 
-        g_debug ("GdmSession: Disposing session");
+        g_debug ("ScdmSession: Disposing session");
 
         gdm_session_close (self);
 
@@ -3631,7 +3631,7 @@ gdm_session_dispose (GObject *object)
 static void
 gdm_session_finalize (GObject *object)
 {
-        GdmSession   *self;
+        ScdmSession   *self;
         GObjectClass *parent_class;
 
         self = GDM_SESSION (object);
@@ -3654,7 +3654,7 @@ gdm_session_constructor (GType                  type,
                          guint                  n_construct_properties,
                          GObjectConstructParam *construct_properties)
 {
-        GdmSession *self;
+        ScdmSession *self;
 
         self = GDM_SESSION (G_OBJECT_CLASS (gdm_session_parent_class)->constructor (type,
                                                                                     n_construct_properties,
@@ -3663,7 +3663,7 @@ gdm_session_constructor (GType                  type,
 }
 
 static void
-gdm_session_class_init (GdmSessionClass *session_class)
+gdm_session_class_init (ScdmSessionClass *session_class)
 {
         GObjectClass *object_class;
 
@@ -3996,8 +3996,8 @@ gdm_session_class_init (GdmSessionClass *session_class)
 #endif
 }
 
-GdmSession *
-gdm_session_new (GdmSessionVerificationMode  verification_mode,
+ScdmSession *
+gdm_session_new (ScdmSessionVerificationMode  verification_mode,
                  uid_t                       allowed_user,
                  const char                 *display_name,
                  const char                 *display_hostname,
@@ -4007,7 +4007,7 @@ gdm_session_new (GdmSessionVerificationMode  verification_mode,
                  gboolean                    display_is_local,
                  const char * const         *environment)
 {
-        GdmSession *self;
+        ScdmSession *self;
 
         self = g_object_new (GDM_TYPE_SESSION,
                              "verification-mode", verification_mode,
@@ -4024,7 +4024,7 @@ gdm_session_new (GdmSessionVerificationMode  verification_mode,
         return self;
 }
 
-GdmSessionDisplayMode
+ScdmSessionDisplayMode
 gdm_session_display_mode_from_string (const char *str)
 {
         if (strcmp (str, "reuse-vt") == 0)
@@ -4034,12 +4034,12 @@ gdm_session_display_mode_from_string (const char *str)
         if (strcmp (str, "logind-managed") == 0)
                 return GDM_SESSION_DISPLAY_MODE_LOGIND_MANAGED;
 
-        g_warning ("Unknown GdmSessionDisplayMode %s", str);
+        g_warning ("Unknown ScdmSessionDisplayMode %s", str);
         return -1;
 }
 
 const char *
-gdm_session_display_mode_to_string (GdmSessionDisplayMode mode)
+gdm_session_display_mode_to_string (ScdmSessionDisplayMode mode)
 {
         switch (mode) {
         case GDM_SESSION_DISPLAY_MODE_REUSE_VT:
@@ -4052,12 +4052,12 @@ gdm_session_display_mode_to_string (GdmSessionDisplayMode mode)
                 break;
         }
 
-        g_warning ("Unknown GdmSessionDisplayMode %d", mode);
+        g_warning ("Unknown ScdmSessionDisplayMode %d", mode);
         return "";
 }
 
 GPid
-gdm_session_get_pid (GdmSession *session)
+gdm_session_get_pid (ScdmSession *session)
 {
         return session->session_pid;
 }

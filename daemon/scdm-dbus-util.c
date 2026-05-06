@@ -58,7 +58,7 @@ handle_connection (GDBusServer      *server,
         bus_info = g_dbus_node_info_new_for_xml (dbus_introspection,
                                                  NULL);
 
-        g_debug ("GdmDBusServer: new connection %p", new_connection);
+        g_debug ("ScdmDBusServer: new connection %p", new_connection);
 
         g_dbus_connection_register_object (new_connection,
                                            "/org/freedesktop/DBus",

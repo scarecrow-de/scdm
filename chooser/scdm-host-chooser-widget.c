@@ -47,7 +47,7 @@
 #include "scdm-chooser-host.h"
 #include "scdm-host-chooser-widget.h"
 
-struct _GdmHostChooserWidget
+struct _ScdmHostChooserWidget
 {
         GtkBox          parent;
 
@@ -71,7 +71,7 @@ struct _GdmHostChooserWidget
         GSList         *query_addresses;
         GSList         *chooser_hosts;
 
-        GdmChooserHost *current_host;
+        ScdmChooserHost *current_host;
 };
 
 enum {
@@ -86,10 +86,10 @@ enum {
 
 static guint signals [LAST_SIGNAL] = { 0, };
 
-static void     gdm_host_chooser_widget_class_init  (GdmHostChooserWidgetClass *klass);
-static void     gdm_host_chooser_widget_init        (GdmHostChooserWidget      *host_chooser_widget);
+static void     gdm_host_chooser_widget_class_init  (ScdmHostChooserWidgetClass *klass);
+static void     gdm_host_chooser_widget_init        (ScdmHostChooserWidget      *host_chooser_widget);
 
-G_DEFINE_TYPE (GdmHostChooserWidget, gdm_host_chooser_widget, GTK_TYPE_BOX)
+G_DEFINE_TYPE (ScdmHostChooserWidget, gdm_host_chooser_widget, GTK_TYPE_BOX)
 
 #define GDM_XDMCP_PROTOCOL_VERSION 1001
 #define SCAN_TIMEOUT 30
@@ -103,24 +103,24 @@ enum {
 };
 
 static void
-chooser_host_add (GdmHostChooserWidget *widget,
-                  GdmChooserHost       *host)
+chooser_host_add (ScdmHostChooserWidget *widget,
+                  ScdmChooserHost       *host)
 {
         widget->chooser_hosts = g_slist_prepend (widget->chooser_hosts, host);
 }
 
 #if 0
 static void
-chooser_host_remove (GdmHostChooserWidget *widget,
-                     GdmChooserHost       *host)
+chooser_host_remove (ScdmHostChooserWidget *widget,
+                     ScdmChooserHost       *host)
 {
         widget->chooser_hosts = g_slist_remove (widget->chooser_hosts, host);
 }
 #endif
 
 static gboolean
-address_hostnames_equal (GdmAddress *address,
-                         GdmAddress *other_address)
+address_hostnames_equal (ScdmAddress *address,
+                         ScdmAddress *other_address)
 {
         char *hostname, *other_hostname;
         gboolean are_equal;
@@ -145,15 +145,15 @@ address_hostnames_equal (GdmAddress *address,
         return are_equal;
 }
 
-static GdmChooserHost *
-find_known_host (GdmHostChooserWidget *widget,
-                 GdmAddress           *address)
+static ScdmChooserHost *
+find_known_host (ScdmHostChooserWidget *widget,
+                 ScdmAddress           *address)
 {
         GSList         *li;
-        GdmChooserHost *host;
+        ScdmChooserHost *host;
 
         for (li = widget->chooser_hosts; li != NULL; li = li->next) {
-                GdmAddress *other_address;
+                ScdmAddress *other_address;
 
                 host = li->data;
 
@@ -171,8 +171,8 @@ find_known_host (GdmHostChooserWidget *widget,
 }
 
 static void
-browser_add_host (GdmHostChooserWidget *widget,
-                  GdmChooserHost       *host)
+browser_add_host (ScdmHostChooserWidget *widget,
+                  ScdmChooserHost       *host)
 {
         char         *hostname;
         char         *name;
@@ -223,10 +223,10 @@ browser_add_host (GdmHostChooserWidget *widget,
 static gboolean
 decode_packet (GIOChannel           *source,
                GIOCondition          condition,
-               GdmHostChooserWidget *widget)
+               ScdmHostChooserWidget *widget)
 {
         struct sockaddr_storage clnt_ss;
-        GdmAddress             *address;
+        ScdmAddress             *address;
         int                     ss_len;
         XdmcpHeader             header;
         int                     res;
@@ -235,7 +235,7 @@ decode_packet (GIOChannel           *source,
         ARRAY8                  host = {0};
         ARRAY8                  stat = {0};
         char                   *status;
-        GdmChooserHost         *chooser_host;
+        ScdmChooserHost         *chooser_host;
 
         status = NULL;
         address = NULL;
@@ -331,7 +331,7 @@ decode_packet (GIOChannel           *source,
 }
 
 static void
-do_ping (GdmHostChooserWidget *widget,
+do_ping (ScdmHostChooserWidget *widget,
          gboolean              full)
 {
         GSList *l;
@@ -339,7 +339,7 @@ do_ping (GdmHostChooserWidget *widget,
         g_debug ("do ping full:%d", full);
 
         for (l = widget->broadcast_addresses; l != NULL; l = l->next) {
-                GdmAddress              *address;
+                ScdmAddress              *address;
                 int                      res;
 
                 address = l->data;
@@ -359,7 +359,7 @@ do_ping (GdmHostChooserWidget *widget,
 
         if (full) {
                 for (l = widget->query_addresses; l != NULL; l = l->next) {
-                        GdmAddress *address;
+                        ScdmAddress *address;
                         int         res;
 
                         address = l->data;
@@ -377,7 +377,7 @@ do_ping (GdmHostChooserWidget *widget,
 }
 
 static gboolean
-ping_try (GdmHostChooserWidget *widget)
+ping_try (ScdmHostChooserWidget *widget)
 {
         do_ping (widget, FALSE);
 
@@ -392,7 +392,7 @@ ping_try (GdmHostChooserWidget *widget)
 }
 
 static void
-xdmcp_discover (GdmHostChooserWidget *widget)
+xdmcp_discover (ScdmHostChooserWidget *widget)
 {
 #if 0
         gtk_widget_set_sensitive (GTK_WIDGET (manage), FALSE);
@@ -403,7 +403,7 @@ xdmcp_discover (GdmHostChooserWidget *widget)
                              _(scanning_message));
 
         while (hl) {
-                gdm_chooser_host_dispose ((GdmChooserHost *) hl->data);
+                gdm_chooser_host_dispose ((ScdmChooserHost *) hl->data);
                 hl = hl->next;
         }
 
@@ -435,7 +435,7 @@ xdmcp_discover (GdmHostChooserWidget *widget)
 
 /* Find broadcast address for all active, non pointopoint interfaces */
 static void
-find_broadcast_addresses (GdmHostChooserWidget *widget)
+find_broadcast_addresses (ScdmHostChooserWidget *widget)
 {
         int           i;
         int           num;
@@ -471,7 +471,7 @@ find_broadcast_addresses (GdmHostChooserWidget *widget)
                 g_debug ("Checking if %s", name);
                 if (name != NULL && name[0] != '\0') {
                         struct ifreq            ifreq;
-                        GdmAddress             *address;
+                        ScdmAddress             *address;
                         struct sockaddr_in      sin;
 
                         memset (&ifreq, 0, sizeof (ifreq));
@@ -510,7 +510,7 @@ find_broadcast_addresses (GdmHostChooserWidget *widget)
 }
 
 static void
-add_hosts (GdmHostChooserWidget *widget)
+add_hosts (ScdmHostChooserWidget *widget)
 {
         int i;
 
@@ -549,7 +549,7 @@ add_hosts (GdmHostChooserWidget *widget)
                 }
 
                 for (ai = result; ai != NULL; ai = ai->ai_next) {
-                        GdmAddress *address;
+                        ScdmAddress *address;
 
                         address = gdm_address_new_from_sockaddr (ai->ai_addr, ai->ai_addrlen);
                         if (address != NULL) {
@@ -566,7 +566,7 @@ add_hosts (GdmHostChooserWidget *widget)
 }
 
 static void
-xdmcp_init (GdmHostChooserWidget *widget)
+xdmcp_init (ScdmHostChooserWidget *widget)
 {
         XdmcpHeader   header;
         int           sockopts;
@@ -639,17 +639,17 @@ xdmcp_init (GdmHostChooserWidget *widget)
 }
 
 void
-gdm_host_chooser_widget_refresh (GdmHostChooserWidget *widget)
+gdm_host_chooser_widget_refresh (ScdmHostChooserWidget *widget)
 {
         g_return_if_fail (GDM_IS_HOST_CHOOSER_WIDGET (widget));
 
         xdmcp_discover (widget);
 }
 
-GdmChooserHost *
-gdm_host_chooser_widget_get_host (GdmHostChooserWidget *widget)
+ScdmChooserHost *
+gdm_host_chooser_widget_get_host (ScdmHostChooserWidget *widget)
 {
-        GdmChooserHost *host;
+        ScdmChooserHost *host;
 
         g_return_val_if_fail (GDM_IS_HOST_CHOOSER_WIDGET (widget), NULL);
 
@@ -662,7 +662,7 @@ gdm_host_chooser_widget_get_host (GdmHostChooserWidget *widget)
 }
 
 static void
-_gdm_host_chooser_widget_set_kind_mask (GdmHostChooserWidget *widget,
+_gdm_host_chooser_widget_set_kind_mask (ScdmHostChooserWidget *widget,
                                         int                   kind_mask)
 {
         if (widget->kind_mask != kind_mask) {
@@ -676,7 +676,7 @@ gdm_host_chooser_widget_set_property (GObject        *object,
                                       const GValue   *value,
                                       GParamSpec     *pspec)
 {
-        GdmHostChooserWidget *self;
+        ScdmHostChooserWidget *self;
 
         self = GDM_HOST_CHOOSER_WIDGET (object);
 
@@ -708,7 +708,7 @@ gdm_host_chooser_widget_constructor (GType                  type,
                                      guint                  n_construct_properties,
                                      GObjectConstructParam *construct_properties)
 {
-        GdmHostChooserWidget      *widget;
+        ScdmHostChooserWidget      *widget;
 
         widget = GDM_HOST_CHOOSER_WIDGET (G_OBJECT_CLASS (gdm_host_chooser_widget_parent_class)->constructor (type,
                                                                                                                            n_construct_properties,
@@ -723,7 +723,7 @@ gdm_host_chooser_widget_constructor (GType                  type,
 static void
 gdm_host_chooser_widget_dispose (GObject *object)
 {
-        GdmHostChooserWidget *widget;
+        ScdmHostChooserWidget *widget;
 
         widget = GDM_HOST_CHOOSER_WIDGET (object);
 
@@ -757,7 +757,7 @@ gdm_host_chooser_widget_dispose (GObject *object)
 }
 
 static void
-gdm_host_chooser_widget_class_init (GdmHostChooserWidgetClass *klass)
+gdm_host_chooser_widget_class_init (ScdmHostChooserWidgetClass *klass)
 {
         GObjectClass   *object_class = G_OBJECT_CLASS (klass);
 
@@ -789,11 +789,11 @@ gdm_host_chooser_widget_class_init (GdmHostChooserWidgetClass *klass)
 
 static void
 on_host_selected (GtkTreeSelection     *selection,
-                  GdmHostChooserWidget *widget)
+                  ScdmHostChooserWidget *widget)
 {
         GtkTreeModel   *model = NULL;
         GtkTreeIter     iter = {0};
-        GdmChooserHost *curhost;
+        ScdmChooserHost *curhost;
 
         curhost = NULL;
 
@@ -808,13 +808,13 @@ static void
 on_row_activated (GtkTreeView          *tree_view,
                   GtkTreePath          *tree_path,
                   GtkTreeViewColumn    *tree_column,
-                  GdmHostChooserWidget *widget)
+                  ScdmHostChooserWidget *widget)
 {
         g_signal_emit (widget, signals[HOST_ACTIVATED], 0);
 }
 
 static void
-gdm_host_chooser_widget_init (GdmHostChooserWidget *widget)
+gdm_host_chooser_widget_init (ScdmHostChooserWidget *widget)
 {
         GtkWidget         *scrolled;
         GtkTreeSelection  *selection;

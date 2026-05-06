@@ -28,18 +28,18 @@
 
 G_BEGIN_DECLS
 
-typedef struct _GdmSettingsEntry GdmSettingsEntry;
+typedef struct _ScdmSettingsEntry ScdmSettingsEntry;
 
-GdmSettingsEntry *        gdm_settings_entry_new               (void);
-GdmSettingsEntry *        gdm_settings_entry_copy              (GdmSettingsEntry *entry);
-void                      gdm_settings_entry_free              (GdmSettingsEntry *entry);
+ScdmSettingsEntry *        gdm_settings_entry_new               (void);
+ScdmSettingsEntry *        gdm_settings_entry_copy              (ScdmSettingsEntry *entry);
+void                      gdm_settings_entry_free              (ScdmSettingsEntry *entry);
 
-const char *              gdm_settings_entry_get_key           (GdmSettingsEntry *entry);
-const char *              gdm_settings_entry_get_signature     (GdmSettingsEntry *entry);
-const char *              gdm_settings_entry_get_default_value (GdmSettingsEntry *entry);
-const char *              gdm_settings_entry_get_value         (GdmSettingsEntry *entry);
+const char *              gdm_settings_entry_get_key           (ScdmSettingsEntry *entry);
+const char *              gdm_settings_entry_get_signature     (ScdmSettingsEntry *entry);
+const char *              gdm_settings_entry_get_default_value (ScdmSettingsEntry *entry);
+const char *              gdm_settings_entry_get_value         (ScdmSettingsEntry *entry);
 
-void                      gdm_settings_entry_set_value         (GdmSettingsEntry *entry,
+void                      gdm_settings_entry_set_value         (ScdmSettingsEntry *entry,
                                                                 const char       *value);
 
 gboolean                  gdm_settings_parse_schemas           (const char  *file,

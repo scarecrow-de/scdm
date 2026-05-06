@@ -33,7 +33,7 @@
 #include "scdm-host-chooser-dialog.h"
 #include "scdm-host-chooser-widget.h"
 
-struct _GdmHostChooserDialog
+struct _ScdmHostChooserDialog
 {
         GtkDialog  parent;
 
@@ -46,15 +46,15 @@ enum {
         PROP_KIND_MASK,
 };
 
-static void     gdm_host_chooser_dialog_class_init  (GdmHostChooserDialogClass *klass);
-static void     gdm_host_chooser_dialog_init        (GdmHostChooserDialog      *host_chooser_dialog);
+static void     gdm_host_chooser_dialog_class_init  (ScdmHostChooserDialogClass *klass);
+static void     gdm_host_chooser_dialog_init        (ScdmHostChooserDialog      *host_chooser_dialog);
 
-G_DEFINE_TYPE (GdmHostChooserDialog, gdm_host_chooser_dialog, GTK_TYPE_DIALOG)
+G_DEFINE_TYPE (ScdmHostChooserDialog, gdm_host_chooser_dialog, GTK_TYPE_DIALOG)
 
-GdmChooserHost *
-gdm_host_chooser_dialog_get_host (GdmHostChooserDialog *dialog)
+ScdmChooserHost *
+gdm_host_chooser_dialog_get_host (ScdmHostChooserDialog *dialog)
 {
-        GdmChooserHost *host;
+        ScdmChooserHost *host;
 
         g_return_val_if_fail (GDM_IS_HOST_CHOOSER_DIALOG (dialog), NULL);
 
@@ -64,7 +64,7 @@ gdm_host_chooser_dialog_get_host (GdmHostChooserDialog *dialog)
 }
 
 static void
-_gdm_host_chooser_dialog_set_kind_mask (GdmHostChooserDialog *dialog,
+_gdm_host_chooser_dialog_set_kind_mask (ScdmHostChooserDialog *dialog,
                                         int                   kind_mask)
 {
         if (dialog->kind_mask != kind_mask) {
@@ -78,7 +78,7 @@ gdm_host_chooser_dialog_set_property (GObject        *object,
                                       const GValue   *value,
                                       GParamSpec     *pspec)
 {
-        GdmHostChooserDialog *self;
+        ScdmHostChooserDialog *self;
 
         self = GDM_HOST_CHOOSER_DIALOG (object);
 
@@ -106,7 +106,7 @@ gdm_host_chooser_dialog_get_property (GObject        *object,
 }
 
 static void
-on_response (GdmHostChooserDialog *dialog,
+on_response (ScdmHostChooserDialog *dialog,
              gint                  response_id)
 {
         switch (response_id) {
@@ -124,7 +124,7 @@ gdm_host_chooser_dialog_constructor (GType                  type,
                                      guint                  n_construct_properties,
                                      GObjectConstructParam *construct_properties)
 {
-        GdmHostChooserDialog      *dialog;
+        ScdmHostChooserDialog      *dialog;
 
         dialog = GDM_HOST_CHOOSER_DIALOG (G_OBJECT_CLASS (gdm_host_chooser_dialog_parent_class)->constructor (type,
                                                                                                                            n_construct_properties,
@@ -165,7 +165,7 @@ gdm_host_chooser_dialog_dispose (GObject *object)
 }
 
 static void
-gdm_host_chooser_dialog_class_init (GdmHostChooserDialogClass *klass)
+gdm_host_chooser_dialog_class_init (ScdmHostChooserDialogClass *klass)
 {
         GObjectClass   *object_class = G_OBJECT_CLASS (klass);
 
@@ -186,7 +186,7 @@ gdm_host_chooser_dialog_class_init (GdmHostChooserDialogClass *klass)
 }
 
 static void
-gdm_host_chooser_dialog_init (GdmHostChooserDialog *dialog)
+gdm_host_chooser_dialog_init (ScdmHostChooserDialog *dialog)
 {
 }
 

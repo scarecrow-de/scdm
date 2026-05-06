@@ -27,7 +27,7 @@
 
 G_BEGIN_DECLS
 
-gboolean              gdm_settings_direct_init                       (GdmSettings       *settings,
+gboolean              gdm_settings_direct_init                       (ScdmSettings       *settings,
                                                                       const char        *schemas_file,
                                                                       const char        *root);
 void                  gdm_settings_direct_shutdown                   (void);

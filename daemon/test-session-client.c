@@ -34,7 +34,7 @@
 static GMainLoop *loop;
 
 static void
-on_conversation_stopped (GdmDBusUserVerifier *user_verifier,
+on_conversation_stopped (ScdmDBusUserVerifier *user_verifier,
                          const char          *service_name)
 {
         g_print ("\n** WARNING: conversation stopped\n");
@@ -43,7 +43,7 @@ on_conversation_stopped (GdmDBusUserVerifier *user_verifier,
 }
 
 static void
-on_reset (GdmDBusUserVerifier *user_verifier)
+on_reset (ScdmDBusUserVerifier *user_verifier)
 {
         g_print ("\n** NOTE: reset\n");
 
@@ -51,7 +51,7 @@ on_reset (GdmDBusUserVerifier *user_verifier)
 }
 
 static void
-on_verification_complete (GdmDBusUserVerifier *user_verifier,
+on_verification_complete (ScdmDBusUserVerifier *user_verifier,
                           const char          *service_name)
 {
         g_print ("\n** INFO: verification complete\n");
@@ -60,7 +60,7 @@ on_verification_complete (GdmDBusUserVerifier *user_verifier,
 }
 
 static void
-on_info_query (GdmDBusUserVerifier *user_verifier,
+on_info_query (ScdmDBusUserVerifier *user_verifier,
                const char          *service_name,
                const char          *query_text)
 {
@@ -92,7 +92,7 @@ on_info_query (GdmDBusUserVerifier *user_verifier,
 }
 
 static void
-on_info (GdmDBusUserVerifier *user_verifier,
+on_info (ScdmDBusUserVerifier *user_verifier,
          const char          *service_name,
          const char          *info)
 {
@@ -100,7 +100,7 @@ on_info (GdmDBusUserVerifier *user_verifier,
 }
 
 static void
-on_problem (GdmDBusUserVerifier *user_verifier,
+on_problem (ScdmDBusUserVerifier *user_verifier,
             const char           *service_name,
             const char           *problem)
 {
@@ -108,7 +108,7 @@ on_problem (GdmDBusUserVerifier *user_verifier,
 }
 
 static void
-on_secret_info_query (GdmDBusUserVerifier *user_verifier,
+on_secret_info_query (ScdmDBusUserVerifier *user_verifier,
                       const char          *service_name,
                       const char          *query_text)
 {
@@ -151,14 +151,14 @@ main (int   argc,
       char *argv[])
 {
         GError *error;
-        GdmDBusManager *manager;
-        GdmDBusUserVerifier *user_verifier;
+        ScdmDBusManager *manager;
+        ScdmDBusUserVerifier *user_verifier;
         GDBusConnection *system_bus;
         GDBusConnection *connection;
         char *address;
         gboolean ok;
 
-        g_debug ("creating instance of GdmDBusDisplay object...");
+        g_debug ("creating instance of ScdmDBusDisplay object...");
 
         error = NULL;
         system_bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);

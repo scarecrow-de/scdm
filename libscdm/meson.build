@@ -1,6 +1,6 @@
 libgdm_manager_dbus_gen = gnome.gdbus_codegen('scdm-manager-glue',
     sources: '..' / 'daemon' / 'scdm-manager.xml',
-    namespace: 'Gdm',
+    namespace: 'Scdm',
     interface_prefix: 'io.github.scarecrow_de.DisplayManager',
     autocleanup: 'all',
     annotations: [
@@ -10,7 +10,7 @@ libgdm_manager_dbus_gen = gnome.gdbus_codegen('scdm-manager-glue',
 )
 libgdm_client_dbus_gen = gnome.gdbus_codegen('scdm-client-glue',
     sources: '..' / 'daemon' / 'scdm-session.xml',
-    namespace: 'Gdm',
+    namespace: 'Scdm',
     interface_prefix: 'io.github.scarecrow_de.DisplayManager',
     autocleanup: 'all',
     annotations: [
@@ -88,9 +88,9 @@ libgdm_dep = declare_dependency(
 
 libgdm_gir = gnome.generate_gir(libscdm,
   sources: libgdm_headers + libgdm_sources,
-  namespace: 'Gdm',
+  namespace: 'Scdm',
   nsversion: '1.0',
-  identifier_prefix: 'Gdm',
+  identifier_prefix: 'Scdm',
   includes: libgdm_gir_includes,
   install: true,
 )

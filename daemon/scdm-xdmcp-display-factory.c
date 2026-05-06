@@ -141,28 +141,28 @@ static XdmAuthRec serv_authlist = {
 /* NOTE: Timeout and max are hardcoded */
 typedef struct _ForwardQuery {
         time_t      acctime;
-        GdmAddress *dsp_address;
-        GdmAddress *from_address;
+        ScdmAddress *dsp_address;
+        ScdmAddress *from_address;
 } ForwardQuery;
 
 typedef struct _IndirectClient {
         int         id;
-        GdmAddress *dsp_address;
-        GdmAddress *chosen_address;
+        ScdmAddress *dsp_address;
+        ScdmAddress *chosen_address;
         time_t      acctime;
 } IndirectClient;
 
 typedef struct {
         int                     times;
         guint                   handler;
-        GdmAddress             *manager;
-        GdmAddress             *origin;
-        GdmXdmcpDisplayFactory *xdmcp_display_factory;
+        ScdmAddress             *manager;
+        ScdmAddress             *origin;
+        ScdmXdmcpDisplayFactory *xdmcp_display_factory;
 } ManagedForward;
 
-struct _GdmXdmcpDisplayFactory
+struct _ScdmXdmcpDisplayFactory
 {
-        GdmDisplayFactory parent;
+        ScdmDisplayFactory parent;
 
         GSList          *forward_queries;
         GSList          *managed_forwards;
@@ -207,16 +207,16 @@ enum {
         PROP_MAX_WAIT_INDIRECT,
 };
 
-static void     gdm_xdmcp_display_factory_class_init    (GdmXdmcpDisplayFactoryClass *klass);
-static void     gdm_xdmcp_display_factory_init          (GdmXdmcpDisplayFactory      *manager);
+static void     gdm_xdmcp_display_factory_class_init    (ScdmXdmcpDisplayFactoryClass *klass);
+static void     gdm_xdmcp_display_factory_init          (ScdmXdmcpDisplayFactory      *manager);
 static void     gdm_xdmcp_display_factory_finalize      (GObject                     *object);
-static void     gdm_xdmcp_send_alive (GdmXdmcpDisplayFactory *factory,
-                                      GdmAddress             *address,
+static void     gdm_xdmcp_send_alive (ScdmXdmcpDisplayFactory *factory,
+                                      ScdmAddress             *address,
                                       CARD16                  dspnum,
                                       CARD32                  sessid);
 static gpointer xdmcp_display_factory_object = NULL;
 
-G_DEFINE_TYPE (GdmXdmcpDisplayFactory, gdm_xdmcp_display_factory, GDM_TYPE_DISPLAY_FACTORY)
+G_DEFINE_TYPE (ScdmXdmcpDisplayFactory, gdm_xdmcp_display_factory, GDM_TYPE_DISPLAY_FACTORY)
 
 /* Theory of operation:
  *
@@ -264,7 +264,7 @@ gdm_xdmcp_display_factory_error_quark (void)
 }
 
 static gint32
-get_next_session_serial (GdmXdmcpDisplayFactory *factory)
+get_next_session_serial (ScdmXdmcpDisplayFactory *factory)
 {
         gint32 serial;
 
@@ -400,7 +400,7 @@ debug_addrinfo (struct addrinfo *ai)
 {
         char *str;
         str = ai_flags_str (ai);
-        g_debug ("GdmXdmcpDisplayFactory: addrinfo family=%s type=%s proto=%s flags=%s",
+        g_debug ("ScdmXdmcpDisplayFactory: addrinfo family=%s type=%s proto=%s flags=%s",
                  ai_family_str (ai),
                  ai_type_str (ai),
                  ai_protocol_str (ai),
@@ -473,14 +473,14 @@ do_bind (guint                     port,
                 if (sock < 0) {
                         char       *host;
                         char       *serv;
-                        GdmAddress *addr;
+                        ScdmAddress *addr;
 
                         addr = gdm_address_new_from_sockaddr (ai->ai_addr, ai->ai_addrlen);
 
                         host = NULL;
                         serv = NULL;
                         gdm_address_get_numeric_info (addr, &host, &serv);
-                        g_debug ("GdmXdmcpDisplayFactory: Attempting to bind to host %s port %s",
+                        g_debug ("ScdmXdmcpDisplayFactory: Attempting to bind to host %s port %s",
                                 host ? host : "(null)", serv ? serv : "(null)");
                         g_free (host);
                         g_free (serv);
@@ -501,7 +501,7 @@ do_bind (guint                     port,
 }
 
 static void
-setup_multicast (GdmXdmcpDisplayFactory *factory)
+setup_multicast (ScdmXdmcpDisplayFactory *factory)
 {
 #ifdef ENABLE_IPV6
         /* Checking and Setting Multicast options */
@@ -546,7 +546,7 @@ setup_multicast (GdmXdmcpDisplayFactory *factory)
                                 ifreq.ifr_name[sizeof (ifreq.ifr_name) - 1] = '\0';
 
                                 if (ioctl (socktemp, SIOCGIFFLAGS, &ifreq) < 0) {
-                                        g_debug ("GdmXdmcpDisplayFactory: Could not get SIOCGIFFLAGS for %s",
+                                        g_debug ("ScdmXdmcpDisplayFactory: Could not get SIOCGIFFLAGS for %s",
                                                  ifr[i].ifr_name);
                                 }
 
@@ -593,11 +593,11 @@ fd_set_close_on_exec (int fd)
 }
 
 static gboolean
-open_port (GdmXdmcpDisplayFactory *factory)
+open_port (ScdmXdmcpDisplayFactory *factory)
 {
         struct sockaddr_storage serv_sa = { 0 };
 
-        g_debug ("GdmXdmcpDisplayFactory: Start up on host %s, port %d",
+        g_debug ("ScdmXdmcpDisplayFactory: Start up on host %s, port %d",
                  factory->hostname ? factory->hostname : "(null)",
                  factory->port);
 
@@ -635,7 +635,7 @@ open_port (GdmXdmcpDisplayFactory *factory)
 #endif
 
 static gboolean
-gdm_xdmcp_host_allow (GdmAddress *address)
+gdm_xdmcp_host_allow (ScdmAddress *address)
 {
 #ifdef HAVE_TCPWRAPPERS
         char       *client;
@@ -662,16 +662,16 @@ gdm_xdmcp_host_allow (GdmAddress *address)
 }
 
 typedef struct {
-        GdmAddress *address;
+        ScdmAddress *address;
         int         count;
 } CountDisplayData;
 
 static void
 count_displays_from_host (const char       *id,
-                          GdmDisplay       *display,
+                          ScdmDisplay       *display,
                           CountDisplayData *data)
 {
-        GdmAddress *address;
+        ScdmAddress *address;
 
         if (GDM_IS_XDMCP_DISPLAY (display)) {
                 address = gdm_xdmcp_display_get_remote_address (GDM_XDMCP_DISPLAY (display));
@@ -683,34 +683,34 @@ count_displays_from_host (const char       *id,
 }
 
 static int
-gdm_xdmcp_num_displays_from_host (GdmXdmcpDisplayFactory *factory,
-                                  GdmAddress             *address)
+gdm_xdmcp_num_displays_from_host (ScdmXdmcpDisplayFactory *factory,
+                                  ScdmAddress             *address)
 {
         CountDisplayData data;
-        GdmDisplayStore *store;
+        ScdmDisplayStore *store;
 
         data.count = 0;
         data.address = address;
 
         store = gdm_display_factory_get_display_store (GDM_DISPLAY_FACTORY (factory));
         gdm_display_store_foreach (store,
-                                   (GdmDisplayStoreFunc)count_displays_from_host,
+                                   (ScdmDisplayStoreFunc)count_displays_from_host,
                                    &data);
 
         return data.count;
 }
 
 typedef struct {
-        GdmAddress *address;
+        ScdmAddress *address;
         int         display_num;
 } LookupHostData;
 
 static gboolean
 lookup_by_host (const char     *id,
-                GdmDisplay     *display,
+                ScdmDisplay     *display,
                 LookupHostData *data)
 {
-        GdmAddress *this_address;
+        ScdmAddress *this_address;
         int         disp_num;
 
         if (! GDM_IS_XDMCP_DISPLAY (display)) {
@@ -728,14 +728,14 @@ lookup_by_host (const char     *id,
         return FALSE;
 }
 
-static GdmDisplay *
-gdm_xdmcp_display_lookup_by_host (GdmXdmcpDisplayFactory *factory,
-                                  GdmAddress             *address,
+static ScdmDisplay *
+gdm_xdmcp_display_lookup_by_host (ScdmXdmcpDisplayFactory *factory,
+                                  ScdmAddress             *address,
                                   int                     display_num)
 {
-        GdmDisplay      *display;
+        ScdmDisplay      *display;
         LookupHostData  *data;
-        GdmDisplayStore *store;
+        ScdmDisplayStore *store;
 
         data = g_new0 (LookupHostData, 1);
         data->address = address;
@@ -743,7 +743,7 @@ gdm_xdmcp_display_lookup_by_host (GdmXdmcpDisplayFactory *factory,
 
         store = gdm_display_factory_get_display_store (GDM_DISPLAY_FACTORY (factory));
         display = gdm_display_store_find (store,
-                                          (GdmDisplayStoreFunc)lookup_by_host,
+                                          (ScdmDisplayStoreFunc)lookup_by_host,
                                           data);
         g_free (data);
 
@@ -751,7 +751,7 @@ gdm_xdmcp_display_lookup_by_host (GdmXdmcpDisplayFactory *factory,
 }
 
 static char *
-get_willing_output (GdmXdmcpDisplayFactory *factory)
+get_willing_output (ScdmXdmcpDisplayFactory *factory)
 {
         char  *output;
         char **argv;
@@ -795,8 +795,8 @@ get_willing_output (GdmXdmcpDisplayFactory *factory)
 }
 
 static void
-gdm_xdmcp_send_willing (GdmXdmcpDisplayFactory *factory,
-                        GdmAddress             *address)
+gdm_xdmcp_send_willing (ScdmXdmcpDisplayFactory *factory,
+                        ScdmAddress             *address)
 {
         ARRAY8        status;
         XdmcpHeader   header;
@@ -806,7 +806,7 @@ gdm_xdmcp_send_willing (GdmXdmcpDisplayFactory *factory,
 
         host = NULL;
         gdm_address_get_numeric_info (address, &host, NULL);
-        g_debug ("GdmXdmcpDisplayFactory: Sending WILLING to %s",
+        g_debug ("ScdmXdmcpDisplayFactory: Sending WILLING to %s",
                 host ? host : "(null)");
         g_free (host);
 
@@ -857,8 +857,8 @@ gdm_xdmcp_send_willing (GdmXdmcpDisplayFactory *factory,
 }
 
 static void
-gdm_xdmcp_send_unwilling (GdmXdmcpDisplayFactory *factory,
-                          GdmAddress             *address,
+gdm_xdmcp_send_unwilling (ScdmXdmcpDisplayFactory *factory,
+                          ScdmAddress             *address,
                           int                     type)
 {
         ARRAY8        status;
@@ -874,7 +874,7 @@ gdm_xdmcp_send_unwilling (GdmXdmcpDisplayFactory *factory,
 
         host = NULL;
         gdm_address_get_numeric_info (address, &host, NULL);
-        g_debug ("GdmXdmcpDisplayFactory: Sending UNWILLING to %s",
+        g_debug ("ScdmXdmcpDisplayFactory: Sending UNWILLING to %s",
                  host ? host : "(null)");
         g_warning ("Denied XDMCP query from host %s",
                  host ? host : "(null)");
@@ -906,7 +906,7 @@ gdm_xdmcp_send_unwilling (GdmXdmcpDisplayFactory *factory,
 #define SIN6(__s)  ((struct sockaddr_in6 *) __s)
 
 static void
-set_port_for_request (GdmAddress *address,
+set_port_for_request (ScdmAddress *address,
                       ARRAY8     *port)
 {
         struct sockaddr_storage *ss;
@@ -930,7 +930,7 @@ set_port_for_request (GdmAddress *address,
 }
 
 static void
-set_address_for_request (GdmAddress *address,
+set_address_for_request (ScdmAddress *address,
                          ARRAY8     *addr)
 {
         struct sockaddr_storage *ss;
@@ -955,10 +955,10 @@ set_address_for_request (GdmAddress *address,
 }
 
 static void
-gdm_xdmcp_send_forward_query (GdmXdmcpDisplayFactory  *factory,
+gdm_xdmcp_send_forward_query (ScdmXdmcpDisplayFactory  *factory,
                               IndirectClient          *ic,
-                              GdmAddress              *address,
-                              GdmAddress              *display_address,
+                              ScdmAddress              *address,
+                              ScdmAddress              *display_address,
                               ARRAYofARRAY8Ptr         authlist)
 {
         XdmcpHeader              header;
@@ -973,14 +973,14 @@ gdm_xdmcp_send_forward_query (GdmXdmcpDisplayFactory  *factory,
 
         host = NULL;
         gdm_address_get_numeric_info (ic->chosen_address, &host, NULL);
-        g_debug ("GdmXdmcpDisplayFactory: Sending forward query to %s",
+        g_debug ("ScdmXdmcpDisplayFactory: Sending forward query to %s",
                    host ? host : "(null)");
         g_free (host);
 
         host = NULL;
         serv = NULL;
         gdm_address_get_numeric_info (display_address, &host, &serv);
-        g_debug ("GdmXdmcpDisplayFactory: Query contains %s:%s",
+        g_debug ("ScdmXdmcpDisplayFactory: Query contains %s:%s",
                  host ? host : "(null)", serv ? serv : "(null)");
         g_free (host);
         g_free (serv);
@@ -1013,8 +1013,8 @@ gdm_xdmcp_send_forward_query (GdmXdmcpDisplayFactory  *factory,
 }
 
 static void
-handle_any_query (GdmXdmcpDisplayFactory  *factory,
-                  GdmAddress              *address,
+handle_any_query (ScdmXdmcpDisplayFactory  *factory,
+                  ScdmAddress              *address,
                   ARRAYofARRAY8Ptr         authentication_names,
                   int                      type)
 {
@@ -1022,8 +1022,8 @@ handle_any_query (GdmXdmcpDisplayFactory  *factory,
 }
 
 static void
-handle_direct_query (GdmXdmcpDisplayFactory  *factory,
-                     GdmAddress              *address,
+handle_direct_query (ScdmXdmcpDisplayFactory  *factory,
+                     ScdmAddress              *address,
                      int                      len,
                      int                      type)
 {
@@ -1054,8 +1054,8 @@ handle_direct_query (GdmXdmcpDisplayFactory  *factory,
 }
 
 static void
-gdm_xdmcp_handle_broadcast_query (GdmXdmcpDisplayFactory *factory,
-                                  GdmAddress             *address,
+gdm_xdmcp_handle_broadcast_query (ScdmXdmcpDisplayFactory *factory,
+                                  ScdmAddress             *address,
                                   int                     len)
 {
         if (gdm_xdmcp_host_allow (address)) {
@@ -1066,8 +1066,8 @@ gdm_xdmcp_handle_broadcast_query (GdmXdmcpDisplayFactory *factory,
 }
 
 static void
-gdm_xdmcp_handle_query (GdmXdmcpDisplayFactory *factory,
-                        GdmAddress             *address,
+gdm_xdmcp_handle_query (ScdmXdmcpDisplayFactory *factory,
+                        ScdmAddress             *address,
                         int                     len)
 {
         if (gdm_xdmcp_host_allow (address)) {
@@ -1078,8 +1078,8 @@ gdm_xdmcp_handle_query (GdmXdmcpDisplayFactory *factory,
 }
 
 static IndirectClient *
-indirect_client_create (GdmXdmcpDisplayFactory *factory,
-                        GdmAddress             *dsp_address)
+indirect_client_create (ScdmXdmcpDisplayFactory *factory,
+                        ScdmAddress             *dsp_address)
 {
         IndirectClient *ic;
 
@@ -1092,7 +1092,7 @@ indirect_client_create (GdmXdmcpDisplayFactory *factory,
 }
 
 static void
-indirect_client_destroy (GdmXdmcpDisplayFactory *factory,
+indirect_client_destroy (ScdmXdmcpDisplayFactory *factory,
                          IndirectClient         *ic)
 {
         if (ic == NULL) {
@@ -1108,7 +1108,7 @@ indirect_client_destroy (GdmXdmcpDisplayFactory *factory,
 
                 host = NULL;
                 gdm_address_get_numeric_info (ic->dsp_address, &host, NULL);
-                g_debug ("GdmXdmcpDisplayFactory: Disposing IndirectClient for %s",
+                g_debug ("ScdmXdmcpDisplayFactory: Disposing IndirectClient for %s",
                         host ? host : "(null)");
                 g_free (host);
         }
@@ -1122,9 +1122,9 @@ indirect_client_destroy (GdmXdmcpDisplayFactory *factory,
 }
 
 static IndirectClient *
-indirect_client_lookup_by_chosen (GdmXdmcpDisplayFactory *factory,
-                                  GdmAddress             *chosen_address,
-                                  GdmAddress             *origin_address)
+indirect_client_lookup_by_chosen (ScdmXdmcpDisplayFactory *factory,
+                                  ScdmAddress             *chosen_address,
+                                  ScdmAddress             *origin_address)
 {
         GSList         *li;
         char           *host;
@@ -1154,7 +1154,7 @@ indirect_client_lookup_by_chosen (GdmXdmcpDisplayFactory *factory,
 
         gdm_address_get_numeric_info (chosen_address, &host, NULL);
 
-        g_debug ("GdmXdmcpDisplayFactory: Chosen %s host not found",
+        g_debug ("ScdmXdmcpDisplayFactory: Chosen %s host not found",
                  host ? host : "(null)");
         g_free (host);
  out:
@@ -1163,8 +1163,8 @@ indirect_client_lookup_by_chosen (GdmXdmcpDisplayFactory *factory,
 
 /* lookup by origin */
 static IndirectClient *
-indirect_client_lookup (GdmXdmcpDisplayFactory *factory,
-                        GdmAddress             *address)
+indirect_client_lookup (ScdmXdmcpDisplayFactory *factory,
+                        ScdmAddress             *address)
 {
         GSList         *li;
         GSList         *qlist;
@@ -1193,7 +1193,7 @@ indirect_client_lookup (GdmXdmcpDisplayFactory *factory,
                 serv = NULL;
                 gdm_address_get_numeric_info (ic->dsp_address, &host, &serv);
 
-                g_debug ("GdmXdmcpDisplayFactory: comparing %s:%s",
+                g_debug ("ScdmXdmcpDisplayFactory: comparing %s:%s",
                         host ? host : "(null)", serv ? serv : "(null)");
                 if (gdm_address_equal (ic->dsp_address, address)) {
                         ret = ic;
@@ -1203,7 +1203,7 @@ indirect_client_lookup (GdmXdmcpDisplayFactory *factory,
                 }
 
                 if (ic->acctime > 0 && curtime > ic->acctime + factory->max_wait_indirect) {
-                        g_debug ("GdmXdmcpDisplayFactory: Disposing stale forward query from %s:%s",
+                        g_debug ("ScdmXdmcpDisplayFactory: Disposing stale forward query from %s:%s",
                                  host ? host : "(null)", serv ? serv : "(null)");
 
                         indirect_client_destroy (factory, ic);
@@ -1220,7 +1220,7 @@ indirect_client_lookup (GdmXdmcpDisplayFactory *factory,
 
                 host = NULL;
                 gdm_address_get_numeric_info (address, &host, NULL);
-                g_debug ("GdmXdmcpDisplayFactory: Host %s not found",
+                g_debug ("ScdmXdmcpDisplayFactory: Host %s not found",
                          host ? host : "(null)");
                 g_free (host);
         }
@@ -1229,8 +1229,8 @@ indirect_client_lookup (GdmXdmcpDisplayFactory *factory,
 }
 
 static void
-gdm_xdmcp_handle_indirect_query (GdmXdmcpDisplayFactory *factory,
-                                 GdmAddress             *address,
+gdm_xdmcp_handle_indirect_query (ScdmXdmcpDisplayFactory *factory,
+                                 ScdmAddress             *address,
                                  int                     len)
 {
         ARRAYofARRAY8    clnt_authlist;
@@ -1252,7 +1252,7 @@ gdm_xdmcp_handle_indirect_query (GdmXdmcpDisplayFactory *factory,
         if (factory->num_sessions > factory->max_displays ||
             (!gdm_address_is_local (address) &&
              gdm_xdmcp_num_displays_from_host (factory, address) > factory->max_displays_per_host)) {
-                g_debug ("GdmXdmcpDisplayFactory: reached maximum number of clients - ignoring indirect query");
+                g_debug ("ScdmXdmcpDisplayFactory: reached maximum number of clients - ignoring indirect query");
                 return;
         }
 
@@ -1283,7 +1283,7 @@ gdm_xdmcp_handle_indirect_query (GdmXdmcpDisplayFactory *factory,
         if (ic != NULL && ic->chosen_address != NULL) {
                 /* if user chose us, then just send willing */
                 if (gdm_address_is_local (ic->chosen_address)) {
-                        g_debug ("GdmXdmcpDisplayFactory: the chosen address is local - dropping indirect");
+                        g_debug ("ScdmXdmcpDisplayFactory: the chosen address is local - dropping indirect");
 
                         /* get rid of indirect, so that we don't get
                          * the chooser */
@@ -1295,10 +1295,10 @@ gdm_xdmcp_handle_indirect_query (GdmXdmcpDisplayFactory *factory,
                          * queries with all the different IPs */
                         const GList *list = gdm_address_peek_local_list ();
 
-                        g_debug ("GdmXdmcpDisplayFactory: the chosen address is a loopback");
+                        g_debug ("ScdmXdmcpDisplayFactory: the chosen address is a loopback");
 
                         while (list != NULL) {
-                                GdmAddress *saddr = list->data;
+                                ScdmAddress *saddr = list->data;
 
                                 if (! gdm_address_is_loopback (saddr)) {
                                         /* forward query to * chosen host */
@@ -1333,7 +1333,7 @@ out:
 }
 
 static void
-forward_query_destroy (GdmXdmcpDisplayFactory *factory,
+forward_query_destroy (ScdmXdmcpDisplayFactory *factory,
                        ForwardQuery           *q)
 {
         if (q == NULL) {
@@ -1349,7 +1349,7 @@ forward_query_destroy (GdmXdmcpDisplayFactory *factory,
 
                 host = NULL;
                 gdm_address_get_numeric_info (q->dsp_address, &host, NULL);
-                g_debug ("GdmXdmcpDisplayFactory: Disposing %s",
+                g_debug ("ScdmXdmcpDisplayFactory: Disposing %s",
                         host ? host : "(null)");
                 g_free (host);
         }
@@ -1363,7 +1363,7 @@ forward_query_destroy (GdmXdmcpDisplayFactory *factory,
 }
 
 static gboolean
-remove_oldest_forward (GdmXdmcpDisplayFactory *factory)
+remove_oldest_forward (ScdmXdmcpDisplayFactory *factory)
 {
         GSList       *li;
         ForwardQuery *oldest = NULL;
@@ -1385,9 +1385,9 @@ remove_oldest_forward (GdmXdmcpDisplayFactory *factory)
 }
 
 static ForwardQuery *
-forward_query_create (GdmXdmcpDisplayFactory *factory,
-                         GdmAddress             *mgr_address,
-                         GdmAddress             *dsp_address)
+forward_query_create (ScdmXdmcpDisplayFactory *factory,
+                         ScdmAddress             *mgr_address,
+                         ScdmAddress             *dsp_address)
 {
         ForwardQuery *q;
         int           count;
@@ -1408,8 +1408,8 @@ forward_query_create (GdmXdmcpDisplayFactory *factory,
 }
 
 static ForwardQuery *
-forward_query_lookup (GdmXdmcpDisplayFactory *factory,
-                          GdmAddress             *address)
+forward_query_lookup (ScdmXdmcpDisplayFactory *factory,
+                          ScdmAddress             *address)
 {
         GSList       *li;
         GSList       *qlist;
@@ -1436,7 +1436,7 @@ forward_query_lookup (GdmXdmcpDisplayFactory *factory,
                 serv = NULL;
                 gdm_address_get_numeric_info (q->dsp_address, &host, &serv);
 
-                g_debug ("GdmXdmcpDisplayFactory: comparing %s:%s",
+                g_debug ("ScdmXdmcpDisplayFactory: comparing %s:%s",
                         host ? host : "(null)", serv ? serv : "(null)");
                 if (gdm_address_equal (q->dsp_address, address)) {
                         ret = q;
@@ -1446,7 +1446,7 @@ forward_query_lookup (GdmXdmcpDisplayFactory *factory,
                 }
 
                 if (q->acctime > 0 &&  curtime > q->acctime + GDM_FORWARD_QUERY_TIMEOUT) {
-                        g_debug ("GdmXdmcpDisplayFactory: Disposing stale forward query from %s:%s",
+                        g_debug ("ScdmXdmcpDisplayFactory: Disposing stale forward query from %s:%s",
                                  host ? host : "(null)", serv ? serv : "(null)");
 
                         forward_query_destroy (factory, q);
@@ -1463,7 +1463,7 @@ forward_query_lookup (GdmXdmcpDisplayFactory *factory,
 
                 host = NULL;
                 gdm_address_get_numeric_info (address, &host, NULL);
-                g_debug ("GdmXdmcpDisplayFactory: Host %s not found",
+                g_debug ("ScdmXdmcpDisplayFactory: Host %s not found",
                          host ? host : "(null)");
                 g_free (host);
         }
@@ -1475,7 +1475,7 @@ static gboolean
 create_address_from_request (ARRAY8      *req_addr,
                              ARRAY8      *req_port,
                              int          family,
-                             GdmAddress **address)
+                             ScdmAddress **address)
 {
         uint16_t         port;
         char             host_buf [NI_MAXHOST];
@@ -1560,9 +1560,9 @@ create_address_from_request (ARRAY8      *req_addr,
 }
 
 static void
-gdm_xdmcp_whack_queued_managed_forwards (GdmXdmcpDisplayFactory *factory,
-                                         GdmAddress             *address,
-                                         GdmAddress             *origin)
+gdm_xdmcp_whack_queued_managed_forwards (ScdmXdmcpDisplayFactory *factory,
+                                         ScdmAddress             *address,
+                                         ScdmAddress             *origin)
 {
         GSList *li;
 
@@ -1581,8 +1581,8 @@ gdm_xdmcp_whack_queued_managed_forwards (GdmXdmcpDisplayFactory *factory,
 }
 
 static void
-gdm_xdmcp_handle_forward_query (GdmXdmcpDisplayFactory *factory,
-                                GdmAddress             *address,
+gdm_xdmcp_handle_forward_query (ScdmXdmcpDisplayFactory *factory,
+                                ScdmAddress             *address,
                                 int                     len)
 {
         ARRAY8                   clnt_addr;
@@ -1590,7 +1590,7 @@ gdm_xdmcp_handle_forward_query (GdmXdmcpDisplayFactory *factory,
         ARRAYofARRAY8            clnt_authlist;
         int                      i;
         int                      explen;
-        GdmAddress              *disp_address;
+        ScdmAddress              *disp_address;
         char                    *host;
         char                    *serv;
 
@@ -1642,7 +1642,7 @@ gdm_xdmcp_handle_forward_query (GdmXdmcpDisplayFactory *factory,
         for (i = 0 ; i < clnt_authlist.length ; i++) {
                 char *s = g_strndup ((char *) clnt_authlist.data[i].data,
                                      clnt_authlist.length);
-                g_debug ("GdmXdmcpDisplayFactory: authlist: %s", s);
+                g_debug ("ScdmXdmcpDisplayFactory: authlist: %s", s);
                 g_free (s);
 
                 explen += 2 + clnt_authlist.data[i].length;
@@ -1666,7 +1666,7 @@ gdm_xdmcp_handle_forward_query (GdmXdmcpDisplayFactory *factory,
         host = NULL;
         serv = NULL;
         gdm_address_get_numeric_info (disp_address, &host, &serv);
-        g_debug ("GdmXdmcpDisplayFactory: Got FORWARD_QUERY for display: %s, port %s",
+        g_debug ("ScdmXdmcpDisplayFactory: Got FORWARD_QUERY for display: %s, port %s",
                  host ? host : "(null)", serv ? serv : "(null)");
         g_free (host);
         g_free (serv);
@@ -1695,9 +1695,9 @@ gdm_xdmcp_handle_forward_query (GdmXdmcpDisplayFactory *factory,
 }
 
 static void
-gdm_xdmcp_really_send_managed_forward (GdmXdmcpDisplayFactory *factory,
-                                       GdmAddress      *address,
-                                       GdmAddress      *origin)
+gdm_xdmcp_really_send_managed_forward (ScdmXdmcpDisplayFactory *factory,
+                                       ScdmAddress      *address,
+                                       ScdmAddress      *origin)
 {
         ARRAY8      addr;
         XdmcpHeader header;
@@ -1705,7 +1705,7 @@ gdm_xdmcp_really_send_managed_forward (GdmXdmcpDisplayFactory *factory,
 
         host = NULL;
         gdm_address_get_numeric_info (address, &host, NULL);
-        g_debug ("GdmXdmcpDisplayFactory: Sending MANAGED_FORWARD to %s",
+        g_debug ("ScdmXdmcpDisplayFactory: Sending MANAGED_FORWARD to %s",
                 host ? host : "(null)");
         g_free (host);
 
@@ -1753,9 +1753,9 @@ managed_forward_free (ManagedForward *mf)
 }
 
 static void
-gdm_xdmcp_send_managed_forward (GdmXdmcpDisplayFactory *factory,
-                                GdmAddress             *address,
-                                GdmAddress             *origin)
+gdm_xdmcp_send_managed_forward (ScdmXdmcpDisplayFactory *factory,
+                                ScdmAddress             *address,
+                                ScdmAddress             *origin)
 {
         ManagedForward *mf;
 
@@ -1777,9 +1777,9 @@ gdm_xdmcp_send_managed_forward (GdmXdmcpDisplayFactory *factory,
 }
 
 static void
-gdm_xdmcp_send_got_managed_forward (GdmXdmcpDisplayFactory *factory,
-                                    GdmAddress             *address,
-                                    GdmAddress             *origin)
+gdm_xdmcp_send_got_managed_forward (ScdmXdmcpDisplayFactory *factory,
+                                    ScdmAddress             *address,
+                                    ScdmAddress             *origin)
 {
         ARRAY8      addr;
         XdmcpHeader header;
@@ -1787,7 +1787,7 @@ gdm_xdmcp_send_got_managed_forward (GdmXdmcpDisplayFactory *factory,
 
         host = NULL;
         gdm_address_get_numeric_info (address, &host, NULL);
-        g_debug ("GdmXdmcpDisplayFactory: Sending GOT_MANAGED_FORWARD to %s",
+        g_debug ("ScdmXdmcpDisplayFactory: Sending GOT_MANAGED_FORWARD to %s",
                 host ? host : "(null)");
         g_free (host);
 
@@ -1807,8 +1807,8 @@ gdm_xdmcp_send_got_managed_forward (GdmXdmcpDisplayFactory *factory,
 
 static void
 count_sessions (const char             *id,
-                GdmDisplay             *display,
-                GdmXdmcpDisplayFactory *factory)
+                ScdmDisplay             *display,
+                ScdmXdmcpDisplayFactory *factory)
 {
         if (GDM_IS_XDMCP_DISPLAY (display)) {
                 int status;
@@ -1824,23 +1824,23 @@ count_sessions (const char             *id,
 }
 
 static void
-gdm_xdmcp_recount_sessions (GdmXdmcpDisplayFactory *factory)
+gdm_xdmcp_recount_sessions (ScdmXdmcpDisplayFactory *factory)
 {
-        GdmDisplayStore *store;
+        ScdmDisplayStore *store;
 
         factory->num_sessions = 0;
         factory->num_pending_sessions = 0;
 
         store = gdm_display_factory_get_display_store (GDM_DISPLAY_FACTORY (factory));
         gdm_display_store_foreach (store,
-                                   (GdmDisplayStoreFunc)count_sessions,
+                                   (ScdmDisplayStoreFunc)count_sessions,
                                    factory);
 }
 
 static gboolean
 purge_displays (const char             *id,
-                GdmDisplay             *display,
-                GdmXdmcpDisplayFactory *factory)
+                ScdmDisplay             *display,
+                ScdmXdmcpDisplayFactory *factory)
 {
         if (GDM_IS_XDMCP_DISPLAY (display)) {
                 int status;
@@ -1862,14 +1862,14 @@ purge_displays (const char             *id,
 }
 
 static void
-gdm_xdmcp_displays_purge (GdmXdmcpDisplayFactory *factory)
+gdm_xdmcp_displays_purge (ScdmXdmcpDisplayFactory *factory)
 {
-        GdmDisplayStore *store;
+        ScdmDisplayStore *store;
 
         store = gdm_display_factory_get_display_store (GDM_DISPLAY_FACTORY (factory));
 
         gdm_display_store_foreach_remove (store,
-                                          (GdmDisplayStoreFunc)purge_displays,
+                                          (ScdmDisplayStoreFunc)purge_displays,
                                           factory);
 
         gdm_xdmcp_recount_sessions (factory);
@@ -1882,7 +1882,7 @@ typedef struct {
 
 static gboolean
 remove_host (const char     *id,
-             GdmDisplay     *display,
+             ScdmDisplay     *display,
              RemoveHostData *data)
 {
         char *hostname;
@@ -1907,12 +1907,12 @@ remove_host (const char     *id,
 }
 
 static void
-display_dispose_check (GdmXdmcpDisplayFactory *factory,
+display_dispose_check (ScdmXdmcpDisplayFactory *factory,
                        const char             *hostname,
                        int                     display_num)
 {
         RemoveHostData  *data;
-        GdmDisplayStore *store;
+        ScdmDisplayStore *store;
 
         if (hostname == NULL) {
                 return;
@@ -1920,14 +1920,14 @@ display_dispose_check (GdmXdmcpDisplayFactory *factory,
 
         store = gdm_display_factory_get_display_store (GDM_DISPLAY_FACTORY (factory));
 
-        g_debug ("GdmXdmcpDisplayFactory: display_dispose_check (%s:%d)",
+        g_debug ("ScdmXdmcpDisplayFactory: display_dispose_check (%s:%d)",
                 hostname ? hostname : "(null)", display_num);
 
         data = g_new0 (RemoveHostData, 1);
         data->hostname = hostname;
         data->display_num = display_num;
         gdm_display_store_foreach_remove (store,
-                                          (GdmDisplayStoreFunc)remove_host,
+                                          (ScdmDisplayStoreFunc)remove_host,
                                           data);
         g_free (data);
 
@@ -1935,8 +1935,8 @@ display_dispose_check (GdmXdmcpDisplayFactory *factory,
 }
 
 static void
-gdm_xdmcp_send_decline (GdmXdmcpDisplayFactory *factory,
-                        GdmAddress             *address,
+gdm_xdmcp_send_decline (ScdmXdmcpDisplayFactory *factory,
+                        ScdmAddress             *address,
                         const char             *reason)
 {
         XdmcpHeader      header;
@@ -1948,7 +1948,7 @@ gdm_xdmcp_send_decline (GdmXdmcpDisplayFactory *factory,
 
         host = NULL;
         gdm_address_get_numeric_info (address, &host, NULL);
-        g_debug ("GdmXdmcpDisplayFactory: Sending DECLINE to %s",
+        g_debug ("ScdmXdmcpDisplayFactory: Sending DECLINE to %s",
                 host ? host : "(null)");
         g_free (host);
 
@@ -1987,19 +1987,19 @@ gdm_xdmcp_send_decline (GdmXdmcpDisplayFactory *factory,
 }
 
 static void
-on_hostname_selected (GdmXdmcpChooserDisplay *display,
+on_hostname_selected (ScdmXdmcpChooserDisplay *display,
                       const char             *hostname,
-                      GdmXdmcpDisplayFactory *factory)
+                      ScdmXdmcpDisplayFactory *factory)
 {
         struct addrinfo  hints;
         struct addrinfo *ai_list;
         struct addrinfo *ai;
         int              gaierr;
-        GdmAddress      *address;
+        ScdmAddress      *address;
         IndirectClient  *ic;
         gchar           *xdmcp_port;
         
-        g_debug ("GdmXdmcpDisplayFactory: hostname selected: %s",
+        g_debug ("ScdmXdmcpDisplayFactory: hostname selected: %s",
                 hostname ? hostname : "(null)");
 
         address = gdm_xdmcp_display_get_remote_address (GDM_XDMCP_DISPLAY (display));
@@ -2037,7 +2037,7 @@ on_hostname_selected (GdmXdmcpChooserDisplay *display,
 
                 ip = NULL;
                 gdm_address_get_numeric_info (ic->chosen_address, &ip, NULL);
-                g_debug ("GdmXdmcpDisplayFactory: hostname resolves to %s",
+                g_debug ("ScdmXdmcpDisplayFactory: hostname resolves to %s",
                         ip ? ip : "(null)");
                 g_free (ip);
         }
@@ -2046,7 +2046,7 @@ on_hostname_selected (GdmXdmcpChooserDisplay *display,
 }
 
 static void
-on_client_disconnected (GdmDisplay *display)
+on_client_disconnected (ScdmDisplay *display)
 {
         if (gdm_display_get_status (display) != GDM_DISPLAY_MANAGED)
                 return;
@@ -2057,14 +2057,14 @@ on_client_disconnected (GdmDisplay *display)
 }
 
 static void
-on_display_status_changed (GdmDisplay             *display,
+on_display_status_changed (ScdmDisplay             *display,
                            GParamSpec             *arg1,
-                           GdmXdmcpDisplayFactory *factory)
+                           ScdmXdmcpDisplayFactory *factory)
 {
         int              status;
-        GdmLaunchEnvironment *launch_environment;
-        GdmSession *session;
-        GdmAddress *address;
+        ScdmLaunchEnvironment *launch_environment;
+        ScdmSession *session;
+        ScdmAddress *address;
         gint32  session_number;
         int display_number;
 
@@ -2078,7 +2078,7 @@ on_display_status_changed (GdmDisplay             *display,
 
         status = gdm_display_get_status (display);
 
-        g_debug ("GdmXdmcpDisplayFactory: xdmcp display status changed: %d", status);
+        g_debug ("ScdmXdmcpDisplayFactory: xdmcp display status changed: %d", status);
         switch (status) {
         case GDM_DISPLAY_FINISHED:
                 g_object_get (display,
@@ -2120,17 +2120,17 @@ on_display_status_changed (GdmDisplay             *display,
         }
 }
 
-static GdmDisplay *
-gdm_xdmcp_display_create (GdmXdmcpDisplayFactory *factory,
+static ScdmDisplay *
+gdm_xdmcp_display_create (ScdmXdmcpDisplayFactory *factory,
                           const char             *hostname,
-                          GdmAddress             *address,
+                          ScdmAddress             *address,
                           int                     displaynum)
 {
-        GdmDisplay      *display;
-        GdmDisplayStore *store;
+        ScdmDisplay      *display;
+        ScdmDisplayStore *store;
         gboolean         use_chooser;
 
-        g_debug ("GdmXdmcpDisplayFactory: Creating xdmcp display for %s:%d",
+        g_debug ("ScdmXdmcpDisplayFactory: Creating xdmcp display for %s:%d",
                 hostname ? hostname : "(null)", displaynum);
 
         use_chooser = FALSE;
@@ -2185,8 +2185,8 @@ gdm_xdmcp_display_create (GdmXdmcpDisplayFactory *factory,
 }
 
 static void
-gdm_xdmcp_send_accept (GdmXdmcpDisplayFactory *factory,
-                       GdmAddress             *address,
+gdm_xdmcp_send_accept (ScdmXdmcpDisplayFactory *factory,
+                       ScdmAddress             *address,
                        CARD32                  session_id,
                        ARRAY8Ptr               authentication_name,
                        ARRAY8Ptr               authentication_data,
@@ -2218,15 +2218,15 @@ gdm_xdmcp_send_accept (GdmXdmcpDisplayFactory *factory,
 
         host = NULL;
         gdm_address_get_numeric_info (address, &host, NULL);
-        g_debug ("GdmXdmcpDisplayFactory: Sending ACCEPT to %s with SessionID=%ld",
+        g_debug ("ScdmXdmcpDisplayFactory: Sending ACCEPT to %s with SessionID=%ld",
                  host ? host : "(null)",
                  (long)session_id);
         g_free (host);
 }
 
 static void
-gdm_xdmcp_handle_request (GdmXdmcpDisplayFactory *factory,
-                          GdmAddress             *address,
+gdm_xdmcp_handle_request (ScdmXdmcpDisplayFactory *factory,
+                          ScdmAddress             *address,
                           int                     len)
 {
         CARD16        clnt_dspnum;
@@ -2247,7 +2247,7 @@ gdm_xdmcp_handle_request (GdmXdmcpDisplayFactory *factory,
 
         hostname = NULL;
         gdm_address_get_numeric_info (address, &hostname, NULL);
-        g_debug ("GdmXdmcpDisplayFactory: Got REQUEST from %s",
+        g_debug ("ScdmXdmcpDisplayFactory: Got REQUEST from %s",
                 hostname ? hostname : "(null)");
 
         /* Check with tcp_wrappers if client is allowed to access */
@@ -2364,7 +2364,7 @@ gdm_xdmcp_handle_request (GdmXdmcpDisplayFactory *factory,
 
         {
                 char *s = g_strndup ((char *) clnt_manufacturer.data, clnt_manufacturer.length);
-                g_debug ("GdmXdmcpDisplayFactory: xdmcp_pending=%d, MaxPending=%d, xdmcp_sessions=%d, MaxSessions=%d, ManufacturerID=%s",
+                g_debug ("ScdmXdmcpDisplayFactory: xdmcp_pending=%d, MaxPending=%d, xdmcp_sessions=%d, MaxSessions=%d, ManufacturerID=%s",
                          factory->num_pending_sessions,
                          factory->max_pending_displays,
                          factory->num_sessions,
@@ -2387,12 +2387,12 @@ gdm_xdmcp_handle_request (GdmXdmcpDisplayFactory *factory,
                 display_dispose_check (factory, hostname, clnt_dspnum);
 
                 if (factory->num_pending_sessions >= factory->max_pending_displays) {
-                        g_debug ("GdmXdmcpDisplayFactory: maximum pending");
+                        g_debug ("ScdmXdmcpDisplayFactory: maximum pending");
                         /* Don't translate, this goes over the wire to servers where we
                          * don't know the charset or language, so it must be ascii */
                         gdm_xdmcp_send_decline (factory, address, "Maximum pending servers");
                 } else {
-                        GdmDisplay *display;
+                        ScdmDisplay *display;
 
                         display = gdm_xdmcp_display_create (factory,
                                                             hostname,
@@ -2416,10 +2416,10 @@ gdm_xdmcp_handle_request (GdmXdmcpDisplayFactory *factory,
                                 name = NULL;
                                 gdm_display_get_x11_display_name (display, &name, NULL);
 
-                                g_debug ("GdmXdmcpDisplayFactory: Sending authorization key for display %s", name ? name : "(null)");
+                                g_debug ("ScdmXdmcpDisplayFactory: Sending authorization key for display %s", name ? name : "(null)");
                                 g_free (name);
 
-                                g_debug ("GdmXdmcpDisplayFactory: cookie len %d", (int) x11_cookie_size);
+                                g_debug ("ScdmXdmcpDisplayFactory: cookie len %d", (int) x11_cookie_size);
 
                                 session_number = gdm_xdmcp_display_get_session_number (GDM_XDMCP_DISPLAY (display));
 
@@ -2460,7 +2460,7 @@ gdm_xdmcp_handle_request (GdmXdmcpDisplayFactory *factory,
                                                 address,
                                                 "Maximum number of open sessions reached");
                 } else {
-                        g_debug ("GdmXdmcpDisplayFactory: Maximum number of open XDMCP sessions from host %s reached",
+                        g_debug ("ScdmXdmcpDisplayFactory: Maximum number of open XDMCP sessions from host %s reached",
                                  hostname ? hostname : "(null)");
                         gdm_xdmcp_send_decline (factory,
                                                 address,
@@ -2480,7 +2480,7 @@ gdm_xdmcp_handle_request (GdmXdmcpDisplayFactory *factory,
 
 static gboolean
 lookup_by_session_id (const char *id,
-                      GdmDisplay *display,
+                      ScdmDisplay *display,
                       gpointer    data)
 {
         CARD32 sessid;
@@ -2501,12 +2501,12 @@ lookup_by_session_id (const char *id,
         return FALSE;
 }
 
-static GdmDisplay *
-gdm_xdmcp_display_lookup (GdmXdmcpDisplayFactory *factory,
+static ScdmDisplay *
+gdm_xdmcp_display_lookup (ScdmXdmcpDisplayFactory *factory,
                           CARD32                  sessid)
 {
-        GdmDisplay      *display;
-        GdmDisplayStore *store;
+        ScdmDisplay      *display;
+        ScdmDisplayStore *store;
 
         if (sessid == 0) {
                 return NULL;
@@ -2514,21 +2514,21 @@ gdm_xdmcp_display_lookup (GdmXdmcpDisplayFactory *factory,
 
         store = gdm_display_factory_get_display_store (GDM_DISPLAY_FACTORY (factory));
         display = gdm_display_store_find (store,
-                                          (GdmDisplayStoreFunc)lookup_by_session_id,
+                                          (ScdmDisplayStoreFunc)lookup_by_session_id,
                                           GINT_TO_POINTER (sessid));
 
         return display;
 }
 
 static void
-gdm_xdmcp_send_failed (GdmXdmcpDisplayFactory *factory,
-                       GdmAddress             *address,
+gdm_xdmcp_send_failed (ScdmXdmcpDisplayFactory *factory,
+                       ScdmAddress             *address,
                        CARD32                  sessid)
 {
         XdmcpHeader header;
         ARRAY8      status;
 
-        g_debug ("GdmXdmcpDisplayFactory: Sending FAILED to %ld", (long)sessid);
+        g_debug ("ScdmXdmcpDisplayFactory: Sending FAILED to %ld", (long)sessid);
 
         /*
          * Don't translate, this goes over the wire to servers where we
@@ -2552,14 +2552,14 @@ gdm_xdmcp_send_failed (GdmXdmcpDisplayFactory *factory,
 }
 
 static void
-gdm_xdmcp_send_refuse (GdmXdmcpDisplayFactory *factory,
-                       GdmAddress             *address,
+gdm_xdmcp_send_refuse (ScdmXdmcpDisplayFactory *factory,
+                       ScdmAddress             *address,
                        CARD32                  sessid)
 {
         XdmcpHeader   header;
         ForwardQuery *fq;
 
-        g_debug ("GdmXdmcpDisplayFactory: Sending REFUSE to %ld",
+        g_debug ("ScdmXdmcpDisplayFactory: Sending REFUSE to %ld",
                  (long)sessid);
 
         header.version = XDM_PROTOCOL_VERSION;
@@ -2586,20 +2586,20 @@ gdm_xdmcp_send_refuse (GdmXdmcpDisplayFactory *factory,
 }
 
 static void
-gdm_xdmcp_handle_manage (GdmXdmcpDisplayFactory *factory,
-                         GdmAddress             *address,
+gdm_xdmcp_handle_manage (ScdmXdmcpDisplayFactory *factory,
+                         ScdmAddress             *address,
                          int                     len)
 {
         CARD32              clnt_sessid;
         CARD16              clnt_dspnum;
         ARRAY8              clnt_dspclass;
-        GdmDisplay         *display;
+        ScdmDisplay         *display;
         ForwardQuery       *fq;
         char               *host;
 
         host = NULL;
         gdm_address_get_numeric_info (address, &host, NULL);
-        g_debug ("GdmXdmcpDisplayFactory: Got MANAGE from %s",
+        g_debug ("ScdmXdmcpDisplayFactory: Got MANAGE from %s",
                 host ? host : "(null)");
 
         /* Check with tcp_wrappers if client is allowed to access */
@@ -2634,7 +2634,7 @@ gdm_xdmcp_handle_manage (GdmXdmcpDisplayFactory *factory,
 
         {
                 char *s = g_strndup ((char *) clnt_dspclass.data, clnt_dspclass.length);
-                g_debug ("GdmXdmcpDisplayFactory: Got display=%d, SessionID=%ld Class=%s from %s",
+                g_debug ("ScdmXdmcpDisplayFactory: Got display=%d, SessionID=%ld Class=%s from %s",
                          (int)clnt_dspnum,
                          (long)clnt_sessid,
                          s != NULL ? s : "",
@@ -2650,7 +2650,7 @@ gdm_xdmcp_handle_manage (GdmXdmcpDisplayFactory *factory,
 
                 name = NULL;
                 gdm_display_get_x11_display_name (display, &name, NULL);
-                g_debug ("GdmXdmcpDisplayFactory: Looked up %s",
+                g_debug ("ScdmXdmcpDisplayFactory: Looked up %s",
                         name ? name : "(null)");
                 g_free (name);
 
@@ -2662,7 +2662,7 @@ gdm_xdmcp_handle_manage (GdmXdmcpDisplayFactory *factory,
                         /* This was an indirect thingie and nothing was yet chosen,
                          * use a chooser */
                         if (ic != NULL && ic->chosen_address == NULL) {
-                                g_debug ("GdmXdmcpDisplayFactory: use chooser");
+                                g_debug ("ScdmXdmcpDisplayFactory: use chooser");
                                 /*d->use_chooser = TRUE;
                                   d->indirect_id = ic->id;*/
                         } else {
@@ -2690,14 +2690,14 @@ gdm_xdmcp_handle_manage (GdmXdmcpDisplayFactory *factory,
                 /* Start greeter/session */
                 if (! gdm_display_manage (display)) {
                         gdm_xdmcp_send_failed (factory, address, clnt_sessid);
-                        g_debug ("GdmXdmcpDisplayFactory: Failed to manage display");
+                        g_debug ("ScdmXdmcpDisplayFactory: Failed to manage display");
                 }
         } else if (display != NULL &&
                    gdm_display_get_status (display) == GDM_DISPLAY_MANAGED) {
-                g_debug ("GdmXdmcpDisplayFactory: Session ID %ld already managed",
+                g_debug ("ScdmXdmcpDisplayFactory: Session ID %ld already managed",
                          (long)clnt_sessid);
         } else {
-                g_warning ("GdmXdmcpDisplayFactory: Failed to look up session ID %ld",
+                g_warning ("ScdmXdmcpDisplayFactory: Failed to look up session ID %ld",
                            (long)clnt_sessid);
                 gdm_xdmcp_send_refuse (factory, address, clnt_sessid);
         }
@@ -2708,23 +2708,23 @@ gdm_xdmcp_handle_manage (GdmXdmcpDisplayFactory *factory,
 }
 
 static void
-gdm_xdmcp_handle_managed_forward (GdmXdmcpDisplayFactory *factory,
-                                  GdmAddress             *address,
+gdm_xdmcp_handle_managed_forward (ScdmXdmcpDisplayFactory *factory,
+                                  ScdmAddress             *address,
                                   int                     len)
 {
         ARRAY8              clnt_address;
         char               *host;
-        GdmAddress         *disp_address;
+        ScdmAddress         *disp_address;
         IndirectClient     *ic;
 
         host = NULL;
         gdm_address_get_numeric_info (address, &host, NULL);
-        g_debug ("GdmXdmcpDisplayFactory: Got MANAGED_FORWARD from %s",
+        g_debug ("ScdmXdmcpDisplayFactory: Got MANAGED_FORWARD from %s",
                    host ? host : "(null)");
 
         /* Check with tcp_wrappers if client is allowed to access */
         if (! gdm_xdmcp_host_allow (address)) {
-                g_warning ("GdmXdmcpDisplayFactory: Got MANAGED_FORWARD from banned host %s",
+                g_warning ("ScdmXdmcpDisplayFactory: Got MANAGED_FORWARD from banned host %s",
                            host ? host : "(null)");
                 g_free (host);
                 return;
@@ -2760,17 +2760,17 @@ gdm_xdmcp_handle_managed_forward (GdmXdmcpDisplayFactory *factory,
 }
 
 static void
-gdm_xdmcp_handle_got_managed_forward (GdmXdmcpDisplayFactory *factory,
-                                      GdmAddress             *address,
+gdm_xdmcp_handle_got_managed_forward (ScdmXdmcpDisplayFactory *factory,
+                                      ScdmAddress             *address,
                                       int                     len)
 {
-        GdmAddress *disp_address;
+        ScdmAddress *disp_address;
         ARRAY8      clnt_address;
         char       *host;
 
         host = NULL;
         gdm_address_get_numeric_info (address, &host, NULL);
-        g_debug ("GdmXdmcpDisplayFactory: Got MANAGED_FORWARD from %s",
+        g_debug ("ScdmXdmcpDisplayFactory: Got MANAGED_FORWARD from %s",
                    host ? host : "(null)");
 
         if (! gdm_xdmcp_host_allow (address)) {
@@ -2803,13 +2803,13 @@ gdm_xdmcp_handle_got_managed_forward (GdmXdmcpDisplayFactory *factory,
 }
 
 static void
-gdm_xdmcp_send_alive (GdmXdmcpDisplayFactory *factory,
-                      GdmAddress             *address,
+gdm_xdmcp_send_alive (ScdmXdmcpDisplayFactory *factory,
+                      ScdmAddress             *address,
                       CARD16                  dspnum,
                       CARD32                  sessid)
 {
         XdmcpHeader header;
-        GdmDisplay *display;
+        ScdmDisplay *display;
         int         send_running = 0;
         CARD32      send_sessid = 0;
 
@@ -2829,7 +2829,7 @@ gdm_xdmcp_send_alive (GdmXdmcpDisplayFactory *factory,
                 }
         }
 
-        g_debug ("GdmXdmcpDisplayFactory: Sending ALIVE to %ld (running %d, sessid %ld)",
+        g_debug ("ScdmXdmcpDisplayFactory: Sending ALIVE to %ld (running %d, sessid %ld)",
                  (long)sessid,
                  send_running,
                  (long)send_sessid);
@@ -2849,8 +2849,8 @@ gdm_xdmcp_send_alive (GdmXdmcpDisplayFactory *factory,
 }
 
 static void
-gdm_xdmcp_handle_keepalive (GdmXdmcpDisplayFactory *factory,
-                            GdmAddress             *address,
+gdm_xdmcp_handle_keepalive (ScdmXdmcpDisplayFactory *factory,
+                            ScdmAddress             *address,
                             int                     len)
 {
         CARD16 clnt_dspnum;
@@ -2859,7 +2859,7 @@ gdm_xdmcp_handle_keepalive (GdmXdmcpDisplayFactory *factory,
 
         host = NULL;
         gdm_address_get_numeric_info (address, &host, NULL);
-        g_debug ("GdmXdmcpDisplayFactory: Got KEEPALIVE from %s",
+        g_debug ("ScdmXdmcpDisplayFactory: Got KEEPALIVE from %s",
                 host ? host : "(null)");
 
         /* Check with tcp_wrappers if client is allowed to access */
@@ -2928,17 +2928,17 @@ opcode_string (int opcode)
 static gboolean
 decode_packet (GIOChannel             *source,
                GIOCondition            cond,
-               GdmXdmcpDisplayFactory *factory)
+               ScdmXdmcpDisplayFactory *factory)
 {
         struct sockaddr_storage clnt_ss;
-        GdmAddress             *address;
+        ScdmAddress             *address;
         gint                    ss_len;
         XdmcpHeader             header;
         char                   *host;
         char                   *port;
         int                     res;
 
-        g_debug ("GdmXdmcpDisplayFactory: decode_packet: GIOCondition %d", (int)cond);
+        g_debug ("ScdmXdmcpDisplayFactory: decode_packet: GIOCondition %d", (int)cond);
 
         if ( ! (cond & G_IO_IN)) {
                 return TRUE;
@@ -2948,13 +2948,13 @@ decode_packet (GIOChannel             *source,
 
         res = XdmcpFill (factory->socket_fd, &factory->buf, (XdmcpNetaddr)&clnt_ss, &ss_len);
         if G_UNLIKELY (! res) {
-                g_debug ("GdmXdmcpDisplayFactory: Could not create XDMCP buffer!");
+                g_debug ("ScdmXdmcpDisplayFactory: Could not create XDMCP buffer!");
                 return TRUE;
         }
 
         res = XdmcpReadHeader (&factory->buf, &header);
         if G_UNLIKELY (! res) {
-                g_warning ("GdmXdmcpDisplayFactory: Could not read XDMCP header!");
+                g_warning ("ScdmXdmcpDisplayFactory: Could not read XDMCP header!");
                 return TRUE;
         }
 
@@ -2976,7 +2976,7 @@ decode_packet (GIOChannel             *source,
         port = NULL;
         gdm_address_get_numeric_info (address, &host, &port);
 
-        g_debug ("GdmXdmcpDisplayFactory: Received opcode %s from client %s : %s",
+        g_debug ("ScdmXdmcpDisplayFactory: Received opcode %s from client %s : %s",
                  opcode_string (header.opcode),
                  host ? host : "(null)",
                  port ? port : "(null)");
@@ -3019,7 +3019,7 @@ decode_packet (GIOChannel             *source,
                 break;
 
         default:
-                g_debug ("GdmXdmcpDisplayFactory: Unknown opcode from client %s : %s",
+                g_debug ("ScdmXdmcpDisplayFactory: Unknown opcode from client %s : %s",
                          host ? host : "(null)",
                          port ? port : "(null)");
 
@@ -3035,11 +3035,11 @@ decode_packet (GIOChannel             *source,
 }
 
 static gboolean
-gdm_xdmcp_display_factory_start (GdmDisplayFactory *base_factory)
+gdm_xdmcp_display_factory_start (ScdmDisplayFactory *base_factory)
 {
         gboolean                ret;
         GIOChannel             *ioc;
-        GdmXdmcpDisplayFactory *factory = GDM_XDMCP_DISPLAY_FACTORY (base_factory);
+        ScdmXdmcpDisplayFactory *factory = GDM_XDMCP_DISPLAY_FACTORY (base_factory);
         gboolean                res;
 
         g_return_val_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (factory), FALSE);
@@ -3076,7 +3076,7 @@ gdm_xdmcp_display_factory_start (GdmDisplayFactory *base_factory)
                 return ret;
         }
 
-        g_debug ("GdmXdmcpDisplayFactory: Starting to listen on XDMCP port");
+        g_debug ("ScdmXdmcpDisplayFactory: Starting to listen on XDMCP port");
 
         ioc = g_io_channel_unix_new (factory->socket_fd);
 
@@ -3095,9 +3095,9 @@ gdm_xdmcp_display_factory_start (GdmDisplayFactory *base_factory)
 }
 
 static gboolean
-gdm_xdmcp_display_factory_stop (GdmDisplayFactory *base_factory)
+gdm_xdmcp_display_factory_stop (ScdmDisplayFactory *base_factory)
 {
-        GdmXdmcpDisplayFactory *factory = GDM_XDMCP_DISPLAY_FACTORY (base_factory);
+        ScdmXdmcpDisplayFactory *factory = GDM_XDMCP_DISPLAY_FACTORY (base_factory);
 
         g_return_val_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (factory), FALSE);
         g_return_val_if_fail (factory->socket_fd != -1, FALSE);
@@ -3116,7 +3116,7 @@ gdm_xdmcp_display_factory_stop (GdmDisplayFactory *base_factory)
 }
 
 void
-gdm_xdmcp_display_factory_set_port (GdmXdmcpDisplayFactory *factory,
+gdm_xdmcp_display_factory_set_port (ScdmXdmcpDisplayFactory *factory,
                                     guint                   port)
 {
         g_return_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (factory));
@@ -3125,7 +3125,7 @@ gdm_xdmcp_display_factory_set_port (GdmXdmcpDisplayFactory *factory,
 }
 
 static void
-gdm_xdmcp_display_factory_set_use_multicast (GdmXdmcpDisplayFactory *factory,
+gdm_xdmcp_display_factory_set_use_multicast (ScdmXdmcpDisplayFactory *factory,
                                              gboolean                use_multicast)
 {
         g_return_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (factory));
@@ -3134,7 +3134,7 @@ gdm_xdmcp_display_factory_set_use_multicast (GdmXdmcpDisplayFactory *factory,
 }
 
 static void
-gdm_xdmcp_display_factory_set_multicast_address (GdmXdmcpDisplayFactory *factory,
+gdm_xdmcp_display_factory_set_multicast_address (ScdmXdmcpDisplayFactory *factory,
                                                  const char             *address)
 {
         g_return_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (factory));
@@ -3144,7 +3144,7 @@ gdm_xdmcp_display_factory_set_multicast_address (GdmXdmcpDisplayFactory *factory
 }
 
 static void
-gdm_xdmcp_display_factory_set_honor_indirect (GdmXdmcpDisplayFactory *factory,
+gdm_xdmcp_display_factory_set_honor_indirect (ScdmXdmcpDisplayFactory *factory,
                                               gboolean                honor_indirect)
 {
         g_return_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (factory));
@@ -3153,7 +3153,7 @@ gdm_xdmcp_display_factory_set_honor_indirect (GdmXdmcpDisplayFactory *factory,
 }
 
 static void
-gdm_xdmcp_display_factory_set_max_displays_per_host (GdmXdmcpDisplayFactory *factory,
+gdm_xdmcp_display_factory_set_max_displays_per_host (ScdmXdmcpDisplayFactory *factory,
                                                      guint                   num)
 {
         g_return_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (factory));
@@ -3162,7 +3162,7 @@ gdm_xdmcp_display_factory_set_max_displays_per_host (GdmXdmcpDisplayFactory *fac
 }
 
 static void
-gdm_xdmcp_display_factory_set_max_displays (GdmXdmcpDisplayFactory *factory,
+gdm_xdmcp_display_factory_set_max_displays (ScdmXdmcpDisplayFactory *factory,
                                             guint                   num)
 {
         g_return_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (factory));
@@ -3171,7 +3171,7 @@ gdm_xdmcp_display_factory_set_max_displays (GdmXdmcpDisplayFactory *factory,
 }
 
 static void
-gdm_xdmcp_display_factory_set_max_pending_displays (GdmXdmcpDisplayFactory *factory,
+gdm_xdmcp_display_factory_set_max_pending_displays (ScdmXdmcpDisplayFactory *factory,
                                                     guint                   num)
 {
         g_return_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (factory));
@@ -3180,7 +3180,7 @@ gdm_xdmcp_display_factory_set_max_pending_displays (GdmXdmcpDisplayFactory *fact
 }
 
 static void
-gdm_xdmcp_display_factory_set_max_wait (GdmXdmcpDisplayFactory *factory,
+gdm_xdmcp_display_factory_set_max_wait (ScdmXdmcpDisplayFactory *factory,
                                         guint                   num)
 {
         g_return_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (factory));
@@ -3189,7 +3189,7 @@ gdm_xdmcp_display_factory_set_max_wait (GdmXdmcpDisplayFactory *factory,
 }
 
 static void
-gdm_xdmcp_display_factory_set_max_wait_indirect (GdmXdmcpDisplayFactory *factory,
+gdm_xdmcp_display_factory_set_max_wait_indirect (ScdmXdmcpDisplayFactory *factory,
                                                  guint                   num)
 {
         g_return_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (factory));
@@ -3198,7 +3198,7 @@ gdm_xdmcp_display_factory_set_max_wait_indirect (GdmXdmcpDisplayFactory *factory
 }
 
 static void
-gdm_xdmcp_display_factory_set_willing_script (GdmXdmcpDisplayFactory *factory,
+gdm_xdmcp_display_factory_set_willing_script (ScdmXdmcpDisplayFactory *factory,
                                               const char             *script)
 {
         g_return_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (factory));
@@ -3213,7 +3213,7 @@ gdm_xdmcp_display_factory_set_property (GObject       *object,
                                         const GValue  *value,
                                         GParamSpec    *pspec)
 {
-        GdmXdmcpDisplayFactory *self;
+        ScdmXdmcpDisplayFactory *self;
 
         self = GDM_XDMCP_DISPLAY_FACTORY (object);
 
@@ -3260,7 +3260,7 @@ gdm_xdmcp_display_factory_get_property (GObject    *object,
                                         GValue     *value,
                                         GParamSpec *pspec)
 {
-        GdmXdmcpDisplayFactory *self;
+        ScdmXdmcpDisplayFactory *self;
 
         self = GDM_XDMCP_DISPLAY_FACTORY (object);
 
@@ -3302,10 +3302,10 @@ gdm_xdmcp_display_factory_get_property (GObject    *object,
 }
 
 static void
-gdm_xdmcp_display_factory_class_init (GdmXdmcpDisplayFactoryClass *klass)
+gdm_xdmcp_display_factory_class_init (ScdmXdmcpDisplayFactoryClass *klass)
 {
         GObjectClass           *object_class = G_OBJECT_CLASS (klass);
-        GdmDisplayFactoryClass *factory_class = GDM_DISPLAY_FACTORY_CLASS (klass);
+        ScdmDisplayFactoryClass *factory_class = GDM_DISPLAY_FACTORY_CLASS (klass);
 
         object_class->get_property = gdm_xdmcp_display_factory_get_property;
         object_class->set_property = gdm_xdmcp_display_factory_set_property;
@@ -3399,7 +3399,7 @@ gdm_xdmcp_display_factory_class_init (GdmXdmcpDisplayFactoryClass *klass)
 }
 
 static void
-gdm_xdmcp_display_factory_init (GdmXdmcpDisplayFactory *factory)
+gdm_xdmcp_display_factory_init (ScdmXdmcpDisplayFactory *factory)
 {
         char           hostbuf[1024];
         struct utsname name;
@@ -3430,7 +3430,7 @@ gdm_xdmcp_display_factory_init (GdmXdmcpDisplayFactory *factory)
 static void
 gdm_xdmcp_display_factory_finalize (GObject *object)
 {
-        GdmXdmcpDisplayFactory *factory;
+        ScdmXdmcpDisplayFactory *factory;
 
         g_return_if_fail (object != NULL);
         g_return_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (object));
@@ -3461,8 +3461,8 @@ gdm_xdmcp_display_factory_finalize (GObject *object)
         G_OBJECT_CLASS (gdm_xdmcp_display_factory_parent_class)->finalize (object);
 }
 
-GdmXdmcpDisplayFactory *
-gdm_xdmcp_display_factory_new (GdmDisplayStore *store)
+ScdmXdmcpDisplayFactory *
+gdm_xdmcp_display_factory_new (ScdmDisplayStore *store)
 {
         if (xdmcp_display_factory_object != NULL) {
                 g_object_ref (xdmcp_display_factory_object);

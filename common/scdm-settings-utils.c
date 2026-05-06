@@ -37,7 +37,7 @@
 
 #include "scdm-settings-utils.h"
 
-struct _GdmSettingsEntry
+struct _ScdmSettingsEntry
 {
         char   *key;
         char   *signature;
@@ -45,12 +45,12 @@ struct _GdmSettingsEntry
         char   *value;
 };
 
-GdmSettingsEntry *
+ScdmSettingsEntry *
 gdm_settings_entry_new (void)
 {
-        GdmSettingsEntry *entry = NULL;
+        ScdmSettingsEntry *entry = NULL;
 
-        entry = g_new0 (GdmSettingsEntry, 1);
+        entry = g_new0 (ScdmSettingsEntry, 1);
         entry->key = NULL;
         entry->signature = NULL;
         entry->value = NULL;
@@ -60,31 +60,31 @@ gdm_settings_entry_new (void)
 }
 
 const char *
-gdm_settings_entry_get_key (GdmSettingsEntry *entry)
+gdm_settings_entry_get_key (ScdmSettingsEntry *entry)
 {
         return entry->key;
 }
 
 const char *
-gdm_settings_entry_get_signature (GdmSettingsEntry *entry)
+gdm_settings_entry_get_signature (ScdmSettingsEntry *entry)
 {
         return entry->signature;
 }
 
 const char *
-gdm_settings_entry_get_default_value (GdmSettingsEntry *entry)
+gdm_settings_entry_get_default_value (ScdmSettingsEntry *entry)
 {
         return entry->default_value;
 }
 
 const char *
-gdm_settings_entry_get_value (GdmSettingsEntry *entry)
+gdm_settings_entry_get_value (ScdmSettingsEntry *entry)
 {
         return entry->value;
 }
 
 void
-gdm_settings_entry_set_value (GdmSettingsEntry *entry,
+gdm_settings_entry_set_value (ScdmSettingsEntry *entry,
                               const char       *value)
 {
         g_free (entry->value);
@@ -92,7 +92,7 @@ gdm_settings_entry_set_value (GdmSettingsEntry *entry,
 }
 
 void
-gdm_settings_entry_free (GdmSettingsEntry *entry)
+gdm_settings_entry_free (ScdmSettingsEntry *entry)
 {
         g_free (entry->key);
         g_free (entry->signature);
@@ -103,7 +103,7 @@ gdm_settings_entry_free (GdmSettingsEntry *entry)
 
 typedef struct {
         GSList                 *list;
-        GdmSettingsEntry       *entry;
+        ScdmSettingsEntry       *entry;
         gboolean                in_key;
         gboolean                in_signature;
         gboolean                in_default;

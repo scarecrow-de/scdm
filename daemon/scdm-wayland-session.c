@@ -40,12 +40,12 @@
 
 typedef struct
 {
-        GdmSettings  *settings;
+        ScdmSettings  *settings;
         GCancellable *cancellable;
 
         GSubprocess     *bus_subprocess;
         GDBusConnection *bus_connection;
-        GdmDBusManager  *display_manager_proxy;
+        ScdmDBusManager  *display_manager_proxy;
         char            *bus_address;
 
         char           **environment;

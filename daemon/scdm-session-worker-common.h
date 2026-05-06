@@ -28,7 +28,7 @@
 
 GQuark gdm_session_worker_error_quark (void);
 
-typedef enum _GdmSessionWorkerError {
+typedef enum _ScdmSessionWorkerError {
         GDM_SESSION_WORKER_ERROR_GENERIC = 0,
         GDM_SESSION_WORKER_ERROR_WITH_SESSION_COMMAND,
         GDM_SESSION_WORKER_ERROR_FORKING,
@@ -44,6 +44,6 @@ typedef enum _GdmSessionWorkerError {
         GDM_SESSION_WORKER_ERROR_WRONG_STATE,
         GDM_SESSION_WORKER_ERROR_OUTSTANDING_REQUEST,
         GDM_SESSION_WORKER_ERROR_IN_REAUTH_SESSION,
-} GdmSessionWorkerError;
+} ScdmSessionWorkerError;
 
 #endif /* GDM_SESSION_WORKER_COMMON_H */
