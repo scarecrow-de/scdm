@@ -114,7 +114,7 @@ scdm_xdmcp_display_set_property (GObject      *object,
         ScdmXdmcpDisplay *self;
         ScdmXdmcpDisplayPrivate *priv;
 
-        self = SCDM_XDMCP_DISPLAY (object);
+        self = GDM_XDMCP_DISPLAY (object);
         priv = scdm_xdmcp_display_get_instance_private (self);
 
         switch (prop_id) {
@@ -139,7 +139,7 @@ scdm_xdmcp_display_get_property (GObject    *object,
         ScdmXdmcpDisplay *self;
         ScdmXdmcpDisplayPrivate *priv;
 
-        self = SCDM_XDMCP_DISPLAY (object);
+        self = GDM_XDMCP_DISPLAY (object);
         priv = scdm_xdmcp_display_get_instance_private (self);
 
         switch (prop_id) {
@@ -158,7 +158,7 @@ scdm_xdmcp_display_get_property (GObject    *object,
 static gboolean
 scdm_xdmcp_display_prepare (ScdmDisplay *display)
 {
-        ScdmXdmcpDisplay *self = SCDM_XDMCP_DISPLAY (display);
+        ScdmXdmcpDisplay *self = GDM_XDMCP_DISPLAY (display);
         ScdmLaunchEnvironment *launch_environment;
         char          *display_name;
         char          *seat_id;
@@ -222,7 +222,7 @@ idle_connect_to_display (ScdmXdmcpDisplay *self)
 static void
 scdm_xdmcp_display_manage (ScdmDisplay *display)
 {
-        ScdmXdmcpDisplay *self = SCDM_XDMCP_DISPLAY (display);
+        ScdmXdmcpDisplay *self = GDM_XDMCP_DISPLAY (display);
 
         g_timeout_add (500, (GSourceFunc)idle_connect_to_display, self);
 }

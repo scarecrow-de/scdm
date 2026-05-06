@@ -19,8 +19,8 @@
  */
 
 
-#ifndef __SCDM_XDMCP_DISPLAY_H
-#define __SCDM_XDMCP_DISPLAY_H
+#ifndef __GDM_XDMCP_DISPLAY_H
+#define __GDM_XDMCP_DISPLAY_H
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -49,4 +49,4 @@ ScdmDisplay              * scdm_xdmcp_display_new                      (const ch
 
 G_END_DECLS
 
-#endif /* __SCDM_XDMCP_DISPLAY_H */
+#endif /* __GDM_XDMCP_DISPLAY_H */

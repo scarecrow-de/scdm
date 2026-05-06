@@ -91,7 +91,7 @@ static void     scdm_host_chooser_widget_init        (ScdmHostChooserWidget     
 
 G_DEFINE_TYPE (ScdmHostChooserWidget, scdm_host_chooser_widget, GTK_TYPE_BOX)
 
-#define SCDM_XDMCP_PROTOCOL_VERSION 1001
+#define GDM_XDMCP_PROTOCOL_VERSION 1001
 #define SCAN_TIMEOUT 30
 #define PING_TIMEOUT 2
 #define PING_TRIES 3
@@ -261,7 +261,7 @@ decode_packet (GIOChannel           *source,
         }
 
         if G_UNLIKELY (header.version != XDM_PROTOCOL_VERSION &&
-                       header.version != SCDM_XDMCP_PROTOCOL_VERSION) {
+                       header.version != GDM_XDMCP_PROTOCOL_VERSION) {
                 g_warning (_("XDMCP: Incorrect XDMCP version!"));
                 return TRUE;
         }

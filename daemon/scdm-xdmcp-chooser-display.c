@@ -93,7 +93,7 @@ scdm_xdmcp_chooser_display_init (ScdmXdmcpChooserDisplay *xdmcp_chooser_display)
 static gboolean
 scdm_xdmcp_chooser_display_prepare (ScdmDisplay *display)
 {
-        ScdmXdmcpDisplay *self = SCDM_XDMCP_DISPLAY (display);
+        ScdmXdmcpDisplay *self = GDM_XDMCP_DISPLAY (display);
         ScdmLaunchEnvironment *launch_environment;
         char          *display_name;
         char          *seat_id;

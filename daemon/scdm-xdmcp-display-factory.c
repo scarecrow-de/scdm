@@ -88,11 +88,11 @@ int deny_severity = LOG_WARNING;
 
 /* some extra XDMCP opcodes that xdm will happily ignore since they'll be
  * the wrong XDMCP version anyway */
-#define SCDM_XDMCP_PROTOCOL_VERSION 1001
+#define GDM_XDMCP_PROTOCOL_VERSION 1001
 enum {
-        SCDM_XDMCP_FIRST_OPCODE = 1000, /*just a marker, not an opcode */
+        GDM_XDMCP_FIRST_OPCODE = 1000, /*just a marker, not an opcode */
 
-        SCDM_XDMCP_MANAGED_FORWARD = 1000,
+        GDM_XDMCP_MANAGED_FORWARD = 1000,
                 /* manager (master) -> manager
                  * A packet with MANAGED_FORWARD is sent to the
                  * manager that sent the forward query from the manager to
@@ -106,14 +106,14 @@ enum {
                  * between each.
                  *
                  * Argument is ARRAY8 with the address of the originating host */
-        SCDM_XDMCP_GOT_MANAGED_FORWARD,
+        GDM_XDMCP_GOT_MANAGED_FORWARD,
                 /* manager -> manager (master)
                  * A single packet with GOT_MANAGED_FORWARD is sent to indicate
                  * that we did receive the MANAGED_FORWARD packet.  The argument
                  * must match the MANAGED_FORWARD one or it will just be ignored.
                  *
                  * Argument is ARRAY8 with the address of the originating host */
-        SCDM_XDMCP_LAST_OPCODE /*just a marker, not an opcode */
+        GDM_XDMCP_LAST_OPCODE /*just a marker, not an opcode */
 };
 
 /*
@@ -674,7 +674,7 @@ count_displays_from_host (const char       *id,
         ScdmAddress *address;
 
         if (GDM_IS_XDMCP_DISPLAY (display)) {
-                address = scdm_xdmcp_display_get_remote_address (SCDM_XDMCP_DISPLAY (display));
+                address = scdm_xdmcp_display_get_remote_address (GDM_XDMCP_DISPLAY (display));
 
                 if (scdm_address_equal (address, data->address)) {
                         data->count++;
@@ -717,7 +717,7 @@ lookup_by_host (const char     *id,
                 return FALSE;
         }
 
-        this_address = scdm_xdmcp_display_get_remote_address (SCDM_XDMCP_DISPLAY (display));
+        this_address = scdm_xdmcp_display_get_remote_address (GDM_XDMCP_DISPLAY (display));
         scdm_display_get_x11_display_number (display, &disp_num, NULL);
 
         if (scdm_address_equal (this_address, data->address)
@@ -1711,9 +1711,9 @@ scdm_xdmcp_really_send_managed_forward (ScdmXdmcpDisplayFactory *factory,
 
         set_address_for_request (origin, &addr);
 
-        header.opcode = (CARD16) SCDM_XDMCP_MANAGED_FORWARD;
+        header.opcode = (CARD16) GDM_XDMCP_MANAGED_FORWARD;
         header.length = 4 + addr.length;
-        header.version = SCDM_XDMCP_PROTOCOL_VERSION;
+        header.version = GDM_XDMCP_PROTOCOL_VERSION;
         XdmcpWriteHeader (&factory->buf, &header);
 
         XdmcpWriteARRAY8 (&factory->buf, &addr);
@@ -1793,9 +1793,9 @@ scdm_xdmcp_send_got_managed_forward (ScdmXdmcpDisplayFactory *factory,
 
         set_address_for_request (origin, &addr);
 
-        header.opcode = (CARD16) SCDM_XDMCP_GOT_MANAGED_FORWARD;
+        header.opcode = (CARD16) GDM_XDMCP_GOT_MANAGED_FORWARD;
         header.length = 4 + addr.length;
-        header.version = SCDM_XDMCP_PROTOCOL_VERSION;
+        header.version = GDM_XDMCP_PROTOCOL_VERSION;
         XdmcpWriteHeader (&factory->buf, &header);
 
         XdmcpWriteARRAY8 (&factory->buf, &addr);
@@ -2002,7 +2002,7 @@ on_hostname_selected (ScdmXdmcpChooserDisplay *display,
         g_debug ("ScdmXdmcpDisplayFactory: hostname selected: %s",
                 hostname ? hostname : "(null)");
 
-        address = scdm_xdmcp_display_get_remote_address (SCDM_XDMCP_DISPLAY (display));
+        address = scdm_xdmcp_display_get_remote_address (GDM_XDMCP_DISPLAY (display));
 
         g_assert (address != NULL);
 
@@ -2421,7 +2421,7 @@ scdm_xdmcp_handle_request (ScdmXdmcpDisplayFactory *factory,
 
                                 g_debug ("ScdmXdmcpDisplayFactory: cookie len %d", (int) x11_cookie_size);
 
-                                session_number = scdm_xdmcp_display_get_session_number (SCDM_XDMCP_DISPLAY (display));
+                                session_number = scdm_xdmcp_display_get_session_number (GDM_XDMCP_DISPLAY (display));
 
                                 /* the send accept will fail if cookie is null */
                                 g_assert (x11_cookie != NULL);
@@ -2492,7 +2492,7 @@ lookup_by_session_id (const char *id,
                 return FALSE;
         }
 
-        session_id = scdm_xdmcp_display_get_session_number (SCDM_XDMCP_DISPLAY (display));
+        session_id = scdm_xdmcp_display_get_session_number (GDM_XDMCP_DISPLAY (display));
 
         if (session_id == sessid) {
                 return TRUE;
@@ -2821,7 +2821,7 @@ scdm_xdmcp_send_alive (ScdmXdmcpDisplayFactory *factory,
         if (display != NULL) {
                 int status;
 
-                send_sessid = scdm_xdmcp_display_get_session_number (SCDM_XDMCP_DISPLAY (display));
+                send_sessid = scdm_xdmcp_display_get_session_number (GDM_XDMCP_DISPLAY (display));
                 status = scdm_display_get_status (display);
 
                 if (status == GDM_DISPLAY_MANAGED) {
@@ -2917,9 +2917,9 @@ opcode_string (int opcode)
 
         if (opcode < G_N_ELEMENTS (opcode_names)) {
                 return opcode_names [opcode];
-        } else if (opcode >= SCDM_XDMCP_FIRST_OPCODE &&
-                   opcode < SCDM_XDMCP_LAST_OPCODE) {
-                return scdm_opcode_names [opcode - SCDM_XDMCP_FIRST_OPCODE];
+        } else if (opcode >= GDM_XDMCP_FIRST_OPCODE &&
+                   opcode < GDM_XDMCP_LAST_OPCODE) {
+                return scdm_opcode_names [opcode - GDM_XDMCP_FIRST_OPCODE];
         } else {
                 return "UNKNOWN";
         }
@@ -2959,7 +2959,7 @@ decode_packet (GIOChannel             *source,
         }
 
         if G_UNLIKELY (header.version != XDM_PROTOCOL_VERSION &&
-                       header.version != SCDM_XDMCP_PROTOCOL_VERSION) {
+                       header.version != GDM_XDMCP_PROTOCOL_VERSION) {
                 g_warning ("XDMCP: Incorrect XDMCP version!");
                 return TRUE;
         }
@@ -3010,11 +3010,11 @@ decode_packet (GIOChannel             *source,
                 scdm_xdmcp_handle_keepalive (factory, address, header.length);
                 break;
 
-        case SCDM_XDMCP_MANAGED_FORWARD:
+        case GDM_XDMCP_MANAGED_FORWARD:
                 scdm_xdmcp_handle_managed_forward (factory, address, header.length);
                 break;
 
-        case SCDM_XDMCP_GOT_MANAGED_FORWARD:
+        case GDM_XDMCP_GOT_MANAGED_FORWARD:
                 scdm_xdmcp_handle_got_managed_forward (factory, address, header.length);
                 break;
 
@@ -3039,7 +3039,7 @@ scdm_xdmcp_display_factory_start (ScdmDisplayFactory *base_factory)
 {
         gboolean                ret;
         GIOChannel             *ioc;
-        ScdmXdmcpDisplayFactory *factory = SCDM_XDMCP_DISPLAY_FACTORY (base_factory);
+        ScdmXdmcpDisplayFactory *factory = GDM_XDMCP_DISPLAY_FACTORY (base_factory);
         gboolean                res;
 
         g_return_val_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (factory), FALSE);
@@ -3097,7 +3097,7 @@ scdm_xdmcp_display_factory_start (ScdmDisplayFactory *base_factory)
 static gboolean
 scdm_xdmcp_display_factory_stop (ScdmDisplayFactory *base_factory)
 {
-        ScdmXdmcpDisplayFactory *factory = SCDM_XDMCP_DISPLAY_FACTORY (base_factory);
+        ScdmXdmcpDisplayFactory *factory = GDM_XDMCP_DISPLAY_FACTORY (base_factory);
 
         g_return_val_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (factory), FALSE);
         g_return_val_if_fail (factory->socket_fd != -1, FALSE);
@@ -3215,7 +3215,7 @@ scdm_xdmcp_display_factory_set_property (GObject       *object,
 {
         ScdmXdmcpDisplayFactory *self;
 
-        self = SCDM_XDMCP_DISPLAY_FACTORY (object);
+        self = GDM_XDMCP_DISPLAY_FACTORY (object);
 
         switch (prop_id) {
         case PROP_PORT:
@@ -3262,7 +3262,7 @@ scdm_xdmcp_display_factory_get_property (GObject    *object,
 {
         ScdmXdmcpDisplayFactory *self;
 
-        self = SCDM_XDMCP_DISPLAY_FACTORY (object);
+        self = GDM_XDMCP_DISPLAY_FACTORY (object);
 
         switch (prop_id) {
         case PROP_PORT:
@@ -3435,7 +3435,7 @@ scdm_xdmcp_display_factory_finalize (GObject *object)
         g_return_if_fail (object != NULL);
         g_return_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (object));
 
-        factory = SCDM_XDMCP_DISPLAY_FACTORY (object);
+        factory = GDM_XDMCP_DISPLAY_FACTORY (object);
 
         g_return_if_fail (factory != NULL);
 
@@ -3474,5 +3474,5 @@ scdm_xdmcp_display_factory_new (ScdmDisplayStore *store)
                                            (gpointer *) &xdmcp_display_factory_object);
         }
 
-        return SCDM_XDMCP_DISPLAY_FACTORY (xdmcp_display_factory_object);
+        return GDM_XDMCP_DISPLAY_FACTORY (xdmcp_display_factory_object);
 }
