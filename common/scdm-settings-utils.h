@@ -30,32 +30,32 @@ G_BEGIN_DECLS
 
 typedef struct _ScdmSettingsEntry ScdmSettingsEntry;
 
-ScdmSettingsEntry *        gdm_settings_entry_new               (void);
-ScdmSettingsEntry *        gdm_settings_entry_copy              (ScdmSettingsEntry *entry);
-void                      gdm_settings_entry_free              (ScdmSettingsEntry *entry);
+ScdmSettingsEntry *        scdm_settings_entry_new               (void);
+ScdmSettingsEntry *        scdm_settings_entry_copy              (ScdmSettingsEntry *entry);
+void                      scdm_settings_entry_free              (ScdmSettingsEntry *entry);
 
-const char *              gdm_settings_entry_get_key           (ScdmSettingsEntry *entry);
-const char *              gdm_settings_entry_get_signature     (ScdmSettingsEntry *entry);
-const char *              gdm_settings_entry_get_default_value (ScdmSettingsEntry *entry);
-const char *              gdm_settings_entry_get_value         (ScdmSettingsEntry *entry);
+const char *              scdm_settings_entry_get_key           (ScdmSettingsEntry *entry);
+const char *              scdm_settings_entry_get_signature     (ScdmSettingsEntry *entry);
+const char *              scdm_settings_entry_get_default_value (ScdmSettingsEntry *entry);
+const char *              scdm_settings_entry_get_value         (ScdmSettingsEntry *entry);
 
-void                      gdm_settings_entry_set_value         (ScdmSettingsEntry *entry,
+void                      scdm_settings_entry_set_value         (ScdmSettingsEntry *entry,
                                                                 const char       *value);
 
-gboolean                  gdm_settings_parse_schemas           (const char  *file,
+gboolean                  scdm_settings_parse_schemas           (const char  *file,
                                                                 const char  *root,
                                                                 GSList     **list);
 
-gboolean                  gdm_settings_parse_value_as_boolean  (const char *value,
+gboolean                  scdm_settings_parse_value_as_boolean  (const char *value,
                                                                 gboolean   *boole);
-gboolean                  gdm_settings_parse_value_as_integer  (const char *value,
+gboolean                  scdm_settings_parse_value_as_integer  (const char *value,
                                                                 int        *intval);
-gboolean                  gdm_settings_parse_value_as_double   (const char *value,
+gboolean                  scdm_settings_parse_value_as_double   (const char *value,
                                                                 gdouble    *doubleval);
 
-char *                    gdm_settings_parse_boolean_as_value  (gboolean    boolval);
-char *                    gdm_settings_parse_integer_as_value  (int         intval);
-char *                    gdm_settings_parse_double_as_value   (gdouble     doubleval);
+char *                    scdm_settings_parse_boolean_as_value  (gboolean    boolval);
+char *                    scdm_settings_parse_integer_as_value  (int         intval);
+char *                    scdm_settings_parse_double_as_value   (gdouble     doubleval);
 
 
 G_END_DECLS

@@ -384,9 +384,9 @@ msgstr ""
 
 #: ../C/scdm.xml:307(para)
 msgid ""
-"For those looking at the code, the gdm_verify_user function in "
+"For those looking at the code, the scdm_verify_user function in "
 "<filename>daemon/verify-pam.c</filename> is used for normal login and the "
-"gdm_verify_setup_user function is used for automatic login."
+"scdm_verify_setup_user function is used for automatic login."
 msgstr ""
 
 #: ../C/scdm.xml:315(title)
@@ -2225,7 +2225,7 @@ msgstr ""
 #: ../C/scdm.xml:2086(para)
 msgid ""
 "If true, the GDM daemon will honor requests to manage displays via the "
-"<filename>/tmp/.gdm_socket</filename> socket connection. Displays can be "
+"<filename>/tmp/.scdm_socket</filename> socket connection. Displays can be "
 "created, started, and deleted with the appropriate commands. The "
 "<filename>scdmdynamic</filename> command is a convenient method to send these "
 "messages."
@@ -2276,7 +2276,7 @@ msgstr ""
 #: ../C/scdm.xml:2128(para)
 msgid ""
 "The maximum number of allowed flexible displays. These are displays that can "
-"be run using the <filename>/tmp/.gdm_socket</filename> socket connection. "
+"be run using the <filename>/tmp/.scdm_socket</filename> socket connection. "
 "This is used for both full flexible displays and for nested displays (refer "
 "to the <filename>Xnest</filename> configuration option)."
 msgstr ""
@@ -5187,7 +5187,7 @@ msgstr ""
 #: ../C/scdm.xml:4643(para)
 msgid ""
 "GDM provides a unix domain socket for communication at <filename>/tmp/."
-"gdm_socket</filename>. Using this you can check if GDM is running, the "
+"scdm_socket</filename>. Using this you can check if GDM is running, the "
 "version of the daemon, the current displays that are running and who is "
 "logged in on them, and if GDM supports it on your operating system, also the "
 "virtual terminals of all the console logins. The <command>scdmflexiserver</"
@@ -6554,7 +6554,7 @@ msgid ""
 "This section describes the creation of themes for the Themed Greeter. For "
 "examples including screenshots, see the standard installed themes and the "
 "themes from <ulink type=\"http\" url=\"http://art.gnome.org/themes/"
-"gdm_greeter/\"> the theme website</ulink>."
+"scdm_greeter/\"> the theme website</ulink>."
 msgstr ""
 
 #: ../C/scdm.xml:5988(title)

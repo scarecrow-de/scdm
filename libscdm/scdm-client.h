@@ -27,79 +27,79 @@
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_CLIENT (gdm_client_get_type ())
-G_DECLARE_FINAL_TYPE (ScdmClient, gdm_client, GDM, CLIENT, GObject)
+#define GDM_TYPE_CLIENT (scdm_client_get_type ())
+G_DECLARE_FINAL_TYPE (ScdmClient, scdm_client, GDM, CLIENT, GObject)
 
-#define GDM_CLIENT_ERROR (gdm_client_error_quark ())
+#define GDM_CLIENT_ERROR (scdm_client_error_quark ())
 
 typedef enum _ScdmClientError {
         GDM_CLIENT_ERROR_GENERIC = 0,
 } ScdmClientError;
 
-GQuark             gdm_client_error_quark              (void);
+GQuark             scdm_client_error_quark              (void);
 
-ScdmClient         *gdm_client_new                      (void);
-void               gdm_client_set_enabled_extensions   (ScdmClient *client,
+ScdmClient         *scdm_client_new                      (void);
+void               scdm_client_set_enabled_extensions   (ScdmClient *client,
                                                         const char * const * extensions);
 
-void               gdm_client_open_reauthentication_channel (ScdmClient     *client,
+void               scdm_client_open_reauthentication_channel (ScdmClient     *client,
                                                              const char           *username,
                                                              GCancellable         *cancellable,
                                                              GAsyncReadyCallback   callback,
                                                              gpointer              user_data);
 
-ScdmUserVerifier   *gdm_client_open_reauthentication_channel_finish (ScdmClient  *client,
+ScdmUserVerifier   *scdm_client_open_reauthentication_channel_finish (ScdmClient  *client,
                                                                     GAsyncResult      *result,
                                                                     GError           **error);
 
-ScdmUserVerifier   *gdm_client_open_reauthentication_channel_sync (ScdmClient *client,
+ScdmUserVerifier   *scdm_client_open_reauthentication_channel_sync (ScdmClient *client,
                                                                   const char       *username,
                                                                   GCancellable     *cancellable,
                                                                   GError          **error);
 
-void               gdm_client_get_user_verifier         (ScdmClient     *client,
+void               scdm_client_get_user_verifier         (ScdmClient     *client,
                                                          GCancellable         *cancellable,
                                                          GAsyncReadyCallback   callback,
                                                          gpointer              user_data);
-ScdmUserVerifier   *gdm_client_get_user_verifier_finish  (ScdmClient     *client,
+ScdmUserVerifier   *scdm_client_get_user_verifier_finish  (ScdmClient     *client,
                                                          GAsyncResult         *result,
                                                          GError              **error);
-ScdmUserVerifier   *gdm_client_get_user_verifier_sync    (ScdmClient *client,
+ScdmUserVerifier   *scdm_client_get_user_verifier_sync    (ScdmClient *client,
                                                          GCancellable     *cancellable,
                                                          GError          **error);
 
-ScdmUserVerifierChoiceList *gdm_client_get_user_verifier_choice_list  (ScdmClient *client);
+ScdmUserVerifierChoiceList *scdm_client_get_user_verifier_choice_list  (ScdmClient *client);
 
-void               gdm_client_get_greeter               (ScdmClient     *client,
+void               scdm_client_get_greeter               (ScdmClient     *client,
                                                          GCancellable         *cancellable,
                                                          GAsyncReadyCallback   callback,
                                                          gpointer              user_data);
-ScdmGreeter        *gdm_client_get_greeter_finish        (ScdmClient *client,
+ScdmGreeter        *scdm_client_get_greeter_finish        (ScdmClient *client,
                                                          GAsyncResult     *result,
                                                          GError          **error);
-ScdmGreeter        *gdm_client_get_greeter_sync          (ScdmClient *client,
+ScdmGreeter        *scdm_client_get_greeter_sync          (ScdmClient *client,
                                                          GCancellable     *cancellable,
                                                          GError          **error);
 
-void               gdm_client_get_remote_greeter        (ScdmClient     *client,
+void               scdm_client_get_remote_greeter        (ScdmClient     *client,
                                                          GCancellable         *cancellable,
                                                          GAsyncReadyCallback   callback,
                                                          gpointer              user_data);
-ScdmRemoteGreeter  *gdm_client_get_remote_greeter_finish (ScdmClient *client,
+ScdmRemoteGreeter  *scdm_client_get_remote_greeter_finish (ScdmClient *client,
                                                          GAsyncResult     *result,
                                                          GError          **error);
-ScdmRemoteGreeter  *gdm_client_get_remote_greeter_sync   (ScdmClient *client,
+ScdmRemoteGreeter  *scdm_client_get_remote_greeter_sync   (ScdmClient *client,
                                                          GCancellable     *cancellable,
                                                          GError          **error);
 
-void               gdm_client_get_chooser               (ScdmClient     *client,
+void               scdm_client_get_chooser               (ScdmClient     *client,
                                                          GCancellable         *cancellable,
                                                          GAsyncReadyCallback   callback,
                                                          gpointer              user_data);
-ScdmChooser        *gdm_client_get_chooser_finish        (ScdmClient *client,
+ScdmChooser        *scdm_client_get_chooser_finish        (ScdmClient *client,
                                                          GAsyncResult     *result,
                                                          GError          **error);
-ScdmChooser        *gdm_client_get_chooser_sync          (ScdmClient *client,
+ScdmChooser        *scdm_client_get_chooser_sync          (ScdmClient *client,
                                                          GCancellable     *cancellable,
                                                          GError          **error);
 

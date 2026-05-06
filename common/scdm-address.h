@@ -34,38 +34,38 @@
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_ADDRESS (gdm_address_get_type ())
-#define	gdm_sockaddr_len(sa) ((sa)->ss_family == AF_INET6 ? sizeof(struct sockaddr_in6) : sizeof(struct sockaddr_in))
+#define GDM_TYPE_ADDRESS (scdm_address_get_type ())
+#define	scdm_sockaddr_len(sa) ((sa)->ss_family == AF_INET6 ? sizeof(struct sockaddr_in6) : sizeof(struct sockaddr_in))
 
 typedef struct _ScdmAddress ScdmAddress;
 
-GType                    gdm_address_get_type                  (void);
+GType                    scdm_address_get_type                  (void);
 
-ScdmAddress *             gdm_address_new_from_sockaddr         (struct sockaddr *sa,
+ScdmAddress *             scdm_address_new_from_sockaddr         (struct sockaddr *sa,
                                                                 size_t           size);
 
-int                      gdm_address_get_family_type           (ScdmAddress              *address);
-struct sockaddr_storage *gdm_address_get_sockaddr_storage      (ScdmAddress              *address);
-struct sockaddr_storage *gdm_address_peek_sockaddr_storage     (ScdmAddress              *address);
+int                      scdm_address_get_family_type           (ScdmAddress              *address);
+struct sockaddr_storage *scdm_address_get_sockaddr_storage      (ScdmAddress              *address);
+struct sockaddr_storage *scdm_address_peek_sockaddr_storage     (ScdmAddress              *address);
 
-gboolean                 gdm_address_get_hostname              (ScdmAddress              *address,
+gboolean                 scdm_address_get_hostname              (ScdmAddress              *address,
                                                                 char                   **hostname);
-gboolean                 gdm_address_get_numeric_info          (ScdmAddress              *address,
+gboolean                 scdm_address_get_numeric_info          (ScdmAddress              *address,
                                                                 char                   **numeric_hostname,
                                                                 char                   **service);
-gboolean                 gdm_address_is_local                  (ScdmAddress              *address);
-gboolean                 gdm_address_is_loopback               (ScdmAddress              *address);
+gboolean                 scdm_address_is_local                  (ScdmAddress              *address);
+gboolean                 scdm_address_is_loopback               (ScdmAddress              *address);
 
-gboolean                 gdm_address_equal                     (ScdmAddress              *a,
+gboolean                 scdm_address_equal                     (ScdmAddress              *a,
                                                                 ScdmAddress              *b);
 
-ScdmAddress *             gdm_address_copy                      (ScdmAddress              *address);
-void                     gdm_address_free                      (ScdmAddress              *address);
+ScdmAddress *             scdm_address_copy                      (ScdmAddress              *address);
+void                     scdm_address_free                      (ScdmAddress              *address);
 
 
-void                     gdm_address_debug                     (ScdmAddress              *address);
+void                     scdm_address_debug                     (ScdmAddress              *address);
 
-const GList *            gdm_address_peek_local_list           (void);
+const GList *            scdm_address_peek_local_list           (void);
 
 
 G_END_DECLS

@@ -57,7 +57,7 @@ assert_signature (ScdmSettingsEntry *entry,
 {
         const char *sig;
 
-        sig = gdm_settings_entry_get_signature (entry);
+        sig = scdm_settings_entry_get_signature (entry);
 
         g_assert (sig != NULL);
         g_assert (signature != NULL);
@@ -73,7 +73,7 @@ get_value (const char *key,
         gboolean res;
 
         error = NULL;
-        res = gdm_settings_get_value (settings_object, key, &str, &error);
+        res = scdm_settings_get_value (settings_object, key, &str, &error);
         if (! res) {
                 if (error != NULL) {
                         g_error_free (error);
@@ -93,7 +93,7 @@ get_value (const char *key,
 }
 
 gboolean
-gdm_settings_direct_get_int (const char        *key,
+scdm_settings_direct_get_int (const char        *key,
                              int               *value)
 {
         ScdmSettingsEntry *entry;
@@ -114,10 +114,10 @@ gdm_settings_direct_get_int (const char        *key,
 
         if (! res) {
                 /* use the default */
-                str = g_strdup (gdm_settings_entry_get_default_value (entry));
+                str = g_strdup (scdm_settings_entry_get_default_value (entry));
         }
 
-        ret = gdm_settings_parse_value_as_integer (str, value);
+        ret = scdm_settings_parse_value_as_integer (str, value);
 
         g_free (str);
 
@@ -125,14 +125,14 @@ gdm_settings_direct_get_int (const char        *key,
 }
 
 gboolean
-gdm_settings_direct_get_uint (const char        *key,
+scdm_settings_direct_get_uint (const char        *key,
                               uint              *value)
 {
         gboolean          ret;
         int               intvalue;
 
         ret = FALSE;
-        ret = gdm_settings_direct_get_int (key, &intvalue);
+        ret = scdm_settings_direct_get_int (key, &intvalue);
    
         if (intvalue >= 0)
            *value = intvalue;
@@ -143,7 +143,7 @@ gdm_settings_direct_get_uint (const char        *key,
 }
 
 gboolean
-gdm_settings_direct_get_boolean (const char        *key,
+scdm_settings_direct_get_boolean (const char        *key,
                                  gboolean          *value)
 {
         ScdmSettingsEntry *entry;
@@ -164,10 +164,10 @@ gdm_settings_direct_get_boolean (const char        *key,
 
         if (! res) {
                 /* use the default */
-                str = g_strdup (gdm_settings_entry_get_default_value (entry));
+                str = g_strdup (scdm_settings_entry_get_default_value (entry));
         }
 
-        ret = gdm_settings_parse_value_as_boolean  (str, value);
+        ret = scdm_settings_parse_value_as_boolean  (str, value);
 
         g_free (str);
 
@@ -175,7 +175,7 @@ gdm_settings_direct_get_boolean (const char        *key,
 }
 
 gboolean
-gdm_settings_direct_get_string (const char        *key,
+scdm_settings_direct_get_string (const char        *key,
                                 char             **value)
 {
         ScdmSettingsEntry *entry;
@@ -196,7 +196,7 @@ gdm_settings_direct_get_string (const char        *key,
 
         if (! res) {
                 /* use the default */
-                str = g_strdup (gdm_settings_entry_get_default_value (entry));
+                str = g_strdup (scdm_settings_entry_get_default_value (entry));
         }
 
         if (value != NULL) {
@@ -209,7 +209,7 @@ gdm_settings_direct_get_string (const char        *key,
 }
 
 gboolean
-gdm_settings_direct_set (const char        *key,
+scdm_settings_direct_set (const char        *key,
                          GValue            *value)
 {
         return TRUE;
@@ -219,11 +219,11 @@ static void
 hashify_list (ScdmSettingsEntry *entry,
               gpointer          data)
 {
-        g_hash_table_insert (schemas, g_strdup (gdm_settings_entry_get_key (entry)), entry);
+        g_hash_table_insert (schemas, g_strdup (scdm_settings_entry_get_key (entry)), entry);
 }
 
 gboolean
-gdm_settings_direct_init (ScdmSettings *settings,
+scdm_settings_direct_init (ScdmSettings *settings,
                           const char  *file,
                           const char  *root)
 {
@@ -238,12 +238,12 @@ gdm_settings_direct_init (ScdmSettings *settings,
                 schemas = NULL;
         }
 
-        if (! gdm_settings_parse_schemas (file, root, &list)) {
+        if (! scdm_settings_parse_schemas (file, root, &list)) {
                 g_warning ("Unable to parse schemas");
                 return FALSE;
         }
 
-        schemas = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, (GDestroyNotify)gdm_settings_entry_free);
+        schemas = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, (GDestroyNotify)scdm_settings_entry_free);
         g_slist_foreach (list, (GFunc)hashify_list, NULL);
 
         settings_object = settings;
@@ -252,7 +252,7 @@ gdm_settings_direct_init (ScdmSettings *settings,
 }
 
 void
-gdm_settings_direct_shutdown (void)
+scdm_settings_direct_shutdown (void)
 {
 
 }

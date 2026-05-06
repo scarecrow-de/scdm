@@ -27,14 +27,14 @@
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_HOST_CHOOSER_DIALOG         (gdm_host_chooser_dialog_get_type ())
-G_DECLARE_FINAL_TYPE (ScdmHostChooserDialog, gdm_host_chooser_dialog, GDM, HOST_CHOOSER_DIALOG, GtkDialog)
+#define GDM_TYPE_HOST_CHOOSER_DIALOG         (scdm_host_chooser_dialog_get_type ())
+G_DECLARE_FINAL_TYPE (ScdmHostChooserDialog, scdm_host_chooser_dialog, GDM, HOST_CHOOSER_DIALOG, GtkDialog)
 
-GtkWidget            * gdm_host_chooser_dialog_new                (int                   kind_mask);
-void                   gdm_host_chooser_dialog_set_kind_mask      (ScdmHostChooserDialog *dialog,
+GtkWidget            * scdm_host_chooser_dialog_new                (int                   kind_mask);
+void                   scdm_host_chooser_dialog_set_kind_mask      (ScdmHostChooserDialog *dialog,
                                                                    int                   kind_mask);
 
-ScdmChooserHost *       gdm_host_chooser_dialog_get_host           (ScdmHostChooserDialog *dialog);
+ScdmChooserHost *       scdm_host_chooser_dialog_get_host           (ScdmHostChooserDialog *dialog);
 
 G_END_DECLS
 

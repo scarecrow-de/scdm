@@ -13,26 +13,26 @@ i18n = import('i18n')
 cc = meson.get_compiler('c')
 
 # Options
-gdm_prefix = get_option('prefix')
+scdm_prefix = get_option('prefix')
 
-scdmconfdir = (get_option('sysconfsubdir') == '')? gdm_prefix / get_option('sysconfdir') : gdm_prefix / get_option('sysconfdir') / get_option('sysconfsubdir')
-dmconfdir = (get_option('dmconfdir') != '')? get_option('dmconfdir') : gdm_prefix / get_option('sysconfdir') / 'dm'
+scdmconfdir = (get_option('sysconfsubdir') == '')? scdm_prefix / get_option('sysconfdir') : scdm_prefix / get_option('sysconfdir') / get_option('sysconfsubdir')
+dmconfdir = (get_option('dmconfdir') != '')? get_option('dmconfdir') : scdm_prefix / get_option('sysconfdir') / 'dm'
 udev_dir = get_option('udev-dir')
-at_spi_registryd_dir = (get_option('at-spi-registryd-dir') != '')? get_option('at-spi-registryd-dir') : gdm_prefix / get_option('libexecdir')
-lang_config_file = (get_option('lang-file') != '')? get_option('lang-file') : gdm_prefix / get_option('sysconfdir') / 'locale.conf'
-pam_mod_dir = (get_option('pam-mod-dir') != '')? get_option('pam-mod-dir') : gdm_prefix / get_option('libdir') / 'security'
+at_spi_registryd_dir = (get_option('at-spi-registryd-dir') != '')? get_option('at-spi-registryd-dir') : scdm_prefix / get_option('libexecdir')
+lang_config_file = (get_option('lang-file') != '')? get_option('lang-file') : scdm_prefix / get_option('sysconfdir') / 'locale.conf'
+pam_mod_dir = (get_option('pam-mod-dir') != '')? get_option('pam-mod-dir') : scdm_prefix / get_option('libdir') / 'security'
 dbus_sys_dir = (get_option('dbus-sys') != '')? get_option('dbus-sys') : get_option('sysconfdir') / 'dbus-1' / 'system.d'
-gdm_defaults_conf = (get_option('defaults-conf') != '')? get_option('defaults-conf') : gdm_prefix / get_option('datadir') / 'scdm' / 'defaults.conf'
-gdm_custom_conf = (get_option('custom-conf') != '')? get_option('custom-conf') : scdmconfdir / 'custom.conf'
-gnome_settings_daemon_dir = (get_option('scarecrow-settings-daemon-dir') != '')? get_option('scarecrow-settings-daemon-dir') : gdm_prefix / get_option('libexecdir')
-check_accelerated_dir = (get_option('check-accelerated-dir') != '')? get_option('check-accelerated-dir') : gdm_prefix / get_option('libexecdir')
-gdm_run_dir = (get_option('run-dir') != '')? get_option('run-dir') : gdm_prefix / get_option('localstatedir') / 'run' / 'scdm'
-gdm_runtime_conf = (get_option('runtime-conf') != '')? get_option('runtime-conf') : gdm_run_dir / 'custom.conf'
-gdm_pid_file = (get_option('pid-file') != '')? get_option('pid-file') : gdm_run_dir / 'scdm.pid'
-ran_once_marker_dir = (get_option('ran-once-marker-dir') != '')? get_option('ran-once-marker-dir') : gdm_run_dir
-working_dir = (get_option('working-dir') != '')? get_option('working-dir') : gdm_prefix / get_option('localstatedir') / 'lib' / 'scdm'
-gdm_xauth_dir = (get_option('xauth-dir') != '')? get_option('xauth-dir') : gdm_run_dir
-gdm_screenshot_dir = (get_option('screenshot-dir') != '')? get_option('screenshot-dir') : gdm_run_dir / 'greeter'
+scdm_defaults_conf = (get_option('defaults-conf') != '')? get_option('defaults-conf') : scdm_prefix / get_option('datadir') / 'scdm' / 'defaults.conf'
+scdm_custom_conf = (get_option('custom-conf') != '')? get_option('custom-conf') : scdmconfdir / 'custom.conf'
+gnome_settings_daemon_dir = (get_option('scarecrow-settings-daemon-dir') != '')? get_option('scarecrow-settings-daemon-dir') : scdm_prefix / get_option('libexecdir')
+check_accelerated_dir = (get_option('check-accelerated-dir') != '')? get_option('check-accelerated-dir') : scdm_prefix / get_option('libexecdir')
+scdm_run_dir = (get_option('run-dir') != '')? get_option('run-dir') : scdm_prefix / get_option('localstatedir') / 'run' / 'scdm'
+scdm_runtime_conf = (get_option('runtime-conf') != '')? get_option('runtime-conf') : scdm_run_dir / 'custom.conf'
+scdm_pid_file = (get_option('pid-file') != '')? get_option('pid-file') : scdm_run_dir / 'scdm.pid'
+ran_once_marker_dir = (get_option('ran-once-marker-dir') != '')? get_option('ran-once-marker-dir') : scdm_run_dir
+working_dir = (get_option('working-dir') != '')? get_option('working-dir') : scdm_prefix / get_option('localstatedir') / 'lib' / 'scdm'
+scdm_xauth_dir = (get_option('xauth-dir') != '')? get_option('xauth-dir') : scdm_run_dir
+scdm_screenshot_dir = (get_option('screenshot-dir') != '')? get_option('screenshot-dir') : scdm_run_dir / 'greeter'
 
 # Common variables
 config_h_dir = include_directories('.')
@@ -58,7 +58,7 @@ if udev_dir == ''
   if udev_dep.found()
     udev_prefix = udev_dep.get_pkgconfig_variable('udevdir')
   else
-    udev_prefix = gdm_prefix / 'lib' / 'udev'
+    udev_prefix = scdm_prefix / 'lib' / 'udev'
   endif
   udev_dir = udev_prefix / 'rules.d'
 endif
@@ -193,21 +193,21 @@ conf.set_quoted('G_LOG_DOMAIN', 'Scdm')
 conf.set_quoted('VERSION', meson.project_version())
 conf.set_quoted('PACKAGE_VERSION', meson.project_version())
 conf.set_quoted('GETTEXT_PACKAGE', meson.project_name())
-conf.set_quoted('DATADIR', gdm_prefix / get_option('datadir'))
-conf.set_quoted('SYSCONFDIR', gdm_prefix / get_option('sysconfdir'))
-conf.set_quoted('BINDIR', gdm_prefix / get_option('bindir'))
-conf.set_quoted('LIBDIR', gdm_prefix / get_option('libdir'))
-conf.set_quoted('LIBEXECDIR', gdm_prefix / get_option('libexecdir'))
+conf.set_quoted('DATADIR', scdm_prefix / get_option('datadir'))
+conf.set_quoted('SYSCONFDIR', scdm_prefix / get_option('sysconfdir'))
+conf.set_quoted('BINDIR', scdm_prefix / get_option('bindir'))
+conf.set_quoted('LIBDIR', scdm_prefix / get_option('libdir'))
+conf.set_quoted('LIBEXECDIR', scdm_prefix / get_option('libexecdir'))
 conf.set_quoted('LOGDIR', get_option('log-dir'))
 conf.set_quoted('DMCONFDIR', dmconfdir)
 conf.set_quoted('GDMCONFDIR', scdmconfdir)
-conf.set_quoted('GDM_SCREENSHOT_DIR', gdm_screenshot_dir)
-conf.set_quoted('GDM_XAUTH_DIR', gdm_xauth_dir)
+conf.set_quoted('GDM_SCREENSHOT_DIR', scdm_screenshot_dir)
+conf.set_quoted('GDM_XAUTH_DIR', scdm_xauth_dir)
 conf.set_quoted('GDM_RAN_ONCE_MARKER_DIR', ran_once_marker_dir)
-conf.set_quoted('GDM_RUN_DIR', gdm_run_dir)
-conf.set_quoted('GNOMELOCALEDIR', gdm_prefix / get_option('localedir'))
+conf.set_quoted('GDM_RUN_DIR', scdm_run_dir)
+conf.set_quoted('GNOMELOCALEDIR', scdm_prefix / get_option('localedir'))
 conf.set_quoted('AT_SPI_REGISTRYD_DIR', at_spi_registryd_dir)
-conf.set_quoted('GDM_PID_FILE', gdm_pid_file)
+conf.set_quoted('GDM_PID_FILE', scdm_pid_file)
 conf.set_quoted('GNOME_SETTINGS_DAEMON_DIR', gnome_settings_daemon_dir)
 conf.set_quoted('CHECK_ACCELRATED_DIR', check_accelerated_dir)
 conf.set_quoted('LANG_CONFIG_FILE', lang_config_file)
@@ -231,9 +231,9 @@ conf.set('ENABLE_SYSTEMD_JOURNAL', get_option('systemd-journal'))
 conf.set('ENABLE_WAYLAND_SUPPORT', get_option('wayland-support'))
 conf.set('ENABLE_PROFILING', get_option('profiling'))
 conf.set('GDM_INITIAL_VT', get_option('initial-vt'))
-conf.set_quoted('GDM_DEFAULTS_CONF', gdm_defaults_conf)
-conf.set_quoted('GDM_CUSTOM_CONF', gdm_custom_conf)
-conf.set_quoted('GDM_RUNTIME_CONF', gdm_runtime_conf)
+conf.set_quoted('GDM_DEFAULTS_CONF', scdm_defaults_conf)
+conf.set_quoted('GDM_CUSTOM_CONF', scdm_custom_conf)
+conf.set_quoted('GDM_RUNTIME_CONF', scdm_runtime_conf)
 conf.set_quoted('GDM_SESSION_DEFAULT_PATH', get_option('default-path'))
 conf.set_quoted('GDM_USERNAME', get_option('user'))
 conf.set_quoted('GDM_GROUPNAME', get_option('group'))
@@ -276,26 +276,26 @@ subdir('docs')
 
 if meson.version().version_compare('>= 0.53')
 summary({
-    'datadir': gdm_prefix / get_option('datadir'),
-    'sysconfdir': gdm_prefix / get_option('sysconfdir'),
-    'bindir': gdm_prefix / get_option('bindir'),
-    'libdir': gdm_prefix / get_option('libdir'),
-    'libexecdir': gdm_prefix / get_option('libexecdir'),
+    'datadir': scdm_prefix / get_option('datadir'),
+    'sysconfdir': scdm_prefix / get_option('sysconfdir'),
+    'bindir': scdm_prefix / get_option('bindir'),
+    'libdir': scdm_prefix / get_option('libdir'),
+    'libexecdir': scdm_prefix / get_option('libexecdir'),
     'logdir': get_option('log-dir'),
     'System DBus': dbus_sys_dir,
     'DM conf': dmconfdir,
     'GDM conf': scdmconfdir,
-    'GDM Screenshot ': gdm_screenshot_dir,
-    'GDM Xauth': gdm_xauth_dir,
+    'GDM Screenshot ': scdm_screenshot_dir,
+    'GDM Xauth': scdm_xauth_dir,
     'GDM RanOnceMarker': ran_once_marker_dir,
-    'GDM Run': gdm_run_dir,
-    'GDM PID file': gdm_pid_file,
-    'GDM Defaults config': gdm_defaults_conf,
-    'GDM Custom config': gdm_custom_conf,
-    'GDM Runtime config': gdm_runtime_conf,
+    'GDM Run': scdm_run_dir,
+    'GDM PID file': scdm_pid_file,
+    'GDM Defaults config': scdm_defaults_conf,
+    'GDM Custom config': scdm_custom_conf,
+    'GDM Runtime config': scdm_runtime_conf,
     'GDM Session default path': get_option('default-path'),
     'GDM Working dir': working_dir,
-    'GNOME locale': gdm_prefix / get_option('datadir') / get_option('localedir'),
+    'GNOME locale': scdm_prefix / get_option('datadir') / get_option('localedir'),
     'GNOME Settings Daemon': gnome_settings_daemon_dir,
     'AT SPI registryd': at_spi_registryd_dir,
     'Check Accelerated': check_accelerated_dir,

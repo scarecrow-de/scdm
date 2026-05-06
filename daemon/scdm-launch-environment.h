@@ -27,7 +27,7 @@
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_LAUNCH_ENVIRONMENT         (gdm_launch_environment_get_type ())
+#define GDM_TYPE_LAUNCH_ENVIRONMENT         (scdm_launch_environment_get_type ())
 #define GDM_LAUNCH_ENVIRONMENT(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GDM_TYPE_LAUNCH_ENVIRONMENT, ScdmLaunchEnvironment))
 #define GDM_LAUNCH_ENVIRONMENT_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), GDM_TYPE_LAUNCH_ENVIRONMENT, ScdmLaunchEnvironmentClass))
 #define GDM_IS_LAUNCH_ENVIRONMENT(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDM_TYPE_LAUNCH_ENVIRONMENT))
@@ -63,24 +63,24 @@ typedef struct
                                     const char            *hostname);
 } ScdmLaunchEnvironmentClass;
 
-GType                 gdm_launch_environment_get_type           (void);
+GType                 scdm_launch_environment_get_type           (void);
 
-gboolean              gdm_launch_environment_start              (ScdmLaunchEnvironment *launch_environment);
-gboolean              gdm_launch_environment_stop               (ScdmLaunchEnvironment *launch_environment);
-ScdmSession *          gdm_launch_environment_get_session        (ScdmLaunchEnvironment *launch_environment);
-char *                gdm_launch_environment_get_session_id     (ScdmLaunchEnvironment *launch_environment);
+gboolean              scdm_launch_environment_start              (ScdmLaunchEnvironment *launch_environment);
+gboolean              scdm_launch_environment_stop               (ScdmLaunchEnvironment *launch_environment);
+ScdmSession *          scdm_launch_environment_get_session        (ScdmLaunchEnvironment *launch_environment);
+char *                scdm_launch_environment_get_session_id     (ScdmLaunchEnvironment *launch_environment);
 
-ScdmLaunchEnvironment *gdm_create_greeter_launch_environment (const char *display_name,
+ScdmLaunchEnvironment *scdm_create_greeter_launch_environment (const char *display_name,
                                                              const char *seat_id,
                                                              const char *session_type,
                                                              const char *display_hostname,
                                                              gboolean    display_is_local);
-ScdmLaunchEnvironment *gdm_create_initial_setup_launch_environment (const char *display_name,
+ScdmLaunchEnvironment *scdm_create_initial_setup_launch_environment (const char *display_name,
                                                                    const char *seat_id,
                                                                    const char *session_type,
                                                                    const char *display_hostname,
                                                                    gboolean    display_is_local);
-ScdmLaunchEnvironment *gdm_create_chooser_launch_environment (const char *display_name,
+ScdmLaunchEnvironment *scdm_create_chooser_launch_environment (const char *display_name,
                                                              const char *seat_id,
                                                              const char *display_hostname);
 

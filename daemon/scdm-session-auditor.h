@@ -31,8 +31,8 @@
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_SESSION_AUDITOR (gdm_session_auditor_get_type ())
-G_DECLARE_DERIVABLE_TYPE (ScdmSessionAuditor, gdm_session_auditor, GDM, SESSION_AUDITOR, GObject)
+#define GDM_TYPE_SESSION_AUDITOR (scdm_session_auditor_get_type ())
+G_DECLARE_DERIVABLE_TYPE (ScdmSessionAuditor, scdm_session_auditor, GDM, SESSION_AUDITOR, GObject)
 
 struct _ScdmSessionAuditorClass
 {
@@ -48,18 +48,18 @@ struct _ScdmSessionAuditorClass
         void               (* report_logout)                  (ScdmSessionAuditor *auditor);
 };
 
-ScdmSessionAuditor        *gdm_session_auditor_new                (const char *hostname,
+ScdmSessionAuditor        *scdm_session_auditor_new                (const char *hostname,
                                                                   const char *display_device);
-void                      gdm_session_auditor_set_username (ScdmSessionAuditor *auditor,
+void                      scdm_session_auditor_set_username (ScdmSessionAuditor *auditor,
                                                             const char        *username);
-void                      gdm_session_auditor_report_password_changed (ScdmSessionAuditor *auditor);
-void                      gdm_session_auditor_report_password_change_failure (ScdmSessionAuditor *auditor);
-void                      gdm_session_auditor_report_user_accredited (ScdmSessionAuditor *auditor);
-void                      gdm_session_auditor_report_login (ScdmSessionAuditor *auditor);
-void                      gdm_session_auditor_report_login_failure (ScdmSessionAuditor *auditor,
+void                      scdm_session_auditor_report_password_changed (ScdmSessionAuditor *auditor);
+void                      scdm_session_auditor_report_password_change_failure (ScdmSessionAuditor *auditor);
+void                      scdm_session_auditor_report_user_accredited (ScdmSessionAuditor *auditor);
+void                      scdm_session_auditor_report_login (ScdmSessionAuditor *auditor);
+void                      scdm_session_auditor_report_login_failure (ScdmSessionAuditor *auditor,
                                                                     int                error_code,
                                                                     const char        *error_message);
-void                      gdm_session_auditor_report_logout (ScdmSessionAuditor *auditor);
+void                      scdm_session_auditor_report_logout (ScdmSessionAuditor *auditor);
 
 G_END_DECLS
 #endif /* GDM_SESSION_AUDITOR_H */

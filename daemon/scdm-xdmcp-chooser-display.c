@@ -49,11 +49,11 @@ enum {
 
 static guint signals [LAST_SIGNAL] = { 0, };
 
-static void     gdm_xdmcp_chooser_display_class_init    (ScdmXdmcpChooserDisplayClass *klass);
-static void     gdm_xdmcp_chooser_display_init          (ScdmXdmcpChooserDisplay      *xdmcp_chooser_display);
-static gboolean gdm_xdmcp_chooser_display_prepare       (ScdmDisplay *display);
+static void     scdm_xdmcp_chooser_display_class_init    (ScdmXdmcpChooserDisplayClass *klass);
+static void     scdm_xdmcp_chooser_display_init          (ScdmXdmcpChooserDisplay      *xdmcp_chooser_display);
+static gboolean scdm_xdmcp_chooser_display_prepare       (ScdmDisplay *display);
 
-G_DEFINE_TYPE (ScdmXdmcpChooserDisplay, gdm_xdmcp_chooser_display, GDM_TYPE_XDMCP_DISPLAY)
+G_DEFINE_TYPE (ScdmXdmcpChooserDisplay, scdm_xdmcp_chooser_display, GDM_TYPE_XDMCP_DISPLAY)
 
 static void
 on_hostname_selected (ScdmLaunchEnvironment     *launch_environment,
@@ -65,12 +65,12 @@ on_hostname_selected (ScdmLaunchEnvironment     *launch_environment,
 }
 
 static void
-gdm_xdmcp_chooser_display_class_init (ScdmXdmcpChooserDisplayClass *klass)
+scdm_xdmcp_chooser_display_class_init (ScdmXdmcpChooserDisplayClass *klass)
 {
         GObjectClass    *object_class = G_OBJECT_CLASS (klass);
         ScdmDisplayClass *display_class = GDM_DISPLAY_CLASS (klass);
 
-        display_class->prepare = gdm_xdmcp_chooser_display_prepare;
+        display_class->prepare = scdm_xdmcp_chooser_display_prepare;
 
         signals [HOSTNAME_SELECTED] =
                 g_signal_new ("hostname-selected",
@@ -86,12 +86,12 @@ gdm_xdmcp_chooser_display_class_init (ScdmXdmcpChooserDisplayClass *klass)
 }
 
 static void
-gdm_xdmcp_chooser_display_init (ScdmXdmcpChooserDisplay *xdmcp_chooser_display)
+scdm_xdmcp_chooser_display_init (ScdmXdmcpChooserDisplay *xdmcp_chooser_display)
 {
 }
 
 static gboolean
-gdm_xdmcp_chooser_display_prepare (ScdmDisplay *display)
+scdm_xdmcp_chooser_display_prepare (ScdmDisplay *display)
 {
         ScdmXdmcpDisplay *self = GDM_XDMCP_DISPLAY (display);
         ScdmLaunchEnvironment *launch_environment;
@@ -110,7 +110,7 @@ gdm_xdmcp_chooser_display_prepare (ScdmDisplay *display)
                       "remote-hostname", &hostname,
                       NULL);
 
-        launch_environment = gdm_create_chooser_launch_environment (display_name,
+        launch_environment = scdm_create_chooser_launch_environment (display_name,
                                                                     seat_id,
                                                                     hostname);
         g_object_set (self, "launch-environment", launch_environment, NULL);
@@ -119,11 +119,11 @@ gdm_xdmcp_chooser_display_prepare (ScdmDisplay *display)
         g_signal_connect (launch_environment, "hostname-selected",
                           G_CALLBACK (on_hostname_selected), display);
 
-        return GDM_DISPLAY_CLASS (gdm_xdmcp_chooser_display_parent_class)->prepare (display);
+        return GDM_DISPLAY_CLASS (scdm_xdmcp_chooser_display_parent_class)->prepare (display);
 }
 
 ScdmDisplay *
-gdm_xdmcp_chooser_display_new (const char              *hostname,
+scdm_xdmcp_chooser_display_new (const char              *hostname,
                                int                      number,
                                ScdmAddress              *address,
                                gint32                   session_number)

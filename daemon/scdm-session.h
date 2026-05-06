@@ -26,8 +26,8 @@
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_SESSION (gdm_session_get_type ())
-G_DECLARE_FINAL_TYPE (ScdmSession, gdm_session, GDM, SESSION, GObject)
+#define GDM_TYPE_SESSION (scdm_session_get_type ())
+G_DECLARE_FINAL_TYPE (ScdmSession, scdm_session, GDM, SESSION, GObject)
 
 typedef enum
 {
@@ -53,10 +53,10 @@ typedef enum {
         GDM_SESSION_DISPLAY_MODE_LOGIND_MANAGED,
 } ScdmSessionDisplayMode;
 
-ScdmSessionDisplayMode gdm_session_display_mode_from_string (const char *str);
-const char * gdm_session_display_mode_to_string (ScdmSessionDisplayMode mode);
+ScdmSessionDisplayMode scdm_session_display_mode_from_string (const char *str);
+const char * scdm_session_display_mode_to_string (ScdmSessionDisplayMode mode);
 
-ScdmSession      *gdm_session_new                      (ScdmSessionVerificationMode verification_mode,
+ScdmSession      *scdm_session_new                      (ScdmSessionVerificationMode verification_mode,
                                                        uid_t         allowed_user,
                                                        const char   *display_name,
                                                        const char   *display_hostname,
@@ -65,73 +65,73 @@ ScdmSession      *gdm_session_new                      (ScdmSessionVerificationM
                                                        const char   *display_x11_authority_file,
                                                        gboolean      display_is_local,
                                                        const char * const *environment);
-uid_t             gdm_session_get_allowed_user       (ScdmSession     *session);
-void              gdm_session_start_reauthentication (ScdmSession *session,
+uid_t             scdm_session_get_allowed_user       (ScdmSession     *session);
+void              scdm_session_start_reauthentication (ScdmSession *session,
                                                       GPid        pid_of_caller,
                                                       uid_t       uid_of_caller);
 
-const char       *gdm_session_get_server_address          (ScdmSession     *session);
-const char       *gdm_session_get_username                (ScdmSession     *session);
-const char       *gdm_session_get_display_device          (ScdmSession     *session);
-const char       *gdm_session_get_display_seat_id         (ScdmSession     *session);
-const char       *gdm_session_get_session_id              (ScdmSession     *session);
-gboolean          gdm_session_bypasses_xsession           (ScdmSession     *session);
-gboolean          gdm_session_session_registers           (ScdmSession     *session);
-ScdmSessionDisplayMode gdm_session_get_display_mode  (ScdmSession     *session);
+const char       *scdm_session_get_server_address          (ScdmSession     *session);
+const char       *scdm_session_get_username                (ScdmSession     *session);
+const char       *scdm_session_get_display_device          (ScdmSession     *session);
+const char       *scdm_session_get_display_seat_id         (ScdmSession     *session);
+const char       *scdm_session_get_session_id              (ScdmSession     *session);
+gboolean          scdm_session_bypasses_xsession           (ScdmSession     *session);
+gboolean          scdm_session_session_registers           (ScdmSession     *session);
+ScdmSessionDisplayMode scdm_session_get_display_mode  (ScdmSession     *session);
 
 #ifdef ENABLE_WAYLAND_SUPPORT
-void              gdm_session_set_ignore_wayland          (ScdmSession *session,
+void              scdm_session_set_ignore_wayland          (ScdmSession *session,
                                                            gboolean    ignore_wayland);
 #endif
-gboolean          gdm_session_start_conversation          (ScdmSession *session,
+gboolean          scdm_session_start_conversation          (ScdmSession *session,
                                                            const char *service_name);
-void              gdm_session_stop_conversation           (ScdmSession *session,
+void              scdm_session_stop_conversation           (ScdmSession *session,
                                                            const char *service_name);
-const char       *gdm_session_get_conversation_session_id (ScdmSession *session,
+const char       *scdm_session_get_conversation_session_id (ScdmSession *session,
                                                            const char *service_name);
-void              gdm_session_setup                       (ScdmSession *session,
+void              scdm_session_setup                       (ScdmSession *session,
                                                            const char *service_name);
-void              gdm_session_setup_for_user              (ScdmSession *session,
+void              scdm_session_setup_for_user              (ScdmSession *session,
                                                            const char *service_name,
                                                            const char *username);
-void              gdm_session_setup_for_program           (ScdmSession *session,
+void              scdm_session_setup_for_program           (ScdmSession *session,
                                                            const char *service_name,
                                                            const char *username,
                                                            const char *log_file);
-void              gdm_session_set_environment_variable    (ScdmSession *session,
+void              scdm_session_set_environment_variable    (ScdmSession *session,
                                                            const char *key,
                                                            const char *value);
-void              gdm_session_send_environment            (ScdmSession *self,
+void              scdm_session_send_environment            (ScdmSession *self,
                                                            const char *service_name);
-void              gdm_session_reset                       (ScdmSession *session);
-void              gdm_session_cancel                      (ScdmSession *session);
-void              gdm_session_authenticate                (ScdmSession *session,
+void              scdm_session_reset                       (ScdmSession *session);
+void              scdm_session_cancel                      (ScdmSession *session);
+void              scdm_session_authenticate                (ScdmSession *session,
                                                            const char *service_name);
-void              gdm_session_authorize                   (ScdmSession *session,
+void              scdm_session_authorize                   (ScdmSession *session,
                                                            const char *service_name);
-void              gdm_session_accredit                    (ScdmSession *session,
+void              scdm_session_accredit                    (ScdmSession *session,
                                                            const char *service_name);
-void              gdm_session_open_session                (ScdmSession *session,
+void              scdm_session_open_session                (ScdmSession *session,
                                                            const char *service_name);
-void              gdm_session_start_session               (ScdmSession *session,
+void              scdm_session_start_session               (ScdmSession *session,
                                                            const char *service_name);
-void              gdm_session_close                       (ScdmSession *session);
+void              scdm_session_close                       (ScdmSession *session);
 
-void              gdm_session_answer_query                (ScdmSession *session,
+void              scdm_session_answer_query                (ScdmSession *session,
                                                            const char *service_name,
                                                            const char *text);
-void              gdm_session_select_program              (ScdmSession *session,
+void              scdm_session_select_program              (ScdmSession *session,
                                                            const char *command_line);
-void              gdm_session_select_session              (ScdmSession *session,
+void              scdm_session_select_session              (ScdmSession *session,
                                                            const char *session_name);
-void              gdm_session_select_user                 (ScdmSession *session,
+void              scdm_session_select_user                 (ScdmSession *session,
                                                            const char *username);
-void              gdm_session_set_timed_login_details     (ScdmSession *session,
+void              scdm_session_set_timed_login_details     (ScdmSession *session,
                                                            const char *username,
                                                            int         delay);
-gboolean          gdm_session_client_is_connected         (ScdmSession *session);
-gboolean          gdm_session_is_running                  (ScdmSession *session);
-GPid              gdm_session_get_pid                     (ScdmSession *session);
+gboolean          scdm_session_client_is_connected         (ScdmSession *session);
+gboolean          scdm_session_is_running                  (ScdmSession *session);
+GPid              scdm_session_get_pid                     (ScdmSession *session);
 
 G_END_DECLS
 

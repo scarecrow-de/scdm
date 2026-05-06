@@ -42,25 +42,25 @@ enum {
 
 static guint signals [LAST_SIGNAL] = { 0, };
 
-static void     gdm_settings_backend_class_init (ScdmSettingsBackendClass *klass);
-static void     gdm_settings_backend_init       (ScdmSettingsBackend      *settings_backend);
-static void     gdm_settings_backend_finalize   (GObject                 *object);
+static void     scdm_settings_backend_class_init (ScdmSettingsBackendClass *klass);
+static void     scdm_settings_backend_init       (ScdmSettingsBackend      *settings_backend);
+static void     scdm_settings_backend_finalize   (GObject                 *object);
 
-G_DEFINE_ABSTRACT_TYPE (ScdmSettingsBackend, gdm_settings_backend, G_TYPE_OBJECT)
+G_DEFINE_ABSTRACT_TYPE (ScdmSettingsBackend, scdm_settings_backend, G_TYPE_OBJECT)
 
 GQuark
-gdm_settings_backend_error_quark (void)
+scdm_settings_backend_error_quark (void)
 {
         static GQuark ret = 0;
         if (ret == 0) {
-                ret = g_quark_from_static_string ("gdm_settings_backend_error");
+                ret = g_quark_from_static_string ("scdm_settings_backend_error");
         }
 
         return ret;
 }
 
 static gboolean
-gdm_settings_backend_real_get_value (ScdmSettingsBackend *settings_backend,
+scdm_settings_backend_real_get_value (ScdmSettingsBackend *settings_backend,
                                      const char         *key,
                                      char              **value,
                                      GError            **error)
@@ -71,7 +71,7 @@ gdm_settings_backend_real_get_value (ScdmSettingsBackend *settings_backend,
 }
 
 static gboolean
-gdm_settings_backend_real_set_value (ScdmSettingsBackend *settings_backend,
+scdm_settings_backend_real_set_value (ScdmSettingsBackend *settings_backend,
                                      const char         *key,
                                      const char         *value,
                                      GError            **error)
@@ -82,7 +82,7 @@ gdm_settings_backend_real_set_value (ScdmSettingsBackend *settings_backend,
 }
 
 gboolean
-gdm_settings_backend_get_value (ScdmSettingsBackend *settings_backend,
+scdm_settings_backend_get_value (ScdmSettingsBackend *settings_backend,
                                 const char         *key,
                                 char              **value,
                                 GError            **error)
@@ -99,7 +99,7 @@ gdm_settings_backend_get_value (ScdmSettingsBackend *settings_backend,
 }
 
 gboolean
-gdm_settings_backend_set_value (ScdmSettingsBackend *settings_backend,
+scdm_settings_backend_set_value (ScdmSettingsBackend *settings_backend,
                                 const char         *key,
                                 const char         *value,
                                 GError            **error)
@@ -116,7 +116,7 @@ gdm_settings_backend_set_value (ScdmSettingsBackend *settings_backend,
 }
 
 void
-gdm_settings_backend_value_changed (ScdmSettingsBackend *settings_backend,
+scdm_settings_backend_value_changed (ScdmSettingsBackend *settings_backend,
                                     const char         *key,
                                     const char         *old_value,
                                     const char         *new_value)
@@ -127,14 +127,14 @@ gdm_settings_backend_value_changed (ScdmSettingsBackend *settings_backend,
 }
 
 static void
-gdm_settings_backend_class_init (ScdmSettingsBackendClass *klass)
+scdm_settings_backend_class_init (ScdmSettingsBackendClass *klass)
 {
         GObjectClass   *object_class = G_OBJECT_CLASS (klass);
 
-        object_class->finalize = gdm_settings_backend_finalize;
+        object_class->finalize = scdm_settings_backend_finalize;
 
-        klass->get_value = gdm_settings_backend_real_get_value;
-        klass->set_value = gdm_settings_backend_real_set_value;
+        klass->get_value = scdm_settings_backend_real_get_value;
+        klass->set_value = scdm_settings_backend_real_set_value;
 
         signals [VALUE_CHANGED] =
                 g_signal_new ("value-changed",
@@ -152,14 +152,14 @@ gdm_settings_backend_class_init (ScdmSettingsBackendClass *klass)
 }
 
 static void
-gdm_settings_backend_init (ScdmSettingsBackend *settings_backend)
+scdm_settings_backend_init (ScdmSettingsBackend *settings_backend)
 {
 }
 
 static void
-gdm_settings_backend_finalize (GObject *object)
+scdm_settings_backend_finalize (GObject *object)
 {
         g_return_if_fail (GDM_IS_SETTINGS_BACKEND (object));
 
-        G_OBJECT_CLASS (gdm_settings_backend_parent_class)->finalize (object);
+        G_OBJECT_CLASS (scdm_settings_backend_parent_class)->finalize (object);
 }

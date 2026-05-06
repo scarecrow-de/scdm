@@ -65,14 +65,14 @@ get_syslog_priority_from_log_level (GLogLevelFlags log_level)
 }
 
 static void
-gdm_log_default_handler (const gchar    *log_domain,
+scdm_log_default_handler (const gchar    *log_domain,
                          GLogLevelFlags  log_level,
                          const gchar    *message,
                          gpointer        unused_data)
 {
         int priority;
 
-        gdm_log_init ();
+        scdm_log_init ();
 
         if ((log_level & G_LOG_LEVEL_MASK) == G_LOG_LEVEL_DEBUG &&
             !debug_enabled) {
@@ -100,13 +100,13 @@ gdm_log_default_handler (const gchar    *log_domain,
 }
 
 void
-gdm_log_toggle_debug (void)
+scdm_log_toggle_debug (void)
 {
-        gdm_log_set_debug (!debug_enabled);
+        scdm_log_set_debug (!debug_enabled);
 }
 
 void
-gdm_log_set_debug (gboolean debug)
+scdm_log_set_debug (gboolean debug)
 {
         g_assert (initialized);
         if (debug_enabled == debug) {
@@ -123,18 +123,18 @@ gdm_log_set_debug (gboolean debug)
 }
 
 void
-gdm_log_init (void)
+scdm_log_init (void)
 {
         if (initialized)
                 return;
 
         initialized = TRUE;
 
-        g_log_set_default_handler (gdm_log_default_handler, NULL);
+        g_log_set_default_handler (scdm_log_default_handler, NULL);
 }
 
 void
-gdm_log_shutdown (void)
+scdm_log_shutdown (void)
 {
         if (!initialized)
                 return;

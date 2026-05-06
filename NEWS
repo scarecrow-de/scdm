@@ -210,7 +210,7 @@ Version 3.27.4
 ==============
 Version 3.27.3
 ==============
-- don't call gdm_session_defaults_changed from setup
+- don't call scdm_session_defaults_changed from setup
 - Add dependency to .pc file
 - code clean ups
 

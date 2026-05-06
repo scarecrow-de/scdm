@@ -25,7 +25,7 @@
 
 #include "scdm-session-worker-common.h"
 
-static const GDBusErrorEntry gdm_session_worker_error_entries[] = {
+static const GDBusErrorEntry scdm_session_worker_error_entries[] = {
         { GDM_SESSION_WORKER_ERROR_GENERIC              , "io.github.scarecrow_de.DisplayManager.SessionWorker.Error.Generic", },
         { GDM_SESSION_WORKER_ERROR_WITH_SESSION_COMMAND , "io.github.scarecrow_de.DisplayManager.SessionWorker.Error.WithSessionCommand" },
         { GDM_SESSION_WORKER_ERROR_FORKING              , "io.github.scarecrow_de.DisplayManager.SessionWorker.Error.Forking" },
@@ -44,14 +44,14 @@ static const GDBusErrorEntry gdm_session_worker_error_entries[] = {
 };
 
 GQuark
-gdm_session_worker_error_quark (void)
+scdm_session_worker_error_quark (void)
 {
         static volatile gsize error_quark = 0;
 
         g_dbus_error_register_error_domain ("scdm-session-worker-error-quark",
                                             &error_quark,
-                                            gdm_session_worker_error_entries,
-                                            G_N_ELEMENTS (gdm_session_worker_error_entries));
+                                            scdm_session_worker_error_entries,
+                                            G_N_ELEMENTS (scdm_session_worker_error_entries));
 
         return (GQuark) error_quark;
 }

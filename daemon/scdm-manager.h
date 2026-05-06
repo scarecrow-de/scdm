@@ -29,7 +29,7 @@
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_MANAGER         (gdm_manager_get_type ())
+#define GDM_TYPE_MANAGER         (scdm_manager_get_type ())
 #define GDM_MANAGER(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GDM_TYPE_MANAGER, ScdmManager))
 #define GDM_MANAGER_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), GDM_TYPE_MANAGER, ScdmManagerClass))
 #define GDM_IS_MANAGER(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDM_TYPE_MANAGER))
@@ -59,20 +59,20 @@ typedef enum
          GDM_MANAGER_ERROR_GENERAL
 } ScdmManagerError;
 
-#define GDM_MANAGER_ERROR gdm_manager_error_quark ()
+#define GDM_MANAGER_ERROR scdm_manager_error_quark ()
 
-GQuark              gdm_manager_error_quark                    (void);
-GType               gdm_manager_get_type                       (void);
+GQuark              scdm_manager_error_quark                    (void);
+GType               scdm_manager_get_type                       (void);
 
-ScdmManager *        gdm_manager_new                            (void);
-void                gdm_manager_start                          (ScdmManager *manager);
-void                gdm_manager_stop                           (ScdmManager *manager);
+ScdmManager *        scdm_manager_new                            (void);
+void                scdm_manager_start                          (ScdmManager *manager);
+void                scdm_manager_stop                           (ScdmManager *manager);
 
-void                gdm_manager_set_xdmcp_enabled              (ScdmManager *manager,
+void                scdm_manager_set_xdmcp_enabled              (ScdmManager *manager,
                                                                 gboolean    enabled);
-void                gdm_manager_set_show_local_greeter         (ScdmManager *manager,
+void                scdm_manager_set_show_local_greeter         (ScdmManager *manager,
                                                                 gboolean    show_local_greeter);
-gboolean            gdm_manager_get_displays                   (ScdmManager *manager,
+gboolean            scdm_manager_get_displays                   (ScdmManager *manager,
                                                                 GPtrArray **displays,
                                                                 GError    **error);
 

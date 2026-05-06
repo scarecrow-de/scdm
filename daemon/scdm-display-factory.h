@@ -28,8 +28,8 @@
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_DISPLAY_FACTORY (gdm_display_factory_get_type ())
-G_DECLARE_DERIVABLE_TYPE (ScdmDisplayFactory, gdm_display_factory, GDM, DISPLAY_FACTORY, GObject)
+#define GDM_TYPE_DISPLAY_FACTORY (scdm_display_factory_get_type ())
+G_DECLARE_DERIVABLE_TYPE (ScdmDisplayFactory, scdm_display_factory, GDM, DISPLAY_FACTORY, GObject)
 
 struct _ScdmDisplayFactoryClass
 {
@@ -44,15 +44,15 @@ typedef enum
          GDM_DISPLAY_FACTORY_ERROR_GENERAL
 } ScdmDisplayFactoryError;
 
-#define GDM_DISPLAY_FACTORY_ERROR gdm_display_factory_error_quark ()
+#define GDM_DISPLAY_FACTORY_ERROR scdm_display_factory_error_quark ()
 
-GQuark                     gdm_display_factory_error_quark             (void);
-GType                      gdm_display_factory_get_type                (void);
+GQuark                     scdm_display_factory_error_quark             (void);
+GType                      scdm_display_factory_get_type                (void);
 
-gboolean                   gdm_display_factory_start                   (ScdmDisplayFactory *manager);
-gboolean                   gdm_display_factory_stop                    (ScdmDisplayFactory *manager);
-ScdmDisplayStore *          gdm_display_factory_get_display_store       (ScdmDisplayFactory *manager);
-void                       gdm_display_factory_queue_purge_displays    (ScdmDisplayFactory *manager);
+gboolean                   scdm_display_factory_start                   (ScdmDisplayFactory *manager);
+gboolean                   scdm_display_factory_stop                    (ScdmDisplayFactory *manager);
+ScdmDisplayStore *          scdm_display_factory_get_display_store       (ScdmDisplayFactory *manager);
+void                       scdm_display_factory_queue_purge_displays    (ScdmDisplayFactory *manager);
 
 G_END_DECLS
 

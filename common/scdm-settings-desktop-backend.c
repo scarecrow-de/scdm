@@ -51,14 +51,14 @@ enum {
         PROP_FILENAME,
 };
 
-static void     gdm_settings_desktop_backend_class_init (ScdmSettingsDesktopBackendClass *klass);
-static void     gdm_settings_desktop_backend_init       (ScdmSettingsDesktopBackend      *settings_desktop_backend);
-static void     gdm_settings_desktop_backend_finalize   (GObject                        *object);
+static void     scdm_settings_desktop_backend_class_init (ScdmSettingsDesktopBackendClass *klass);
+static void     scdm_settings_desktop_backend_init       (ScdmSettingsDesktopBackend      *settings_desktop_backend);
+static void     scdm_settings_desktop_backend_finalize   (GObject                        *object);
 
-G_DEFINE_TYPE (ScdmSettingsDesktopBackend, gdm_settings_desktop_backend, GDM_TYPE_SETTINGS_BACKEND)
+G_DEFINE_TYPE (ScdmSettingsDesktopBackend, scdm_settings_desktop_backend, GDM_TYPE_SETTINGS_BACKEND)
 
 static void
-_gdm_settings_desktop_backend_set_file_name (ScdmSettingsDesktopBackend *backend,
+_scdm_settings_desktop_backend_set_file_name (ScdmSettingsDesktopBackend *backend,
                                              const char                *filename)
 {
         gboolean res;
@@ -89,7 +89,7 @@ _gdm_settings_desktop_backend_set_file_name (ScdmSettingsDesktopBackend *backend
 }
 
 static void
-gdm_settings_desktop_backend_set_property (GObject      *object,
+scdm_settings_desktop_backend_set_property (GObject      *object,
                                            guint         prop_id,
                                            const GValue *value,
                                            GParamSpec   *pspec)
@@ -100,7 +100,7 @@ gdm_settings_desktop_backend_set_property (GObject      *object,
 
         switch (prop_id) {
                 case PROP_FILENAME:
-                        _gdm_settings_desktop_backend_set_file_name (self, g_value_get_string (value));
+                        _scdm_settings_desktop_backend_set_file_name (self, g_value_get_string (value));
                         break;
                 default:
                         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -109,7 +109,7 @@ gdm_settings_desktop_backend_set_property (GObject      *object,
 }
 
 static void
-gdm_settings_desktop_backend_get_property (GObject      *object,
+scdm_settings_desktop_backend_get_property (GObject      *object,
                                            guint         prop_id,
                                            GValue       *value,
                                            GParamSpec   *pspec)
@@ -217,7 +217,7 @@ parse_key_string (const char *keystring,
 }
 
 static gboolean
-gdm_settings_desktop_backend_get_value (ScdmSettingsBackend *backend,
+scdm_settings_desktop_backend_get_value (ScdmSettingsBackend *backend,
                                         const char         *key,
                                         char              **value,
                                         GError            **error)
@@ -239,7 +239,7 @@ gdm_settings_desktop_backend_get_value (ScdmSettingsBackend *backend,
         }
 
         val = g = k = l = NULL;
-        /*GDM_SETTINGS_BACKEND_CLASS (gdm_settings_desktop_backend_parent_class)->get_value (display);*/
+        /*GDM_SETTINGS_BACKEND_CLASS (scdm_settings_desktop_backend_parent_class)->get_value (display);*/
         if (! parse_key_string (key, &g, &k, &l, NULL)) {
                 g_set_error (error, GDM_SETTINGS_BACKEND_ERROR, GDM_SETTINGS_BACKEND_ERROR_KEY_NOT_FOUND, "Key not found");
                 goto out;
@@ -332,7 +332,7 @@ queue_save (ScdmSettingsDesktopBackend *backend)
 }
 
 static gboolean
-gdm_settings_desktop_backend_set_value (ScdmSettingsBackend *backend,
+scdm_settings_desktop_backend_set_value (ScdmSettingsBackend *backend,
                                         const char         *key,
                                         const char         *value,
                                         GError            **error)
@@ -346,7 +346,7 @@ gdm_settings_desktop_backend_set_value (ScdmSettingsBackend *backend,
         g_return_val_if_fail (GDM_IS_SETTINGS_BACKEND (backend), FALSE);
         g_return_val_if_fail (key != NULL, FALSE);
 
-        /*GDM_SETTINGS_BACKEND_CLASS (gdm_settings_desktop_backend_parent_class)->get_value (display);*/
+        /*GDM_SETTINGS_BACKEND_CLASS (scdm_settings_desktop_backend_parent_class)->get_value (display);*/
         if (! parse_key_string (key, &g, &k, &l, NULL)) {
                 g_set_error (error, GDM_SETTINGS_BACKEND_ERROR, GDM_SETTINGS_BACKEND_ERROR_KEY_NOT_FOUND, "Key not found");
                 return FALSE;
@@ -371,7 +371,7 @@ gdm_settings_desktop_backend_set_value (ScdmSettingsBackend *backend,
         GDM_SETTINGS_DESKTOP_BACKEND (backend)->dirty = TRUE;
         queue_save (GDM_SETTINGS_DESKTOP_BACKEND (backend));
 
-        gdm_settings_backend_value_changed (backend, key, old_val, value);
+        scdm_settings_backend_value_changed (backend, key, old_val, value);
 
         g_free (old_val);
 
@@ -379,17 +379,17 @@ gdm_settings_desktop_backend_set_value (ScdmSettingsBackend *backend,
 }
 
 static void
-gdm_settings_desktop_backend_class_init (ScdmSettingsDesktopBackendClass *klass)
+scdm_settings_desktop_backend_class_init (ScdmSettingsDesktopBackendClass *klass)
 {
         GObjectClass            *object_class = G_OBJECT_CLASS (klass);
         ScdmSettingsBackendClass *backend_class = GDM_SETTINGS_BACKEND_CLASS (klass);
 
-        object_class->get_property = gdm_settings_desktop_backend_get_property;
-        object_class->set_property = gdm_settings_desktop_backend_set_property;
-        object_class->finalize = gdm_settings_desktop_backend_finalize;
+        object_class->get_property = scdm_settings_desktop_backend_get_property;
+        object_class->set_property = scdm_settings_desktop_backend_set_property;
+        object_class->finalize = scdm_settings_desktop_backend_finalize;
 
-        backend_class->get_value = gdm_settings_desktop_backend_get_value;
-        backend_class->set_value = gdm_settings_desktop_backend_set_value;
+        backend_class->get_value = scdm_settings_desktop_backend_get_value;
+        backend_class->set_value = scdm_settings_desktop_backend_set_value;
 
         g_object_class_install_property (object_class,
                                          PROP_FILENAME,
@@ -401,12 +401,12 @@ gdm_settings_desktop_backend_class_init (ScdmSettingsDesktopBackendClass *klass)
 }
 
 static void
-gdm_settings_desktop_backend_init (ScdmSettingsDesktopBackend *backend)
+scdm_settings_desktop_backend_init (ScdmSettingsDesktopBackend *backend)
 {
 }
 
 static void
-gdm_settings_desktop_backend_finalize (GObject *object)
+scdm_settings_desktop_backend_finalize (GObject *object)
 {
         ScdmSettingsDesktopBackend *backend;
 
@@ -419,11 +419,11 @@ gdm_settings_desktop_backend_finalize (GObject *object)
         g_key_file_free (backend->key_file);
         g_free (backend->filename);
 
-        G_OBJECT_CLASS (gdm_settings_desktop_backend_parent_class)->finalize (object);
+        G_OBJECT_CLASS (scdm_settings_desktop_backend_parent_class)->finalize (object);
 }
 
 ScdmSettingsBackend *
-gdm_settings_desktop_backend_new (const char* filename)
+scdm_settings_desktop_backend_new (const char* filename)
 {
         GObject *object;
 

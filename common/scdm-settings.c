@@ -53,27 +53,27 @@ enum {
 
 static guint signals [LAST_SIGNAL] = { 0, };
 
-static void     gdm_settings_class_init (ScdmSettingsClass *klass);
-static void     gdm_settings_init       (ScdmSettings      *settings);
-static void     gdm_settings_finalize   (GObject          *object);
+static void     scdm_settings_class_init (ScdmSettingsClass *klass);
+static void     scdm_settings_init       (ScdmSettings      *settings);
+static void     scdm_settings_finalize   (GObject          *object);
 
 static gpointer settings_object = NULL;
 
-G_DEFINE_TYPE (ScdmSettings, gdm_settings, G_TYPE_OBJECT)
+G_DEFINE_TYPE (ScdmSettings, scdm_settings, G_TYPE_OBJECT)
 
 GQuark
-gdm_settings_error_quark (void)
+scdm_settings_error_quark (void)
 {
         static GQuark ret = 0;
         if (ret == 0) {
-                ret = g_quark_from_static_string ("gdm_settings_error");
+                ret = g_quark_from_static_string ("scdm_settings_error");
         }
 
         return ret;
 }
 
 gboolean
-gdm_settings_get_value (ScdmSettings *settings,
+scdm_settings_get_value (ScdmSettings *settings,
                         const char  *key,
                         char       **value,
                         GError     **error)
@@ -95,7 +95,7 @@ gdm_settings_get_value (ScdmSettings *settings,
                         local_error = NULL;
                 }
 
-                res = gdm_settings_backend_get_value (backend,
+                res = scdm_settings_backend_get_value (backend,
                                                       key,
                                                       value,
                                                       &local_error);
@@ -110,7 +110,7 @@ gdm_settings_get_value (ScdmSettings *settings,
 }
 
 gboolean
-gdm_settings_set_value (ScdmSettings *settings,
+scdm_settings_set_value (ScdmSettings *settings,
                         const char  *key,
                         const char  *value,
                         GError     **error)
@@ -134,7 +134,7 @@ gdm_settings_set_value (ScdmSettings *settings,
                         local_error = NULL;
                 }
 
-                res = gdm_settings_backend_set_value (backend,
+                res = scdm_settings_backend_set_value (backend,
                                                       key,
                                                       value,
                                                       &local_error);
@@ -150,11 +150,11 @@ gdm_settings_set_value (ScdmSettings *settings,
 }
 
 static void
-gdm_settings_class_init (ScdmSettingsClass *klass)
+scdm_settings_class_init (ScdmSettingsClass *klass)
 {
         GObjectClass   *object_class = G_OBJECT_CLASS (klass);
 
-        object_class->finalize = gdm_settings_finalize;
+        object_class->finalize = scdm_settings_finalize;
 
         signals [VALUE_CHANGED] =
                 g_signal_new ("value-changed",
@@ -185,16 +185,16 @@ backend_value_changed (ScdmSettingsBackend *backend,
 }
 
 static void
-gdm_settings_init (ScdmSettings *settings)
+scdm_settings_init (ScdmSettings *settings)
 {
         GList *l;
         ScdmSettingsBackend *backend;
 
-        backend = gdm_settings_desktop_backend_new (GDM_CUSTOM_CONF);
+        backend = scdm_settings_desktop_backend_new (GDM_CUSTOM_CONF);
         if (backend)
                 settings->backends = g_list_prepend (NULL, backend);
 
-        backend = gdm_settings_desktop_backend_new (GDM_RUNTIME_CONF);
+        backend = scdm_settings_desktop_backend_new (GDM_RUNTIME_CONF);
         if (backend)
                 settings->backends = g_list_prepend (settings->backends, backend);
 
@@ -209,7 +209,7 @@ gdm_settings_init (ScdmSettings *settings)
 }
 
 static void
-gdm_settings_finalize (GObject *object)
+scdm_settings_finalize (GObject *object)
 {
         ScdmSettings *settings;
 
@@ -226,11 +226,11 @@ gdm_settings_finalize (GObject *object)
 
         settings_object = NULL;
 
-        G_OBJECT_CLASS (gdm_settings_parent_class)->finalize (object);
+        G_OBJECT_CLASS (scdm_settings_parent_class)->finalize (object);
 }
 
 ScdmSettings *
-gdm_settings_new (void)
+scdm_settings_new (void)
 {
         if (settings_object != NULL) {
                 g_object_ref (settings_object);

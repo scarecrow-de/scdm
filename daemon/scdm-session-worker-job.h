@@ -26,22 +26,22 @@
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_SESSION_WORKER_JOB (gdm_session_worker_job_get_type ())
-G_DECLARE_FINAL_TYPE (ScdmSessionWorkerJob, gdm_session_worker_job, GDM, SESSION_WORKER_JOB, GObject)
+#define GDM_TYPE_SESSION_WORKER_JOB (scdm_session_worker_job_get_type ())
+G_DECLARE_FINAL_TYPE (ScdmSessionWorkerJob, scdm_session_worker_job, GDM, SESSION_WORKER_JOB, GObject)
 
-ScdmSessionWorkerJob *   gdm_session_worker_job_new                (void);
-void                    gdm_session_worker_job_set_server_address (ScdmSessionWorkerJob *session_worker_job,
+ScdmSessionWorkerJob *   scdm_session_worker_job_new                (void);
+void                    scdm_session_worker_job_set_server_address (ScdmSessionWorkerJob *session_worker_job,
                                                                    const char          *server_address);
-void                    gdm_session_worker_job_set_for_reauth (ScdmSessionWorkerJob *session_worker_job,
+void                    scdm_session_worker_job_set_for_reauth (ScdmSessionWorkerJob *session_worker_job,
                                                                gboolean             for_reauth);
-void                    gdm_session_worker_job_set_environment    (ScdmSessionWorkerJob *session_worker_job,
+void                    scdm_session_worker_job_set_environment    (ScdmSessionWorkerJob *session_worker_job,
                                                                    const char * const  *environment);
-gboolean                gdm_session_worker_job_start              (ScdmSessionWorkerJob *session_worker_job,
+gboolean                scdm_session_worker_job_start              (ScdmSessionWorkerJob *session_worker_job,
                                                                    const char          *name);
-void                    gdm_session_worker_job_stop               (ScdmSessionWorkerJob *session_worker_job);
-void                    gdm_session_worker_job_stop_now           (ScdmSessionWorkerJob *session_worker_job);
+void                    scdm_session_worker_job_stop               (ScdmSessionWorkerJob *session_worker_job);
+void                    scdm_session_worker_job_stop_now           (ScdmSessionWorkerJob *session_worker_job);
 
-GPid                    gdm_session_worker_job_get_pid            (ScdmSessionWorkerJob *session_worker_job);
+GPid                    scdm_session_worker_job_get_pid            (ScdmSessionWorkerJob *session_worker_job);
 
 G_END_DECLS
 

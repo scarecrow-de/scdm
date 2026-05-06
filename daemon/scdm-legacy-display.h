@@ -27,10 +27,10 @@
 
 G_BEGIN_DECLS
 
-#define GDM_TYPE_LEGACY_DISPLAY (gdm_legacy_display_get_type ())
-G_DECLARE_FINAL_TYPE (ScdmLegacyDisplay, gdm_legacy_display, GDM, LEGACY_DISPLAY, ScdmDisplay)
+#define GDM_TYPE_LEGACY_DISPLAY (scdm_legacy_display_get_type ())
+G_DECLARE_FINAL_TYPE (ScdmLegacyDisplay, scdm_legacy_display, GDM, LEGACY_DISPLAY, ScdmDisplay)
 
-ScdmDisplay *        gdm_legacy_display_new                     (int display_number);
+ScdmDisplay *        scdm_legacy_display_new                     (int display_number);
 
 
 G_END_DECLS

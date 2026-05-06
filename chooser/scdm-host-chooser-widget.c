@@ -86,10 +86,10 @@ enum {
 
 static guint signals [LAST_SIGNAL] = { 0, };
 
-static void     gdm_host_chooser_widget_class_init  (ScdmHostChooserWidgetClass *klass);
-static void     gdm_host_chooser_widget_init        (ScdmHostChooserWidget      *host_chooser_widget);
+static void     scdm_host_chooser_widget_class_init  (ScdmHostChooserWidgetClass *klass);
+static void     scdm_host_chooser_widget_init        (ScdmHostChooserWidget      *host_chooser_widget);
 
-G_DEFINE_TYPE (ScdmHostChooserWidget, gdm_host_chooser_widget, GTK_TYPE_BOX)
+G_DEFINE_TYPE (ScdmHostChooserWidget, scdm_host_chooser_widget, GTK_TYPE_BOX)
 
 #define GDM_XDMCP_PROTOCOL_VERSION 1001
 #define SCAN_TIMEOUT 30
@@ -125,16 +125,16 @@ address_hostnames_equal (ScdmAddress *address,
         char *hostname, *other_hostname;
         gboolean are_equal;
 
-        if (gdm_address_equal (address, other_address)) {
+        if (scdm_address_equal (address, other_address)) {
                 return TRUE;
         }
 
-        if (!gdm_address_get_hostname (address, &hostname)) {
-                gdm_address_get_numeric_info (address, &hostname, NULL);
+        if (!scdm_address_get_hostname (address, &hostname)) {
+                scdm_address_get_numeric_info (address, &hostname, NULL);
         }
 
-        if (!gdm_address_get_hostname (other_address, &other_hostname)) {
-                gdm_address_get_numeric_info (other_address, &other_hostname, NULL);
+        if (!scdm_address_get_hostname (other_address, &other_hostname)) {
+                scdm_address_get_numeric_info (other_address, &other_hostname, NULL);
         }
 
         are_equal = g_strcmp0 (hostname, other_hostname) == 0;
@@ -157,7 +157,7 @@ find_known_host (ScdmHostChooserWidget *widget,
 
                 host = li->data;
 
-                other_address = gdm_chooser_host_get_address (host);
+                other_address = scdm_chooser_host_get_address (host);
                         
                 if (address_hostnames_equal (address, other_address)) {
                         goto out;
@@ -186,18 +186,18 @@ browser_add_host (ScdmHostChooserWidget *widget,
 
         g_assert (host != NULL);
 
-        if (! gdm_chooser_host_get_willing (host)) {
+        if (! scdm_chooser_host_get_willing (host)) {
                 gtk_widget_set_sensitive (GTK_WIDGET (widget), TRUE);
                 return;
         }
 
-        res = gdm_address_get_hostname (gdm_chooser_host_get_address (host), &hostname);
+        res = scdm_address_get_hostname (scdm_chooser_host_get_address (host), &hostname);
         if (! res) {
-                gdm_address_get_numeric_info (gdm_chooser_host_get_address (host), &hostname, NULL);
+                scdm_address_get_numeric_info (scdm_chooser_host_get_address (host), &hostname, NULL);
         }
 
         name = g_markup_escape_text (hostname, -1);
-        desc = g_markup_escape_text (gdm_chooser_host_get_description (host), -1);
+        desc = g_markup_escape_text (scdm_chooser_host_get_description (host), -1);
         label = g_strdup_printf ("<b>%s</b>\n%s", name, desc);
         g_free (name);
         g_free (desc);
@@ -266,13 +266,13 @@ decode_packet (GIOChannel           *source,
                 return TRUE;
         }
 
-        address = gdm_address_new_from_sockaddr ((struct sockaddr *) &clnt_ss, ss_len);
+        address = scdm_address_new_from_sockaddr ((struct sockaddr *) &clnt_ss, ss_len);
         if (address == NULL) {
                 g_warning (_("XDMCP: Unable to parse address"));
                 return TRUE;
         }
 
-        gdm_address_debug (address);
+        scdm_address_debug (address);
 
         if (header.opcode == WILLING) {
                 if (! XdmcpReadARRAY8 (&buf, &auth)) {
@@ -310,7 +310,7 @@ decode_packet (GIOChannel           *source,
         } else {
                 /* server changed it's mind */
                 if (header.opcode == WILLING
-                    && ! gdm_chooser_host_get_willing (chooser_host)) {
+                    && ! scdm_chooser_host_get_willing (chooser_host)) {
                         browser_add_host (widget, chooser_host);
                         g_object_set (chooser_host, "willing", TRUE, NULL);
                 }
@@ -325,7 +325,7 @@ decode_packet (GIOChannel           *source,
         }
 
         g_free (status);
-        gdm_address_free (address);
+        scdm_address_free (address);
 
         return TRUE;
 }
@@ -344,13 +344,13 @@ do_ping (ScdmHostChooserWidget *widget,
 
                 address = l->data;
 
-                gdm_address_debug (address);
+                scdm_address_debug (address);
                 errno = 0;
                 g_debug ("fd:%d", widget->socket_fd);
                 res = XdmcpFlush (widget->socket_fd,
                                   &widget->broadcast_buf,
-                                  (XdmcpNetaddr)gdm_address_peek_sockaddr_storage (address),
-                                  (int)gdm_sockaddr_len (gdm_address_peek_sockaddr_storage (address)));
+                                  (XdmcpNetaddr)scdm_address_peek_sockaddr_storage (address),
+                                  (int)scdm_sockaddr_len (scdm_address_peek_sockaddr_storage (address)));
 
                 if (! res) {
                         g_warning ("Unable to flush the XDMCP broadcast packet: %s", g_strerror (errno));
@@ -364,11 +364,11 @@ do_ping (ScdmHostChooserWidget *widget,
 
                         address = l->data;
 
-                        gdm_address_debug (address);
+                        scdm_address_debug (address);
                         res = XdmcpFlush (widget->socket_fd,
                                           &widget->query_buf,
-                                          (XdmcpNetaddr)gdm_address_peek_sockaddr_storage (address),
-                                          (int)gdm_sockaddr_len (gdm_address_peek_sockaddr_storage (address)));
+                                          (XdmcpNetaddr)scdm_address_peek_sockaddr_storage (address),
+                                          (int)scdm_sockaddr_len (scdm_address_peek_sockaddr_storage (address)));
                         if (! res) {
                                 g_warning ("Unable to flush the XDMCP query packet");
                         }
@@ -403,7 +403,7 @@ xdmcp_discover (ScdmHostChooserWidget *widget)
                              _(scanning_message));
 
         while (hl) {
-                gdm_chooser_host_dispose ((ScdmChooserHost *) hl->data);
+                scdm_chooser_host_dispose ((ScdmChooserHost *) hl->data);
                 hl = hl->next;
         }
 
@@ -495,10 +495,10 @@ find_broadcast_addresses (ScdmHostChooserWidget *widget)
 
                         g_memmove (&sin, &ifreq.ifr_broadaddr, sizeof (struct sockaddr_in));
                         sin.sin_port = htons (XDM_UDP_PORT);
-                        address = gdm_address_new_from_sockaddr ((struct sockaddr *) &sin, sizeof (sin));
+                        address = scdm_address_new_from_sockaddr ((struct sockaddr *) &sin, sizeof (sin));
                         if (address != NULL) {
                                 g_debug ("Adding if %s", name);
-                                gdm_address_debug (address);
+                                scdm_address_debug (address);
 
                                 widget->broadcast_addresses = g_slist_append (widget->broadcast_addresses, address);
                         }
@@ -531,7 +531,7 @@ add_hosts (ScdmHostChooserWidget *widget)
                 }
 
                 if (strcmp (name, "MULTICAST") == 0) {
-                        /*gdm_chooser_find_mcaddr ();*/
+                        /*scdm_chooser_find_mcaddr ();*/
                         continue;
                 }
 
@@ -551,7 +551,7 @@ add_hosts (ScdmHostChooserWidget *widget)
                 for (ai = result; ai != NULL; ai = ai->ai_next) {
                         ScdmAddress *address;
 
-                        address = gdm_address_new_from_sockaddr (ai->ai_addr, ai->ai_addrlen);
+                        address = scdm_address_new_from_sockaddr (ai->ai_addr, ai->ai_addrlen);
                         if (address != NULL) {
                                 widget->query_addresses = g_slist_append (widget->query_addresses, address);
                         }
@@ -639,7 +639,7 @@ xdmcp_init (ScdmHostChooserWidget *widget)
 }
 
 void
-gdm_host_chooser_widget_refresh (ScdmHostChooserWidget *widget)
+scdm_host_chooser_widget_refresh (ScdmHostChooserWidget *widget)
 {
         g_return_if_fail (GDM_IS_HOST_CHOOSER_WIDGET (widget));
 
@@ -647,7 +647,7 @@ gdm_host_chooser_widget_refresh (ScdmHostChooserWidget *widget)
 }
 
 ScdmChooserHost *
-gdm_host_chooser_widget_get_host (ScdmHostChooserWidget *widget)
+scdm_host_chooser_widget_get_host (ScdmHostChooserWidget *widget)
 {
         ScdmChooserHost *host;
 
@@ -662,7 +662,7 @@ gdm_host_chooser_widget_get_host (ScdmHostChooserWidget *widget)
 }
 
 static void
-_gdm_host_chooser_widget_set_kind_mask (ScdmHostChooserWidget *widget,
+_scdm_host_chooser_widget_set_kind_mask (ScdmHostChooserWidget *widget,
                                         int                   kind_mask)
 {
         if (widget->kind_mask != kind_mask) {
@@ -671,7 +671,7 @@ _gdm_host_chooser_widget_set_kind_mask (ScdmHostChooserWidget *widget,
 }
 
 static void
-gdm_host_chooser_widget_set_property (GObject        *object,
+scdm_host_chooser_widget_set_property (GObject        *object,
                                       guint           prop_id,
                                       const GValue   *value,
                                       GParamSpec     *pspec)
@@ -682,7 +682,7 @@ gdm_host_chooser_widget_set_property (GObject        *object,
 
         switch (prop_id) {
         case PROP_KIND_MASK:
-                _gdm_host_chooser_widget_set_kind_mask (self, g_value_get_int (value));
+                _scdm_host_chooser_widget_set_kind_mask (self, g_value_get_int (value));
                 break;
         default:
                 G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -691,7 +691,7 @@ gdm_host_chooser_widget_set_property (GObject        *object,
 }
 
 static void
-gdm_host_chooser_widget_get_property (GObject        *object,
+scdm_host_chooser_widget_get_property (GObject        *object,
                                       guint           prop_id,
                                       GValue         *value,
                                       GParamSpec     *pspec)
@@ -704,13 +704,13 @@ gdm_host_chooser_widget_get_property (GObject        *object,
 }
 
 static GObject *
-gdm_host_chooser_widget_constructor (GType                  type,
+scdm_host_chooser_widget_constructor (GType                  type,
                                      guint                  n_construct_properties,
                                      GObjectConstructParam *construct_properties)
 {
         ScdmHostChooserWidget      *widget;
 
-        widget = GDM_HOST_CHOOSER_WIDGET (G_OBJECT_CLASS (gdm_host_chooser_widget_parent_class)->constructor (type,
+        widget = GDM_HOST_CHOOSER_WIDGET (G_OBJECT_CLASS (scdm_host_chooser_widget_parent_class)->constructor (type,
                                                                                                                            n_construct_properties,
                                                                                                                            construct_properties));
 
@@ -721,7 +721,7 @@ gdm_host_chooser_widget_constructor (GType                  type,
 }
 
 static void
-gdm_host_chooser_widget_dispose (GObject *object)
+scdm_host_chooser_widget_dispose (GObject *object)
 {
         ScdmHostChooserWidget *widget;
 
@@ -731,14 +731,14 @@ gdm_host_chooser_widget_dispose (GObject *object)
 
         if (widget->broadcast_addresses != NULL) {
                 g_slist_foreach (widget->broadcast_addresses,
-                                 (GFunc)gdm_address_free,
+                                 (GFunc)scdm_address_free,
                                  NULL);
                 g_slist_free (widget->broadcast_addresses);
                 widget->broadcast_addresses = NULL;
         }
         if (widget->query_addresses != NULL) {
                 g_slist_foreach (widget->query_addresses,
-                                 (GFunc)gdm_address_free,
+                                 (GFunc)scdm_address_free,
                                  NULL);
                 g_slist_free (widget->query_addresses);
                 widget->query_addresses = NULL;
@@ -753,18 +753,18 @@ gdm_host_chooser_widget_dispose (GObject *object)
 
         widget->current_host = NULL;
 
-        G_OBJECT_CLASS (gdm_host_chooser_widget_parent_class)->dispose (object);
+        G_OBJECT_CLASS (scdm_host_chooser_widget_parent_class)->dispose (object);
 }
 
 static void
-gdm_host_chooser_widget_class_init (ScdmHostChooserWidgetClass *klass)
+scdm_host_chooser_widget_class_init (ScdmHostChooserWidgetClass *klass)
 {
         GObjectClass   *object_class = G_OBJECT_CLASS (klass);
 
-        object_class->get_property = gdm_host_chooser_widget_get_property;
-        object_class->set_property = gdm_host_chooser_widget_set_property;
-        object_class->constructor = gdm_host_chooser_widget_constructor;
-        object_class->dispose = gdm_host_chooser_widget_dispose;
+        object_class->get_property = scdm_host_chooser_widget_get_property;
+        object_class->set_property = scdm_host_chooser_widget_set_property;
+        object_class->constructor = scdm_host_chooser_widget_constructor;
+        object_class->dispose = scdm_host_chooser_widget_dispose;
 
         g_object_class_install_property (object_class,
                                          PROP_KIND_MASK,
@@ -814,7 +814,7 @@ on_row_activated (GtkTreeView          *tree_view,
 }
 
 static void
-gdm_host_chooser_widget_init (ScdmHostChooserWidget *widget)
+scdm_host_chooser_widget_init (ScdmHostChooserWidget *widget)
 {
         GtkWidget         *scrolled;
         GtkTreeSelection  *selection;
@@ -866,7 +866,7 @@ gdm_host_chooser_widget_init (ScdmHostChooserWidget *widget)
 }
 
 GtkWidget *
-gdm_host_chooser_widget_new (int kind_mask)
+scdm_host_chooser_widget_new (int kind_mask)
 {
         GObject *object;
 

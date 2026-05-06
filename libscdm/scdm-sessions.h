@@ -28,8 +28,8 @@
 
 G_BEGIN_DECLS
 
-char **                gdm_get_session_ids (void);
-char *                 gdm_get_session_name_and_description (const char  *id,
+char **                scdm_get_session_ids (void);
+char *                 scdm_get_session_name_and_description (const char  *id,
                                                              char       **description);
 
 G_END_DECLS
