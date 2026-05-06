@@ -871,7 +871,7 @@ scdm_launch_environment_finalize (GObject *object)
         ScdmLaunchEnvironment *launch_environment;
 
         g_return_if_fail (object != NULL);
-        g_return_if_fail (SCDM_IS_LAUNCH_ENVIRONMENT (object));
+        g_return_if_fail (GDM_IS_LAUNCH_ENVIRONMENT (object));
 
         launch_environment = SCDM_LAUNCH_ENVIRONMENT (object);
 

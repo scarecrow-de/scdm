@@ -2236,7 +2236,7 @@ scdm_session_start_conversation (ScdmSession *self,
 {
         ScdmSessionConversation *conversation;
 
-        g_return_val_if_fail (SCDM_IS_SESSION (self), FALSE);
+        g_return_val_if_fail (GDM_IS_SESSION (self), FALSE);
 
         conversation = g_hash_table_lookup (self->conversations,
                                             service_name);
@@ -2267,7 +2267,7 @@ scdm_session_stop_conversation (ScdmSession *self,
 {
         ScdmSessionConversation *conversation;
 
-        g_return_if_fail (SCDM_IS_SESSION (self));
+        g_return_if_fail (GDM_IS_SESSION (self));
 
         g_debug ("ScdmSession: stopping conversation %s", service_name);
 
@@ -2391,7 +2391,7 @@ scdm_session_setup (ScdmSession *self,
                    const char *service_name)
 {
 
-        g_return_if_fail (SCDM_IS_SESSION (self));
+        g_return_if_fail (GDM_IS_SESSION (self));
 
         update_session_type (self);
 
@@ -2406,7 +2406,7 @@ scdm_session_setup_for_user (ScdmSession *self,
                             const char *username)
 {
 
-        g_return_if_fail (SCDM_IS_SESSION (self));
+        g_return_if_fail (GDM_IS_SESSION (self));
         g_return_if_fail (username != NULL);
 
         update_session_type (self);
@@ -2429,7 +2429,7 @@ scdm_session_setup_for_program (ScdmSession *self,
                                const char *log_file)
 {
 
-        g_return_if_fail (SCDM_IS_SESSION (self));
+        g_return_if_fail (GDM_IS_SESSION (self));
 
         self->is_program_session = TRUE;
         initialize (self, service_name, username, log_file);
@@ -2441,7 +2441,7 @@ scdm_session_authenticate (ScdmSession *self,
 {
         ScdmSessionConversation *conversation;
 
-        g_return_if_fail (SCDM_IS_SESSION (self));
+        g_return_if_fail (GDM_IS_SESSION (self));
 
         conversation = find_conversation_by_name (self, service_name);
         if (conversation != NULL) {
@@ -2458,7 +2458,7 @@ scdm_session_authorize (ScdmSession *self,
 {
         ScdmSessionConversation *conversation;
 
-        g_return_if_fail (SCDM_IS_SESSION (self));
+        g_return_if_fail (GDM_IS_SESSION (self));
 
         conversation = find_conversation_by_name (self, service_name);
         if (conversation != NULL) {
@@ -2475,7 +2475,7 @@ scdm_session_accredit (ScdmSession *self,
 {
         ScdmSessionConversation *conversation;
 
-        g_return_if_fail (SCDM_IS_SESSION (self));
+        g_return_if_fail (GDM_IS_SESSION (self));
 
         conversation = find_conversation_by_name (self, service_name);
         if (conversation != NULL) {
@@ -2514,7 +2514,7 @@ scdm_session_send_environment (ScdmSession *self,
 {
         ScdmSessionConversation *conversation;
 
-        g_return_if_fail (SCDM_IS_SESSION (self));
+        g_return_if_fail (GDM_IS_SESSION (self));
 
         conversation = find_conversation_by_name (self, service_name);
         if (conversation != NULL) {
@@ -2718,7 +2718,7 @@ scdm_session_open_session (ScdmSession *self,
 {
         ScdmSessionConversation *conversation;
 
-        g_return_if_fail (SCDM_IS_SESSION (self));
+        g_return_if_fail (GDM_IS_SESSION (self));
 
         conversation = find_conversation_by_name (self, service_name);
 
@@ -2839,7 +2839,7 @@ scdm_session_start_session (ScdmSession *self,
         char                   *program;
         gboolean               register_session;
 
-        g_return_if_fail (SCDM_IS_SESSION (self));
+        g_return_if_fail (GDM_IS_SESSION (self));
         g_return_if_fail (self->session_conversation == NULL);
 
         conversation = find_conversation_by_name (self, service_name);
@@ -2980,7 +2980,7 @@ void
 scdm_session_close (ScdmSession *self)
 {
 
-        g_return_if_fail (SCDM_IS_SESSION (self));
+        g_return_if_fail (GDM_IS_SESSION (self));
 
         g_debug ("ScdmSession: Closing session");
         do_reset (self);
@@ -2996,7 +2996,7 @@ scdm_session_answer_query (ScdmSession *self,
 {
         ScdmSessionConversation *conversation;
 
-        g_return_if_fail (SCDM_IS_SESSION (self));
+        g_return_if_fail (GDM_IS_SESSION (self));
 
         conversation = find_conversation_by_name (self, service_name);
 
@@ -3008,7 +3008,7 @@ scdm_session_answer_query (ScdmSession *self,
 void
 scdm_session_cancel  (ScdmSession *self)
 {
-        g_return_if_fail (SCDM_IS_SESSION (self));
+        g_return_if_fail (GDM_IS_SESSION (self));
 
         g_signal_emit (G_OBJECT (self), signals [CANCELLED], 0);
 }
@@ -3042,7 +3042,7 @@ scdm_session_is_running (ScdmSession *self)
 gboolean
 scdm_session_client_is_connected (ScdmSession *self)
 {
-        g_return_val_if_fail (SCDM_IS_SESSION (self), FALSE);
+        g_return_val_if_fail (GDM_IS_SESSION (self), FALSE);
 
         return self->outside_connections != NULL;
 }
@@ -3079,7 +3079,7 @@ scdm_session_start_reauthentication (ScdmSession *session,
 const char *
 scdm_session_get_server_address (ScdmSession *self)
 {
-        g_return_val_if_fail (SCDM_IS_SESSION (self), NULL);
+        g_return_val_if_fail (GDM_IS_SESSION (self), NULL);
 
         return g_dbus_server_get_client_address (self->outside_server);
 }
@@ -3087,7 +3087,7 @@ scdm_session_get_server_address (ScdmSession *self)
 const char *
 scdm_session_get_username (ScdmSession *self)
 {
-        g_return_val_if_fail (SCDM_IS_SESSION (self), NULL);
+        g_return_val_if_fail (GDM_IS_SESSION (self), NULL);
 
         return self->selected_user;
 }
@@ -3095,7 +3095,7 @@ scdm_session_get_username (ScdmSession *self)
 const char *
 scdm_session_get_display_device (ScdmSession *self)
 {
-        g_return_val_if_fail (SCDM_IS_SESSION (self), NULL);
+        g_return_val_if_fail (GDM_IS_SESSION (self), NULL);
 
         return self->display_device;
 }
@@ -3103,7 +3103,7 @@ scdm_session_get_display_device (ScdmSession *self)
 const char *
 scdm_session_get_display_seat_id (ScdmSession *self)
 {
-        g_return_val_if_fail (SCDM_IS_SESSION (self), NULL);
+        g_return_val_if_fail (GDM_IS_SESSION (self), NULL);
 
         return g_strdup (self->display_seat_id);
 }
@@ -3113,7 +3113,7 @@ scdm_session_get_session_id (ScdmSession *self)
 {
         ScdmSessionConversation *conversation;
 
-        g_return_val_if_fail (SCDM_IS_SESSION (self), NULL);
+        g_return_val_if_fail (GDM_IS_SESSION (self), NULL);
 
         conversation = self->session_conversation;
 
@@ -3130,7 +3130,7 @@ scdm_session_get_conversation_session_id (ScdmSession *self,
 {
         ScdmSessionConversation *conversation;
 
-        g_return_val_if_fail (SCDM_IS_SESSION (self), NULL);
+        g_return_val_if_fail (GDM_IS_SESSION (self), NULL);
 
         conversation = find_conversation_by_name (self, service_name);
 
@@ -3157,7 +3157,7 @@ scdm_session_is_wayland_session (ScdmSession *self)
         char       *full_path = NULL;
 
         g_return_val_if_fail (self != NULL, FALSE);
-        g_return_val_if_fail (SCDM_IS_SESSION (self), FALSE);
+        g_return_val_if_fail (GDM_IS_SESSION (self), FALSE);
 
         filename = get_session_filename (self);
 
@@ -3203,7 +3203,7 @@ scdm_session_session_registers (ScdmSession *self)
         g_autofree char *filename = NULL;
 
         g_return_val_if_fail (self != NULL, FALSE);
-        g_return_val_if_fail (SCDM_IS_SESSION (self), FALSE);
+        g_return_val_if_fail (GDM_IS_SESSION (self), FALSE);
 
         filename = get_session_filename (self);
 
@@ -3236,7 +3236,7 @@ scdm_session_bypasses_xsession (ScdmSession *self)
         char       *filename = NULL;
 
         g_return_val_if_fail (self != NULL, FALSE);
-        g_return_val_if_fail (SCDM_IS_SESSION (self), FALSE);
+        g_return_val_if_fail (GDM_IS_SESSION (self), FALSE);
 
 #ifdef ENABLE_WAYLAND_SUPPORT
         if (scdm_session_is_wayland_session (self)) {

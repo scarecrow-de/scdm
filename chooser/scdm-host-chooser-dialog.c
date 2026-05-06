@@ -56,7 +56,7 @@ scdm_host_chooser_dialog_get_host (ScdmHostChooserDialog *dialog)
 {
         ScdmChooserHost *host;
 
-        g_return_val_if_fail (SCDM_IS_HOST_CHOOSER_DIALOG (dialog), NULL);
+        g_return_val_if_fail (GDM_IS_HOST_CHOOSER_DIALOG (dialog), NULL);
 
         host = scdm_host_chooser_widget_get_host (SCDM_HOST_CHOOSER_WIDGET (dialog->chooser_widget));
 

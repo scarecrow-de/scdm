@@ -3532,7 +3532,7 @@ scdm_session_worker_finalize (GObject *object)
         ScdmSessionWorker *worker;
 
         g_return_if_fail (object != NULL);
-        g_return_if_fail (SCDM_IS_SESSION_WORKER (object));
+        g_return_if_fail (GDM_IS_SESSION_WORKER (object));
 
         worker = SCDM_SESSION_WORKER (object);
 

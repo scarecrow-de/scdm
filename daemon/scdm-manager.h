@@ -32,8 +32,8 @@ G_BEGIN_DECLS
 #define SCDM_TYPE_MANAGER         (scdm_manager_get_type ())
 #define SCDM_MANAGER(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), SCDM_TYPE_MANAGER, ScdmManager))
 #define SCDM_MANAGER_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), SCDM_TYPE_MANAGER, ScdmManagerClass))
-#define SCDM_IS_MANAGER(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), SCDM_TYPE_MANAGER))
-#define SCDM_IS_MANAGER_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), SCDM_TYPE_MANAGER))
+#define GDM_IS_MANAGER(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), SCDM_TYPE_MANAGER))
+#define GDM_IS_MANAGER_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), SCDM_TYPE_MANAGER))
 #define SCDM_MANAGER_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), SCDM_TYPE_MANAGER, ScdmManagerClass))
 
 typedef struct ScdmManagerPrivate ScdmManagerPrivate;

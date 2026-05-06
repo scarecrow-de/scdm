@@ -673,7 +673,7 @@ count_displays_from_host (const char       *id,
 {
         ScdmAddress *address;
 
-        if (SCDM_IS_XDMCP_DISPLAY (display)) {
+        if (GDM_IS_XDMCP_DISPLAY (display)) {
                 address = scdm_xdmcp_display_get_remote_address (SCDM_XDMCP_DISPLAY (display));
 
                 if (scdm_address_equal (address, data->address)) {
@@ -713,7 +713,7 @@ lookup_by_host (const char     *id,
         ScdmAddress *this_address;
         int         disp_num;
 
-        if (! SCDM_IS_XDMCP_DISPLAY (display)) {
+        if (! GDM_IS_XDMCP_DISPLAY (display)) {
                 return FALSE;
         }
 
@@ -1810,7 +1810,7 @@ count_sessions (const char             *id,
                 ScdmDisplay             *display,
                 ScdmXdmcpDisplayFactory *factory)
 {
-        if (SCDM_IS_XDMCP_DISPLAY (display)) {
+        if (GDM_IS_XDMCP_DISPLAY (display)) {
                 int status;
 
                 status = scdm_display_get_status (display);
@@ -1842,7 +1842,7 @@ purge_displays (const char             *id,
                 ScdmDisplay             *display,
                 ScdmXdmcpDisplayFactory *factory)
 {
-        if (SCDM_IS_XDMCP_DISPLAY (display)) {
+        if (GDM_IS_XDMCP_DISPLAY (display)) {
                 int status;
                 time_t currtime;
                 time_t acctime;
@@ -1888,7 +1888,7 @@ remove_host (const char     *id,
         char *hostname;
         int   disp_num;
 
-        if (! SCDM_IS_XDMCP_DISPLAY (display)) {
+        if (! GDM_IS_XDMCP_DISPLAY (display)) {
                 return FALSE;
         }
 
@@ -2488,7 +2488,7 @@ lookup_by_session_id (const char *id,
 
         sessid = GPOINTER_TO_INT (data);
 
-        if (! SCDM_IS_XDMCP_DISPLAY (display)) {
+        if (! GDM_IS_XDMCP_DISPLAY (display)) {
                 return FALSE;
         }
 
@@ -3042,7 +3042,7 @@ scdm_xdmcp_display_factory_start (ScdmDisplayFactory *base_factory)
         ScdmXdmcpDisplayFactory *factory = SCDM_XDMCP_DISPLAY_FACTORY (base_factory);
         gboolean                res;
 
-        g_return_val_if_fail (SCDM_IS_XDMCP_DISPLAY_FACTORY (factory), FALSE);
+        g_return_val_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (factory), FALSE);
         g_return_val_if_fail (factory->socket_fd == -1, FALSE);
 
         /* read configuration */
@@ -3099,7 +3099,7 @@ scdm_xdmcp_display_factory_stop (ScdmDisplayFactory *base_factory)
 {
         ScdmXdmcpDisplayFactory *factory = SCDM_XDMCP_DISPLAY_FACTORY (base_factory);
 
-        g_return_val_if_fail (SCDM_IS_XDMCP_DISPLAY_FACTORY (factory), FALSE);
+        g_return_val_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (factory), FALSE);
         g_return_val_if_fail (factory->socket_fd != -1, FALSE);
 
         if (factory->socket_watch_id > 0) {
@@ -3119,7 +3119,7 @@ void
 scdm_xdmcp_display_factory_set_port (ScdmXdmcpDisplayFactory *factory,
                                     guint                   port)
 {
-        g_return_if_fail (SCDM_IS_XDMCP_DISPLAY_FACTORY (factory));
+        g_return_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (factory));
 
         factory->port = port;
 }
@@ -3128,7 +3128,7 @@ static void
 scdm_xdmcp_display_factory_set_use_multicast (ScdmXdmcpDisplayFactory *factory,
                                              gboolean                use_multicast)
 {
-        g_return_if_fail (SCDM_IS_XDMCP_DISPLAY_FACTORY (factory));
+        g_return_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (factory));
 
         factory->use_multicast = use_multicast;
 }
@@ -3137,7 +3137,7 @@ static void
 scdm_xdmcp_display_factory_set_multicast_address (ScdmXdmcpDisplayFactory *factory,
                                                  const char             *address)
 {
-        g_return_if_fail (SCDM_IS_XDMCP_DISPLAY_FACTORY (factory));
+        g_return_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (factory));
 
         g_free (factory->multicast_address);
         factory->multicast_address = g_strdup (address);
@@ -3147,7 +3147,7 @@ static void
 scdm_xdmcp_display_factory_set_honor_indirect (ScdmXdmcpDisplayFactory *factory,
                                               gboolean                honor_indirect)
 {
-        g_return_if_fail (SCDM_IS_XDMCP_DISPLAY_FACTORY (factory));
+        g_return_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (factory));
 
         factory->honor_indirect = honor_indirect;
 }
@@ -3156,7 +3156,7 @@ static void
 scdm_xdmcp_display_factory_set_max_displays_per_host (ScdmXdmcpDisplayFactory *factory,
                                                      guint                   num)
 {
-        g_return_if_fail (SCDM_IS_XDMCP_DISPLAY_FACTORY (factory));
+        g_return_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (factory));
 
         factory->max_displays_per_host = num;
 }
@@ -3165,7 +3165,7 @@ static void
 scdm_xdmcp_display_factory_set_max_displays (ScdmXdmcpDisplayFactory *factory,
                                             guint                   num)
 {
-        g_return_if_fail (SCDM_IS_XDMCP_DISPLAY_FACTORY (factory));
+        g_return_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (factory));
 
         factory->max_displays = num;
 }
@@ -3174,7 +3174,7 @@ static void
 scdm_xdmcp_display_factory_set_max_pending_displays (ScdmXdmcpDisplayFactory *factory,
                                                     guint                   num)
 {
-        g_return_if_fail (SCDM_IS_XDMCP_DISPLAY_FACTORY (factory));
+        g_return_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (factory));
 
         factory->max_pending_displays = num;
 }
@@ -3183,7 +3183,7 @@ static void
 scdm_xdmcp_display_factory_set_max_wait (ScdmXdmcpDisplayFactory *factory,
                                         guint                   num)
 {
-        g_return_if_fail (SCDM_IS_XDMCP_DISPLAY_FACTORY (factory));
+        g_return_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (factory));
 
         factory->max_wait = num;
 }
@@ -3192,7 +3192,7 @@ static void
 scdm_xdmcp_display_factory_set_max_wait_indirect (ScdmXdmcpDisplayFactory *factory,
                                                  guint                   num)
 {
-        g_return_if_fail (SCDM_IS_XDMCP_DISPLAY_FACTORY (factory));
+        g_return_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (factory));
 
         factory->max_wait_indirect = num;
 }
@@ -3201,7 +3201,7 @@ static void
 scdm_xdmcp_display_factory_set_willing_script (ScdmXdmcpDisplayFactory *factory,
                                               const char             *script)
 {
-        g_return_if_fail (SCDM_IS_XDMCP_DISPLAY_FACTORY (factory));
+        g_return_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (factory));
 
         g_free (factory->willing_script);
         factory->willing_script = g_strdup (script);
@@ -3433,7 +3433,7 @@ scdm_xdmcp_display_factory_finalize (GObject *object)
         ScdmXdmcpDisplayFactory *factory;
 
         g_return_if_fail (object != NULL);
-        g_return_if_fail (SCDM_IS_XDMCP_DISPLAY_FACTORY (object));
+        g_return_if_fail (GDM_IS_XDMCP_DISPLAY_FACTORY (object));
 
         factory = SCDM_XDMCP_DISPLAY_FACTORY (object);
 

@@ -135,7 +135,7 @@ scdm_session_auditor_set_username (ScdmSessionAuditor *auditor,
 {
         ScdmSessionAuditorPrivate *priv;
 
-        g_return_if_fail (SCDM_IS_SESSION_AUDITOR (auditor));
+        g_return_if_fail (GDM_IS_SESSION_AUDITOR (auditor));
 
         priv = scdm_session_auditor_get_instance_private (auditor);
 
@@ -156,7 +156,7 @@ scdm_session_auditor_set_hostname (ScdmSessionAuditor *auditor,
 {
         ScdmSessionAuditorPrivate *priv;
 
-        g_return_if_fail (SCDM_IS_SESSION_AUDITOR (auditor));
+        g_return_if_fail (GDM_IS_SESSION_AUDITOR (auditor));
 
         priv = scdm_session_auditor_get_instance_private (auditor);
         priv->hostname = g_strdup (hostname);
@@ -168,7 +168,7 @@ scdm_session_auditor_set_display_device (ScdmSessionAuditor *auditor,
 {
         ScdmSessionAuditorPrivate *priv;
 
-        g_return_if_fail (SCDM_IS_SESSION_AUDITOR (auditor));
+        g_return_if_fail (GDM_IS_SESSION_AUDITOR (auditor));
 
         priv = scdm_session_auditor_get_instance_private (auditor);
         priv->display_device = g_strdup (display_device);

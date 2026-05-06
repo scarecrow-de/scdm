@@ -71,7 +71,7 @@ scdm_xdmcp_display_get_session_number (ScdmXdmcpDisplay *display)
 {
         ScdmXdmcpDisplayPrivate *priv;
 
-        g_return_val_if_fail (SCDM_IS_XDMCP_DISPLAY (display), 0);
+        g_return_val_if_fail (GDM_IS_XDMCP_DISPLAY (display), 0);
 
         priv = scdm_xdmcp_display_get_instance_private (display);
         return priv->session_number;
@@ -82,7 +82,7 @@ scdm_xdmcp_display_get_remote_address (ScdmXdmcpDisplay *display)
 {
         ScdmXdmcpDisplayPrivate *priv;
 
-        g_return_val_if_fail (SCDM_IS_XDMCP_DISPLAY (display), NULL);
+        g_return_val_if_fail (GDM_IS_XDMCP_DISPLAY (display), NULL);
 
         priv = scdm_xdmcp_display_get_instance_private (display);
         return priv->remote_address;

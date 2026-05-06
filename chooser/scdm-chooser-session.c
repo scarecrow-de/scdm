@@ -200,7 +200,7 @@ gboolean
 scdm_chooser_session_start (ScdmChooserSession *session,
                            GError           **error)
 {
-        g_return_val_if_fail (SCDM_IS_CHOOSER_SESSION (session), FALSE);
+        g_return_val_if_fail (GDM_IS_CHOOSER_SESSION (session), FALSE);
 
         session->remote_greeter = scdm_client_get_remote_greeter_sync (session->client,
                                                                             NULL,
@@ -233,7 +233,7 @@ scdm_chooser_session_start (ScdmChooserSession *session,
 void
 scdm_chooser_session_stop (ScdmChooserSession *session)
 {
-        g_return_if_fail (SCDM_IS_CHOOSER_SESSION (session));
+        g_return_if_fail (GDM_IS_CHOOSER_SESSION (session));
 
 }
 
@@ -309,7 +309,7 @@ scdm_chooser_session_finalize (GObject *object)
         ScdmChooserSession *chooser_session;
 
         g_return_if_fail (object != NULL);
-        g_return_if_fail (SCDM_IS_CHOOSER_SESSION (object));
+        g_return_if_fail (GDM_IS_CHOOSER_SESSION (object));
 
         chooser_session = SCDM_CHOOSER_SESSION (object);
 

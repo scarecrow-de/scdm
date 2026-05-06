@@ -226,7 +226,7 @@ scdm_local_display_factory_create_transient_display (ScdmLocalDisplayFactory *fa
         ScdmDisplay      *display = NULL;
         gboolean         is_initial = FALSE;
 
-        g_return_val_if_fail (SCDM_IS_LOCAL_DISPLAY_FACTORY (factory), FALSE);
+        g_return_val_if_fail (GDM_IS_LOCAL_DISPLAY_FACTORY (factory), FALSE);
 
         ret = FALSE;
 
@@ -940,7 +940,7 @@ scdm_local_display_factory_start (ScdmDisplayFactory *base_factory)
         ScdmLocalDisplayFactory *factory = SCDM_LOCAL_DISPLAY_FACTORY (base_factory);
         ScdmDisplayStore *store;
 
-        g_return_val_if_fail (SCDM_IS_LOCAL_DISPLAY_FACTORY (factory), FALSE);
+        g_return_val_if_fail (GDM_IS_LOCAL_DISPLAY_FACTORY (factory), FALSE);
 
         store = scdm_display_factory_get_display_store (SCDM_DISPLAY_FACTORY (factory));
 
@@ -966,7 +966,7 @@ scdm_local_display_factory_stop (ScdmDisplayFactory *base_factory)
         ScdmLocalDisplayFactory *factory = SCDM_LOCAL_DISPLAY_FACTORY (base_factory);
         ScdmDisplayStore *store;
 
-        g_return_val_if_fail (SCDM_IS_LOCAL_DISPLAY_FACTORY (factory), FALSE);
+        g_return_val_if_fail (GDM_IS_LOCAL_DISPLAY_FACTORY (factory), FALSE);
 
         scdm_local_display_factory_stop_monitor (factory);
 
@@ -1109,7 +1109,7 @@ scdm_local_display_factory_finalize (GObject *object)
         ScdmLocalDisplayFactory *factory;
 
         g_return_if_fail (object != NULL);
-        g_return_if_fail (SCDM_IS_LOCAL_DISPLAY_FACTORY (object));
+        g_return_if_fail (GDM_IS_LOCAL_DISPLAY_FACTORY (object));
 
         factory = SCDM_LOCAL_DISPLAY_FACTORY (object);
 

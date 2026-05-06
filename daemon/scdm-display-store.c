@@ -308,7 +308,7 @@ scdm_display_store_finalize (GObject *object)
         ScdmDisplayStore *store;
 
         g_return_if_fail (object != NULL);
-        g_return_if_fail (SCDM_IS_DISPLAY_STORE (object));
+        g_return_if_fail (GDM_IS_DISPLAY_STORE (object));
 
         store = SCDM_DISPLAY_STORE (object);
 

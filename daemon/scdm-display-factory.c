@@ -104,7 +104,7 @@ scdm_display_factory_get_display_store (ScdmDisplayFactory *factory)
 {
         ScdmDisplayFactoryPrivate *priv;
 
-        g_return_val_if_fail (SCDM_IS_DISPLAY_FACTORY (factory), NULL);
+        g_return_val_if_fail (GDM_IS_DISPLAY_FACTORY (factory), NULL);
 
         priv = scdm_display_factory_get_instance_private (factory);
         return priv->display_store;
@@ -115,7 +115,7 @@ scdm_display_factory_start (ScdmDisplayFactory *factory)
 {
         gboolean ret;
 
-        g_return_val_if_fail (SCDM_IS_DISPLAY_FACTORY (factory), FALSE);
+        g_return_val_if_fail (GDM_IS_DISPLAY_FACTORY (factory), FALSE);
 
         g_object_ref (factory);
         ret = SCDM_DISPLAY_FACTORY_GET_CLASS (factory)->start (factory);
@@ -129,7 +129,7 @@ scdm_display_factory_stop (ScdmDisplayFactory *factory)
 {
         gboolean ret;
 
-        g_return_val_if_fail (SCDM_IS_DISPLAY_FACTORY (factory), FALSE);
+        g_return_val_if_fail (GDM_IS_DISPLAY_FACTORY (factory), FALSE);
 
         g_object_ref (factory);
         ret = SCDM_DISPLAY_FACTORY_GET_CLASS (factory)->stop (factory);
@@ -224,7 +224,7 @@ scdm_display_factory_finalize (GObject *object)
         ScdmDisplayFactoryPrivate *priv;
 
         g_return_if_fail (object != NULL);
-        g_return_if_fail (SCDM_IS_DISPLAY_FACTORY (object));
+        g_return_if_fail (GDM_IS_DISPLAY_FACTORY (object));
 
         factory = SCDM_DISPLAY_FACTORY (object);
         priv = scdm_display_factory_get_instance_private (factory);

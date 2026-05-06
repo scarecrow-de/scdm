@@ -1051,7 +1051,7 @@ scdm_server_finalize (GObject *object)
         ScdmServer *server;
 
         g_return_if_fail (object != NULL);
-        g_return_if_fail (SCDM_IS_SERVER (object));
+        g_return_if_fail (GDM_IS_SERVER (object));
 
         server = SCDM_SERVER (object);
 

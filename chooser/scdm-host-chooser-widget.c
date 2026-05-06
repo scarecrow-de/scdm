@@ -641,7 +641,7 @@ xdmcp_init (ScdmHostChooserWidget *widget)
 void
 scdm_host_chooser_widget_refresh (ScdmHostChooserWidget *widget)
 {
-        g_return_if_fail (SCDM_IS_HOST_CHOOSER_WIDGET (widget));
+        g_return_if_fail (GDM_IS_HOST_CHOOSER_WIDGET (widget));
 
         xdmcp_discover (widget);
 }
@@ -651,7 +651,7 @@ scdm_host_chooser_widget_get_host (ScdmHostChooserWidget *widget)
 {
         ScdmChooserHost *host;
 
-        g_return_val_if_fail (SCDM_IS_HOST_CHOOSER_WIDGET (widget), NULL);
+        g_return_val_if_fail (GDM_IS_HOST_CHOOSER_WIDGET (widget), NULL);
 
         host = NULL;
         if (widget->current_host != NULL) {

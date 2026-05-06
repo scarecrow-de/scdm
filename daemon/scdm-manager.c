@@ -865,7 +865,7 @@ scdm_manager_handle_open_session (ScdmDBusManager        *manager,
         }
 
 #ifdef HAVE_LIBXDMCP
-        if (SCDM_IS_XDMCP_CHOOSER_DISPLAY (display)) {
+        if (GDM_IS_XDMCP_CHOOSER_DISPLAY (display)) {
                 ScdmLaunchEnvironment *launch_environment;
 
                 g_object_get (display, "launch-environment", &launch_environment, NULL);
@@ -1460,7 +1460,7 @@ set_up_session (ScdmManager *manager,
                 g_free (username);
 
 #ifdef HAVE_LIBXDMCP
-                if (SCDM_IS_XDMCP_CHOOSER_DISPLAY (display)) {
+                if (GDM_IS_XDMCP_CHOOSER_DISPLAY (display)) {
                         set_up_chooser_session (manager, display);
                         return;
                 }
@@ -2462,7 +2462,7 @@ scdm_manager_get_displays (ScdmManager *manager,
                           GPtrArray **displays,
                           GError    **error)
 {
-        g_return_val_if_fail (SCDM_IS_MANAGER (manager), FALSE);
+        g_return_val_if_fail (GDM_IS_MANAGER (manager), FALSE);
 
         if (displays == NULL) {
                 return FALSE;
@@ -2568,7 +2568,7 @@ void
 scdm_manager_set_xdmcp_enabled (ScdmManager *manager,
                                gboolean    enabled)
 {
-        g_return_if_fail (SCDM_IS_MANAGER (manager));
+        g_return_if_fail (GDM_IS_MANAGER (manager));
 
         if (manager->priv->xdmcp_enabled != enabled) {
                 manager->priv->xdmcp_enabled = enabled;
@@ -2595,7 +2595,7 @@ void
 scdm_manager_set_show_local_greeter (ScdmManager *manager,
                                     gboolean    show_local_greeter)
 {
-        g_return_if_fail (SCDM_IS_MANAGER (manager));
+        g_return_if_fail (GDM_IS_MANAGER (manager));
 
         manager->priv->show_local_greeter = show_local_greeter;
 }
@@ -2767,7 +2767,7 @@ scdm_manager_dispose (GObject *object)
         ScdmManager *manager;
 
         g_return_if_fail (object != NULL);
-        g_return_if_fail (SCDM_IS_MANAGER (object));
+        g_return_if_fail (GDM_IS_MANAGER (object));
 
         manager = SCDM_MANAGER (object);
 

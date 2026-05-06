@@ -60,7 +60,7 @@ G_DEFINE_TYPE (ScdmChooserHost, scdm_chooser_host, G_TYPE_OBJECT)
 ScdmAddress *
 scdm_chooser_host_get_address (ScdmChooserHost *host)
 {
-        g_return_val_if_fail (SCDM_IS_CHOOSER_HOST (host), NULL);
+        g_return_val_if_fail (GDM_IS_CHOOSER_HOST (host), NULL);
 
         return host->address;
 }
@@ -68,7 +68,7 @@ scdm_chooser_host_get_address (ScdmChooserHost *host)
 G_CONST_RETURN char *
 scdm_chooser_host_get_description (ScdmChooserHost *host)
 {
-        g_return_val_if_fail (SCDM_IS_CHOOSER_HOST (host), NULL);
+        g_return_val_if_fail (GDM_IS_CHOOSER_HOST (host), NULL);
 
         return host->description;
 }
@@ -76,7 +76,7 @@ scdm_chooser_host_get_description (ScdmChooserHost *host)
 ScdmChooserHostKind
 scdm_chooser_host_get_kind (ScdmChooserHost *host)
 {
-        g_return_val_if_fail (SCDM_IS_CHOOSER_HOST (host), 0);
+        g_return_val_if_fail (GDM_IS_CHOOSER_HOST (host), 0);
 
         return host->kind;
 }
@@ -84,7 +84,7 @@ scdm_chooser_host_get_kind (ScdmChooserHost *host)
 gboolean
 scdm_chooser_host_get_willing (ScdmChooserHost *host)
 {
-        g_return_val_if_fail (SCDM_IS_CHOOSER_HOST (host), FALSE);
+        g_return_val_if_fail (GDM_IS_CHOOSER_HOST (host), FALSE);
 
         return host->willing;
 }
@@ -241,7 +241,7 @@ scdm_chooser_host_finalize (GObject *object)
         ScdmChooserHost *host;
 
         g_return_if_fail (object != NULL);
-        g_return_if_fail (SCDM_IS_CHOOSER_HOST (object));
+        g_return_if_fail (GDM_IS_CHOOSER_HOST (object));
 
         host = SCDM_CHOOSER_HOST (object);
 

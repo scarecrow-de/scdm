@@ -405,7 +405,7 @@ scdm_client_get_connection_sync (ScdmClient      *client,
         GDBusConnection *connection;
         gboolean ret;
 
-        g_return_val_if_fail (SCDM_IS_CLIENT (client), NULL);
+        g_return_val_if_fail (GDM_IS_CLIENT (client), NULL);
 
         connection = scdm_client_get_open_connection (client);
 
@@ -525,7 +525,7 @@ scdm_client_get_connection_finish (ScdmClient      *client,
 {
         GDBusConnection *connection;
 
-        g_return_val_if_fail (SCDM_IS_CLIENT (client), NULL);
+        g_return_val_if_fail (GDM_IS_CLIENT (client), NULL);
 
         connection = g_task_propagate_pointer (G_TASK (result), error);
         if (connection == NULL) {
@@ -544,7 +544,7 @@ scdm_client_get_connection (ScdmClient           *client,
         g_autoptr(GTask) task = NULL;
         GDBusConnection *connection;
 
-        g_return_if_fail (SCDM_IS_CLIENT (client));
+        g_return_if_fail (GDM_IS_CLIENT (client));
 
         task = g_task_new (G_OBJECT (client),
                            cancellable,
@@ -592,7 +592,7 @@ scdm_client_open_reauthentication_channel_sync (ScdmClient     *client,
         ScdmUserVerifier *user_verifier = NULL;
         gboolean         ret;
 
-        g_return_val_if_fail (SCDM_IS_CLIENT (client), NULL);
+        g_return_val_if_fail (GDM_IS_CLIENT (client), NULL);
 
         manager = scdm_manager_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
                                                       G_DBUS_PROXY_FLAGS_NONE,
@@ -657,7 +657,7 @@ scdm_client_open_reauthentication_channel (ScdmClient           *client,
 {
         GTask *task;
 
-        g_return_if_fail (SCDM_IS_CLIENT (client));
+        g_return_if_fail (GDM_IS_CLIENT (client));
 
         task = g_task_new (G_OBJECT (client),
                            cancellable,
@@ -693,7 +693,7 @@ scdm_client_open_reauthentication_channel_finish (ScdmClient       *client,
                                                  GAsyncResult    *result,
                                                  GError         **error)
 {
-        g_return_val_if_fail (SCDM_IS_CLIENT (client), NULL);
+        g_return_val_if_fail (GDM_IS_CLIENT (client), NULL);
 
         return g_task_propagate_pointer (G_TASK (result), error);
 }
@@ -818,7 +818,7 @@ scdm_client_get_user_verifier (ScdmClient           *client,
 {
         g_autoptr(GTask) task = NULL;
 
-        g_return_if_fail (SCDM_IS_CLIENT (client));
+        g_return_if_fail (GDM_IS_CLIENT (client));
 
         task = g_task_new (G_OBJECT (client),
                            cancellable,
@@ -857,7 +857,7 @@ scdm_client_get_user_verifier_finish (ScdmClient       *client,
 {
         ScdmUserVerifier *user_verifier;
 
-        g_return_val_if_fail (SCDM_IS_CLIENT (client), NULL);
+        g_return_val_if_fail (GDM_IS_CLIENT (client), NULL);
 
         if (client->user_verifier != NULL)
                 return g_object_ref (client->user_verifier);
@@ -982,7 +982,7 @@ scdm_client_get_greeter (ScdmClient           *client,
 {
         g_autoptr(GTask) task = NULL;
 
-        g_return_if_fail (SCDM_IS_CLIENT (client));
+        g_return_if_fail (GDM_IS_CLIENT (client));
 
         task = g_task_new (G_OBJECT (client),
                            cancellable,
@@ -1021,7 +1021,7 @@ scdm_client_get_greeter_finish (ScdmClient       *client,
 {
         ScdmGreeter *greeter;
 
-        g_return_val_if_fail (SCDM_IS_CLIENT (client), NULL);
+        g_return_val_if_fail (GDM_IS_CLIENT (client), NULL);
 
         if (client->greeter != NULL)
                 return g_object_ref (client->greeter);
@@ -1152,7 +1152,7 @@ scdm_client_get_remote_greeter (ScdmClient           *client,
 {
         g_autoptr (GTask) task = NULL;
 
-        g_return_if_fail (SCDM_IS_CLIENT (client));
+        g_return_if_fail (GDM_IS_CLIENT (client));
 
         task = g_task_new (G_OBJECT (client),
                            cancellable,
@@ -1191,7 +1191,7 @@ scdm_client_get_remote_greeter_finish (ScdmClient     *client,
 {
         ScdmRemoteGreeter *remote_greeter;
 
-        g_return_val_if_fail (SCDM_IS_CLIENT (client), NULL);
+        g_return_val_if_fail (GDM_IS_CLIENT (client), NULL);
 
         if (client->remote_greeter != NULL)
                 return g_object_ref (client->remote_greeter);
@@ -1320,7 +1320,7 @@ scdm_client_get_chooser (ScdmClient           *client,
 {
         g_autoptr(GTask) task = NULL;
 
-        g_return_if_fail (SCDM_IS_CLIENT (client));
+        g_return_if_fail (GDM_IS_CLIENT (client));
 
         task = g_task_new (G_OBJECT (client),
                            cancellable,
@@ -1359,7 +1359,7 @@ scdm_client_get_chooser_finish (ScdmClient       *client,
 {
         ScdmChooser *chooser;
 
-        g_return_val_if_fail (SCDM_IS_CLIENT (client), NULL);
+        g_return_val_if_fail (GDM_IS_CLIENT (client), NULL);
 
         if (client->chooser != NULL)
                 return g_object_ref (client->chooser);
@@ -1441,7 +1441,7 @@ scdm_client_finalize (GObject *object)
         ScdmClient *client;
 
         g_return_if_fail (object != NULL);
-        g_return_if_fail (SCDM_IS_CLIENT (object));
+        g_return_if_fail (GDM_IS_CLIENT (object));
 
         client = SCDM_CLIENT (object);
 

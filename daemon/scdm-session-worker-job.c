@@ -389,7 +389,7 @@ scdm_session_worker_job_stop (ScdmSessionWorkerJob *session_worker_job)
 GPid
 scdm_session_worker_job_get_pid (ScdmSessionWorkerJob *session_worker_job)
 {
-        g_return_val_if_fail (SCDM_IS_SESSION_WORKER_JOB (session_worker_job), 0);
+        g_return_val_if_fail (GDM_IS_SESSION_WORKER_JOB (session_worker_job), 0);
         return session_worker_job->pid;
 }
 
@@ -397,7 +397,7 @@ void
 scdm_session_worker_job_set_server_address (ScdmSessionWorkerJob *session_worker_job,
                                            const char      *address)
 {
-        g_return_if_fail (SCDM_IS_SESSION_WORKER_JOB (session_worker_job));
+        g_return_if_fail (GDM_IS_SESSION_WORKER_JOB (session_worker_job));
 
         g_free (session_worker_job->server_address);
         session_worker_job->server_address = g_strdup (address);
@@ -407,7 +407,7 @@ void
 scdm_session_worker_job_set_for_reauth (ScdmSessionWorkerJob *session_worker_job,
                                        gboolean             for_reauth)
 {
-        g_return_if_fail (SCDM_IS_SESSION_WORKER_JOB (session_worker_job));
+        g_return_if_fail (GDM_IS_SESSION_WORKER_JOB (session_worker_job));
 
         session_worker_job->for_reauth = for_reauth;
 }
@@ -416,7 +416,7 @@ void
 scdm_session_worker_job_set_environment (ScdmSessionWorkerJob *session_worker_job,
                                         const char * const  *environment)
 {
-        g_return_if_fail (SCDM_IS_SESSION_WORKER_JOB (session_worker_job));
+        g_return_if_fail (GDM_IS_SESSION_WORKER_JOB (session_worker_job));
 
         session_worker_job->environment = g_strdupv ((char **) environment);
 }
@@ -566,7 +566,7 @@ scdm_session_worker_job_finalize (GObject *object)
         ScdmSessionWorkerJob *session_worker_job;
 
         g_return_if_fail (object != NULL);
-        g_return_if_fail (SCDM_IS_SESSION_WORKER_JOB (object));
+        g_return_if_fail (GDM_IS_SESSION_WORKER_JOB (object));
 
         session_worker_job = SCDM_SESSION_WORKER_JOB (object);
 
