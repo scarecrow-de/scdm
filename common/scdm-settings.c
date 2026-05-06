@@ -82,7 +82,7 @@ scdm_settings_get_value (ScdmSettings *settings,
         gboolean res;
         GList   *l;
 
-        g_return_val_if_fail (SCDM_IS_SETTINGS (settings), FALSE);
+        g_return_val_if_fail (GDM_IS_SETTINGS (settings), FALSE);
         g_return_val_if_fail (key != NULL, FALSE);
 
         local_error = NULL;
@@ -119,7 +119,7 @@ scdm_settings_set_value (ScdmSettings *settings,
         gboolean res;
         GList   *l;
 
-        g_return_val_if_fail (SCDM_IS_SETTINGS (settings), FALSE);
+        g_return_val_if_fail (GDM_IS_SETTINGS (settings), FALSE);
         g_return_val_if_fail (key != NULL, FALSE);
 
         g_debug ("Setting value %s", key);
@@ -214,7 +214,7 @@ scdm_settings_finalize (GObject *object)
         ScdmSettings *settings;
 
         g_return_if_fail (object != NULL);
-        g_return_if_fail (SCDM_IS_SETTINGS (object));
+        g_return_if_fail (GDM_IS_SETTINGS (object));
 
         settings = GDM_SETTINGS (object);
 

@@ -229,7 +229,7 @@ scdm_settings_desktop_backend_get_value (ScdmSettingsBackend *backend,
         char    *l;
         gboolean ret;
 
-        g_return_val_if_fail (SCDM_IS_SETTINGS_BACKEND (backend), FALSE);
+        g_return_val_if_fail (GDM_IS_SETTINGS_BACKEND (backend), FALSE);
         g_return_val_if_fail (key != NULL, FALSE);
 
         ret = FALSE;
@@ -343,7 +343,7 @@ scdm_settings_desktop_backend_set_value (ScdmSettingsBackend *backend,
         char   *k;
         char   *l;
 
-        g_return_val_if_fail (SCDM_IS_SETTINGS_BACKEND (backend), FALSE);
+        g_return_val_if_fail (GDM_IS_SETTINGS_BACKEND (backend), FALSE);
         g_return_val_if_fail (key != NULL, FALSE);
 
         /*GDM_SETTINGS_BACKEND_CLASS (scdm_settings_desktop_backend_parent_class)->get_value (display);*/
@@ -411,7 +411,7 @@ scdm_settings_desktop_backend_finalize (GObject *object)
         ScdmSettingsDesktopBackend *backend;
 
         g_return_if_fail (object != NULL);
-        g_return_if_fail (SCDM_IS_SETTINGS_DESKTOP_BACKEND (object));
+        g_return_if_fail (GDM_IS_SETTINGS_DESKTOP_BACKEND (object));
 
         backend = GDM_SETTINGS_DESKTOP_BACKEND (object);
 
