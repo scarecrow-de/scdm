@@ -19,8 +19,8 @@
  */
 
 
-#ifndef __SCDM_SETTINGS_BACKEND_H
-#define __SCDM_SETTINGS_BACKEND_H
+#ifndef __GDM_SETTINGS_BACKEND_H
+#define __GDM_SETTINGS_BACKEND_H
 
 #include <glib-object.h>
 
@@ -52,11 +52,11 @@ struct _ScdmSettingsBackendClass
 
 typedef enum
 {
-        SCDM_SETTINGS_BACKEND_ERROR_GENERAL,
-        SCDM_SETTINGS_BACKEND_ERROR_KEY_NOT_FOUND
+        GDM_SETTINGS_BACKEND_ERROR_GENERAL,
+        GDM_SETTINGS_BACKEND_ERROR_KEY_NOT_FOUND
 } ScdmSettingsBackendError;
 
-#define SCDM_SETTINGS_BACKEND_ERROR scdm_settings_backend_error_quark ()
+#define GDM_SETTINGS_BACKEND_ERROR scdm_settings_backend_error_quark ()
 
 GQuark              scdm_settings_backend_error_quark            (void);
 
@@ -76,4 +76,4 @@ void                scdm_settings_backend_value_changed          (ScdmSettingsBa
 
 G_END_DECLS
 
-#endif /* __SCDM_SETTINGS_BACKEND_H */
+#endif /* __GDM_SETTINGS_BACKEND_H */

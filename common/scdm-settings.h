@@ -19,8 +19,8 @@
  */
 
 
-#ifndef __SCDM_SETTINGS_H
-#define __SCDM_SETTINGS_H
+#ifndef __GDM_SETTINGS_H
+#define __GDM_SETTINGS_H
 
 #include <glib-object.h>
 
@@ -31,11 +31,11 @@ G_DECLARE_FINAL_TYPE (ScdmSettings, scdm_settings, GDM, SETTINGS, GObject)
 
 typedef enum
 {
-        SCDM_SETTINGS_ERROR_GENERAL,
-        SCDM_SETTINGS_ERROR_KEY_NOT_FOUND
+        GDM_SETTINGS_ERROR_GENERAL,
+        GDM_SETTINGS_ERROR_KEY_NOT_FOUND
 } ScdmSettingsError;
 
-#define SCDM_SETTINGS_ERROR scdm_settings_error_quark ()
+#define GDM_SETTINGS_ERROR scdm_settings_error_quark ()
 
 GQuark              scdm_settings_error_quark                    (void);
 
@@ -54,4 +54,4 @@ gboolean            scdm_settings_set_value                      (ScdmSettings *
 
 G_END_DECLS
 
-#endif /* __SCDM_SETTINGS_H */
+#endif /* __GDM_SETTINGS_H */

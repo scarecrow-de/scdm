@@ -19,8 +19,8 @@
  */
 
 
-#ifndef __SCDM_SETTINGS_DESKTOP_BACKEND_H
-#define __SCDM_SETTINGS_DESKTOP_BACKEND_H
+#ifndef __GDM_SETTINGS_DESKTOP_BACKEND_H
+#define __GDM_SETTINGS_DESKTOP_BACKEND_H
 
 #include <glib-object.h>
 #include "scdm-settings-backend.h"
@@ -34,4 +34,4 @@ ScdmSettingsBackend        *scdm_settings_desktop_backend_new             (const
 
 G_END_DECLS
 
-#endif /* __SCDM_SETTINGS_DESKTOP_BACKEND_H */
+#endif /* __GDM_SETTINGS_DESKTOP_BACKEND_H */

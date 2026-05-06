@@ -18,8 +18,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef _SCDM_SETTINGS_KEYS_H
-#define _SCDM_SETTINGS_KEYS_H
+#ifndef _GDM_SETTINGS_KEYS_H
+#define _GDM_SETTINGS_KEYS_H
 
 #include <glib.h>
 
@@ -61,4 +61,4 @@ G_BEGIN_DECLS
 
 G_END_DECLS
 
-#endif /* _SCDM_SETTINGS_KEYS_H */
+#endif /* _GDM_SETTINGS_KEYS_H */

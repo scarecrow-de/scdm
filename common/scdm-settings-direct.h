@@ -19,8 +19,8 @@
  */
 
 
-#ifndef __SCDM_SETTINGS_DIRECT_H
-#define __SCDM_SETTINGS_DIRECT_H
+#ifndef __GDM_SETTINGS_DIRECT_H
+#define __GDM_SETTINGS_DIRECT_H
 
 #include <glib-object.h>
 #include "scdm-settings.h"
@@ -47,4 +47,4 @@ gboolean              scdm_settings_direct_get_string                 (const cha
 
 G_END_DECLS
 
-#endif /* __SCDM_SETTINGS_DIRECT_H */
+#endif /* __GDM_SETTINGS_DIRECT_H */

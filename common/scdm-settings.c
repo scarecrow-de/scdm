@@ -216,7 +216,7 @@ scdm_settings_finalize (GObject *object)
         g_return_if_fail (object != NULL);
         g_return_if_fail (SCDM_IS_SETTINGS (object));
 
-        settings = SCDM_SETTINGS (object);
+        settings = GDM_SETTINGS (object);
 
         g_return_if_fail (settings != NULL);
 
@@ -238,5 +238,5 @@ scdm_settings_new (void)
                 settings_object = g_object_new (SCDM_TYPE_SETTINGS, NULL);
         }
 
-        return SCDM_SETTINGS (settings_object);
+        return GDM_SETTINGS (settings_object);
 }

@@ -92,7 +92,7 @@ scdm_settings_backend_get_value (ScdmSettingsBackend *settings_backend,
         g_return_val_if_fail (SCDM_IS_SETTINGS_BACKEND (settings_backend), FALSE);
 
         g_object_ref (settings_backend);
-        ret = SCDM_SETTINGS_BACKEND_GET_CLASS (settings_backend)->get_value (settings_backend, key, value, error);
+        ret = GDM_SETTINGS_BACKEND_GET_CLASS (settings_backend)->get_value (settings_backend, key, value, error);
         g_object_unref (settings_backend);
 
         return ret;
@@ -109,7 +109,7 @@ scdm_settings_backend_set_value (ScdmSettingsBackend *settings_backend,
         g_return_val_if_fail (SCDM_IS_SETTINGS_BACKEND (settings_backend), FALSE);
 
         g_object_ref (settings_backend);
-        ret = SCDM_SETTINGS_BACKEND_GET_CLASS (settings_backend)->set_value (settings_backend, key, value, error);
+        ret = GDM_SETTINGS_BACKEND_GET_CLASS (settings_backend)->set_value (settings_backend, key, value, error);
         g_object_unref (settings_backend);
 
         return ret;
