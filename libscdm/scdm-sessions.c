@@ -189,7 +189,7 @@ collect_sessions_from_directory (const char *dirname)
         const char *filename;
 
         gboolean is_x11 = g_getenv ("WAYLAND_DISPLAY") == NULL &&
-                          g_getenv ("RUNNING_UNDER_GDM") != NULL;
+                          g_getenv ("RUNNING_UNDER_SCDM") != NULL;
 
         /* FIXME: add file monitor to directory */
 
@@ -290,7 +290,7 @@ collect_sessions (void)
 
 #ifdef ENABLE_WAYLAND_SUPPORT
 #ifdef ENABLE_USER_DISPLAY_SERVER
-        if (g_getenv ("WAYLAND_DISPLAY") == NULL && g_getenv ("RUNNING_UNDER_GDM") != NULL) {
+        if (g_getenv ("WAYLAND_DISPLAY") == NULL && g_getenv ("RUNNING_UNDER_SCDM") != NULL) {
                 goto out;
         }
 #endif

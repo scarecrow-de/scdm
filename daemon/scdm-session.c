@@ -3211,7 +3211,7 @@ scdm_session_session_registers (ScdmSession *self)
 
         session_registers = g_key_file_get_boolean (key_file,
                                                     G_KEY_FILE_DESKTOP_GROUP,
-                                                    "X-GDM-SessionRegisters",
+                                                    "X-SCDM-SessionRegisters",
                                                     &error);
         if (!session_registers &&
             error != NULL &&

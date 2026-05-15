@@ -1404,11 +1404,11 @@ msgstr ""
 #. (itstool) path: sect2/para
 #: C/index.docbook:1045
 msgid ""
-"All of the above scripts will set the <filename>$RUNNING_UNDER_GDM</filename> environment variable to <filename>yes</filename>. If the "
+"All of the above scripts will set the <filename>$RUNNING_UNDER_SCDM</filename> environment variable to <filename>yes</filename>. If the "
 "scripts are also shared with other display managers, this allows you to identify when GDM is calling these scripts, so you can run "
 "specific code when GDM is used."
 msgstr ""
-"Όλα τα παραπάνω σενάρια θα ρυθμίσουν την μεταβλητή περιβάλλοντος <filename>$RUNNING_UNDER_GDM</filename> σε <filename>yes</filename>. "
+"Όλα τα παραπάνω σενάρια θα ρυθμίσουν την μεταβλητή περιβάλλοντος <filename>$RUNNING_UNDER_SCDM</filename> σε <filename>yes</filename>. "
 "Αν τα σενάρια χρησιμοποιούνται και από άλλους διαχειριστές οθόνης, αυτό σας επιτρέπει να αναγνωρίσετε πότε το GDM καλεί αυτά τα "
 "σενάρια, έτσι ώστε να εκτελείτε συγκεκριμένο κώδικα όταν χρησιμοποιείται το GDM."
 

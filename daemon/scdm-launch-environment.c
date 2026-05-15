@@ -216,7 +216,7 @@ build_launch_environment (ScdmLaunchEnvironment *launch_environment,
                 g_hash_table_insert (hash, g_strdup ("SCDM_SEAT_ID"), g_strdup (seat_id));
         }
 
-        g_hash_table_insert (hash, g_strdup ("RUNNING_UNDER_GDM"), g_strdup ("true"));
+        g_hash_table_insert (hash, g_strdup ("RUNNING_UNDER_SCDM"), g_strdup ("true"));
 
         return hash;
 }

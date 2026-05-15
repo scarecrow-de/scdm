@@ -1746,7 +1746,7 @@ msgstr ""
 #: ../C/scdm.xml:1663(para)
 msgid ""
 "Except for the <filename>Xsession</filename> script all of these scripts "
-"will also have the environment variable <filename>$RUNNING_UNDER_GDM</"
+"will also have the environment variable <filename>$RUNNING_UNDER_SCDM</"
 "filename> set to <filename>yes</filename>, so that you could perhaps use "
 "similar scripts for different display managers. The <filename>Xsession</"
 "filename> will always have the <filename>$GDMSESSION</filename> set to the "

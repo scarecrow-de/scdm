@@ -642,7 +642,7 @@ scdm_get_script_environment (const char *username,
                 g_hash_table_insert (hash, g_strdup ("DISPLAY"), g_strdup (display_name));
         }
         g_hash_table_insert (hash, g_strdup ("PATH"), g_strdup (GDM_SESSION_DEFAULT_PATH));
-        g_hash_table_insert (hash, g_strdup ("RUNNING_UNDER_GDM"), g_strdup ("true"));
+        g_hash_table_insert (hash, g_strdup ("RUNNING_UNDER_SCDM"), g_strdup ("true"));
 
         g_hash_table_remove (hash, "MAIL");
 
