@@ -3312,7 +3312,7 @@ scdm_session_get_display_mode (ScdmSession *self)
 
 #ifdef ENABLE_WAYLAND_SUPPORT
         /* Wayland sessions are for now assumed to run in a
-         * mutter-launch-like environment, so we allocate
+         * vater-launch-like environment, so we allocate
          * a new VT for them. */
         if (g_strcmp0 (self->session_type, "wayland") == 0) {
                 return GDM_SESSION_DISPLAY_MODE_NEW_VT;

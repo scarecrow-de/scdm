@@ -43,12 +43,12 @@ typedef enum {
 
         /* Doesn't know anything about VTs. Tries to set DRM
          * master and will throw a tantrum if something bad
-         * happens. e.g. weston-launch or mutter-launch. */
+         * happens. e.g. weston-launch or vater-launch. */
         GDM_SESSION_DISPLAY_MODE_NEW_VT,
 
         /* Uses logind sessions to manage itself. We need to set an
          * XDG_VTNR and it will switch to the correct VT on startup.
-         * e.g. mutter-wayland with logind integration, X server with
+         * e.g. vater-wayland with logind integration, X server with
          * logind integration. */
         GDM_SESSION_DISPLAY_MODE_LOGIND_MANAGED,
 } ScdmSessionDisplayMode;
