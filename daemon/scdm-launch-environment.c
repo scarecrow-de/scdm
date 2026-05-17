@@ -53,7 +53,7 @@
 #define INITIAL_SETUP_USERNAME "gnome-initial-setup"
 #define GDM_SESSION_MODE "scdm"
 #define INITIAL_SETUP_SESSION_MODE "initial-setup"
-#define GNOME_SESSION_SESSIONS_PATH DATADIR "/gnome-session/sessions"
+#define GNOME_SESSION_SESSIONS_PATH DATADIR "/scarecrow-session/sessions"
 
 extern char **environ;
 
@@ -916,7 +916,7 @@ create_gnome_session_environment (const char *session_id,
         scdm_settings_direct_get_boolean (SCDM_KEY_DEBUG, &debug);
 
         args = g_ptr_array_new ();
-        g_ptr_array_add (args, "gnome-session");
+        g_ptr_array_add (args, "scarecrow-session");
 
         g_ptr_array_add (args, "--autostart");
         g_ptr_array_add (args, DATADIR "/scdm/greeter/autostart");

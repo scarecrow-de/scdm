@@ -75,7 +75,7 @@ scdm_gnome_session_required_components = [
   'io.github.scarecrow_de.SettingsDaemon.Rfkill',
   'io.github.scarecrow_de.SettingsDaemon.ScreensaverProxy',
   'io.github.scarecrow_de.SettingsDaemon.Sharing',
-  'io.github.scarecrow_de.SettingsDaemon.Smartcard',
+#  'io.github.scarecrow_de.SettingsDaemon.Smartcard',
   'io.github.scarecrow_de.SettingsDaemon.Sound',
   'io.github.scarecrow_de.SettingsDaemon.Wacom',
 ]
@@ -94,7 +94,7 @@ configure_file(
     'gnome_required_components': ';'.join(
       [ scdm_gnome_shell_component ] + scdm_gnome_session_required_components),
   },
-  install_dir: get_option('datadir') / 'gnome-session' / 'sessions',
+  install_dir: get_option('datadir') / 'scarecrow-session' / 'sessions',
 )
 
 # PAM
@@ -103,7 +103,7 @@ pam_data_files_map = {
     'scdm-autologin',
     'scdm-launch-environment',
     'scdm-fingerprint',
-    'scdm-smartcard',
+#    'scdm-smartcard',
     'scdm-password',
     'scdm-pin',
   ],
@@ -117,7 +117,7 @@ pam_data_files_map = {
     'scdm-autologin',
     'scdm-launch-environment',
     'scdm-fingerprint',
-    'scdm-smartcard',
+#    'scdm-smartcard',
     'scdm-password',
     'scdm-pin',
   ],
@@ -125,7 +125,7 @@ pam_data_files_map = {
     'scdm-autologin',
     'scdm-launch-environment',
     'scdm-fingerprint',
-    'scdm-smartcard',
+#    'scdm-smartcard',
     'scdm-password',
     'scdm-pin',
   ],
@@ -133,7 +133,7 @@ pam_data_files_map = {
     'scdm-autologin',
     'scdm-launch-environment',
     'scdm-fingerprint',
-    'scdm-smartcard',
+#    'scdm-smartcard',
     'scdm-password',
     'scdm-pin',
   ],
@@ -203,7 +203,7 @@ configure_file(
     'requires_component': scdm_gnome_shell_component,
     'wants_required_components': '\n'.join(scdm_gnome_session_wanted_targets),
   },
-  install_dir: systemd_userunitdir / 'gnome-session@scarecrow-login.target.d',
+  install_dir: systemd_userunitdir / 'scarecrow-session@scarecrow-login.target.d',
 )
 
 # XSession

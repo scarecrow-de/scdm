@@ -2908,7 +2908,7 @@ scdm_session_start_session (ScdmSession *self,
                  * But, we also explicitly do this for seat0, because that way
                  * it cannot make use of systemd to run the GNOME session. This
                  * prevents the session lookup logic from getting confused.
-                 * This has a similar effect as passing --builtin to gnome-session.
+                 * This has a similar effect as passing --builtin to scarecrow-session.
                  *
                  * We really should not be doing this. But the fix is to use
                  * separate dynamically created users and that requires some

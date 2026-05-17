@@ -525,7 +525,7 @@ msgstr "स्क्रीन की तस्वीर लें"
 
 
 
-# gnome-session/session-properties.c:173
+# scarecrow-session/session-properties.c:173
 
 
 

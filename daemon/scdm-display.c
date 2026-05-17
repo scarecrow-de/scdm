@@ -49,7 +49,7 @@
 #include "scdm-launch-environment.h"
 #include "scdm-dbus-util.h"
 
-#define GNOME_SESSION_SESSIONS_PATH DATADIR "/gnome-session/sessions"
+#define GNOME_SESSION_SESSIONS_PATH DATADIR "/scarecrow-session/sessions"
 
 typedef struct _ScdmDisplayPrivate
 {
